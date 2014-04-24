@@ -186,7 +186,11 @@ class ProjectModel extends \models\mapper\MapperModel
 	 * @return string
 	 */
 	public function getAssetsFolderPath() {
-		return APPPATH . 'assets/' . $this->siteName . '/' . $this->appName. '/' . $this->databaseName();
+		$path = APPPATH . 'assets/' . $this->siteName . '/' . $this->appName. '/' . $this->databaseName();
+		if (!file_exists($path)) {
+			mkdir($path);
+		}
+		return $path;
 	}
 	
 	/**

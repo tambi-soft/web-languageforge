@@ -1,6 +1,6 @@
 <?php
 
-namespace models\scriptureforge;
+namespace models\scriptureforge\rapuma;
 
 class RapumaProjectModel extends SfProjectModel {
 	public function __construct($id = '') {
@@ -8,4 +8,7 @@ class RapumaProjectModel extends SfProjectModel {
 		$this->appName = SfProjectModel::RAPUMA_APP;
 	}
 }
+
+
+
 ?>
