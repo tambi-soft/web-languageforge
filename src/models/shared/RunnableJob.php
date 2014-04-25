@@ -2,6 +2,8 @@
 namespace models\shared;
 
 
+use models\mapper\ArrayOf;
+
 class RunnableJob extends \models\mapper\MapperModel {
 
 	public static function mapper($databaseName) {
@@ -21,6 +23,9 @@ class RunnableJob extends \models\mapper\MapperModel {
 		$this->_projectModel = $projectModel;
 		$this->endTime = 0;
 		$this->startTime = 0;
+		$this->artifacts = new ArrayOf(function($data) {
+			return new RunnableJobArtifact();
+		});
 		parent::__construct(self::mapper($projectModel->databaseName()), $id);
 	}
 	
@@ -135,4 +140,20 @@ class RunnableJob extends \models\mapper\MapperModel {
 	 */
 	public $errorOutput;
 	
+	/**
+	 * @var ArrayOf<RunnableJobArtifact>
+	 */
+	public $artifacts;
+	
 }
+
+class RunnableJobArtifact {
+	
+	const TYPE_PDF = 'pdf';
+	const TYPE_TXT = 'txt';
+	
+	public $type;
+	
+	public $filePath;
+}
+?>
