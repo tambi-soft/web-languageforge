@@ -155,5 +155,7 @@ class RunnableJobArtifact {
 	public $type;
 	
 	public $filePath;
+	
+	public $displayName;
 }
 ?>

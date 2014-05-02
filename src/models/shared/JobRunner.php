@@ -1,6 +1,8 @@
 <?php
 namespace libraries\shared;
 
+use models\shared\RunnableJobListModel;
+
 use libraries\shared\Website;
 
 use libraries\shared\palaso\CodeGuard;
@@ -13,7 +15,7 @@ class JobRunner {
 	
 	private $_projectFolderPath;
 	
-	private $_projectModel;
+	protected  $_projectModel;
 	
 	/**
 	 * 
@@ -24,16 +26,30 @@ class JobRunner {
 		$this->_projectFolderPath = $projectModel->getAssetsFolderPath(); 
 	}
 	
-	public function queueJob($command) {
-		// this function will be overridden in the child classes
-	}
-	
+	/*
 	public function listAllJobs() {
-		// this function will be overridden in the child classes
 	}
+	*/
 	
 	public function listQueuedJobs() {
-		// this function will be overridden in the child classes
+		$list = new RunnableJobListModel_Queue($this->_projectModel);
+		$list->read();
+		$queue = array();
+		$queue['queue'] = $list->entries;
+		$runningJobId = $this->_getRunningJobIdInList($list->entries);
+		if ($runningJobId) {
+			$queue['runningJobId'] = $runningJobId;
+		}
+		return $queue;
+	}
+	
+	private function _getRunningJobIdInList($jobList) {
+		foreach ($jobList as $job) {
+			if ($job['startTime'] != 0) {
+				return $job['id'];
+			}
+		}
+		return false;
 	}
 	
 	public function isRunning() {
@@ -57,21 +73,14 @@ class JobRunner {
 			
 			$job = new RunnableJob($this->_projectModel, $jobId);
 			$job->run($this->_lockFilePath);
-			$this->_log("Started Job " . $job->id->asString());
 			$this->_log("Running Command: " . $job->command);
 		}
 	}
 	
-	private function _log($message) { }
-	
-	// I'm not sure if the following methods are useful or not
-	public function getOutputForJob($jobId) { }
-	
-	public function getErrorForJob($jobId) { }
-	
-	public function jobHasError($jobId) { }
-	
-	public function jobHasOutput($jobId) { }
-	
+	private function _log($message) { 
+		$logfile = $this->_projectFolderPath . "/jobRunner.log";
+		$message = date(DateTime::W3C) . "\t$message\n";
+		file_put_contents($logfile, $message, FILE_APPEND);
+	}
 }
 ?>
