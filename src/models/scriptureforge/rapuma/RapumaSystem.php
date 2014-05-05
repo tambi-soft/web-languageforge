@@ -8,7 +8,7 @@ use models\shared\RunnableJob;
 
 class RapumaSystem {
 	
-	const RAPUMACONF = '/home/rapuma/.config/rapuma/rapuma.conf';
+	const RAPUMACONF = '/var/lib/rapuma/config/rapuma.conf';
 	
 	
 	/**

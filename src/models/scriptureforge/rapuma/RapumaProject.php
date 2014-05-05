@@ -71,8 +71,8 @@ class RapumaProject {
 	 * @return boolean
 	 */
 	public function rapumaProjectExists() {
-		// TODO implement this by checking if the project config file exists
-		return false;
+		$configFile = $this->_projectModel->getAssetsFolderPath() . "/Config/project.json";
+		return file_exists($configFile);
 	}
 	
 	/**
@@ -92,16 +92,21 @@ class RapumaProject {
 		return false;
 	}
 	
+	/**
+	 * @return array
+	 */
 	public function readProjectConfig() {
-		
+		$configFile = $this->_projectModel->getAssetsFolderPath() . "/Config/project.json";
+		return json_decode(file_get_contents($configFile), true);
 	}
 	
+	/**
+	 * 
+	 * @param array $config
+	 */
 	public function updateProjectConfig($config) {
-		
-	}
-	
-	public static function readProjectConfigXml() {
-		
+		$configFile = $this->_projectModel->getAssetsFolderPath() . "/Config/project.json";
+		return file_put_contents($configFile, json_encode($config, JSON_PRETTY_PRINT));
 	}
 	
 }

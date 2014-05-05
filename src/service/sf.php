@@ -1,5 +1,7 @@
 <?php
 
+use models\scriptureforge\rapuma\RapumaSettingsCommands;
+
 use libraries\scriptureforge\sfchecks\ParatextExport;
 use libraries\shared\palaso\exceptions\UserNotAuthenticatedException;
 use libraries\shared\palaso\exceptions\UserUnauthorizedException;
@@ -411,6 +413,20 @@ class Sf
 	public function questionTemplate_list() {
 		return QuestionTemplateCommands::listTemplates();
 	}
+	
+	
+	//---------------------------------------------------------------
+	// RAPUMA API
+	//---------------------------------------------------------------
+	
+	public function rapuma_settings_read($projectId) {
+		return RapumaSettingsCommands::readSettings($projectId);
+	}
+	
+	public function rapuma_settings_update($projectId, $settings) {
+		return RapumaSettingsCommands::updateSettings($projectId, $settings);
+	}
+
 	
 	
 	
