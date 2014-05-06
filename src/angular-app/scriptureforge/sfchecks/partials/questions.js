@@ -10,6 +10,7 @@ angular.module(
 		var textId = $routeParams.textId;
 		$scope.projectId = projectId;
 		$scope.textId = textId;
+		$scope.finishedLoading = false;
 		
 		$scope.audioReady = false;
 		soundManager.setup({
@@ -43,15 +44,6 @@ angular.module(
 		$scope.rights.editOther = false; //ss.hasRight(ss.realm.SITE(), ss.domain.PROJECTS, ss.operation.EDIT);
 		$scope.rights.showControlBar = $scope.rights.deleteOther || $scope.rights.create || $scope.rights.createTemplate || $scope.rights.editOther;
 		
-		// Breadcrumb
-		breadcrumbService.set('top',
-				[
-				 {href: '/app/sfchecks#/projects', label: 'My Projects'},
-				 {href: '/app/sfchecks#/project/' + $routeParams.projectId, label: ''},
-				 {href: '/app/sfchecks#/project/' + $routeParams.projectId + '/' + $routeParams.textId, label: ''},
-				]
-		);
-
 		// Question templates
 		$scope.emptyTemplate = {
 			title: '(Select a template)',
@@ -134,8 +126,15 @@ angular.module(
 					$scope.text.url = sfchecksLinkService.text(projectId, textId);
 					//console.log($scope.project.name);
 					//console.log($scope.text.title);
-					breadcrumbService.updateCrumb('top', 1, {label: $scope.project.name});
-					breadcrumbService.updateCrumb('top', 2, {label: $scope.text.title});
+
+					// Breadcrumb
+					breadcrumbService.set('top',
+							[
+							 {href: '/app/projects', label: 'My Projects'},
+							 {href: sfchecksLinkService.project($routeParams.projectId), label: $scope.project.name},
+							 {href: sfchecksLinkService.text($routeParams.projectId, $routeParams.textId), label: $scope.text.title},
+							]
+					);
 
 					var rights = result.data.rights;
 					$scope.rights.deleteOther = ss.hasRight(rights, ss.domain.QUESTIONS, ss.operation.DELETE); 
@@ -146,6 +145,7 @@ angular.module(
 					if ($scope.rights.create) {
 						$scope.queryTemplates();
 					}
+					$scope.finishedLoading = true;
 				}
 			});
 		};
@@ -183,7 +183,7 @@ angular.module(
 					$scope.queryQuestions();
 					notice.push(notice.SUCCESS, "'" + $scope.calculateTitle(model.title, model.description) + "' was added successfully");
 					if ($scope.saveAsTemplate) {
-						qts.update(model, function(result) {
+						qts.update(projectId, model, function(result) {
 							if (result.ok) {
 								notice.push(notice.SUCCESS, "'" + model.title + "' was added as a template question");
 							}
@@ -225,7 +225,7 @@ angular.module(
 			model.id = '';
 			model.title = $scope.selected[0].title;
 			model.description = $scope.selected[0].description;
-			qts.update(model, function(result) {
+			qts.update(projectId, model, function(result) {
 				if (result.ok) {
 					$scope.queryTemplates();
 					notice.push(notice.SUCCESS, "'" + model.title + "' was added as a template question");
@@ -243,10 +243,10 @@ angular.module(
 		};
 		
 		$scope.enhanceDto = function(items) {
-			for (var i in items) {
-				items[i].url = sfchecksLinkService.question(projectId, textId, items[i].id);
-				items[i].calculatedTitle = $scope.calculateTitle(items[i].title, items[i].description);
-			}
+			angular.forEach(items, function(item) {
+				item.url = sfchecksLinkService.question(projectId, textId, item.id);
+				item.calculatedTitle = $scope.calculateTitle(item.title, item.description);
+			});
 		};
 
 	}])

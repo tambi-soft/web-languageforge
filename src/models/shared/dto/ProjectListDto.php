@@ -46,6 +46,7 @@ class ProjectListDto
 				
 			$data['entries'][] = $entry;
 		}
+		
 		return $data;
 	}
 }

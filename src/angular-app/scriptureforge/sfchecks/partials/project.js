@@ -8,6 +8,7 @@ angular.module(
                             function($scope, textService, $routeParams, ss, breadcrumbService, sfchecksLinkService, notice, sfchecksProjectService, messageService) {
 		var projectId = $routeParams.projectId;
 		$scope.projectId = projectId;
+		$scope.finishedLoading = false;
 		
 		// Rights
 		$scope.rights = {};
@@ -80,7 +81,7 @@ angular.module(
 					breadcrumbService.set('top',
 							[
 							 {href: '/app/projects', label: 'My Projects'},
-							 {href: '/app/sfchecks#/p/' + $routeParams.projectId, label: $scope.project.name},
+							 {href: sfchecksLinkService.project($routeParams.projectId), label: $scope.project.name},
 							]
 					);
 
@@ -89,6 +90,8 @@ angular.module(
 					$scope.rights.create = ss.hasRight(rights, ss.domain.TEXTS, ss.operation.CREATE); 
 					$scope.rights.editOther = ss.hasRight(rights, ss.domain.TEXTS, ss.operation.EDIT);
 					$scope.rights.showControlBar = $scope.rights.deleteOther || $scope.rights.create || $scope.rights.editOther;
+					
+					$scope.finishedLoading = true;
 				}
 			});
 		};
