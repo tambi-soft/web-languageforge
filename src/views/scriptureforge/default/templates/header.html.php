@@ -3,7 +3,7 @@
 <![endif]-->
 		<div id="header">
 			<div class="container">
-				<div class="sf-logo-large">
+				<div class="sf-logo-medium">
 					<img src="/images/scriptureforge/default/sf_logo_medium.png" alt="Scripture Forge" style="width:92px; height:114px" />
 				</div>
 				<div id="header-nav" class="pull-left">
@@ -51,12 +51,12 @@
 									}
 									?>
 
-									<li><a href="<?php echo "http://$theme$hostname/app/" . $project['appName'] . "#/p/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
+									<li><a href="<?php echo "//$theme$hostname/app/" . $project['appName'] . "#/p/" . $project['id']; ?>"><?php echo $project['projectname']; ?></a></li>
 								<?php endforeach;?>
 								</ul>
 							</li>
 							<li>
-							<a href="#"><img src="<?php echo $small_avatar_url; ?>" style="width: 28px; height: 28px; float:left; position:relative; top:-5px; border:1px solid white; margin-right:10px" />Hi, <?php echo $user_name; ?></a>
+							<a href="#"><img src="<?php echo $small_avatar_url; ?>" style="width: 28px; height: 28px; float:left; position:relative; top:-5px; border:1px solid white; margin-right:10px" id="smallAvatarURL" />Hi, <?php echo $user_name; ?></a>
 								<ul>
 									<?php if ($is_admin):?>
 									<li><a href="/app/siteadmin">Site Administration</a></li>

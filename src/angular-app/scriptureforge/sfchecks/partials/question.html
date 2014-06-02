@@ -41,7 +41,7 @@
 			<form ng-submit="submitAnswer()">
 				<textarea required ng-model="newAnswer.content" pui-jqte="jqteOptions"></textarea>
 				<div ng-hide="unreadResponseCount() == 0" class="right badge badge-important">{{unreadResponseCount()}} new response<span ng-show="unreadResponseCount() > 1">s</span></div>
-				<button type="submit" class="btn">Done</button>
+				<button type="submit" class="btn" id="doneBtn">Done</button>
 			</form>
 		</div>
 	</div>
@@ -57,12 +57,8 @@
 		<td>
 			<div ng-class="{unread: isUnreadAnswer(answerId)}" class="answer"><!--<b>DEBUG:</b>answerId = {{answerId}}, answer.id = {{answer.id}}<br/>-->
 				<!--<b>DEBUG:</b>answer = {{answer}}<br/>-->
-				<div ng-show="answer.textHighlight" ng-bind-html="answer.textHighlight" class="scripture-quote">
-					{{answer.textHighlight}}
-				</div>
-				<div ng-bind-html="answer.content">
-					{{answer.content}}
-				</div>
+				<div ng-show="answer.textHighlight" ng-bind-html="answer.textHighlight" class="scripture-quote"></div>
+				<div class="answerContent" ng-bind-html="answer.content"></div>
 				<view-tags ng-show="$parent.rightsCreateTag()" tags="answer.tags" on-delete="deletedTags(answer)" rights-delete="rightsDeleteTag()"></view-tags>
 				<div class="by">
 					<img ng-src="{{answer.userRef.avatar_ref}}" width="32" height="32" /><div>answered {{answer.dateCreated | date:mediumDate}}<br/>by {{answer.userRef.username}}</div>
@@ -74,7 +70,7 @@
 							<label for="inputtagstring">Add tags (comma-separated):</label>
 							<add-tags tags="tags"></add-tags>
 							<label></label>
-							<button type="submit" class="btn"><i class="icon-ok"></i>Save</button>
+							<button type="submit" class="tagBtn"><i class="icon-ok"></i>Save</button>
 							<a ng-click="tagEditorVisible=false">Cancel</a>
 						</form>
 					</div>
@@ -85,7 +81,7 @@
 					<ng-switch on="answerEditorVisible(answerId)">
 					<form ng-submit="editAnswer(editedAnswer)" ng-switch-when="true">
 						<textarea required ng-model="editedAnswer.content" pui-jqte="jqteOptions"></textarea>
-						<button type="submit" class="btn"><i class="icon-ok"></i>Save</button>
+						<button type="submit" class="btn answerBtn"><i class="icon-ok"></i>Save</button>
 						<a class="btn-link" ng-click="hideAnswerEditor()">Cancel</a>
 					</form>
 					</ng-switch>
@@ -111,7 +107,7 @@
 					<td></td>
 					<td>
 						<div ng-hide="questionIsClosed()">
-							<a ng-click="collapsed = !collapsed" class="btn btn-link">add comment</a>
+							<a ng-click="collapsed = !collapsed" class="btn btn-link addCommentLink">add comment</a>
 							<div collapse="!collapsed">
 							<form ng-submit="submitComment(answerId, answer); collapsed = !collapsed;">
 								<textarea required ng-model="newComment.content"></textarea><br/>
