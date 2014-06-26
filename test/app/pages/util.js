@@ -146,22 +146,25 @@ var clearMailQueue = function() {
 };
 module.exports.clearMailQueue = clearMailQueue;
 
-var getQueuedMail = function(queueId, callback) {
+var getQueuedMail = function(queueId) {
+	var promise = protractor.promise.defer();
 	exec("sudo postcat -bhq " + queueId, function(error, stdout, stderr) {
 		var msg;
 		var mailparser = new MailParser();
 		mailparser.on('end', function(mailobj) {
 			msg = mailobj.html || mailobj.text;
 //			console.log('Found msg:', msg);
-			if (callback) { callback(msg); }
+			promise.fulfill(msg);
 		});
 		mailparser.write(stdout);
 		mailparser.end();
 	});
+	return promise;
 };
 // The getQueuedMail function is not exported, as it's internal
 
-var getFirstQueuedMail = function(callback) {
+var getFirstQueuedMail = function() {
+	var promise = protractor.promise.defer();
 	exec("mailq", function(error, stdout, stderr) {
 		// mailq outputs one header line, then a set of queue records
 		// Their format is annoying to parse, but we only need the first queue ID, so it's not too bad
@@ -170,27 +173,34 @@ var getFirstQueuedMail = function(callback) {
 		// Queue IDs in mailq format may have extra non-alphanum characters after them, representing a status which we don't need
 		queueId = queueId.replace(/\W/, '');
 //		console.log('First queue ID:', queueId);
-		getQueuedMail(queueId, callback);
+		getQueuedMail(queueId).then(function(value) {
+			promise.fulfill(value);
+		});
 	});
+	return promise;
 };
 // The getFirstQueuedMail function is not exported, as it's internal
 
-var getFirstUrlFromMail = function(callback) {
+var getFirstUrlFromMail = function() {
 	// E.g., <a href="https://scriptureforge.local/auth/reset_password/fe95970f6720727fd1f578e7b9be4f64d8af8a4b">Reset Your Password</a>
 	var htmlPattern = new RegExp('<a href="([^"]*)">[^<]*<\\/a>');
 	var textPattern = new RegExp('^(http.*)$', 'm');
-	var result;
-	getFirstQueuedMail(function(mailBody) {
+	var promise = protractor.promise.defer();
+	getFirstQueuedMail().then(function(mailBody) {
 		var htmlResults = htmlPattern.exec(mailBody);
 		var textResults;
 		if (htmlResults) {
-			result = htmlResults[1];
+			promise.fulfill(htmlResults[1]);
 		} else {
 			textResults = textPattern.exec(mailBody);
-			if (textResults) { result = textResults[1]; }
+			if (textResults) {
+				promise.fulfill(textResults[1]);
+			} else {
+				promise.fulfill(undefined);
+			}
 		}
-//		console.log('Regex results:', result);
-		if (callback) { callback(result); }
+//			console.log('Regex results:', result);
 	});
+	return promise;
 };
 module.exports.getFirstUrlFromMail = getFirstUrlFromMail;
