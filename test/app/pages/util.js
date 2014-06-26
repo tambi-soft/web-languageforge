@@ -134,3 +134,63 @@ var clickModalButton = function(btnText) {
 	btn.click();
 };
 module.exports.clickModalButton = clickModalButton;
+
+// --- Email checking ---
+
+// MailParser is from https://github.com/andris9/mailparser
+var MailParser = require("mailparser").MailParser;
+var exec = require('child_process').exec;
+
+var clearMailQueue = function() {
+	exec("sudo postsuper -d ALL");
+};
+module.exports.clearMailQueue = clearMailQueue;
+
+var getQueuedMail = function(queueId, callback) {
+	exec("sudo postcat -bhq " + queueId, function(error, stdout, stderr) {
+		var msg;
+		var mailparser = new MailParser();
+		mailparser.on('end', function(mailobj) {
+			msg = mailobj.html || mailobj.text;
+//			console.log('Found msg:', msg);
+			if (callback) { callback(msg); }
+		});
+		mailparser.write(stdout);
+		mailparser.end();
+	});
+};
+// The getQueuedMail function is not exported, as it's internal
+
+var getFirstQueuedMail = function(callback) {
+	exec("mailq", function(error, stdout, stderr) {
+		// mailq outputs one header line, then a set of queue records
+		// Their format is annoying to parse, but we only need the first queue ID, so it's not too bad
+		var secondLine = stdout.split("\n")[1];
+		var queueId = secondLine.split(/\s+/)[0];
+		// Queue IDs in mailq format may have extra non-alphanum characters after them, representing a status which we don't need
+		queueId = queueId.replace(/\W/, '');
+//		console.log('First queue ID:', queueId);
+		getQueuedMail(queueId, callback);
+	});
+};
+// The getFirstQueuedMail function is not exported, as it's internal
+
+var getFirstUrlFromMail = function(callback) {
+	// E.g., <a href="https://scriptureforge.local/auth/reset_password/fe95970f6720727fd1f578e7b9be4f64d8af8a4b">Reset Your Password</a>
+	var htmlPattern = new RegExp('<a href="([^"]*)">[^<]*<\\/a>');
+	var textPattern = new RegExp('^(http.*)$', 'm');
+	var result;
+	getFirstQueuedMail(function(mailBody) {
+		var htmlResults = htmlPattern.exec(mailBody);
+		var textResults;
+		if (htmlResults) {
+			result = htmlResults[1];
+		} else {
+			textResults = textPattern.exec(mailBody);
+			if (textResults) { result = textResults[1]; }
+		}
+//		console.log('Regex results:', result);
+		if (callback) { callback(result); }
+	});
+};
+module.exports.getFirstUrlFromMail = getFirstUrlFromMail;
