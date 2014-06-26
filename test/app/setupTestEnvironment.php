@@ -1,4 +1,5 @@
 <?php
+
 require_once('e2eTestConfig.php');
 
 // put the test config into place
@@ -9,7 +10,9 @@ use models\commands\ProjectCommands;
 use models\commands\UserCommands;
 use models\commands\TextCommands;
 use models\commands\QuestionCommands;
-use models\rights\Roles;
+use models\commands\QuestionTemplateCommands;
+use models\shared\rights\ProjectRoles;
+use models\shared\rights\SiteRoles;
 use models\scriptureforge\SfProjectModel;
 use models\ProjectModel;
 use libraries\shared\Website;
@@ -27,14 +30,14 @@ $constants = json_decode(file_get_contents(TestPath . '/testConstants.json'), tr
 $projectNames = array($constants['testProjectName'], $constants['otherProjectName']);
 foreach ($projectNames as $name) {
 	$projectModel = new ProjectModel();
-	$projectModel->projectname = $name;
+	$projectModel->projectName = $name;
 	$db = \models\mapper\MongoStore::connect($projectModel->databaseName());
 	foreach ($db->listCollections() as $collection) { $collection->drop(); }
 }
 
 // drop the third database because it is used in a rename test
 $projectModel = new ProjectModel();
-$projectModel->projectname = $constants['thirdProjectName'];
+$projectModel->projectName = $constants['thirdProjectName'];
 $db = \models\mapper\MongoStore::dropDB($projectModel->databaseName());
 
 $adminUser = UserCommands::createUser(array(
@@ -44,7 +47,7 @@ $adminUser = UserCommands::createUser(array(
 	'username' => $constants['adminUsername'],
 	'password' => $constants['adminPassword'],
 	'active' => true,
-	'role' => Roles::SYSTEM_ADMIN
+	'role' => SiteRoles::SYSTEM_ADMIN
 ));
 $managerUser = UserCommands::createUser(array(
 	'id' => '',
@@ -53,7 +56,7 @@ $managerUser = UserCommands::createUser(array(
 	'username' => $constants['managerUsername'],
 	'password' => $constants['managerPassword'],
 	'active' => true,
-	'role' => Roles::USER // Should this be Roles::PROJECT_ADMIN? I think not; I think that's set per-project. 2014-05 RM
+	'role' => SiteRoles::USER
 ));
 $memberUser = UserCommands::createUser(array(
 	'id' => '',
@@ -62,34 +65,33 @@ $memberUser = UserCommands::createUser(array(
 	'username' => $constants['memberUsername'],
 	'password' => $constants['memberPassword'],
 	'active' => true,
-	'role' => Roles::USER
+	'role' => SiteRoles::USER
 ));
 
 $testProject = ProjectCommands::createProject(
 	$constants['testProjectName'],
-	SfProjectModel::SFCHECKS_APP, // TODO: Find out if there's a better constant for this. 2014-05 RM
+	SfProjectModel::SFCHECKS_APP,
 	$adminUser,
-	Website::SCRIPTUREFORGE
+	Website::get('scriptureforge.local')
 );
 $testProjectModel = new ProjectModel($testProject);
 $testProjectModel->projectCode = $constants['testProjectCode'];
+$testProjectModel->allowInviteAFriend = $constants['testProjectAllowInvites'];
 $testProjectModel->write();
 
 $otherProject = ProjectCommands::createProject(
 	$constants['otherProjectName'],
-	SfProjectModel::SFCHECKS_APP, // TODO: Find out if there's a better constant for this. 2014-05 RM
+	SfProjectModel::SFCHECKS_APP,
 	$adminUser,
-	Website::SCRIPTUREFORGE
+	Website::get('scriptureforge.local')
 );
+$otherProjectModel = new ProjectModel($otherProject);
+$otherProjectModel->projectCode = $constants['otherProjectCode'];
+$otherProjectModel->allowInviteAFriend = $constants['otherProjectAllowInvites'];
+$otherProjectModel->write();
 
-ProjectCommands::updateUserRole($testProject, array(
-	'id' => $managerUser,
-	'role' => Roles::PROJECT_ADMIN
-));
-ProjectCommands::updateUserRole($testProject, array(
-	'id' => $memberUser,
-	'role' => Roles::USER
-));
+ProjectCommands::updateUserRole($testProject, $managerUser, ProjectRoles::MANAGER);
+ProjectCommands::updateUserRole($testProject, $memberUser, ProjectRoles::CONTRIBUTOR);
 
 $text1 = TextCommands::updateText($testProject, array(
 	'id' => '',
@@ -114,6 +116,18 @@ $question2 = QuestionCommands::updateQuestion($testProject, array(
 	'title' => $constants['testText1Question2Title'],
 	'description' => $constants['testText1Question2Content']
 ));
+
+$template1 = QuestionTemplateCommands::updateTemplate($testProject, array(
+	'id' => '',
+	'title' => 'first template',
+	'description' => 'not particularly interesting'
+		));
+
+$template2 = QuestionTemplateCommands::updateTemplate($testProject, array(
+	'id' => '',
+	'title' => 'second template',
+	'description' => 'not entirely interesting'
+		));
 
 $answer1 = QuestionCommands::updateAnswer($testProject, $question1, array(
 	'id' => '', 

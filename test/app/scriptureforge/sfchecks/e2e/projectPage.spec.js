@@ -3,8 +3,10 @@
 describe('the project dashboard AKA text list page', function() {
 	var projectListPage = require('../../../pages/projectsPage.js');
 	var projectPage = require('../../../pages/projectPage.js');
+	var projectSettingsPage = require('../../../pages/projectSettingsPage.js');
 	var questionListPage = require('../../../pages/textPage.js');
 	var loginPage = require('../../../pages/loginPage.js');
+	var appFrame = require('../../../pages/appFrame.js');
 	var util = require('../../../pages/util.js');
 	var constants = require('../../../../testConstants.json');
 	
@@ -30,6 +32,11 @@ describe('the project dashboard AKA text list page', function() {
 			expect(projectPage.settingsButton.isDisplayed()).toBe(false);
 		});
 
+		it('does not have access to the invite-a-friend button', function() {
+			// Note that the test project has been created with allowInviteAFriend = false
+			expect(projectPage.invite.showFormButton.isDisplayed()).toBe(false);
+		});
+
 	});
 
 	describe('project manager', function() {
@@ -39,6 +46,18 @@ describe('the project dashboard AKA text list page', function() {
 			loginPage.loginAsManager();
 	    	projectListPage.get();
 	    	projectListPage.clickOnProject(constants.testProjectName);
+		});
+
+		it('has access to the invite-a-friend button', function() {
+			expect(projectPage.invite.showFormButton.isDisplayed()).toBe(true);
+		});
+
+		it('can invite a friend to join the project', function() {
+			projectPage.invite.showFormButton.click();
+			projectPage.invite.emailInput.sendKeys('nobody@example.com');
+			projectPage.invite.sendButton.click();
+			// TODO: Should we expect() a success message to show up? Or an error message to *not* show up?
+			appFrame.checkMsg("An invitation email has been sent to nobody@example.com", "success");
 		});
 
 		it('can click on settings button', function() {
@@ -71,18 +90,34 @@ describe('the project dashboard AKA text list page', function() {
 			browser.navigate().back();
 		});
 		
-		it('can delete the text that was just created', function() {
-			var deleteButton = projectPage.removeTextButton.find();
-			expect(deleteButton.isDisplayed()).toBe(true);
-			expect(deleteButton.isEnabled()).toBe(false);
+		it('can archive the text that was just created', function() {
+			var archiveButton = projectPage.archiveTextButton.find();
+			expect(archiveButton.isDisplayed()).toBe(true);
+			expect(archiveButton.isEnabled()).toBe(false);
 			util.setCheckbox(projectPage.getFirstCheckbox(), true);
-			expect(deleteButton.isEnabled()).toBe(true);
-			deleteButton.click();
-			browser.switchTo().alert().accept();
-			expect(deleteButton.isEnabled()).toBe(false);
+			expect(archiveButton.isEnabled()).toBe(true);
+			archiveButton.click();
+			util.clickModalButton('Archive');
+			expect(archiveButton.isEnabled()).toBe(false);
 			expect(projectPage.textLink(sampleTitle).isPresent()).toBe(false);
 		});
 
+		it('can re-publish the text that was just archived (Project Settings)', function() {
+			projectPage.settingsButton.click();
+			projectSettingsPage.tabs.archiveTexts.click();
+			expect(projectSettingsPage.archivedTextsTab.textLink(sampleTitle).isDisplayed()).toBe(true);
+			var publishButton = projectSettingsPage.archivedTextsTab.publishButton.find();
+			expect(publishButton.isDisplayed()).toBe(true);
+			expect(publishButton.isEnabled()).toBe(false);
+			util.setCheckbox(projectSettingsPage.archivedTextsTabGetFirstCheckbox(), true);
+			expect(publishButton.isEnabled()).toBe(true);
+			publishButton.click();
+			expect(projectSettingsPage.archivedTextsTab.textLink(sampleTitle).isPresent()).toBe(false);
+			expect(publishButton.isEnabled()).toBe(false);
+			browser.navigate().back();
+			expect(projectPage.textLink(sampleTitle).isDisplayed()).toBe(true);
+		});
+		
 		// I am avoiding testing creating a new text using the file dialog for importing a USX file... - cjh
 		// according to http://stackoverflow.com/questions/8851051/selenium-webdriver-and-browsers-select-file-dialog
 		// you can have selenium interact with the file dialog by sending keystrokes but this is highly OS dependent
@@ -93,6 +128,7 @@ describe('the project dashboard AKA text list page', function() {
 			projectPage.newText.showFormButton.click();
 			projectPage.newText.title.sendKeys(sampleTitle);
 			util.sendText(projectPage.newText.usx, projectPage.testData.longUsx1);
+			projectPage.newText.verseRangeLink.click();
 			projectPage.newText.fromChapter.sendKeys('1');
 			projectPage.newText.fromVerse.sendKeys('1');
 			projectPage.newText.toChapter.sendKeys('1');
@@ -105,10 +141,9 @@ describe('the project dashboard AKA text list page', function() {
 
 			// clean up the text
 			util.setCheckbox(projectPage.getFirstCheckbox(), true);
-			var deleteButton = projectPage.removeTextButton.find();
-			deleteButton.click();
-			browser.switchTo().alert().accept();
-
+			var archiveButton = projectPage.archiveTextButton.find();
+			archiveButton.click();
+			util.clickModalButton('Archive');
 		});
 	});
 });

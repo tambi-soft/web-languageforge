@@ -5,11 +5,14 @@ exports.config = {
   seleniumAddress: 'http://192.168.56.1:4444/wd/hub',
   // TODO: Re-enable when Test Project can be created with the jamaicanpsalm theme   2014-05 DDW
   //baseUrl: 'http://jamaicanpsalms.scriptureforge.local',
-  baseUrl: 'http://scriptureforge.local',
+  baseUrl: 'https://scriptureforge.local',
   
   // To run tests in a single browser, uncomment the following
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
+    'chromeOptions': {
+        'args': ['--start-maximized'],
+    },
   },
 
   // To run tests in multiple browsers, uncomment the following
@@ -30,6 +33,7 @@ exports.config = {
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 50000
+    defaultTimeoutInterval: 70000,
+    //isVerbose: true,
   }
 };
