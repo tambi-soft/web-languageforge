@@ -19,6 +19,8 @@ var SignupPage = function() {
 	this.captchaImage = element(by.id('captcha'));
 	this.signupButton = element(by.id('submit'));
 	this.noticeList  = element.all(by.repeater('notice in notices()'));
+	this.almostThereDiv = element(by.id('almostThereDiv'));
+	this.almostThereRows = this.almostThereDiv.element.all(by.css('div.row'));
 }; 
 
 
