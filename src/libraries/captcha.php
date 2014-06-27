@@ -33,6 +33,7 @@ class Captcha
 		
 		// Overwrite defaults with custom config values
 		if( is_array($config) ) {
+			error_log('Captcha got config: ' . print_r($config, true));
 			foreach( $config as $key => $value ) $captcha_config[$key] = $value;
 		}
 		
@@ -55,7 +56,12 @@ class Captcha
 				$captcha_config['code'] .= substr($captcha_config['characters'], rand() % (strlen($captcha_config['characters'])), 1);
 			}
 		}
-		
+
+		// Use known value in test mode
+		if (defined("TestMode")) {
+			$captcha_config['code'] = "LetMeIn";
+		}
+
 		// Generate image src
 		$image_src = '/viewcaptcha?t=' . urlencode(microtime());
 		//$image_src = '/' . ltrim(preg_replace('/\\\\/', '/', $image_src), '/');
