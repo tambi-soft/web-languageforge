@@ -1,7 +1,9 @@
 'use strict';
 
 var SfProjectSettingsPage = function() {
-	
+	// For checking username/password of newly-added user
+	this.noticeList  = element.all(by.repeater('notice in notices()'));
+
 	this.tabs = {
 		members:			element(by.linkText('Members')),
 		templates:			element(by.linkText('Question Templates')),

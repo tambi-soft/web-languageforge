@@ -14,9 +14,10 @@ describe('the project settings page - project manager', function() {
 	var util = require('../../../pages/util.js');
 	var constants = require('../../../../testConstants.json');
 	
-	it('setup: logout, login as project manager, go to project settings', function() {
+	it('setup: logout, login as project manager, go to project settings, clear email queue', function() {
 		loginPage.logout();
 		loginPage.loginAsManager();
+		util.clearMailQueue();
     	projectListPage.get();
     	projectListPage.clickOnProject(constants.testProjectName);
     	projectPage.settingsButton.click();
@@ -43,10 +44,30 @@ describe('the project settings page - project manager', function() {
 		});
 
 		it('can add a new user as a member', function() {
+			expect(page.noticeList.count()).toBe(0);
 			page.membersTab.addButton.click();
 			page.membersTab.newMember.input.sendKeys('dude');
 			//this.membersTab.newMember.results.click();
 			page.membersTab.newMember.button.click();
+			util.getFirstQueuedMail().then(function(msg) {
+				// There should be an email in the queue that matches the notice at top of page
+				var usernameRe = /Username:? (\w+)/;
+				var passwordRe = /Password:? (\w+)/;
+				expect(msg).toMatch(usernameRe);
+				expect(msg).toMatch(passwordRe);
+				var usernameEmail = usernameRe.exec(msg)[1];
+				var passwordEmail = passwordRe.exec(msg)[1];
+				expect(usernameEmail).toBeTruthy();
+				expect(passwordEmail).toBeTruthy();
+				expect(page.noticeList.count()).toBe(1);
+				expect(page.noticeList.get(0).getText()).toContain('User created.');
+				page.noticeList.get(0).getText().then(function(noticeText) {
+					var usernameNotice = usernameRe.exec(noticeText)[1];
+					var passwordNotice = passwordRe.exec(noticeText)[1];
+					expect(usernameNotice).toBe(usernameEmail);
+					expect(passwordNotice).toBe(passwordEmail);
+				});
+			});
 			expect(page.membersTab.list.count()).toBe(memberCount+1);
 		});
 
@@ -173,6 +194,7 @@ describe('the project settings page - project manager', function() {
 			page.optionlistsTab.addButton.click();
 			expect(page.optionlistsTab.editContentsList.count()).toBe(2);
 		});
+
 		/* Skipping this test because testing the drag-and-drop is proving much harder than expected. 2013-06 RM
 		it('can rearrange the values', function() {
 			var foo = util.findRowByText(page.optionlistsTab.editContentsList, "foo");

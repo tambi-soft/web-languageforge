@@ -179,7 +179,7 @@ var getFirstQueuedMail = function() {
 	});
 	return promise;
 };
-// The getFirstQueuedMail function is not exported, as it's internal
+module.exports.getFirstQueuedMail = getFirstQueuedMail;
 
 var getFirstUrlFromMail = function() {
 	// E.g., <a href="https://scriptureforge.local/auth/reset_password/fe95970f6720727fd1f578e7b9be4f64d8af8a4b">Reset Your Password</a>
@@ -199,7 +199,6 @@ var getFirstUrlFromMail = function() {
 				promise.fulfill(undefined);
 			}
 		}
-//			console.log('Regex results:', result);
 	});
 	return promise;
 };
