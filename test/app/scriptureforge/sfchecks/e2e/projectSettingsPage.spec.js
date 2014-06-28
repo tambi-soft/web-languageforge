@@ -14,15 +14,15 @@ describe('the project settings page - project manager', function() {
 	var util = require('../../../pages/util.js');
 	var constants = require('../../../../testConstants.json');
 	
-	it('setup: logout, login as project manager, go to project settings, clear email queue', function() {
+	var setupFunc = function() {
 		loginPage.logout();
 		loginPage.loginAsManager();
 		util.clearMailQueue();
     	projectListPage.get();
     	projectListPage.clickOnProject(constants.testProjectName);
     	projectPage.settingsButton.click();
-	});
-	
+	};
+	it('setup: logout, login as project manager, go to project settings, clear email queue', setupFunc);
 
 	describe('members tab', function() {
 		var memberCount = 0;
@@ -43,6 +43,11 @@ describe('the project settings page - project manager', function() {
 			page.membersTab.listFilter.clear();
 		});
 
+		// Putting these up here so they can be accessd from multiple test functions
+		var usernameEmail;
+		var passwordEmail;
+		var usernameNotice;
+		var passwordNotice;
 		it('can add a new user as a member', function() {
 			expect(page.noticeList.count()).toBe(0);
 			page.membersTab.addButton.click();
@@ -55,15 +60,15 @@ describe('the project settings page - project manager', function() {
 				var passwordRe = /Password:? (\w+)/;
 				expect(msg).toMatch(usernameRe);
 				expect(msg).toMatch(passwordRe);
-				var usernameEmail = usernameRe.exec(msg)[1];
-				var passwordEmail = passwordRe.exec(msg)[1];
+				usernameEmail = usernameRe.exec(msg)[1];
+				passwordEmail = passwordRe.exec(msg)[1];
 				expect(usernameEmail).toBeTruthy();
 				expect(passwordEmail).toBeTruthy();
 				expect(page.noticeList.count()).toBe(1);
 				expect(page.noticeList.get(0).getText()).toContain('User created.');
 				page.noticeList.get(0).getText().then(function(noticeText) {
-					var usernameNotice = usernameRe.exec(noticeText)[1];
-					var passwordNotice = passwordRe.exec(noticeText)[1];
+					usernameNotice = usernameRe.exec(noticeText)[1];
+					passwordNotice = passwordRe.exec(noticeText)[1];
 					expect(usernameNotice).toBe(usernameEmail);
 					expect(passwordNotice).toBe(passwordEmail);
 				});
@@ -71,7 +76,21 @@ describe('the project settings page - project manager', function() {
 			expect(page.membersTab.list.count()).toBe(memberCount+1);
 		});
 
+		it('newly added user can log in and see the project', function() {
+			loginPage.logout();
+			loginPage.login(usernameEmail, passwordEmail);
+			projectListPage.get();
+			projectListPage.findProject(constants.testProjectName).then(function(projectRow) {
+				projectRow.getText().then(function(projectName) {
+					expect(projectName).toMatch(constants.testProjectName);
+				});
+			});
+			// Set up for rest of manager tests again
+			setupFunc();
+		});
+
 		it('can not add the same user twice', function() {
+			page.membersTab.addButton.click();
 			page.membersTab.newMember.input.clear();
 			page.membersTab.newMember.input.sendKeys('dude');
 			expect(page.membersTab.newMember.button.isEnabled()).toBeFalsy();
