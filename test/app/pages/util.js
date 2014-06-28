@@ -142,7 +142,11 @@ var MailParser = require("mailparser").MailParser;
 var exec = require('child_process').exec;
 
 var clearMailQueue = function() {
-	exec("sudo postsuper -d ALL");
+	var promise = protractor.promise.defer();
+	exec("sudo postsuper -d ALL", function() {
+		promise.fulfill(true);
+	});
+	return promise;
 };
 module.exports.clearMailQueue = clearMailQueue;
 
@@ -153,7 +157,6 @@ var getQueuedMail = function(queueId) {
 		var mailparser = new MailParser();
 		mailparser.on('end', function(mailobj) {
 			msg = mailobj.html || mailobj.text;
-//			console.log('Found msg:', msg);
 			promise.fulfill(msg);
 		});
 		mailparser.write(stdout);
@@ -163,18 +166,40 @@ var getQueuedMail = function(queueId) {
 };
 // The getQueuedMail function is not exported, as it's internal
 
-var getFirstQueuedMail = function() {
+var queueHasMail = function() {
 	var promise = protractor.promise.defer();
 	exec("mailq", function(error, stdout, stderr) {
-		// mailq outputs one header line, then a set of queue records
-		// Their format is annoying to parse, but we only need the first queue ID, so it's not too bad
-		var secondLine = stdout.split("\n")[1];
-		var queueId = secondLine.split(/\s+/)[0];
-		// Queue IDs in mailq format may have extra non-alphanum characters after them, representing a status which we don't need
-		queueId = queueId.replace(/\W/, '');
-//		console.log('First queue ID:', queueId);
-		getQueuedMail(queueId).then(function(value) {
-			promise.fulfill(value);
+		var queueEmpty = /Mail queue is empty/.test(stdout);
+		promise.fulfill(!queueEmpty);
+	});
+	return promise;
+};
+module.exports.queueHasMail = queueHasMail;
+
+var waitForMail = function() {
+	// Can't just use browser.wait(queueHasMail), because that waits for the promise to be fulfilled
+	// Instead, we need to keep calling queueHasMail() until we get a true result
+	return browser.driver.wait(function() {
+		return queueHasMail().then(function(mailInQueue) {
+			return mailInQueue;
+		});
+	});
+};
+module.exports.waitForMail = waitForMail;
+
+var getFirstQueuedMail = function() {
+	var promise = protractor.promise.defer();
+	waitForMail().then(function() {
+		exec("mailq", function(error, stdout, stderr) {
+			// mailq outputs one header line, then a set of queue records
+			// Their format is annoying to parse, but we only need the first queue ID, so it's not too bad
+			var secondLine = stdout.split("\n")[1];
+			var queueId = secondLine.split(/\s+/)[0];
+			// Queue IDs in mailq format may have extra non-alphanum characters after them, representing a status which we don't need
+			queueId = queueId.replace(/\W/, '');
+			getQueuedMail(queueId).then(function(value) {
+				promise.fulfill(value);
+			});
 		});
 	});
 	return promise;
