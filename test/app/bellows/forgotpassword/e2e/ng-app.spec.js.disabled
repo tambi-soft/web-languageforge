@@ -1,0 +1,97 @@
+'use strict';
+
+
+describe('E2E testing: Forgot password', function() {
+	var constants = require('../../../../testConstants');
+	var emailNonexistent = 'nonexistent_' + constants.emailValid;
+	var util = require('../../../pages/util');
+	var loginPage = require('../../../pages/loginPage');
+	//var header = require('../../../pages/pageHeader');
+	var page = require('../../../pages/forgotPasswordPage');
+	var changePasswordPage = require('../../../pages/changePasswordPage'); 
+	var newPassword = '12345678';
+
+	it('setup: clear mail queue', function() {
+		util.clearMailQueue();
+	});
+	it('submitting a nonexistent email address gives an error', function() {
+		page.get();
+		browser.driver.findElement(page.email).sendKeys(emailNonexistent);
+		browser.driver.findElement(page.submitButton).click();
+		expect(browser.driver.findElement(page.infoMessage).getText()).toContain("Unable to Reset Password");
+	});
+
+	it('submitting a real address sends an email with a "reset password" link', function() {
+		var testfunc = this;
+		browser.driver.findElement(page.email).clear();
+		browser.driver.findElement(page.email).sendKeys(constants.memberEmail);
+		browser.driver.findElement(page.submitButton).click();
+		var done = util.getFirstUrlFromMail();
+		browser.wait(function() { return done; }).then(function(url) {
+			expect(url).toContain("reset_password");
+			console.log(url);
+			browser.driver.get(url);
+			browser.driver.wait(function() {
+				return browser.driver.getCurrentUrl().then(function(currentUrl) {
+					console.log('Now at', currentUrl);
+					return (url == currentUrl);
+				});
+			});
+			browser.driver.getCurrentUrl().then(function(currentUrl) {
+				// Without this expect(), we'd end up exiting the test too soon.
+				expect(currentUrl).toBe(url);
+				console.log('Exiting one test');
+				browser.driver.findElement(page.password).sendKeys(newPassword);
+				browser.driver.findElement(page.confirm) .sendKeys(newPassword);
+				browser.driver.findElement(page.submitButton).click();
+			});
+			browser.driver.wait(function() {
+				return browser.driver.getCurrentUrl().then(function(currentUrl) {
+					return /auth\/login/.test(currentUrl);
+				});
+			}).then(function() {
+				expect(browser.driver.findElement(page.infoAlert).getText()).toContain("Password Successfully Changed");
+				// Set up cleanup function
+				testfunc.after(function() {
+					console.log("Cleaning up");
+					loginPage.login(constants.memberEmail, newPassword);
+					changePasswordPage.get();
+					changePasswordPage.password.sendKeys(constants.memberPassword);
+					changePasswordPage.confirm.sendKeys(constants.memberPassword);
+					changePasswordPage.confirm.sendKeys(protractor.Key.ENTER);
+					loginPage.logout();
+					// And double-check
+					loginPage.login(constants.memberEmail, constants.memberPassword);
+					expect(browser.driver.isElementPresent(by.id('myProjects'))).toBeTruthy();
+					console.log('Done cleaning up');
+				});
+			});
+		});
+		browser.sleep(2000);
+	});
+/*
+	it('can log in with the new password', function() {
+	});
+
+	it('cleanup: reset password back to the old password', function() {
+	});
+
+	it('cleanup:', function() {
+	});
+
+	it('does something', function() {
+	});
+
+	it('does something', function() {
+	});
+
+	it('does something', function() {
+	});
+
+	it('does something', function() {
+	});
+
+	it('does something', function() {
+	});
+*/
+});

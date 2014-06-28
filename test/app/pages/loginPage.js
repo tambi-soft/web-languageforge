@@ -45,6 +45,10 @@ var SfLoginPage = function() {
 	this.logout = function() {
 		browser.driver.get(this.baseUrl + '/auth/logout');
 	};
+	
+	this.forgotPassword = function() {
+		browser.driver.get(this.baseUrl + '/auth/forgot_password');
+	}
 };
 
 module.exports = new SfLoginPage();
