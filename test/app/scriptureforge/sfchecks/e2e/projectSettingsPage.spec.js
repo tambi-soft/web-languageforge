@@ -1,9 +1,9 @@
 'use strict';
 
-afterEach(function() {
-	var appFrame = require('../../../pages/appFrame.js');
-	expect(appFrame.errorMessage.isPresent()).toBe(false);
-});
+//afterEach(function() {
+//	var appFrame = require('../../../pages/appFrame.js');
+//	expect(appFrame.errorMessage.isPresent()).toBe(false);
+//});
 
 describe('the project settings page - project manager', function() {
 	var projectListPage = require('../../../pages/projectsPage.js');
