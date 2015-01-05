@@ -107,7 +107,7 @@ class MongoTestEnvironment
         } elseif ($this->website->base == Website::LANGUAGEFORGE) {
             $projectModel->appName = 'lexicon';
         } else {
-            $projectModel->appName = 'rapuma';
+            $projectModel->appName = 'webtypesetting';
         }
         $this->cleanProjectEnvironment($projectModel);
         $projectModel->write();

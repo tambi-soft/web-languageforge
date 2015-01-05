@@ -111,12 +111,12 @@ angular.module('bellows.services', ['jsonRpc'])
   this.data = {};
   this.data.projectTypeNames = {
     'sfchecks': 'Community Scripture Checking',
-    'rapuma': 'Publishing',
+    'webtypesetting': 'Web Typesetting',
     'lexicon': 'Web Dictionary'
   };
   this.data.projectTypesBySite = function() {
     var types = {
-      'scriptureforge': ['sfchecks'],
+      'scriptureforge': ['sfchecks', 'webtypesetting'],
       'languageforge': ['lexicon']
     };
     return types[ss.baseSite()];

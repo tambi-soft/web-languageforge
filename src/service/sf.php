@@ -1,5 +1,7 @@
 <?php
 use libraries\scriptureforge\sfchecks\Email;
+use models\scriptureforge\webtypesetting\WebtypesettingSettingsCommands;
+
 use libraries\scriptureforge\sfchecks\ParatextExport;
 use libraries\shared\palaso\exceptions\UserNotAuthenticatedException;
 use libraries\shared\palaso\exceptions\UserUnauthorizedException;
@@ -527,6 +529,20 @@ class sf
     {
         return QuestionTemplateCommands::listTemplates($this->_projectId);
     }
+	
+	
+	//---------------------------------------------------------------
+	// WEBTYPESETTING API
+	//---------------------------------------------------------------
+	
+	public function webtypesetting_settings_read($projectId) {
+		return WebtypesettingSettingsCommands::readSettings($projectId);
+	}
+	
+	public function webtypesetting_settings_update($projectId, $settings) {
+		return WebtypesettingSettingsCommands::updateSettings($projectId, $settings);
+	}
+
 
     // ---------------------------------------------------------------
     // Upload API
