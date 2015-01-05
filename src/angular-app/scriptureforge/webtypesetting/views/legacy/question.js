@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module(
-		'rapuma.question',
+		'webtypesetting.question',
 		[ 'sf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'palaso.ui.jqte', 'ui.bootstrap' ]
 	)
 	.controller('QuestionCtrl', ['$scope', '$routeParams', 'questionService', 'sessionService', 'breadcrumbService',

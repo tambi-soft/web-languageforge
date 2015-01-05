@@ -3,7 +3,7 @@
 namespace models;
 
 use libraries\shared\Website;
-use models\scriptureforge\RapumaProjectModel;
+use models\scriptureforge\WebtypesettingProjectModel;
 
 use models\languageforge\lexicon\LexiconProjectModel;
 
@@ -211,8 +211,8 @@ class ProjectModel extends \models\mapper\MapperModel
         switch ($m->appName) {
             case 'sfchecks':
                 return new SfchecksProjectModel($projectId);
-            case 'rapuma':
-                return new RapumaProjectModel($projectId);
+            case 'webtypesetting':
+                return new WebtypesettingProjectModel($projectId);
             case 'lexicon':
                 return new LexiconProjectModel($projectId);
             default:

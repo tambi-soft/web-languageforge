@@ -1,10 +1,10 @@
 <?php
 
-namespace models\scriptureforge\rapuma;
+namespace models\scriptureforge\webtypesetting;
 
 use models\shared\rights\ProjectRoles;
 
-class RapumaRoles extends ProjectRoles
+class WebtypesettingRoles extends ProjectRoles
 {
     public static function init()
     {
@@ -22,4 +22,4 @@ class RapumaRoles extends ProjectRoles
     public static function getRightsArray($role) { return self::_getRightsArray(self::$_rights, $role); }
 
 }
-RapumaRoles::init();
+WebtypesettingRoles::init();

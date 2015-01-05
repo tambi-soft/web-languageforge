@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module(
-		'rapuma.project',
+		'webtypesetting.project',
 		[ 'sf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap', 'sgw.ui.breadcrumb' ]
 	)
 	.controller('ProjectCtrl', ['$scope', 'componentService', '$routeParams', 'sessionService', 'breadcrumbService',
@@ -19,8 +19,8 @@ angular.module(
 		// Breadcrumb
 		breadcrumbService.set('top',
 				[
-				 {href: '/app/rapuma#/projects', label: 'My Projects'},
-				 {href: '/app/rapuma#/project/' + $routeParams.projectId, label: 'unknown'},
+				 {href: '/app/webtypesetting#/projects', label: 'My Projects'},
+				 {href: '/app/webtypesetting#/project/' + $routeParams.projectId, label: 'unknown'},
 				]
 		);
 

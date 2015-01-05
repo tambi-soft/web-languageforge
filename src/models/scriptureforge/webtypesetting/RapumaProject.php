@@ -1,6 +1,6 @@
 <?php
 
-namespace models\scriptureforge\rapuma;
+namespace models\scriptureforge\webtypesetting;
 
 use models\shared\RunnableJobArtifact;
 
@@ -19,19 +19,19 @@ class RapumaProject {
 	}
 	
 	public function createRapumaProject() {
-		if (!$this->rapumaProjectExists()) {
+		if (!$this->webtypesettingProjectExists()) {
 			$job = new RapumaJob($this->_projectModel);
 			$projectCode = $this->_projectModel->id->asString();
 			$cmd = "rapuma project $projectCode project add --media_type book --target_path " . $this->_projectModel->getAssetsFolderPath();
 			$job->command = $cmd;
 			$job->write();
 		} else {
-			throw new Exception("Cannot create new rapuma project because one already exists with the same name: $projectCode");
+			throw new Exception("Cannot create new webtypesetting project because one already exists with the same name: $projectCode");
 		}
 	}
 	
 	public function addComponent($group, $component, $sourceFilePath) {
-		if ($this->rapumaProjectExists()) {
+		if ($this->webtypesettingProjectExists()) {
 			$job = new RapumaJob($this->_projectModel);
 			$projectCode = $this->_projectModel->id->asString();
 			$cmd = "rapuma group $projectCode $group group add --component_type usfm --cid_list $component --source_id $group --source_path $sourceFilePath";
@@ -43,7 +43,7 @@ class RapumaProject {
 	}
 	
 	public function renderGroup($group) {
-		if ($this->rapumaProjectExists()) {
+		if ($this->webtypesettingProjectExists()) {
 			if ($this->groupExists($group)) {
 				$job = new RapumaJob($this->_projectModel);
 				$outputFolderPath = $this->_projectModel->getAssetsFolderPath() . "/Downloads"; 
@@ -70,7 +70,7 @@ class RapumaProject {
 	/**
 	 * @return boolean
 	 */
-	public function rapumaProjectExists() {
+	public function webtypesettingProjectExists() {
 		$configFile = $this->_projectModel->getAssetsFolderPath() . "/Config/project.json";
 		return file_exists($configFile);
 	}

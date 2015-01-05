@@ -1,6 +1,6 @@
 <?php
 
-namespace models\scriptureforge\rapuma;
+namespace models\scriptureforge\webtypesetting;
 
 use models\shared\RunnableJobArtifact;
 

@@ -1,9 +1,9 @@
 <?php
-namespace models\scriptureforge\rapuma;
+namespace models\scriptureforge\webtypesetting;
 
 use models\ProjectModel;
 
-class RapumaSettingsCommands {
+class WebtypesettingSettingsCommands {
 	
 	/**
 	 * 
@@ -11,8 +11,8 @@ class RapumaSettingsCommands {
 	 */
 	public static function readSettings($projectId) {
 		$project = new ProjectModel($projectId);
-		$rapumaProject = new RapumaProject($project);
-		$config = $rapumaProject->readProjectConfig();
+		$webtypesettingProject = new WebtypesettingProject($project);
+		$config = $webtypesettingProject->readProjectConfig();
 
 		// provide filtering of properties
 		$generalSettingsAllowed = array('box', 'lines', 'cropmarks');
@@ -30,8 +30,8 @@ class RapumaSettingsCommands {
 	
 	public static function updateSettings($projectId, $settings) {
 		$project = new ProjectModel($projectId);
-		$rapumaProject = new RapumaProject($project);
-		$config = $rapumaProject->readProjectConfig();
+		$webtypesettingProject = new WebtypesettingProject($project);
+		$config = $webtypesettingProject->readProjectConfig();
 
 		// provide filtering of properties
 		$generalSettingsAllowed = array('box', 'lines', 'cropmarks');
@@ -43,7 +43,7 @@ class RapumaSettingsCommands {
 		foreach ($projectInfoAllowed as $prop) {
 			$config['ProjectInfo'][$prop] = $settings['ProjectInfo'][$prop];
 		}
-		$rapumaProject->updateProjectConfig($config);
+		$webtypesettingProject->updateProjectConfig($config);
 	}
 	
 }
