@@ -23,7 +23,7 @@
 						<label class="checkbox"><input type="checkbox" data-ng-model="project.featured"/> {{ 'Featured On Website' | translate }}</label>
 					</div>
 				</fieldset>
-				<button type="submit" class="btn"><i class="icon-ok"></i>{{ 'Save' | translate }}</button>
+				<button type="submit" class="btn btn-default"><i class="icon-ok"></i>{{ 'Save' | translate }}</button>
 			</form>
 		</tab>
 		<tab heading="Communication Settings" select="readCommunicationSettings()" data-ng-show="true" disabled="rights.canEditCommunicationSettings">
@@ -40,7 +40,7 @@
 					<label translate="Email Name"></label>
 					<input type="text" placeholder="(From Name)" data-ng-model="settings.email.fromName"/>
 				</fieldset>
-				<button type="submit" class="btn"><i class="icon-ok"></i>{{ 'Save' | translate }}</button>
+				<button type="submit" class="btn btn-default"><i class="icon-ok"></i>{{ 'Save' | translate }}</button>
 			</form>
 		</tab>
 	</tabset>

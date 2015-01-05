@@ -1,5 +1,5 @@
 <div class="row outer-flex">
-<div class="span8 offset2">
+<div class="col-md-8 col-md-offset-2">
 
     <div id="form-container">
 
@@ -20,13 +20,13 @@
             </ul>
 
             <div class="row" align="center">
-            <div class="span8">
+            <div class="col-md-8">
             <!-- Back button disabled by RM on 2014-10. TODO: Re-enable when decisions are made on how to implement. -->
             <!-- E.g., when moving back to initial-data upload step, delete previous zip file and reset project to empty. -->
             <!--
-            <button class="btn" ng-click="prevStep()" ng-class="interfaceConfig.pullNormal" translate="&lt; &nbsp; Back"></button>
+            <button class="btn btn-default" ng-click="prevStep()" ng-class="interfaceConfig.pullNormal" translate="&lt; &nbsp; Back"></button>
             -->
-            <button class="btn" ng-click="nextStep()" ng-class="[interfaceConfig.pullToSide, forwardBtnClass]" translate="Forward &nbsp; &gt;"></button>
+            <button class="btn btn-default" ng-click="nextStep()" ng-class="[interfaceConfig.pullToSide, forwardBtnClass]" translate="Forward &nbsp; &gt;"></button>
             <span>&nbsp; Step {{state.current.data.step}}, {{interfaceConfig.direction}} direction &nbsp;</span>
             </div>
             </div>
@@ -35,7 +35,7 @@
         <!-- use ng-submit to catch the form submission and use our Angular function -->
         <form class="form-horizontal" data-ng-submit="nextStep()" id="newLexProjectForm" name="newLexProjectForm" novalidate>
         <div class="row" align="center">
-            <div class="span8" id="form-status" ng-class="formStatusClass"><span>{{formStatus | translate}} &nbsp;</span></div>
+            <div class="col-md-8" id="form-status" ng-class="formStatusClass"><span>{{formStatus | translate}} &nbsp;</span></div>
         </div>
 
             <!-- our nested state views will be injected here -->

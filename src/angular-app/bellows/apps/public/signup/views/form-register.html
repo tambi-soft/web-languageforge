@@ -17,7 +17,7 @@
 			<label class="control-label" for="username" translate="User Name"></label>
 			<div class="controls">
 				<div class="input-prepend">
-					<input class="span3" id="username"
+					<input class="col-md-3" id="username"
 						disabled type="text" name="username"
 						placeholder="{{'pick a username' | translate}}" 
 						data-ng-model="record.username" />
@@ -31,7 +31,7 @@
 			<label class="control-label" for="email" translate="Email"></label>
 			<div class="controls">
 				<div class="input-prepend">
-					<input class="span3" id="email"
+					<input class="col-md-3" id="email"
 						disabled type="email" name="email"
 						placeholder="{{'your email' | translate}}" data-ng-model="record.email" />
                     <span data-ng-show="!emailExists"><img id="emailOk" src="/images/shared/tick.png" title="Email address is available!"  style="position: absolute; padding-left: 5px; padding-top: 8px;"/></span>
@@ -43,7 +43,7 @@
 			<label class="control-label" for="name" translate="Name"></label>
 			<div class="controls">
 				<div class="input-prepend">
-					<input class="span3" id="name" autofocus
+					<input class="col-md-3" id="name" autofocus
 						required type="text" name="name"
 						placeholder="{{'your name' | translate}}" 
 						data-ng-model="record.name" />
@@ -55,7 +55,7 @@
 				<label class="control-label" for="visiblePassword" translate="Password"></label>
 				<div class="controls">
 					<div class="input-prepend">
-						<input class="span3" id="visiblePassword"
+						<input class="col-md-3" id="visiblePassword"
 							required type="text" name="visiblePassword"
 							title="Passwords must be at least 7 characters"
 							data-ng-model="record.password" />
@@ -67,7 +67,7 @@
 				<label class="control-label muted" for="disabledConfirm" translate="Confirm Password"></label>
 				<div class="controls">
 					<div class="input-prepend">
-						<input class="span3" id="disabledConfirm" disabled type="text" />
+						<input class="col-md-3" id="disabledConfirm" disabled type="text" />
 					</div>
 				</div>
 			</div>
@@ -77,7 +77,7 @@
 				<label class="control-label" for="password" translate="Password"></label>
 				<div class="controls">
 					<div class="input-prepend">
-						<input class="span3" id="password"
+						<input class="col-md-3" id="password"
 							required type="password" name="password"
 							title="Passwords must be at least 7 characters"
 							data-ng-model="record.password" />
@@ -89,7 +89,7 @@
 				<label class="control-label" for="confirmPassword" translate="Confirm Password"></label>
 				<div class="controls">
 					<div class="input-prepend">
-						<input class="span3" id="confirmPassword"
+						<input class="col-md-3" id="confirmPassword"
 							type="password" name="confirmPassword"
 							title="Passwords must be at least 7 characters"
 							data-ng-required="!showPassword"
@@ -116,7 +116,7 @@
 		</div>
 	</div>
 	<div align="center">
-		<a class="btn pull-left" data-ui-sref="form.identify" id="back">
+		<a class="btn btn-default pull-left" data-ui-sref="form.identify" id="back">
 			<i class="icon-circle-arrow-left"></i>
 			{{'Back' | translate}}</a>
 		<button class="btn btn-primary" type="submit" id="submit"

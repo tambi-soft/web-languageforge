@@ -5,12 +5,12 @@
 <tabset>
 	<tab heading="Users">
 	<div class="row" data-ng-controller="UserCtrl" style="overflow:hidden">
-	<div class="span8">
+	<div class="col-md-8">
 		<fieldset>
 		<legend>Users (total: {{users.length}})</legend>
 		<form class="control-bar form-inline">
-		<button class="btn" data-ng-disabled="selected.length == 0" data-ng-click="removeUsers()"><i class="icon-remove"></i>Remove Users</button>
-		<button class="btn" data-ng-click="addRecord()"><i class="icon-plus"></i>Add New</button>
+		<button class="btn btn-default" data-ng-disabled="selected.length == 0" data-ng-click="removeUsers()"><i class="icon-remove"></i>Remove Users</button>
+		<button class="btn btn-default" data-ng-click="addRecord()"><i class="icon-plus"></i>Add New</button>
 		<div class="pull-right"><input type="text" data-ng-model="filterUsers" placeholder="Filter user list"><a data-ng-show="filterUsers != ''" title="Clear Filter" data-ng-click="filterUsers = ''"><i class="icon-remove" style="color:gray"></i></a></div>
 		</form>
 		<listview search="queryUsers()" items="users" items-filter="filterUsers" visible-items="visibleUsers" select="">
@@ -36,7 +36,7 @@
 		</fieldset>
 	</div>
 				
-	<div class="span4">
+	<div class="col-md-4">
 		<form data-ng-submit="updateRecord(record)" data-ng-hide="(vars.editButtonName=='')" name="userForm">
 		<fieldset>
 			<legend>User data</legend>
@@ -79,7 +79,7 @@
 			<tr data-ng-show="record.created_on"><td><label style="cursor:default">Created On: {{ record.created_on * 1000 | date:shortDate }}</label></td></tr>
 			<tr data-ng-show="record.last_login"><td><label style="cursor:default">Last Login: {{record.last_login * 1000 | date:shortDate}}</label></td></tr>
 			</table>
-			<button class="btn btn-small" type="submit" data-ng-disabled="userForm.$invalid || !(uniqueUserState == 'ok')">
+			<button class="btn btn-default btn-sm" type="submit" data-ng-disabled="userForm.$invalid || !(uniqueUserState == 'ok')">
 				<i class="icon-{{vars.editButtonIcon}}"></i> {{vars.editButtonName}}
 			</button>
 		</fieldset>
@@ -91,14 +91,14 @@
 	<!-- 
 	<tab heading="Projects">
 		<div class="row" data-ng-controller="ProjectCtrl" style="overflow:hidden">
-		<div class="span8"><project-list/></div>
-		<div class="span4"><project-data/></div>
+		<div class="col-md-8"><project-list/></div>
+		<div class="col-md-4"><project-data/></div>
 		</div>
 	</tab>
 	-->
 	<tab heading="Archived Projects" data-ng-controller="ArchivedProjectsCtrl" select="queryArchivedProjects()">
 		<form data-ng-show="rights.showControlBar" class="control-bar form-inline">
-			<button data-ng-disabled="selected.length == 0" data-ng-show="rights.archive" class="btn" data-ng-click="publishProjects()"><i class="icon-globe icon-large" style="color:black"></i>Re-publish Projects</button>
+			<button data-ng-disabled="selected.length == 0" data-ng-show="rights.archive" class="btn btn-default" data-ng-click="publishProjects()"><i class="icon-globe icon-large" style="color:black"></i>Re-publish Projects</button>
 		</form>
 		<hr />
 		<listview hide-if-empty="true" items="list.archivedProjects" visible-items="visibleProjects" select="">
@@ -106,7 +106,7 @@
 				<ul class="inline" data-ng-class="{active: isSelected(project)}">
 					<li data-ng-show="rights.archive" ><input type="checkbox" data-ng-checked="isSelected(project)" data-ng-click="updateSelection($event, project)" /></li>
 					<li>
-					<span class="span5">
+					<span class="col-md-5">
 						<a href="/app/{{project.appName}}/{{project.id}}/">
 							<span class="larger-text">{{project.projectName}}</span>
 						</a>

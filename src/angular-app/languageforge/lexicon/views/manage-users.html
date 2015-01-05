@@ -2,8 +2,8 @@
 	<br><h2 style="font-weight:normal" >{{project.projectName}} <span translate="User Management"></span></h2>
 	<!-- <h2 translate="{projectName} User Management" translate-values="{projectName: project.projectName}"></h2> -->
 	<form data-ng-show="rights.showControlBar" class="control-bar form-inline">
-		<button data-ng-disabled="selected.length == 0" data-ng-show="rights.remove" class="btn" data-ng-click="removeProjectUsers()"><i class="icon-remove"></i>{{ 'Remove Members' | translate }}</button>
-		<button data-ng-show="rights.create" class="btn" data-ng-click="newUserCollapsed = !newUserCollapsed"><i class="icon-plus"></i>{{ 'Add Members' | translate }}</button>
+		<button data-ng-disabled="selected.length == 0" data-ng-show="rights.remove" class="btn btn-default" data-ng-click="removeProjectUsers()"><i class="icon-remove"></i>{{ 'Remove Members' | translate }}</button>
+		<button data-ng-show="rights.create" class="btn btn-default" data-ng-click="newUserCollapsed = !newUserCollapsed"><i class="icon-plus"></i>{{ 'Add Members' | translate }}</button>
 		<input type="text" ng-model="userFilter" placeholder="Member List Filter"/> <a ng-show="userFilter != ''" title="Clear Filter" ng-click="userFilter = ''"><i class="icon-remove" style="color:gray"></i></a>
 	</form>
 	<div id="newMembersDiv" class="new-item" data-collapse="!newUserCollapsed">
@@ -17,7 +17,7 @@
 				</li>
 			</ul>
 		</typeahead>
-		<button data-ng-model="addMode" class="btn" data-ng-disabled="disableAddButton" data-ng-click="addProjectUser()"><i data-ng-class="addModeIcon(addMode)"></i>{{addModeText(addMode)}}</button>
+		<button data-ng-model="addMode" class="btn btn-default" data-ng-disabled="disableAddButton" data-ng-click="addProjectUser()"><i data-ng-class="addModeIcon(addMode)"></i>{{addModeText(addMode)}}</button>
 		<span class="warning" data-ng-show="warningText">{{warningText}}</span>
 		</form>
 	</div>
