@@ -19,4 +19,6 @@
 		<link href="//fonts.googleapis.com/css?family=Dosis:300" rel="stylesheet" type="text/css">
 
 		<script src="/vendor_bower/jquery/jquery.min.js"></script>
-		<!-- jquery *must* be the first js to load -->
+		<!-- jquery must be the first js to be loaded -->
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
+		<!-- see https://github.com/jquery/jquery-migrate/ -->

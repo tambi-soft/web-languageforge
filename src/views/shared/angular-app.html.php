@@ -33,7 +33,7 @@ window.session = <?php echo $jsonSession; ?>;
 	<script src="/js/lib/angularjs-gravatardirective.js"></script>
 	<script src="/js/lib/truncate.js"></script>
 	<script src="/js/lib/lodash_2.4.1/lodash.js"></script>
-	<script src="/js/lib/ng-ui-bootstrap-tpls-0.8.0.js"></script>
+	<script src="/vendor_bower/angular-bootstrap/ui-bootstrap.js"></script>
 	<script src="/js/lib/ng-ui-utils-validate.js"></script>
 <?php endif; ?>
 
