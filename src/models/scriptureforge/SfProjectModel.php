@@ -8,7 +8,7 @@ class SfProjectModel extends ProjectModel
 {
     // define scriptureforge project types here
     const SFCHECKS_APP = 'sfchecks';
-    const RAPUMA_APP = 'rapuma';
+    const WEBTYPESETTING_APP = 'webtypesetting';
 
     public function __construct($id = '')
     {
