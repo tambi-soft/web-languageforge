@@ -3,9 +3,9 @@
         <label ng-show="$first && config.type != 'pictures'"
             class="control-label">{{config.label}}</label>
         <div class="controls">
-            <div class="input-prepend" ng-click="selectInputSystem(tag)"
+            <div class="input-group" ng-click="selectInputSystem(tag)"
                 ng-class="{selectableInputSystemFieldForComment: control.state == 'comment' && control.rights.canComment()}">
-                <span class="add-on wsid"
+                <span class="input-group-addon wsid"
                     title="{{inputSystems[tag].languageName}}">{{inputSystems[tag].abbreviation}}</span>
                 <textarea
                     ng-show="config.displayMultiline && control.state == 'edit' && control.rights.canEditEntry()"

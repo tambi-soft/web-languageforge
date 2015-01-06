@@ -31,8 +31,8 @@
                 <div class="commentRegarding" ng-show="model.regarding.field">
                     <div class="regardingContext"><b>{{model.regarding.word}}</b> <em>{{model.regarding.meaning}}</em></div>
                     <span class="regardingFieldName">{{model.regarding.fieldNameForDisplay}}</span>
-                    <div class="input-prepend">
-                        <span ng-if="model.regarding.inputSystem" class="add-on wsid regardingInputSystem" title="{{model.regarding.inputSystem}}">{{model.regarding.inputSystemAbbreviation}}</span>
+                    <div class="input-group">
+                        <span ng-if="model.regarding.inputSystem" class="input-group-addon wsid regardingInputSystem" title="{{model.regarding.inputSystem}}">{{model.regarding.inputSystemAbbreviation}}</span>
                         <span class="uneditable-input regardingFieldValue" ng-bind="model.regarding.fieldValue"></span>
                     </div>
                 </div>
