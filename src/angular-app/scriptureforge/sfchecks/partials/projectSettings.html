@@ -101,7 +101,7 @@
 		<hr />
 		<listview hide-if-empty="true" items="list.archivedTexts" visible-items="visibleTexts" select="">
 			<div data-ng-repeat="text in visibleTexts" class="details-row">
-				<ul class="inline" data-ng-class="{active: isSelected(text)}">
+				<ul class="list-inline" data-ng-class="{active: isSelected(text)}">
 					<li data-ng-show="rights.archive" ><input type="checkbox" data-ng-checked="isSelected(text)" data-ng-click="updateSelection($event, text)" /></li>
 					<li>
 						<a class="col-md-5" href="{{text.url}}">
@@ -140,13 +140,13 @@
 		<div class="col-md-4">
 		<fieldset class="well picklists" id="showInProfileFieldset">
 			<legend>Show in the User's Profile</legend>
-			<ul class="unstyled">
+			<ul class="list-unstyled">
   				<li data-ng-repeat="(listId, list) in project.userProperties.userProfilePickLists"><div class="checkbox"><input data-ng-model="currentListsEnabled[listId]" type="checkbox"/>{{list.name}}</div></li>
 			</ul>
 		</fieldset>
 		<fieldset class="well picklists" id="editListValuesFieldset">
 			<legend>Edit list values</legend>
-			<ul class="unstyled">
+			<ul class="list-unstyled">
   				<li data-ng-click="selectList(listId)" data-ng-repeat="(listId, list) in project.userProperties.userProfilePickLists" data-ng-class="{selected:currentListId == listId}">{{list.name}}</li>
 			</ul>
 		</fieldset>

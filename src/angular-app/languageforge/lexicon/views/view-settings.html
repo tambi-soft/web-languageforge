@@ -39,8 +39,8 @@
             <div class="row outer-flex">
             
                 <!-- Left column: user select list -->
-                <div class="col-md-3 control-group picklists" id="userSelectList">
-                        <ul class="unstyled">
+                <div class="col-md-3 form-group picklists" id="userSelectList">
+                        <ul class="list-unstyled">
                             <li data-ng-click="selectUser(userId)" data-ng-repeat="(userId, userView) in configDirty.userViews" 
                                 data-ng-class="{selected:currentUserId == userId}"> 
                                 {{usersWithSettings[userId].name}} ({{usersWithSettings[userId].username}})
@@ -57,10 +57,10 @@
         <div data-ng-hide="tab.byUser && state === 'userSelectList'">
             <!-- control buttons for member-specific views -->
             <div class="row outer-flex" data-ng-show="tab.byUser && state === 'userSettings'">
-                <div class="col-md-3 control-group">
+                <div class="col-md-3 form-group">
                     <button class="btn btn-default" data-ng-click="goSelectUser()"><i class="icon-chevron-left"></i> {{'Select Member' | translate}}</button>
                 </div>
-                <div class="col-md-9 control-group" style="height: 30px">
+                <div class="col-md-9 form-group" style="height: 30px">
                     <button class="btn btn-default" data-ng-click="removeSelectedMemberSettings()">
                         <i class="icon-remove"></i> {{'Remove Member Specific Settings' | translate}} </button>
                 </div>
@@ -71,11 +71,11 @@
             <div class="row outer-flex">
             
             <!-- Left column: field view select list -->
-            <div class="col-md-3 control-group">
+            <div class="col-md-3 form-group">
                 
             
                 <!-- control buttons -->
-                <div class="control-group">
+                <div class="form-group">
                     <button data-ng-click="showAllFields = ! showAllFields" class="btn btn-default btn-sm">{{showAllFields ? 'Show Only Common Fields' : 'Show All Fields' | translate}}</button>
                 </div>
 
@@ -126,12 +126,12 @@
             </div>
         
             <!-- Right column: field view settings -->
-            <div class="col-md-9 control-group">
+            <div class="col-md-9 form-group">
 
                 <!-- settings -->
                 <div class="well">
                     <h3 style="font-weight:normal">{{fieldConfig[currentField.name].label}} {{'Field View Settings' | translate}}</h3>
-                    <div class="control-group">
+                    <div class="form-group">
                         <div class="controls">
                             <label class="checkbox {{interfaceConfig.pullNormal}}">
                                 <input type="checkbox" 
@@ -142,7 +142,7 @@
                         <br />
                     </div>
                     <div data-ng-show="currentView.fields[currentField.name].type === 'multitext'">
-                        <div class="control-group">
+                        <div class="form-group">
                             <div class="controls">
                                 <label class="checkbox {{interfaceConfig.pullNormal}}">
                                     <input type="checkbox" 
@@ -153,10 +153,10 @@
                         </div>
                         <div data-ng-show="currentView.fields[currentField.name].overrideInputSystems">
                             <hr />
-                            <div class="row outer-flex control-group">
+                            <div class="row outer-flex form-group">
                                 <div class="col-md-3 picklists">
                                     <label class="control-label" for="inputSystem">{{'Input Systems' | translate}}</label>
-                                    <ul class="unstyled indent1"  id="inputSystem">
+                                    <ul class="list-unstyled indent1"  id="inputSystem">
                                         <li data-ng-click="currentField.inputSystems.currentTag = inputSystemTag"
                                             data-ng-repeat="inputSystemTag in currentField.inputSystems.order"
                                             data-ng-class="{selected:currentField.inputSystems.currentTag == inputSystemTag}">
@@ -192,7 +192,7 @@ currentField {{currentField | json}}
             <div class="row outer-flex">
             
             <!-- Left column: task view settings -->
-            <div class="col-md-4 control-group">
+            <div class="col-md-4 form-group">
                 <dl>
                     <dt translate="Dashboard"></dt>
                     <dd><div class="controls">
