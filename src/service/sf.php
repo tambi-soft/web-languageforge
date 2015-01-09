@@ -535,6 +535,10 @@ class sf
 	// WEBTYPESETTING API
 	//---------------------------------------------------------------
 	
+    public function webtypesetting_rapuma_render(){
+    	return array('pdfUrl' => "assets/ngTraining.pdf");
+    }
+    
 	public function webtypesetting_settings_read($projectId) {
 		return WebtypesettingSettingsCommands::readSettings($projectId);
 	}
