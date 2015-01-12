@@ -4,11 +4,9 @@ angular.module('webtypesetting.services', ['jsonRpc'])
   .service('webtypesettingEditService', ['jsonRpc',
   function(jsonRpc) {
     jsonRpc.connect('/api/sf');
-    
     this.render = function render(callback){
-    	jsonRpc.call('webtypesetting_rapuma_render', [], callback);
+    	jsonRpc.call("webtypesetting_rapuma_render", [], callback);
     };
-    
     this.editorDto = function(callback) {
     }; 
     
@@ -22,5 +20,5 @@ angular.module('webtypesetting.services', ['jsonRpc'])
     this.setupPageDto = function(callback) {
     }; 
     
-  }])
+  }]);
   

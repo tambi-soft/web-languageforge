@@ -19,8 +19,10 @@ angular.module(
 						webtypesettingEditService, sessionService, modal,
 						notice) {
 
-					$scope.renderRapuma = function renderRapuma() {
-
+					$scope.selectedRange = 1;
+					$scope.numPages = 170;
+					$scope.pdfUrl = "test";
+					$scope.renderRapuma = function() {
 						webtypesettingEditService.render(function(result) {
 							if (result.ok) {
 								$scope.pdfUrl = result.data.pdfUrl;
@@ -28,5 +30,11 @@ angular.module(
 						});
 
 					};
-
+					$scope.decreasePage = function(){
+						$scope.selectedRange = Math.max(1, $scope.selectedRange -1);
+					};
+					$scope.increasePage = function(){
+						//$scope.selectedRange = Math.min($scope.numPages, $scope.selectedRange + 1);
+						$scope.selectedRange = Math.min($scope.numPages, parseInt($scope.selectedRange) + 1);
+					};
 				} ]);
