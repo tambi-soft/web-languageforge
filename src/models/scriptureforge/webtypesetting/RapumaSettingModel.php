@@ -96,6 +96,7 @@ class RapumaSettingModel extends \models\mapper\MapperModel
 
         $this->layout = new RapmumaSettingModelLayout();
 
+        $this->templateName = "";
         $this->workflowState = "open"; // default workflow state
         $this->description = '';
         $this->title = '';
@@ -132,6 +133,12 @@ class RapumaSettingModel extends \models\mapper\MapperModel
      * @var RapumaSettingModelLayout
      */
     public $layout;
+    
+    /**
+     *
+     * @var string - optional name if settings are a template
+     */
+    public $templateName;
 
     /**
      * @var string

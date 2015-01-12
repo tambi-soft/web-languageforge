@@ -129,6 +129,44 @@ class TestRapumaSettingModel extends UnitTestCase
         $this->assertEqual(0, $list->count);
 
     }
+    
+    public function testTemplate_Works(){
+    	$e = new MongoTestEnvironment();
+    	$projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+    	
+    	// List
+    	$list = new RapumaSettingListModel($projectModel, true);
+    	$list->read();
+    	$this->assertEqual(0, $list->count);
+    	
+    	// Create Template
+    	$setting = new RapumaSettingModel($projectModel);
+    	$setting->templateName = "Template 1";
+    	
+    	$id = $setting->write();
+    	$this->assertNotNull($id);
+    	$this->assertIsA($id, 'string');
+    	$this->assertEqual($id, $setting->id->asString());
+    	
+    	// List
+    	$list = new RapumaSettingListModel($projectModel, true);
+    	$list->read();
+    	$this->assertEqual(1, $list->count);
+    	
+    	// Create NonTemplate
+    	$setting = new RapumaSettingModel($projectModel);
+    	 
+    	$id = $setting->write();
+    	$this->assertNotNull($id);
+    	$this->assertIsA($id, 'string');
+    	$this->assertEqual($id, $setting->id->asString());
+    	
+    	// List
+    	$list = new RapumaSettingListModel($projectModel, true);
+    	$list->read();
+    	$this->assertEqual(1, $list->count);
+    	
+    }
 /*
     public function testTextReference_NullRefValidRef_AllowsNullRef()
     {

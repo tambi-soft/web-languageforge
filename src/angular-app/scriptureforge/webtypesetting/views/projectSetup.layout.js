@@ -3,7 +3,7 @@
 
 angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.services'])
 
-.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice) {
+.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService','$rootScope', function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject, $rootScope) {
   var vm = this;
   
   vm.introColumnsTwo = false;
@@ -95,5 +95,9 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
   watchMaker("insideMargin", "maxInsideMargin", "width", "outsideMargin", "leftMargins", "marginRight", "rightMargins", "marginLeft");
   watchMaker("outsideMargin", "maxOutsideMargin", "width", "insideMargin", "rightMargins", "marginRight", "leftMargins", "marginLeft");
 
+  $rootScope.$on('handleSaveBroadcast', function() {
+		console.log("handledSaveBroadcast");
+		templateSaveObject.vm = vm;
+  });
   
 }]);
