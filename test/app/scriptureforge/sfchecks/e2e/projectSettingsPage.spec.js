@@ -99,7 +99,7 @@ describe('the project settings page - project manager', function() {
 		});
 		
 		it('can update an existing template', function() {
-			page.templatesTab.list.last().element(by.linkText('sound check')).click();
+			page.templatesTab.list.first().element(by.linkText('sound check')).click();
 			browser.wait(function() {
 				return page.templatesTab.editor.saveButton.isDisplayed();
 			});
