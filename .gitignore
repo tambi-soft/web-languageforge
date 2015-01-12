@@ -14,3 +14,5 @@ test/app/node_modules/protractor/selenium/
 test/app/node_modules/.bin/
 
 src/vendor_bower/
+
+test/php/assets/
