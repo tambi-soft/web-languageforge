@@ -19,33 +19,27 @@
 	<div class="well">
 		<div class="form-group">
 			<label class="control-label" for="username" translate="User Name"></label>
-			<div class="controls">
-				<div class="input-group">
-					<input class="col-md-3" id="username"
-						disabled type="text" name="username"
-						placeholder="{{'pick a username' | translate}}" 
-						data-ng-model="record.username" />
-				</div>
+			<div class="col-md-6">
+				<input class="form-control" id="username"
+					disabled type="text" name="username"
+					placeholder="{{'pick a username' | translate}}" 
+					data-ng-model="record.username" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label" for="email" translate="Email"></label>
-			<div class="controls">
-				<div class="input-group">
-					<input class="col-md-3" id="email"
-						disabled type="email" name="email"
-						placeholder="{{'your email' | translate}}" data-ng-model="record.email" />
-				</div>
+			<div class="col-md-6">
+				<input class="form-control" id="email"
+					disabled type="email" name="email"
+					placeholder="{{'your email' | translate}}" data-ng-model="record.email" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label" for="password" translate="Password"></label>
-			<div class="controls">
-				<div class="input-group">
-					<input class="col-md-3" id="password" autofocus
-						required type="password" name="password"
-						data-ng-model="record.password" />
-				</div>
+			<div class="col-md-6">
+				<input class="form-control" id="password" autofocus
+					required type="password" name="password"
+					data-ng-model="record.password" />
 			</div>
 		</div>
 	</div>
