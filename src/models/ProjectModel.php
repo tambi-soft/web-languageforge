@@ -10,6 +10,7 @@ use models\languageforge\lexicon\LexiconProjectModel;
 use models\scriptureforge\SfchecksProjectModel;
 
 use Palaso\Utilities\CodeGuard;
+use Palaso\Utilities\FileUtilities;
 
 use models\shared\rights\ProjectRoleModel;
 use models\mapper\MapOf;
@@ -226,10 +227,8 @@ class ProjectModel extends \models\mapper\MapperModel
     public function getAssetsPath()
     {
     	$path = 'assets/' . $this->appName. '/' . $this->databaseName();
-	if (!file_exists($path)) {
-		mkdir($path);
-	}
-        return $path;
+		FileUtilities::createAllFolders($path);
+		return $path;
     }
 
     /**
