@@ -104,9 +104,9 @@
 		<listview hide-if-empty="true" items="list.archivedProjects" visible-items="visibleProjects" select="">
 			<div data-ng-repeat="project in visibleProjects" class="details-row">
 				<ul class="list-inline" data-ng-class="{active: isSelected(project)}">
-					<li data-ng-show="rights.archive" ><input type="checkbox" data-ng-checked="isSelected(project)" data-ng-click="updateSelection($event, project)" /></li>
+					<li class="col-md-1" data-ng-show="rights.archive" ><input type="checkbox" data-ng-checked="isSelected(project)" data-ng-click="updateSelection($event, project)" /></li>
 					<li>
-					<span class="col-md-5">
+					<span>
 						<a href="/app/{{project.appName}}/{{project.id}}/">
 							<span class="larger-text">{{project.projectName}}</span>
 						</a>

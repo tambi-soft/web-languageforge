@@ -72,10 +72,10 @@
                     class="details-row">
                     <ul class="list-inline"
                         data-ng-class="{active: isSelected(question)}">
-                        <li data-ng-show="rights.archive">
+                        <li class="col-md-1" data-ng-show="rights.archive">
                             <input type="checkbox"
                                 data-ng-click="updateSelection($event, question)" /></li>
-                        <li><a class="col-md-3" href="{{question.url}}">
+                        <li class="col-md-6"><a href="{{question.url}}">
                              <span class="larger-text">{{question.calculatedTitle}}</span>
                         </a></li>
                         <li><a href="{{question.url}}">

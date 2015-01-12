@@ -105,9 +105,9 @@
         <div data-ng-repeat="question in visibleArchivedQuestions"
             class="details-row">
             <ul class="list-inline" data-ng-class="{active: isSelected(question)}">
-                <li data-ng-show="rights.archive">
+                <li class="col-md-1" data-ng-show="rights.archive">
                     <input type="checkbox" data-ng-click="updateSelection($event, question)" /></li>
-                <li><a class="col-md-5" href="{{question.url}}">
+                <li class="col-md-4"><a href="{{question.url}}">
                     <span class="larger-text">{{question.calculatedTitle}}</span></a></li>
                 <li><a href="{{question.url}}">
                     <div class="attention-block">
@@ -115,7 +115,7 @@
                             answers</span>
                     </div></a></li>
                 <li>{{question.responseCount}} responses</li>
-                <li>Archived on {{question.dateModified | date:'fullDate'}}</li>
+                <li class="text-muted"><small>Archived on {{question.dateModified | date:'fullDate'}}</small></li>
             </ul>
             <hr />
         </div>

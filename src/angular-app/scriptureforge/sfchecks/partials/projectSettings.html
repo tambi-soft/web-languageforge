@@ -102,9 +102,9 @@
 		<listview hide-if-empty="true" items="list.archivedTexts" visible-items="visibleTexts" select="">
 			<div data-ng-repeat="text in visibleTexts" class="details-row">
 				<ul class="list-inline" data-ng-class="{active: isSelected(text)}">
-					<li data-ng-show="rights.archive" ><input type="checkbox" data-ng-checked="isSelected(text)" data-ng-click="updateSelection($event, text)" /></li>
-					<li>
-						<a class="col-md-5" href="{{text.url}}">
+					<li class="col-md-1" data-ng-show="rights.archive" ><input type="checkbox" data-ng-checked="isSelected(text)" data-ng-click="updateSelection($event, text)" /></li>
+					<li class="col-md-4">
+						<a href="{{text.url}}">
 							<span class="larger-text">{{text.title}}</span>
 						</a>
 					</li>
@@ -114,7 +114,7 @@
 						</div>
 					</a></li>
 					<li>{{text.responseCount}} responses</li>
-					<li>Archived on {{text.dateModified | date:'fullDate'}}</li>
+					<li class="text-muted"><small>Archived on {{text.dateModified | date:'fullDate'}}</small></li>
 				</ul>
 				<hr />
 			</div>
