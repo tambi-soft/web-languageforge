@@ -7,7 +7,7 @@
                     <select ng-model="newValue" ng-options="item.key as item.value for item in items">
                         <option value="">Unknown</option>
                     </select>
-                    <button ng-click="addValue()" class="btn btn-small"><i class="icon-plus"></i>Add</button>
+                    <button ng-click="addValue()" class="btn btn-default btn-sm"><i class="icon-plus"></i>Add</button>
                 </div>
             </div>
             <div ng-hide="control.state == 'edit' && control.rights.canEditEntry()">

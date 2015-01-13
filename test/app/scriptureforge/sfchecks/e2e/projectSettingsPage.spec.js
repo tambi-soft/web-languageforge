@@ -22,7 +22,6 @@ describe('the project settings page - project manager', function() {
     	projectPage.settingsButton.click();
 	});
 	
-
 	describe('members tab', function() {
 		var memberCount = 0;
 		it('setup: click on tab', function() {
@@ -99,7 +98,9 @@ describe('the project settings page - project manager', function() {
 		});
 		
 		it('can update an existing template', function() {
-			page.templatesTab.list.last().element(by.linkText('sound check')).click();
+		    util.findRowByText(page.templatesTab.list, 'sound check').then(function(row) {
+		      row.element(by.linkText('sound check')).click();
+		    });
 			browser.wait(function() {
 				return page.templatesTab.editor.saveButton.isDisplayed();
 			});
@@ -191,7 +192,8 @@ describe('the project settings page - project manager', function() {
 			browser.sleep(5000);
 		});
 		*/
-		 
+		
+	
 		it('can delete values from the list', function() {
 			expect(page.optionlistsTab.editContentsList.count()).toBe(2);
 			page.optionlistsTab.editContentsList.first().then(function(elem) { page.optionlistsTab.deleteButton(elem).click(); });
@@ -242,6 +244,8 @@ describe('the project settings page - project manager', function() {
 				expect(page.communicationTab.email.name.getAttribute('value')).toBe(sample.e);
 			});
 		});
+		
 	});
+	
 
 });

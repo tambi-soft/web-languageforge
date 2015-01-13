@@ -2,8 +2,8 @@
     <div style="display:flex;justify-content:space-between; margin-top:45px;margin-bottom: 10px">
         <div>
             <label ng-show="state == 'list' " style="height:25px"></label>
-            <a id="toListLink" ng-show="state == 'edit'" class="btn" ng-click="returnToList()" tooltip="{{'Back to List'|translate}}"><i style="position: relative; top:1px; right:5px" class="icon-large icon-chevron-left"></i> {{'List'|translate}}</a>
-            <a id="toEditLink" ng-show="state == 'comment'" class="btn" ng-click="editEntry(currentEntry.id)" tooltip="{{'Return to Edit Entry'|translate}}"><i style="position: relative; top:1px; right:5px" class="icon-large icon-chevron-left"></i> {{'Edit'|translate}}</a>
+            <a id="toListLink" ng-show="state == 'edit'" class="btn btn-default" ng-click="returnToList()" tooltip="{{'Back to List'|translate}}"><i style="position: relative; top:1px; right:5px" class="icon-large icon-chevron-left"></i> {{'List'|translate}}</a>
+            <a id="toEditLink" ng-show="state == 'comment'" class="btn btn-default" ng-click="editEntry(currentEntry.id)" tooltip="{{'Return to Edit Entry'|translate}}"><i style="position: relative; top:1px; right:5px" class="icon-large icon-chevron-left"></i> {{'Edit'|translate}}</a>
         </div>
         <div>
             <a id="toCommentsLink" ng-show="state == 'edit'" style="color:white" class="btn btn-warning" ng-click="showComments()" tooltip="{{'Show Comments'|translate}}">
@@ -23,7 +23,7 @@
         <div id="lexAppListView" class="animate-switch" data-ng-switch-when="list">
             <div style="margin: 5px 5px 5px 0">
                 <small style="color: grey">{{entries.length}} {{'entries' | translate}}</small>
-                <button class="btn btn-success btn-small pull-right" data-ng-if="rights.canEditEntry()" data-ng-click="newEntry()"><i class="icon-plus"></i> {{'New Word' | translate}} </button>
+                <button class="btn btn-success btn-sm pull-right" data-ng-if="rights.canEditEntry()" data-ng-click="newEntry()"><i class="icon-plus"></i> {{'New Word' | translate}} </button>
             </div>
             <div ng-hide="show.entries.length === 0" style="width:340px; margin:0 auto;" >
                 <typeahead style="margin:0px" class="typeahead" placeholder="'Search Entries'" items="typeahead.searchResults" term="typeahead.searchItemSelected" search="typeahead.searchEntries" select="typeahead.searchSelect">
@@ -51,7 +51,7 @@
             <div style="flex: 1; border-right: 1px #dcdcdc solid">
                 <div style="display:flex; justify-content: space-between; margin: 5px 5px 5px 0">
                     <small style="color: grey; margin: 3px 0 0 2px">{{entries.length}} {{'entries' | translate}}</small>
-                    <button class="btn btn-success btn-small" data-ng-if="rights.canEditEntry()" data-ng-click="newEntry()"><i class="icon-plus"></i> {{'New Word' | translate}} </button>
+                    <button class="btn btn-success btn-sm" data-ng-if="rights.canEditEntry()" data-ng-click="newEntry()"><i class="icon-plus"></i> {{'New Word' | translate}} </button>
                 </div>
                 <div style="margin: 5px 5px 5px 0">
                     <typeahead style="margin:0px; width:162px" class="typeahead" placeholder="'Search Entries'" items="typeahead.searchResults" term="typeahead.searchItemSelected" search="typeahead.searchEntries" select="typeahead.searchSelect">
@@ -78,15 +78,15 @@
             <div style="flex: 4;padding:5px;display: flex; flex-direction: column">
                 <div style="margin-bottom: 5px; border-bottom: solid black 1px">
                     <div ng-if="rights.canEditEntry()" style="float:right; position:relative; top:-5px">
-                        <button data-ng-if="rights.canDeleteEntry()" data-ng-click="deleteEntry(currentEntry)" class="btn btn-mini" title="{{ 'Delete Entry' | translate }}"> <i class="icon-remove"></i> {{'Word' | translate}} </button>
-                        <button class="btn btn-mini" style="margin-left:20px; margin-right: 10px" data-ng-disabled="!currentEntryIsDirty()" data-ng-click="saveCurrentEntry(true)"> <i class="icon-save"></i> {{saveButtonTitle()}} </button>
+                        <button data-ng-if="rights.canDeleteEntry()" data-ng-click="deleteEntry(currentEntry)" class="btn btn-default btn-xs" title="{{ 'Delete Entry' | translate }}"> <i class="icon-remove"></i> {{'Word' | translate}} </button>
+                        <button class="btn btn-default btn-xs" style="margin-left:20px; margin-right: 10px" data-ng-disabled="!currentEntryIsDirty()" data-ng-click="saveCurrentEntry(true)"> <i class="icon-save"></i> {{saveButtonTitle()}} </button>
                         <span style="color: grey; margin-right: 10px">{{saveNotice()}}</span>
                     </div>
                     <dc-rendered config="config.entry" model="currentEntry"></dc-rendered>
                 </div>
                 <div style="margin-top:5px">
                     <div class="entryItemView" data-ng-if="entryLoaded()">
-                        <button id="toggleUncommonFieldsBtn" ng-show="rights.canEditEntry()" class="pull-right btn btn-mini" style="margin:10px" ng-click="show.emptyFields = !show.emptyFields">{{show.emptyFields ? 'Hide Uncommon Fields' : 'Show All Fields' |translate}}</button>
+                        <button id="toggleUncommonFieldsBtn" ng-show="rights.canEditEntry()" class="pull-right btn btn-default btn-xs" style="margin:10px" ng-click="show.emptyFields = !show.emptyFields">{{show.emptyFields ? 'Hide Uncommon Fields' : 'Show All Fields' |translate}}</button>
                         <dc-entry config="config.entry" model="currentEntry" control="control"></dc-entry>
                     </div>
                 </div>
@@ -95,17 +95,17 @@
 
         <!--
         <div class="row">
-            <div class="span10">
+            <div class="col-md-10">
                 <pre>{{currentEntryCommentCounts|json}}</pre>
             </div>
         </div>
         <div class="row">
-            <div class="span10">
+            <div class="col-md-10">
                 <pre>currentEntry {{currentEntry|json}}</pre>
             </div>
         </div>
         <div class="row">
-            <div class="span10">
+            <div class="col-md-10">
                 <pre>config {{config|json}}</pre>
             </div>
         </div>
@@ -154,12 +154,12 @@
                             <div class="commentRegarding">
                                 <i class="icon-remove" style="float:right; color:#808080; cursor: pointer" ng-click="newComment.regarding = {}" ng-show="newComment.regarding.field"></i>
 
-                                <span class="muted"><em>This comment is regarding</em></span>
+                                <span class="text-muted"><em>This comment is regarding</em></span>
                                 <div ng-show="newComment.regarding.field">
                                     <div class="regardingContext"><b>{{newComment.regarding.word}}</b> <em>{{newComment.regarding.meaning}}</em></div>
                                     <span class="regardingFieldName">{{newComment.regarding.fieldNameForDisplay}}</span>
-                                    <div class="input-prepend">
-                                        <span ng-if="newComment.regarding.inputSystem" class="add-on wsid regardingInputSystem" title="{{newComment.regarding.inputSystem}}">{{newComment.regarding.inputSystemAbbreviation}}</span>
+                                    <div class="input-group">
+                                        <span ng-if="newComment.regarding.inputSystem" class="input-group-addon wsid regardingInputSystem" title="{{newComment.regarding.inputSystem}}">{{newComment.regarding.inputSystemAbbreviation}}</span>
                                         <span class="uneditable-input regardingFieldValue" ng-bind="newComment.regarding.fieldValue"></span>
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@
     </div>
     <!--
     <div class="row">
-        <div class="span10">
+        <div class="col-md-10">
             <pre>currentEntry {{currentEntry|json}}</pre>
         </div>
     </div>

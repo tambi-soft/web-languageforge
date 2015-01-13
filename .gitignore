@@ -12,5 +12,10 @@ src/assets/
 .idea/*
 test/app/node_modules/protractor/selenium/
 test/app/node_modules/.bin/
+
+# TODO remove below after jterm
 .metadata/
+# TODO review inclusion below after jterm
 test/app/node_modules/
+# TODO review inclusion below after jterm
+test/php/assets/

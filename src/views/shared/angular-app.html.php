@@ -8,10 +8,10 @@ window.session = <?php echo $jsonSession; ?>;
 
 <?php if (SF_USE_MINIFIED_JS): ?>
 	<script src="/vendor_bower/angularjs-file-upload/angular-file-upload-html5-shim.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-animate.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-animate.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
 	<script src="/vendor_bower/angularjs-file-upload/angular-file-upload.min.js"></script>
 	<script src="/js/lib/angular-translate_2.2.0/angular-translate.min.js"></script>
@@ -19,6 +19,7 @@ window.session = <?php echo $jsonSession; ?>;
 	<script src="/js/lib/angularjs-gravatardirective.min.js"></script>
 	<script src="/js/lib/truncate.min.js"></script>
 	<script src="/js/lib/lodash_2.4.1/lodash.min.js"></script>
+	<script src="/vendor_bower/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<!-- ng-ui-*.js included in combined scriptureforge-min.js script -->
 <?php else: ?>
 	<script src="/vendor_bower/angularjs-file-upload/angular-file-upload-html5-shim.js"></script>
@@ -33,7 +34,7 @@ window.session = <?php echo $jsonSession; ?>;
 	<script src="/js/lib/angularjs-gravatardirective.js"></script>
 	<script src="/js/lib/truncate.js"></script>
 	<script src="/js/lib/lodash_2.4.1/lodash.js"></script>
-	<script src="/js/lib/ng-ui-bootstrap-tpls-0.8.0.js"></script>
+	<script src="/vendor_bower/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script src="/js/lib/ng-ui-utils-validate.js"></script>
 <?php endif; ?>
 
