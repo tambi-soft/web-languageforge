@@ -6,7 +6,7 @@
 		<input class="progress-slider" type="range" min="0" max="{{numPages}}"
 			data-ng-model="selectedPage">
 		<div class="inner" data-ng-style="{ width: (selectedPage)/numPages*100 + '%' || '0%' }"></div>
-		<div class="sliderRanges" data-ng-repeat="page in pages" data-ng-style="{width: 100/numPages + '%', 'background-color':page}"></div> 
+		<div class="sliderRanges" data-ng-repeat="page in pages track by $index" data-ng-style="{width: 100/numPages + '%', 'background-color':page}"></div> 
 	</div>
 	
 	<div class="left"
@@ -20,7 +20,7 @@
 	</div>
 
 	<button data-ng-click="decreasePage()">left</button>
-	page: {{selectedPage}}
+	page: <input class="pageNumber" data-ng-model="selectedPage">
 	<button data-ng-click="increasePage()">right</button>
 	<div class="right"
 		data-ng-init="renderedImage='http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png'">

@@ -37,27 +37,13 @@ angular.module(
 						//$scope.selectedPage = Math.min($scope.numPages, $scope.selectedPage + 1);
 						$scope.selectedPage = Math.min($scope.numPages, parseInt($scope.selectedPage) + 1);
 					};
-					$scope.sliderRanges = [{
-						'length':10,
-						'color':'red'
-					},{
-						'length':20,
-						'color':'green'
-					},{
-						'length':40,
-						'color':'yellow'
-					},{
-						'length': 100,
-						'color':'red'
-					}
-					               
-					];
 					
 					$scope.pages = ["red", "green", "yellow"];
-//					for(var i=0; i<1; i++){
-//						$scope.pages.push((i%2==0)?'green':'red');
-//					}
-//					$scope.pages.push("green");
-//					$scope.$apply();
-					$scope.numPages = $scope.pages.length; 
+					for(var i=0; i<200; i++){
+						$scope.pages.push((i%2==0)?'green':'red');
+					}
+					$scope.numPages = $scope.pages.length;
+					$scope.$watch('selectedPage', function(){
+						//if($scope.selectedPage == 0)$scope.selectedPage = 1;
+					});
 				} ]);
