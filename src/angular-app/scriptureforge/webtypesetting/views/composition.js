@@ -38,9 +38,10 @@ angular.module(
 						$scope.selectedPage = Math.min($scope.numPages, parseInt($scope.selectedPage) + 1);
 					};
 					
-					$scope.pages = ["red", "green", "yellow"];
+					$scope.pages = ["green", "green", "green"];
 					for(var i=0; i<20; i++){
-						$scope.pages.push((i%2==0)?'green':'red');
+						if(i<10)$scope.pages.push("yellow");
+						else $scope.pages.push("red");
 					}
 					$scope.numPages = $scope.pages.length;
 					$scope.$watch('selectedPage', function(){
