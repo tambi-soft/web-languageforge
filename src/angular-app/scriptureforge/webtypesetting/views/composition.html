@@ -5,10 +5,13 @@
 	<div class="progress-bar progress-bar-slider">
 		<input class="progress-slider" type="range" min="0" max="{{numPages}}"
 			data-ng-model="selectedPage">
-		<div class="inner" data-ng-style="{ width: (selectedPage)/numPages*100 + '%' || '0%' }"></div>
-		<div class="sliderRanges" data-ng-repeat="page in pages track by $index" data-ng-style="{width: 100/numPages + '%', 'background-color':page}"></div> 
+		<div class="inner"
+			data-ng-style="{ width: (selectedPage)/numPages*100 + '%' || '0%' }"></div>
+		<div class="sliderRanges"
+			data-ng-repeat="page in pages track by $index"
+			data-ng-style="{width: 100/numPages + '%', 'background-color':page}"></div>
 	</div>
-	
+
 	<div class="left"
 		data-ng-init="text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean imperdiet semper luctus. Fusce feugiat urna orci, ut finibus metus eleifend a. Sed nibh quam, efficitur vitae lacus in, maximus malesuada elit. Nulla vulputate eget tellus nec tristique. Nulla blandit vitae arcu eu mollis. Integer ut mauris ut sem elementum fringilla ac ac diam. In non placerat arcu. Pellentesque eu mollis velit.
 				Sed sed vestibulum felis, id posuere purus. Sed eget sodales ex, porta blandit ante. Cras vel velit nec nisl placerat eleifend a vel urna. Praesent in elementum neque, eget gravida enim. Donec eget quam sed eros ullamcorper pellentesque. Praesent tellus turpis, maximus et mi non, tristique condimentum enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce feugiat sit amet felis eu ultrices.
@@ -18,10 +21,16 @@
 
 
 	</div>
-
-	<button data-ng-click="decreasePage()">left</button>
-	page: <input class="pageNumber" data-ng-model="selectedPage">
-	<button data-ng-click="increasePage()">right</button>
+	<div class="center">
+		<div>
+			<button data-ng-click="decreasePage()">left</button>
+			<button data-ng-click="increasePage()">right</button>
+		</div>
+		<div>
+			page: <input data-ng-keyup="$event.keyCode==13 && update()" class="pageNumber" data-ng-model="pageInput" >
+			<button data-ng-click="update()">GO</button>
+		</div>
+	</div>
 	<div class="right"
 		data-ng-init="renderedImage='http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png'">
 		<img data-ng-src="{{renderedImage}}" />

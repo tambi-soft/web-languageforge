@@ -8,6 +8,11 @@
 	width: 40%;
 	float:right;
 }
+
+.center{
+	float:left;
+	margin-left:20px;
+}
 /*.progress-bar{
 	height:30px;
 	width: 100%;

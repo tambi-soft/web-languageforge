@@ -39,11 +39,16 @@ angular.module(
 					};
 					
 					$scope.pages = ["red", "green", "yellow"];
-					for(var i=0; i<200; i++){
+					for(var i=0; i<20; i++){
 						$scope.pages.push((i%2==0)?'green':'red');
 					}
 					$scope.numPages = $scope.pages.length;
 					$scope.$watch('selectedPage', function(){
-						//if($scope.selectedPage == 0)$scope.selectedPage = 1;
+						if($scope.selectedPage <= 0)$scope.selectedPage = 1;
+						if($scope.selectedPage > $scope.numPages)$scope.selectedPage=$scope.numPages;
+						$scope.pageInput = $scope.selectedPage;
 					});
+					$scope.update = function(){
+						$scope.selectedPage = $scope.pageInput;
+					}
 				} ]);
