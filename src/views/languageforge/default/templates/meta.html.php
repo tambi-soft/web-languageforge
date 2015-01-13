@@ -23,5 +23,8 @@
   -->
 		<script src="/vendor_bower/jquery/jquery.min.js"></script>
 		<!-- jquery must be the first js to be loaded -->
-		<script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
+		<script src="/vendor_bower/jquery-migrate/jquery-migrate-1.2.1.min.js"></script>
 		<!-- see https://github.com/jquery/jquery-migrate/ -->
+		<!-- swap in the script below to show what needs migrating in the browser console
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
+		 -->
