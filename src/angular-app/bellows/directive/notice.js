@@ -69,8 +69,8 @@ angular.module('palaso.ui.notice', ['ui.bootstrap', 'bellows.services', 'ngAnima
         isLoading: function() {
             return isLoading;
         },
-		ERROR:   function() { return 'error'; },
-		WARN:    function() { return 'warn'; },
+		ERROR:   function() { return 'danger'; },
+		WARN:    function() { return 'warning'; }, 
 		INFO:    function() { return 'info'; },
 		SUCCESS: function() { return 'success'; }
 	};
