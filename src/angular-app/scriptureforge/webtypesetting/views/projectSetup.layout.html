@@ -1,1 +1,29 @@
-<p>LAYOUT TAB CONTENT</p>
+<div data-ng-cloak data-ng-controller="projectSetupLayoutCtrl as layout"
+	style="text-align: center;">
+	</br>
+
+        Inside Margin: <input data-ng-class="margin-input" type="number" min="0" max="{{ layout.width - layout.outsideMargin }}" data-ng-model="layout.insideMargin"></input>
+        </br>
+
+        Outside Margin: <input data-ng-class="margin-input" type="number" min="0" max="{{ layout.width - layout.insideMargin }}" data-ng-model="layout.outsideMargin"></input>
+        </br>
+
+        Top Margin: <input data-ng-class="margin-input" type="number" min="0" max="{{ layout.height - layout.bottomMargin }}" data-ng-model="layout.topMargin"></input>
+        </br>
+
+        Bottom Margin: <input data-ng-class="margin-input" type="number" min="0" max="{{ layout.height - layout.topMargin }}" data-ng-model="layout.bottomMargin"></input>
+		</br>
+		<input type="button" value="save" class="btn btn-primary"></input>
+<div class="row">
+    	<div class="col-md-6" style="float: left; border: 1px solid; width: {{ layout.width }}px; height: {{ layout.height }}px; margin: 27px auto;">
+    		<div style="border: 1px solid blue; height: {{layout.height - layout.topMargin - layout.bottomMargin}}px; width: {{ layout.width - layout.insideMargin - layout.outsideMargin }}px; margin:{{layout.topMargin}}px {{layout.insideMargin}}px {{layout.bottomMargin}}px {{layout.outsideMargin}}px;">
+    			<p>Qui occaecati incidunt delectus itaque maiores. Accusantium blanditiis debitis numquam et ad modi autem. Omnis exercitationem consectetur tenetur veniam. Est qui et non occaecati.</p>
+    		</div>
+    	</div>
+    	<div class="col-md-6" style="float: right; border: 1px solid; width: {{ layout.width }}px; height: {{ layout.height }}px; margin: 27px auto;">
+    		<div style="border: 1px solid blue; height: {{layout.height - layout.topMargin - layout.bottomMargin}}px; width: {{ layout.width - layout.insideMargin - layout.outsideMargin }}px; margin:{{layout.topMargin}}px {{layout.outsideMargin}}px {{layout.bottomMargin}}px {{layout.insideMargin}}px;">
+    	    	<p>Sed quod voluptas nihil. Dolores molestiae in soluta. Distinctio veniam illum et velit aut. Voluptates tenetur et ab non quo consectetur.</p>
+    	    </div>
+    	</div>
+</div>
+</div>
