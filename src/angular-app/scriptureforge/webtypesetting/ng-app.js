@@ -6,6 +6,7 @@ angular.module('webtypesetting',
 		 'webtypesetting.projectSetup',
 		 'bellows.filters',
 		 'webtypesetting.composition',
+		 'webtypesetting.discussionList',
 		 'webtypesetting.services',
 		 'webtypesetting.projectSetupLayout',
 		 'webtypesetting.projectSetupAssets'
@@ -54,6 +55,10 @@ angular.module('webtypesetting',
 	    	.state('discussion', {
 	    		url: '/discussion',
 	    		templateUrl: '/angular-app/scriptureforge/webtypesetting/views/discussionList.html'
+	    	})
+	    	.state('discussionThreadView', {
+	    		url: '/discussion/:threadId',
+	    		templateUrl: '/angular-app/scriptureforge/webtypesetting/views/discussionThread.html'
 	    	})
 	    	.state('render', {
 	    		url: '/render',

@@ -1,4 +1,8 @@
 <?php
+use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCommands;
+
+use models\scriptureforge\webtypesetting\dto\WebtypesettingDiscussionListPageDto;
+
 use libraries\scriptureforge\sfchecks\Email;
 use models\scriptureforge\webtypesetting\WebtypesettingSettingsCommands;
 
@@ -555,15 +559,49 @@ class sf
     // ---------------------------------------------------------------
     
 
-    	
-    /*
-     * --------------------------------------------------------------- SCRIPTUREFORGE - TYPESETTING ---------------------------------------------------------------
-     */
-
-    // ---------------------------------------------------------------
-    // API
-    // ---------------------------------------------------------------
+    public function webtypesetting_discussionList_getPageDto() {
+    	return WebtypesettingDiscussionListPageDto::encode($this->_projectId);
+    }
     
+    public function webtypesetting_discussionList_createThread($title, $itemId) {
+    	return WebtypesettingDiscussionListCommands::createThread($this->_projectId, $title, $itemId);
+    }
+    
+	public function webtypesetting_discussionList_deleteThread($threadId) {
+    	return WebtypesettingDiscussionListCommands::deleteThread($this->_projectId, $threadId);
+    }
+    
+	public function webtypesetting_discussionList_updateThread($threadId, $title) {
+    	return WebtypesettingDiscussionListCommands::updateThread($this->_projectId, $threadId, $title);
+    }
+    
+	public function webtypesetting_discussionList_createPost($threadId, $post) {
+    	return WebtypesettingDiscussionListCommands::createPost($this->_projectId, $threadId, $post);
+    }
+    
+	public function webtypesetting_discussionList_deletePost($threadId, $postId) {
+    	return WebtypesettingDiscussionListCommands::deletePost($this->_projectId, $threadId, $postId);
+    }
+    
+	public function webtypesetting_discussionList_updatePost($threadId, $postId, $content) {
+    	return WebtypesettingDiscussionListCommands::updatePost($this->_projectId, $threadId, $postId, $content);
+    }
+    
+	public function webtypesetting_discussionList_createReply($threadId, $postId, $reply) {
+    	return WebtypesettingDiscussionListCommands::createReply($this->_projectId, $threadId, $postId, $reply);
+    }
+    
+	public function webtypesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
+    	return WebtypesettingDiscussionListCommands::deleteReply($this->_projectId, $threadId, $postId, $replyId);
+    }
+    
+	public function webtypesetting_discussionList_updateReply($threadId, $postId, $replyId, $content) {
+    	return WebtypesettingDiscussionListCommands::updateReply($this->_projectId, $threadId, $postId, $replyId, $content);
+    }
+    
+	public function webtypesetting_discussionList_updateStatus($threadId, $status) {
+    	return WebtypesettingDiscussionListCommands::updateStatus($this->_projectId, $status);
+    }
 	
     public function webtypesetting_rapuma_render(){
     	return array('pdfUrl' => "assets/ngTraining.pdf");
