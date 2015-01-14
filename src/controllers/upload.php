@@ -36,6 +36,13 @@ class Upload extends Secure_base
                         $tmpFilePath
                     ));
                     $response = $api->sfChecks_uploadFile($mediaType, $tmpFilePath);
+                } elseif ($app == 'sf-typesetting') {
+                	$api = new Sf($this);
+                	$api->checkPermissions('sfTypesetting_uploadFile', array(
+                		$mediaType,
+                		$tmpFilePath
+                	));
+                	$response = $api->sfTypesetting_uploadFile($mediaType, $tmpFilePath);
                 } elseif ($app == 'lf-lexicon') {
                     $api = new Sf($this);
                     switch ($mediaType) {

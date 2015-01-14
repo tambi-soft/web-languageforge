@@ -37,6 +37,14 @@ use models\UserModel;
 use models\UserProfileModel;
 use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
 
+// TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
+use models\shared\commands\MediaResult;
+use models\shared\commands\UploadResponse;
+
+// TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
+use models\shared\commands\MediaResult;
+use models\shared\commands\UploadResponse;
+
 require_once APPPATH . 'vendor/autoload.php';
 require_once APPPATH . 'config/sf_config.php';
 require_once APPPATH . 'models/ProjectModel.php';
@@ -326,7 +334,7 @@ class sf
     }
 
     /*
-     * --------------------------------------------------------------- SCRIPTUREFORGE ---------------------------------------------------------------
+     * --------------------------------------------------------------- SCRIPTUREFORGE - WEBCHECKS ---------------------------------------------------------------
      */
 
     // ---------------------------------------------------------------
@@ -531,10 +539,35 @@ class sf
         return QuestionTemplateCommands::listTemplates($this->_projectId);
     }
 	
-	
-	//---------------------------------------------------------------
-	// WEBTYPESETTING API
-	//---------------------------------------------------------------
+
+    // ---------------------------------------------------------------
+    // Upload API
+    // ---------------------------------------------------------------
+    public function sfChecks_uploadFile($mediaType, $tmpFilePath)
+    {
+        $response = SfchecksUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
+        return JsonEncoder::encode($response);
+    }
+
+    	
+    /*
+     * --------------------------------------------------------------- SCRIPTUREFORGE - TYPESETTING ---------------------------------------------------------------
+     */
+
+    // ---------------------------------------------------------------
+    // API
+    // ---------------------------------------------------------------
+    
+
+    	
+    /*
+     * --------------------------------------------------------------- SCRIPTUREFORGE - TYPESETTING ---------------------------------------------------------------
+     */
+
+    // ---------------------------------------------------------------
+    // API
+    // ---------------------------------------------------------------
+    
 	
     public function webtypesetting_rapuma_render(){
     	return array('pdfUrl' => "assets/ngTraining.pdf");
@@ -571,14 +604,41 @@ class sf
 	public function webtypesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
 		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
-
-
+	
+	public function webtypesetting_composition_getBookHTML($bookId) {
+		return WebtypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
+	}
+	
+	public function webtypesetting_composition_getListOfBooks() {
+		return WebtypesettingCompositionCommands::getListOfBooks($this->_projectId);
+	}
+	
+	public function webtypesetting_composition_getParagraphProperties($bookId) {
+		return WebtypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
+	}
+	
+	public function webtypesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
+		return WebtypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
+	}
+	
+	public function webtypesetting_composition_renderBook($bookId) {
+		return WebtypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
+	}
+	
+	public function webtypesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
+		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
+	}
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------
-    public function sfChecks_uploadFile($mediaType, $tmpFilePath)
+    public function sfTypesetting_uploadFile($mediaType, $tmpFilePath)
     {
-        $response = SfchecksUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
+//        $response = SfchecksUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
+		$response = new UploadResponse();
+		$response->result = true;
+		$response->data = new MediaResult();
+		$response->data->fileName = "Fake filename";
+		$response->data->path = "Fake/path/not";
         return JsonEncoder::encode($response);
     }
 
