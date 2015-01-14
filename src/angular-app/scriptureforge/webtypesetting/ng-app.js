@@ -3,8 +3,9 @@
 angular.module('webtypesetting', 
 		[
 		 'ui.router',
-		 'webtypesetting.projectSetup',
+         'webtypesetting.projectSetup',
 		 'webtypesetting.composition',
+         'webtypesetting.projectSetupLayout',
 		 'webtypesetting.services'
 		])
 	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
