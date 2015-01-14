@@ -7,14 +7,14 @@
     <h4>Upload initial data</h4>
     <br/>
     <p>Drag files here, or click Browse button</p>
-    <input type="button" class="btn" value="Browse..." onclick="javascript:document.getElementById('datafile').click();">
+    <input type="button" class="btn btn-default" value="Browse..." onclick="javascript:document.getElementById('datafile').click();">
     <input id="datafile" type="file" style="display:none;" data-ng-file-select="onFileSelect($files)">
     <div data-ng-show="uploadErrorMsg"><span style="color: red" data-ng-bind="uploadErrorMsg"></span></div>
 </div>
 <div data-ng-show="uploadProgress">Upload progress: {{uploadProgress}}%</div>
 <div data-ng-show="datafile != null">
     <p><strong>{{datafile.name}}</strong> {{datafile.size | bytes }}</p>
-    <div class="span4" ng-class="interfaceConfig.pullNormal">
+    <div class="col-md-4" ng-class="interfaceConfig.pullNormal">
         <progressbar data-value="uploadProgress" data-max="100.0"></progressbar>
     </div>
     &nbsp;

@@ -99,7 +99,7 @@ var SfQuestionPage = function() {
 	this.comments.addToLastAnswer = function(comment) {
 		this.addCommentCtrl = page.answers.last().$('table.comments').$('a.addCommentLink');
 		this.commentField   = page.answers.last().element(by.model('newComment.content'));
-		this.submit         = page.answers.last().$('button.btn-small');
+		this.submit         = page.answers.last().$('button.btn-sm');
 		
 		// Click "add comment" at the end of the Answers list to un-collapse the comment text area.
 		this.addCommentCtrl.click();
