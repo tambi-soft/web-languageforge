@@ -21,4 +21,12 @@ angular.module('webtypesetting.services', ['jsonRpc'])
     }; 
     
   }]);
+
+  .service('webtypesettingAssetService', ['jsonRpc',
+  function(jsonRpc) {
+	  jsonRpc.connect('/api/sf');
+	  
+	  this.add = function(callback) {
+	  };
+  }]);
   
