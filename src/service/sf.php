@@ -539,36 +539,36 @@ class sf
     	return array('pdfUrl' => "assets/ngTraining.pdf");
     }
     
-	public function webtypesetting_settings_read($projectId) {
-		return WebtypesettingSettingsCommands::readSettings($projectId);
+	public function webtypesetting_settings_read() {
+		return WebtypesettingSettingsCommands::readSettings($this->_projectId);
 	}
 	
-	public function webtypesetting_settings_update($projectId, $settings) {
-		return WebtypesettingSettingsCommands::updateSettings($projectId, $settings);
+	public function webtypesetting_settings_update($settings) {
+		return WebtypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
 	}
 	
 	public function webtypesetting_getBookHTML($bookId) {
-		return WebtypesettingCompositionCommands::getBookHTML($bookId);
+		return WebtypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
 	}
 	
 	public function webtypesetting_getListOfBooks() {
-		return WebtypesettingCompositionCommands::getListOfBooks();
+		return WebtypesettingCompositionCommands::getListOfBooks($this->_projectId);
 	}
 	
 	public function webtypesetting_getParagraphProperties($bookId) {
-		return WebtypesettingCompositionCommands::getParagraphProperties($bookId);
+		return WebtypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
 	}
 	
 	public function webtypesetting_setParagraphProperties($bookId, $propertiesModel) {
-		return WebtypesettingCompositionCommands::setParagraphProperties($bookId, $propertiesModel);
+		return WebtypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
 	}
 	
 	public function webtypesetting_renderBook($bookId) {
-		return WebtypesettingCompositionCommands::renderBook($bookId);
+		return WebtypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
 	}
 	
 	public function webtypesetting_getRenderedPageForBook($bookId, $pageNumber) {
-		return WebtypesettingCompositionCommands::getRenderedPageForBook($bookId, $pageNumber);
+		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
 
 
