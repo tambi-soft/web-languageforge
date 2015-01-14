@@ -18,5 +18,5 @@ angular.module('webtypesetting.services', ['jsonRpc'])
     this.setupPageDto = function(callback) {
     }; 
     
-  }])
+  }]);
   
