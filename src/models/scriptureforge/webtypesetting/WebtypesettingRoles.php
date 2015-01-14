@@ -3,6 +3,8 @@
 namespace models\scriptureforge\webtypesetting;
 
 use models\shared\rights\ProjectRoles;
+use models\shared\rights\Domain;
+use models\shared\rights\Operation;
 
 class WebtypesettingRoles extends ProjectRoles
 {
@@ -10,10 +12,12 @@ class WebtypesettingRoles extends ProjectRoles
     {
         // Project Member
         $rights = array();
+        $rights[] = Domain::TEXTS + Operation::VIEW;
         self::$_rights[self::CONTRIBUTOR] = $rights;
 
         // Project Manager (everything an user has... plus the following)
         $rights = self::$_rights[self::CONTRIBUTOR];
+        $rights[] = Domain::TEXTS + Operation::EDIT;
         self::$_rights[self::MANAGER] = $rights;
     }
 

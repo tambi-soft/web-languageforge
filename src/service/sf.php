@@ -35,6 +35,7 @@ use models\ProjectModel;
 use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
+use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
 
 require_once APPPATH . 'vendor/autoload.php';
 require_once APPPATH . 'config/sf_config.php';
@@ -535,12 +536,40 @@ class sf
 	// WEBTYPESETTING API
 	//---------------------------------------------------------------
 	
-	public function webtypesetting_settings_read($projectId) {
-		return WebtypesettingSettingsCommands::readSettings($projectId);
+    public function webtypesetting_rapuma_render(){
+    	return array('pdfUrl' => "assets/ngTraining.pdf");
+    }
+    
+	public function webtypesetting_settings_read() {
+		return WebtypesettingSettingsCommands::readSettings($this->_projectId);
 	}
 	
-	public function webtypesetting_settings_update($projectId, $settings) {
-		return WebtypesettingSettingsCommands::updateSettings($projectId, $settings);
+	public function webtypesetting_settings_update($settings) {
+		return WebtypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
+	}
+	
+	public function webtypesetting_composition_getBookHTML($bookId) {
+		return WebtypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
+	}
+	
+	public function webtypesetting_composition_getListOfBooks() {
+		return WebtypesettingCompositionCommands::getListOfBooks($this->_projectId);
+	}
+	
+	public function webtypesetting_composition_getParagraphProperties($bookId) {
+		return WebtypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
+	}
+	
+	public function webtypesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
+		return WebtypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
+	}
+	
+	public function webtypesetting_composition_renderBook($bookId) {
+		return WebtypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
+	}
+	
+	public function webtypesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
+		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
 
 
