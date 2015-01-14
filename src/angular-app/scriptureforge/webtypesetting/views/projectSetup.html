@@ -31,7 +31,9 @@
         </div>
     </div>
     
-    <a ui-sref=".assets">Assets</a>
-    <a ui-sref=".layout">Layout</a>
+    <tabset>
+    	<tab heading="Assets" ui-sref=".assets"></tab>
+    	<tab heading="Layout" ui-sref=".layout"></tab>
+    </tabset>
     <ui-view />
 </div>
