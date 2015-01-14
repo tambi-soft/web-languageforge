@@ -3,7 +3,7 @@
 angular.module(
 		'webtypesetting.composition',
 		[ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
-				'palaso.ui.notice', 'webtypesetting.services' ])
+				'palaso.ui.notice', 'webtypesetting.compositionServices' ])
 
 .controller(
 		'compositionCtrl',

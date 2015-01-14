@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('webtypesetting.services', ['jsonRpc'])
+angular.module('webtypesetting.compositionServices', ['jsonRpc'])
   .service('webtypesettingCompositionService', ['jsonRpc',
   function(jsonRpc) {
     jsonRpc.connect('/api/sf');
