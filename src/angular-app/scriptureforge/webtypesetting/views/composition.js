@@ -28,6 +28,7 @@ angular.module(
 
 					$scope.selectedPage = 1;
 					$scope.bookID = 1;
+					$scope.properties = "test";
 					$scope.bookHTML = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean imperdiet semper luctus. Fusce feugiat urna orci, ut finibus metus eleifend a. Sed nibh quam, efficitur vitae lacus in, maximus malesuada elit. Nulla vulputate eget tellus nec tristique. Nulla blandit vitae arcu eu mollis. Integer ut mauris ut sem elementum fringilla ac ac diam. In non placerat arcu. Pellentesque eu mollis velit."+
 						"Sed sed vestibulum felis, id posuere purus. Sed eget sodales ex, porta blandit ante. Cras vel velit nec nisl placerat eleifend a vel urna. Praesent in elementum neque, eget gravida enim. Donec eget quam sed eros ullamcorper pellentesque. Praesent tellus turpis, maximus et mi non, tristique condimentum enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce feugiat sit amet felis eu ultrices."+
 						"Mauris tincidunt purus augue, sit amet faucibus nisi aliquet et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse tempus volutpat dictum. Maecenas ut consectetur lacus. Vivamus pharetra ante vel lorem hendrerit, a consectetur nisl interdum. Phasellus interdum nulla magna. Nulla sem elit, gravida quis lobortis quis, rhoncus ac enim.";
@@ -66,6 +67,9 @@ angular.module(
 					});
 					$scope.update = function(){
 						$scope.selectedPage = $scope.pageInput;
+					};
+					$scope.textClick = function textClick(){
+						$scope.properties = "clicked";
 					};
 					$scope.getBookHTML();
 				} ]);
