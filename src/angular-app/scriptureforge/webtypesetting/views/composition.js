@@ -11,13 +11,20 @@ angular.module(
 				'$scope',
 				'$state',
 				'webtypesettingSetupService',
-				'webtypesettingEditService',
+				'webtypesettingCompositionService',
 				'sessionService',
 				'modalService',
 				'silNoticeService',
 				function($scope, $state, webtypesettingSetupApi,
-						webtypesettingEditService, sessionService, modal,
+						compositionService, sessionService, modal,
 						notice) {
+					
+					$scope.paragraphProperties = {
+							c1v1: {growthfactor:0},
+							c2v1: {growthfactor:1},
+							c3v1: {growthfactor:0},
+							c4v1: {growthfactor:3},
+							};
 
 					$scope.selectedPage = 1;
 					//$scope.numPages = 170;
