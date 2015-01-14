@@ -7,9 +7,9 @@
 			data-ng-model="selectedPage">
 		<div class="inner"
 			data-ng-style="{ width: (selectedPage)/numPages*100 + '%' || '0%' }"></div>
-		<div class="sliderRanges"
+		<span class="sliderRanges"
 			data-ng-repeat="page in pages track by $index"
-			data-ng-style="{width: 100/numPages + '%', 'background-color':page}"></div>
+			data-ng-style="{width: 100/numPages + '%', 'background-color':page}"></span>
 	</div>
 
 	<div class="left"
