@@ -41,6 +41,7 @@ angular.module(
 					$scope.getBookHTML = function getBookHTML() {
 						compositionService.getBookHTML($scope.bookID, function(result) {
 							$scope.bookHTML = result.data;
+							
 						});
 					};
 					$scope.decreasePage = function(){
