@@ -1,11 +1,8 @@
 // controller for setupProjectLayout
 'use strict';
 
-angular.module('webtypesetting.projectSetup', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.services'])
+angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.services'])
 
-.controller('projectSetupCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice) {
-
-}])
 .controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice) {
   var vm = this;
   
