@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+.pages {
+    border: 1px solid;
+    margin-top: 27px;
+    margin-bottom: 27px;
+}
+
+.margins {
+    border: 1px solid blue;
+}
+
+#page-left {
+    float: left;
+}
+
+#page-right {
+    float: right;
+}
