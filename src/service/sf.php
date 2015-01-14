@@ -546,6 +546,30 @@ class sf
 	public function webtypesetting_settings_update($projectId, $settings) {
 		return WebtypesettingSettingsCommands::updateSettings($projectId, $settings);
 	}
+	
+	public function webtypesetting_getBookHTML($bookId) {
+		return WebtypesettingCompositionCommands::getBookHTML($bookId);
+	}
+	
+	public function webtypesetting_getListOfBooks() {
+		return WebtypesettingCompositionCommands::getListOfBooks();
+	}
+	
+	public function webtypesetting_getParagraphProperties($bookId) {
+		return WebtypesettingCompositionCommands::getParagraphProperties($bookId);
+	}
+	
+	public function webtypesetting_setParagraphProperties($bookId, $propertiesModel) {
+		return WebtypesettingCompositionCommands::setParagraphProperties($bookId, $propertiesModel);
+	}
+	
+	public function webtypesetting_renderBook($bookId) {
+		return WebtypesettingCompositionCommands::renderBook($bookId);
+	}
+	
+	public function webtypesetting_getRenderedPageForBook($bookId, $pageNumber) {
+		return WebtypesettingCompositionCommands::getRenderedPageForBook($bookId, $pageNumber);
+	}
 
 
     // ---------------------------------------------------------------
