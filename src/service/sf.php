@@ -35,6 +35,7 @@ use models\ProjectModel;
 use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
+use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
 
 require_once APPPATH . 'vendor/autoload.php';
 require_once APPPATH . 'config/sf_config.php';
@@ -547,27 +548,27 @@ class sf
 		return WebtypesettingSettingsCommands::updateSettings($projectId, $settings);
 	}
 	
-	public function webtypesetting_getBookHTML($bookId) {
+	public function webtypesetting_composition_getBookHTML($bookId) {
 		return WebtypesettingCompositionCommands::getBookHTML($bookId);
 	}
 	
-	public function webtypesetting_getListOfBooks() {
+	public function webtypesetting_composition_getListOfBooks() {
 		return WebtypesettingCompositionCommands::getListOfBooks();
 	}
 	
-	public function webtypesetting_getParagraphProperties($bookId) {
+	public function webtypesetting_composition_getParagraphProperties($bookId) {
 		return WebtypesettingCompositionCommands::getParagraphProperties($bookId);
 	}
 	
-	public function webtypesetting_setParagraphProperties($bookId, $propertiesModel) {
+	public function webtypesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
 		return WebtypesettingCompositionCommands::setParagraphProperties($bookId, $propertiesModel);
 	}
 	
-	public function webtypesetting_renderBook($bookId) {
+	public function webtypesetting_composition_renderBook($bookId) {
 		return WebtypesettingCompositionCommands::renderBook($bookId);
 	}
 	
-	public function webtypesetting_getRenderedPageForBook($bookId, $pageNumber) {
+	public function webtypesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
 		return WebtypesettingCompositionCommands::getRenderedPageForBook($bookId, $pageNumber);
 	}
 

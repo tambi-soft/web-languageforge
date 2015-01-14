@@ -264,7 +264,8 @@ class RightsHelper
             // webtypesetting    
             case 'webtypesetting_rapuma_render':
             	return $this->userHasSiteRight(Domain::USERS + Operation::EDIT);
-            	 
+            case 'webtypesetting_composition_getBookHTML':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
 
                 
             // LanguageForge (lexicon)
