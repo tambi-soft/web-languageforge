@@ -1,9 +1,37 @@
 <div data-ng-cloak data-ng-controller="projectSetupCtrl" style="text-align: center;">
     <h3>Project Setup</h3>
-    <tabset>
-    	<tab heading="Assets" ui-sref=".assets"></tab>
-    	<tab heading="Layout" ui-sref=".layout"></tab>
-    	<tab heading="Composition" ui-sref= "composition"></tab>
-    </tabset>
+    
+    <div data-ng-controller="templateCtrl">
+        <div class='row'>
+            <div class="pull-right">
+                <button class="btn btn-default" data-ng-click="uncollapseDivs('save')">
+                    Save Template
+                </button>
+                <button class="btn btn-default" data-ng-click="uncollapseDivs('load')">
+                    Load Template
+                </button>
+            </div>
+        </div>
+        <div class='row'>
+            <div class="pull-right">
+                <div id="loadTemplateDiv" data-collapse="loadTemplateCollapsed">
+                    <form class="well form-inline">
+                       <input type="text" placeholder="Template Name..." ng-model="loadTemplateName">
+                       <button class="btn btn-default btn-sm" data-ng-disabled="loadTemplateName < 1"><i class="glyphicon glyphicon-folder-open"></i>Load</button>
+                    </form>
+                </div>
+        
+                <div id="saveTemplateDiv" data-collapse="saveTemplateCollapsed">
+                    <form class="well form-inline">
+                       <input type="text" placeholder="Template Name..." ng-model="saveTemplateName">
+                       <button class="btn btn-default btn-sm" data-ng-disabled="saveTemplateName < 1"><i class="icon-ok"></i>Save</button>
+                    </form>
+                </div>
+             </div>
+        </div>
+    </div>
+    
+    <a ui-sref=".assets">Assets</a>
+    <a ui-sref=".layout">Layout</a>
     <ui-view />
 </div>
