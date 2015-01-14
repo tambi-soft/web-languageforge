@@ -1,4 +1,21 @@
 <div class="content container" data-ng-cloak data-ng-controller="MainCtrl">
-	<div data-sil-notices></div>
-	<div data-ui-view></div>
+	<div id="sfchecks-hmenu" class="hdrnav">
+		<ul class="topNav">
+			<li><a href="/app/projects">My Projects</a></li>
+			<li><a href="/app/activity">Activity</a></li>
+			<li ng-class="{ here: $state.includes('composition') }"><a ui-sref="composition">Composition</a></li>
+			<li ng-class="{ here: $state.includes('discussion') }"><a ui-sref="discussion">Discussion</a></li>
+			<li ng-class="{ here: $state.includes('render') }"><a ui-sref="render">Render</a></li>
+			<li ng-class="{ here: $state.includes('projectSetupAssets') }"><a ui-sref="projectSetupAssets">Assets</a></li>
+			<li ng-class="{ here: $state.includes('projectSetupLayout') }"><a ui-sref="projectSetupLayout">Layout</a></li>
+		</ul>
+		<ul id="top" class="topCrumbs" breadcrumbs></ul>
+	</div>
+	<div style="padding-top:10px">
+	<sil-notices></sil-notices>
+	<!-- <div data-wc-overlay="" data-wc-overlay-delay="6000">
+    <img src="/images/shared/loading.gif" />&nbsp; Loading...
+    </div>-->
+	<div ui-view></div>
+	</div>
 </div>
