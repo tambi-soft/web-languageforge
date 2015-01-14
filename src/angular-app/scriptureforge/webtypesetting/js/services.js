@@ -20,13 +20,12 @@ angular.module('webtypesetting.services', ['jsonRpc'])
     this.setupPageDto = function(callback) {
     }; 
     
-  }]);
-
+  }])
   .service('webtypesettingAssetService', ['jsonRpc',
   function(jsonRpc) {
 	  jsonRpc.connect('/api/sf');
 	  
 	  this.add = function(callback) {
 	  };
-  }]);
-  
+  }])
+  ;
