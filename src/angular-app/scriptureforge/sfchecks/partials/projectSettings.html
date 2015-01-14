@@ -4,9 +4,9 @@
 <tabset>
 	<tab heading="Members" data-ng-controller="ProjectSettingsUsersCtrl">
 		<form data-ng-show="rights.showControlBar" class="control-bar form-inline">
-			<button data-ng-disabled="selected.length == 0" data-ng-show="rights.deleteOther" class="btn" data-ng-click="removeProjectUsers()"><i class="icon-remove"></i>Remove Members</button>
-			<button data-ng-show="rights.create" class="btn" data-ng-click="newUserCollapsed = !newUserCollapsed"><i class="icon-plus"></i>Add Members</button>
-			<button data-ng-disabled="selected.length == 0" data-ng-show="rights.create" class="btn" data-ng-click="newMessageCollapsed = !newMessageCollapsed"><i class="icon-envelope"></i>Message Selected Users</button>
+			<button data-ng-disabled="selected.length == 0" data-ng-show="rights.deleteOther" class="btn btn-default" data-ng-click="removeProjectUsers()"><i class="icon-remove"></i>Remove Members</button>
+			<button data-ng-show="rights.create" class="btn btn-default" data-ng-click="newUserCollapsed = !newUserCollapsed"><i class="icon-plus"></i>Add Members</button>
+			<button data-ng-disabled="selected.length == 0" data-ng-show="rights.create" class="btn btn-default" data-ng-click="newMessageCollapsed = !newMessageCollapsed"><i class="icon-envelope"></i>Message Selected Users</button>
 			<input type="text" ng-model="userFilter" placeholder="Member List Filter"/> <a ng-show="userFilter != ''" title="Clear Filter" ng-click="userFilter = ''"><i class="icon-remove" style="color:gray"></i></a>
 		</form>
 		<div id="newMembersDiv" class="new-item" data-collapse="!newUserCollapsed">
@@ -20,7 +20,7 @@
 					</li>
 				</ul>
 			</typeahead>
-			<button data-ng-model="addMode" class="btn" data-ng-disabled="disableAddButton" data-ng-click="addProjectUser()"><i data-ng-class="addModeIcon(addMode)"></i>{{addModeText(addMode)}}</button>
+			<button data-ng-model="addMode" class="btn btn-default" data-ng-disabled="disableAddButton" data-ng-click="addProjectUser()"><i data-ng-class="addModeIcon(addMode)"></i>{{addModeText(addMode)}}</button>
 			<span class="warning" data-ng-show="warningText">{{warningText}}</span>
 			</form>
 		</div>
@@ -35,7 +35,7 @@
 				<label>SMS Message <i>({{160 - message.smsTemplate.length}} characters remaining)</i></label>
 				<textarea required name="smsTemplate" placeholder="SMS Message" data-ng-model="message.smsTemplate" style="width:400px; height:80px" maxlength="160"></textarea>
 			</fieldset>
-			<button type="submit" class="btn"><i class="icon-ok"></i>Send Message Now</button>
+			<button type="submit" class="btn btn-default"><i class="icon-ok"></i>Send Message Now</button>
 			
 			</form>
 		</div>
@@ -63,18 +63,18 @@
 	</tab>
 	<tab heading="Question Templates" data-ng-controller="ProjectSettingsQTemplateCtrl" style="overflow:hidden">
 		<form class="control-bar form-inline">
-			<button class="btn" data-ng-disabled="selected.length == 0" data-ng-click="removeTemplates()"><i class="icon-remove"></i>Remove Templates</button>
-			<button class="btn" data-ng-click="toggleTemplateEditor()"><i class="icon-plus"></i>Add New Template</button>
+			<button class="btn btn-default" data-ng-disabled="selected.length == 0" data-ng-click="removeTemplates()"><i class="icon-remove"></i>Remove Templates</button>
+			<button class="btn btn-default" data-ng-click="toggleTemplateEditor()"><i class="icon-plus"></i>Add New Template</button>
 		</form>
 		<div class="new-item" data-collapse="!templateEditorVisible">
 			<form class="well">
 			<fieldset>
 			<label>Question Template</label>
-			<textarea required data-ng-model="editedTemplate.description" class="span4" rows="4" placeholder="The Question"></textarea>
+			<textarea required data-ng-model="editedTemplate.description" class="col-md-4" rows="4" placeholder="The Question"></textarea>
 			<label></label>
-			<input type="text" maxlength="35" required data-ng-model="editedTemplate.title" class="span4" rows="4" placeholder="One Line Summary for Title" />
+			<input type="text" maxlength="35" required data-ng-model="editedTemplate.title" class="col-md-4" rows="4" placeholder="One Line Summary for Title" />
 			<label></label>
-			<button id="question_templates_save_button" type="submit" class="btn" data-ng-click="editTemplate()"><i class="icon-ok"></i>Save</button>
+			<button id="question_templates_save_button" type="submit" class="btn btn-default" data-ng-click="editTemplate()"><i class="icon-ok"></i>Save</button>
 			<a data-ng-click="hideTemplateEditor()">Cancel</a>
 			</fieldset>
 			</form>
@@ -83,7 +83,7 @@
 		<table style="width: 100%">
 			<tr>
 				<th></th>
-				<th class="span3">Question title</th>
+				<th class="col-md-3">Question title</th>
 				<th>Question contents</th>
 			</tr>
 			<tr data-ng-repeat="template in visibleTemplates" data-ng-class="{active: isSelected(template)}" data-ng-click="selectRow($index, template)" >
@@ -96,15 +96,15 @@
 	</tab>
 	<tab heading="Archived Texts" data-ng-controller="ProjectSettingsArchiveTextsCtrl">
 		<form data-ng-show="rights.showControlBar" class="control-bar form-inline">
-			<button data-ng-disabled="selected.length == 0" data-ng-show="rights.archive" class="btn" data-ng-click="publishTexts()"><i class="icon-globe icon-large" style="color:black"></i>Re-publish Texts</button>
+			<button data-ng-disabled="selected.length == 0" data-ng-show="rights.archive" class="btn btn-default" data-ng-click="publishTexts()"><i class="icon-globe icon-large" style="color:black"></i>Re-publish Texts</button>
 		</form>
 		<hr />
 		<listview hide-if-empty="true" items="list.archivedTexts" visible-items="visibleTexts" select="">
 			<div data-ng-repeat="text in visibleTexts" class="details-row">
-				<ul class="inline" data-ng-class="{active: isSelected(text)}">
-					<li data-ng-show="rights.archive" ><input type="checkbox" data-ng-checked="isSelected(text)" data-ng-click="updateSelection($event, text)" /></li>
-					<li>
-						<a class="span5" href="{{text.url}}">
+				<ul class="list-inline" data-ng-class="{active: isSelected(text)}">
+					<li class="col-md-1" data-ng-show="rights.archive" ><input type="checkbox" data-ng-checked="isSelected(text)" data-ng-click="updateSelection($event, text)" /></li>
+					<li class="col-md-4">
+						<a href="{{text.url}}">
 							<span class="larger-text">{{text.title}}</span>
 						</a>
 					</li>
@@ -114,7 +114,7 @@
 						</div>
 					</a></li>
 					<li>{{text.responseCount}} responses</li>
-					<li>Archived on {{text.dateModified | date:'fullDate'}}</li>
+					<li class="text-muted"><small>Archived on {{text.dateModified | date:'fullDate'}}</small></li>
 				</ul>
 				<hr />
 			</div>
@@ -131,28 +131,28 @@
 			<label class="checkbox"><input type="checkbox" data-ng-model="project.allowAudioDownload"/> Allow downloading audio files</label>
 			<label class="checkbox"><input type="checkbox" data-ng-model="project.allowInviteAFriend"/> Allow contributors to use "Invite a Friend" feature (managers can always use it)</label>
 		</fieldset>
-		<button id="project_properties_save_button" type="submit" class="btn"><i class="icon-ok"></i>Save</button>
+		<button id="project_properties_save_button" type="submit" class="btn btn-default"><i class="icon-ok"></i>Save</button>
 		</form>
 	</tab>
 	<tab heading="User Profile Lists" data-ng-controller="ProjectSettingsSetupCtrl">
 		<form class="well" data-ng-submit="updateProject()">
 		<div class="row">
-		<div class="span4">
+		<div class="col-md-4">
 		<fieldset class="well picklists" id="showInProfileFieldset">
 			<legend>Show in the User's Profile</legend>
-			<ul class="unstyled">
+			<ul class="list-unstyled">
   				<li data-ng-repeat="(listId, list) in project.userProperties.userProfilePickLists"><div class="checkbox"><input data-ng-model="currentListsEnabled[listId]" type="checkbox"/>{{list.name}}</div></li>
 			</ul>
 		</fieldset>
 		<fieldset class="well picklists" id="editListValuesFieldset">
 			<legend>Edit list values</legend>
-			<ul class="unstyled">
+			<ul class="list-unstyled">
   				<li data-ng-click="selectList(listId)" data-ng-repeat="(listId, list) in project.userProperties.userProfilePickLists" data-ng-class="{selected:currentListId == listId}">{{list.name}}</li>
 			</ul>
 		</fieldset>
-		<button id="user_profile_lists_save_button" type="submit" class="btn"><i class="icon-ok"></i>Save</button>
+		<button id="user_profile_lists_save_button" type="submit" class="btn btn-default"><i class="icon-ok"></i>Save</button>
 		<span ng-show="unsavedChanges" class="unsaved-warning" style="color: red">You have unsaved changes.</span> <!-- Remove the style="" attr once class has real CSS definition -->
-		</div><div class="span4">
+		</div><div class="col-md-4">
 		<fieldset class="well" id="picklistEditorFieldset">
 			<legend style="width:auto;">{{project.userProperties.userProfilePickLists[currentListId].name}}</legend>
 			<picklist-editor items="project.userProperties.userProfilePickLists[currentListId].items" default-key="project.userProperties.userProfilePickLists[currentListId].defaultKey"></picklist-editor>
@@ -176,7 +176,7 @@
 			<label>Email Name</label>
 			<input type="text" placeholder="(From Name)" data-ng-model="settings.email.fromName"/>
 		</fieldset>
-		<button id="communication_settings_save_button" type="submit" class="btn"><i class="icon-ok"></i>Save</button>
+		<button id="communication_settings_save_button" type="submit" class="btn btn-default"><i class="icon-ok"></i>Save</button>
 		</form>
 		</div>
 	</tab>

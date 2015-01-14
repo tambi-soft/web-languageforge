@@ -4,6 +4,7 @@ angular.module('webtypesetting',
 		[
 		 'ui.router',
 		 'webtypesetting.projectSetup',
+		 'webtypesetting.composition',
 		 'webtypesetting.services'
 		])
 	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -27,8 +28,15 @@ angular.module('webtypesetting',
 	    		url: '/layout',
 	    		templateUrl: '/angular-app/scriptureforge/webtypesetting/views/projectSetup.layout.html'
 	    	})
+	    	.state('composition', {
+		        url: '/composition',
+		        views: {
+		        	'': {templateUrl: '/angular-app/scriptureforge/webtypesetting/views/composition.html',
+		        		controller: 'compositionCtrl'}
+		        }
+		    });
 	    	
-		    ;
+		    
 	    
 	}])
 	.controller('MainCtrl', ['$scope', function($scope) {

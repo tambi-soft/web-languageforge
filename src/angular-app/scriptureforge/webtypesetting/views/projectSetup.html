@@ -1,6 +1,9 @@
 <div data-ng-cloak data-ng-controller="projectSetupCtrl" style="text-align: center;">
     <h3>Project Setup</h3>
-    <a ui-sref=".assets">Assets</a>
-    <a ui-sref=".layout">Layout</a>
+    <tabset>
+    	<tab heading="Assets" ui-sref=".assets"></tab>
+    	<tab heading="Layout" ui-sref=".layout"></tab>
+    	<tab heading="Composition" ui-sref= "composition"></tab>
+    </tabset>
     <ui-view />
 </div>

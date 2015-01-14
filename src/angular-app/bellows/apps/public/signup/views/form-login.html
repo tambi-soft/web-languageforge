@@ -1,6 +1,6 @@
 <fieldset>
 	<div align="center">
-		<ul class="inline" id="progress-indicator">
+		<ul class="list-inline" id="progress-indicator">
 			<li><i class="icon-check-sign"></i>
 				<span>{{'Register' | translate}}</span></li>
 			<li>&gt;</li>
@@ -16,40 +16,34 @@
 	<p translate="If this is your account, you can activate it to use on this site. Simply login to activate it now."></p>
 	<a href="/auth/forgot_password" style="margin-top:20px; color:darkorange">Forgot password?</a>
 	<div class="well">
-		<div class="control-group">
+		<div class="form-group">
 			<label class="control-label" for="username" translate="User Name"></label>
-			<div class="controls">
-				<div class="input-prepend">
-					<input class="span3" id="username"
-						disabled type="text" name="username"
-						placeholder="{{'pick a username' | translate}}" 
-						data-ng-model="record.username" />
-				</div>
+			<div class="col-md-6">
+				<input class="form-control" id="username"
+					disabled type="text" name="username"
+					placeholder="{{'pick a username' | translate}}" 
+					data-ng-model="record.username" />
 			</div>
 		</div>
-		<div class="control-group">
+		<div class="form-group">
 			<label class="control-label" for="email" translate="Email"></label>
-			<div class="controls">
-				<div class="input-prepend">
-					<input class="span3" id="email"
-						disabled type="email" name="email"
-						placeholder="{{'your email' | translate}}" data-ng-model="record.email" />
-				</div>
+			<div class="col-md-6">
+				<input class="form-control" id="email"
+					disabled type="email" name="email"
+					placeholder="{{'your email' | translate}}" data-ng-model="record.email" />
 			</div>
 		</div>
-		<div class="control-group">
+		<div class="form-group">
 			<label class="control-label" for="password" translate="Password"></label>
-			<div class="controls">
-				<div class="input-prepend">
-					<input class="span3" id="password" autofocus
-						required type="password" name="password"
-						data-ng-model="record.password" />
-				</div>
+			<div class="col-md-6">
+				<input class="form-control" id="password" autofocus
+					required type="password" name="password"
+					data-ng-model="record.password" />
 			</div>
 		</div>
 	</div>
 	<div align="center">
-		<a class="btn pull-left" data-ui-sref="form.identify">
+		<a class="btn btn-default pull-left" data-ui-sref="form.identify">
 			<i class="icon-circle-arrow-left"></i>
 			{{'Back' | translate}}</a>
 		<button class="btn btn-primary" type="submit" id="login" 

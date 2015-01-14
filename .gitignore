@@ -12,5 +12,21 @@ src/assets/
 .idea/*
 test/app/node_modules/protractor/selenium/
 test/app/node_modules/.bin/
+
+# TODO remove below after jterm
 .metadata/
+# TODO review inclusion below after jterm
 test/app/node_modules/
+# TODO review inclusion below after jterm
+test/php/assets/
+
+src/vendor_bower/*/*.*
+src/vendor_bower/*/*/*.*
+src/vendor_bower/*/*/*/*.*
+src/vendor_bower/*/*/*/*
+# TODO remove all vendor_bower after jterm
+!src/vendor_bower/jquery/jquery.min.js
+!src/vendor_bower/jquery-migrate/jquery-migrate-1.2.1.min.js
+!src/vendor_bower/angular-bootstrap/ui-bootstrap-tpls.js
+!src/vendor_bower/bootstrap/dist/css/bootstrap.css
+!src/vendor_bower/bootstrap/dist/css/bootstrap.css.map

@@ -260,6 +260,14 @@ class RightsHelper
                 // Are there any circumstances where this should be denied? Should this just be "return true;"?
                 return $this->userHasSiteRight(Domain::USERS + Operation::VIEW_OWN);
 
+
+            // webtypesetting    
+            case 'webtypesetting_rapuma_render':
+            	return $this->userHasSiteRight(Domain::USERS + Operation::EDIT);
+            case 'webtypesetting_composition_getBookHTML':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+
+                
             // LanguageForge (lexicon)
             case 'lex_configuration_update':
             case 'lex_upload_importLift':

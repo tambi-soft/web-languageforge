@@ -2,7 +2,7 @@
 		<!--  <meta name="viewport" content="width=device-width" />-->
 		<title><?php echo $controller->website->name; ?></title>
 
-		<link rel="stylesheet" href="/css/shared/bootstrap.css" />
+		<link rel="stylesheet" href="/vendor_bower/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="/css/shared/animate.css" />
 		<?php if (isset($cssFiles)): ?>
 		<?php foreach($cssFiles as $filename): ?>
@@ -17,5 +17,10 @@
 		<link rel="icon" href="favicon.ico" type="image/x-icon" />
 		<link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700" rel="stylesheet" type="text/css">
 
-		<script src="/js/lib/jquery-1.8.3.min.js"></script>
-		<!--  jquery *must* be the first to js to load -->
+		<script src="/vendor_bower/jquery/jquery.min.js"></script>
+		<!-- jquery must be the first js to be loaded -->
+		<script src="/vendor_bower/jquery-migrate/jquery-migrate-1.2.1.min.js"></script>
+		<!-- see https://github.com/jquery/jquery-migrate/ -->
+		<!-- swap in the script below to show what needs migrating in the browser console
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
+		 -->
