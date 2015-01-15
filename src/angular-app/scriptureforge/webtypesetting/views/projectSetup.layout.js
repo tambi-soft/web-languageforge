@@ -22,10 +22,6 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
 
   vm.width = 300;
   vm.height = 400;
-//  vm.insideMargin = 60;
-//  vm.outsideMargin = 50;
-//  vm.topMargin = 35;
-//  vm.bottomMargin = 40;
   vm.css = {
       leftPage: {
         height: vm.height,
@@ -49,27 +45,6 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
       },
   };
   
-  // variable watchers
-  /*
-  $scope.$watch('[layout.insideMargin, layout.outsideMargin, layout.topMargin, layout.bottomMargin]', function() {
-    vm.maxOutsideMargin = vm.width - vm.insideMargin;
-    vm.maxTopMargin = vm.height - vm.bottomMargin;
-    vm.maxBottomMargin = vm.height - vm.topMargin;
-    vm.css.leftPage = {
-    		width: vm.width + "px",
-    		height: vm.height + "px",
-    };
-    vm.css.rightPage = {
-        width: vm.width + "px",
-        height: vm.height + "px",
-    };
-    vm.css.rightMargins = {
-        height: vm.height - vm.topMargin - vm.bottomMargin + "px",
-        width: vm.width - vm.insideMargin - vm.outsideMargin + "px",
-        margin: vm.topMargin + "px " + vm.outsideMargin + "px " + vm.bottomMargin + "px " + vm.insideMargin + "px",
-    };
-  }, true);
-  */
   
   function watchMaker(margin, max, size, outside, left, margin_right, right, margin_left) {
     $scope.$watch("layout." + margin, function() {
@@ -119,56 +94,6 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
   
   watchMaker("insideMargin", "maxInsideMargin", "width", "outsideMargin", "leftMargins", "marginRight", "rightMargins", "marginLeft");
   watchMaker("outsideMargin", "maxOutsideMargin", "width", "insideMargin", "rightMargins", "marginRight", "leftMargins", "marginLeft");
- 
-/*
-  $scope.$watch('layout.insideMargin', function() {
-    vm.maxInsideMargin = vm.width - vm.outsideMargin;
 
-    vm.css.leftMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.leftMargins["margin-right"] = vm.insideMargin + "px";
-    vm.css.rightMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.rightMargins["margin-left"] = vm.insideMargin + "px";
-    
-    if (vm.maxInsideMargin < vm.insideMargin) {
-      vm.insideMargin = vm.maxInsideMargin;
-    }
-  });
-  $scope.$watch('layout.outsideMargin', function() {
-    vm.maxOutsideMargin = vm.width - vm.insideMargin;
-
-    vm.css.rightMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.rightMargins["margin-left"] = vm.outsideMargin + "px";
-    vm.css.leftMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.leftMargins["margin-right"] = vm.outsideMargin + "px";
-    
-    if (vm.maxOutsideMargin < vm.outsideMargin) {
-      vm.outsideMargin = vm.maxOutsideMargin;
-    }
-  });
-  $scope.$watch('layout.insideMargin', function() {
-    vm.maxInsideMargin = vm.width - vm.outsideMargin;
-
-    vm.css.leftMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.leftMargins["margin-right"] = vm.insideMargin + "px";
-    vm.css.rightMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.rightMargins["margin-left"] = vm.insideMargin + "px";
-    
-    if (vm.maxInsideMargin < vm.insideMargin) {
-      vm.insideMargin = vm.maxInsideMargin;
-    }
-  });
-  $scope.$watch('layout.insideMargin', function() {
-    vm.maxInsideMargin = vm.width - vm.outsideMargin;
-
-    vm.css.leftMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.leftMargins["margin-right"] = vm.insideMargin + "px";
-    vm.css.rightMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.rightMargins["margin-left"] = vm.insideMargin + "px";
-    
-    if (vm.maxInsideMargin < vm.insideMargin) {
-      vm.insideMargin = vm.maxInsideMargin;
-    }
-  });
-*/
   
 }]);

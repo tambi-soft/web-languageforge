@@ -17,3 +17,7 @@
 #page-right {
     float: right;
 }
+
+.checkbox-inline {
+	font-weight: bold;	
+}
