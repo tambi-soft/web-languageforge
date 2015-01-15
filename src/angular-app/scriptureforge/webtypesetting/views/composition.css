@@ -23,6 +23,7 @@
 .render{
 	float:right;
 }
+
 .properties{
 	height: 200px;
 	border: 1px solid;
@@ -37,18 +38,16 @@
 
 
 
-
-
 .progress-bar {
-	
 	margin-top: 10px;
 	margin-bottom: 20px;
-	width: 100%;
+	margin-left:350px;
+	width: 50%;
 	height: 12px;
 	/*background: #f2f1f1;*/
 	/*border: 1px solid #dfdfdf;
 	box-shadow: 0 0 2px #D5D4D4 inset;*/
-  position: relative;
+  	position: relative;
 }
 
 .progress-bar .inner {
@@ -101,4 +100,17 @@
 .triColor{
 	width:80%;
 	height:80%;
+}
+
+
+.control-bar{
+	width:100%;
+}
+
+.button-bar {
+	float:left;
+}
+
+.slider-bar{
+
 }
