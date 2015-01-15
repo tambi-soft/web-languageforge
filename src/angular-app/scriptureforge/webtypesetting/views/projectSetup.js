@@ -48,5 +48,5 @@ angular.module('webtypesetting.projectSetup', ['jsonRpc', 'ui.bootstrap', 'bello
 		});
 		reader.readAsText(file);
 	};
-
+	
 }]);

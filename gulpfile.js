@@ -8,7 +8,14 @@ var livereload = require('gulp-livereload');
 var lr = require('tiny-lr');
 var server = lr();
 
-var srcTheme = [];
+var paths = {
+	'src_ng_typesetting': [
+	    'src/angular-app/scriptureforge/webtypesetting/**/*.js',
+	    'src/angular-app/scriptureforge/webtypesetting/**/*.css',	    
+	    'src/angular-app/scriptureforge/webtypesetting/**/*.less',	    
+	    'src/angular-app/scriptureforge/webtypesetting/**/*.html',	    
+	]
+}
 
 var execute = function(command, callback) {
   gutil.log(gutil.colors.green(command));
@@ -32,7 +39,7 @@ gulp.task('reload', function() {
     if (err) {
       return console.log(err);
     }
-    gulp.watch(srcTheme, ['do-reload']);
+    gulp.watch(paths.src_ng_typesetting, ['do-reload']);
   });
 });
 

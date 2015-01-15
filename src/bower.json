@@ -4,10 +4,10 @@
         "jquery": "1.9.x",
         "bootstrap": "3.3.x",
         "angular-bootstrap": "0.12.x",
-        "angularjs-file-upload": "1.6.*"
+        "angularjs-file-upload": "1.6.*",
+        "jquery-migrate": "1.2.x"
     },
     "devDependencies": {
-        "jquery-migrate": "1.2.x",
         "font-awesome": "4.2.x"
     }
 }
