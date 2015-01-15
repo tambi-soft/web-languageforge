@@ -129,26 +129,5 @@ class TestRapumaSettingModel extends UnitTestCase
         $this->assertEqual(0, $list->count);
 
     }
-/*
-    public function testTextReference_NullRefValidRef_AllowsNullRef()
-    {
-        $projectModel = new MockProjectModel();
-        $mockTextRef = (string) new \MongoId();
 
-        // Test create with null textRef
-        $setting = new RapumaSettingModel($projectModel);
-        $id = $setting->write();
-
-        $otherSetting = new RapumaSettingModel($projectModel, $id);
-        $this->assertEqual('', $otherSetting->textRef->id);
-
-        // Test update with textRef
-        $setting->textRef->id = $mockTextRef;
-        $setting->write();
-
-        $otherSetting = new RapumaSettingModel($projectModel, $id);
-        $this->assertEqual($mockTextRef, $otherSetting->textRef->id);
-
-    }
-*/
 }

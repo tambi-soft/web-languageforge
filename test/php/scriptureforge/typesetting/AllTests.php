@@ -8,6 +8,7 @@ class AllTypesettingTests extends TestSuite
     {
         parent::__construct();
         $this->addFile(TestPath . 'scriptureforge/typesetting/RapumaSettingsModel_Test.php');
+        $this->addFile(TestPath . 'scriptureforge/typesetting/TypesettingSettingCommand_Test.php');
     }
 
 }
