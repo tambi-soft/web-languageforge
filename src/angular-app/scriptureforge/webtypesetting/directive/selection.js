@@ -1,7 +1,7 @@
 
-angular.module('palaso.ui.selection', [])
+angular.module('composition.selection', [])
   // Typeahead
-  .directive('silSelection', ["$compile", function($compile) {
+  .directive('compositionSelection', ["$compile", function($compile) {
 		return {
 			restrict: 'A',
 			scope: {
@@ -61,15 +61,30 @@ angular.module('palaso.ui.selection', [])
 
 					if (scope.validMouseDown) {
 						var selection = rangy.getSelection();
-						var selectedHtml = selection.toHtml();
-						var range = selection.getRangeAt(0);
+						scope.silSelectedText = selection.toHtml();
+						var parent = selection.anchorNode;
+						  while (parent != null && (parent.localName == null || parent.localName.toUpperCase() != "P")) {
+						    parent = parent.parentNode;
+						  }
+						  
+						  if (parent == null) {
+						    scope.silSelectedText = "";
+						  } else {
+							  var range = rangy.createRange();
+							  range.selectNodeContents(parent);
+							  selection.setSingleRange(range);
+							  scope.silSelectedText = parent.innerText || parent.textContent;
+						  }
+						//var selectedHtml = selection.toHtml();
+						/*var range = selection.getRangeAt(0);
 						controller.cssApplier.applyToRange(range);
 						scope.oldHighlightedRange = range;
+
 						scope.$apply(function() {
 							if (scope.silSelectedText != undefined) {
 								scope.silSelectedText = selectedHtml;
 							}
-						});
+						});*/
 					}
 					scope.validMouseDown = false;
 				});
