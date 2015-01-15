@@ -18,10 +18,10 @@ angular.module(
 						compositionService, sessionService, modal,
 						notice) {
 					
+					var currentVerse;
 					var paragraphProperties = {
 							//c1v1: {growthfactor:3},
 							};
-
 					$scope.selectedPage = 1;
 					$scope.bookID = 1;
 					$scope.selectedText="";
@@ -76,7 +76,7 @@ angular.module(
 							$scope.temp = $scope.temp.previousSibling;
 						}
 						$scope.chapter = $scope.temp.innerText.replace("Chapter ", "");
-						var currentVerse = 'c'+$scope.chapter+'v'+$scope.verse;
+						currentVerse = 'c'+$scope.chapter+'v'+$scope.verse;
 						var currentParagraphProperties = paragraphProperties[currentVerse];
 						$scope.paragraphGrowthFactor =  (currentParagraphProperties)? currentParagraphProperties.growthfactor : 0;
 					});
