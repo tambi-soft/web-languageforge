@@ -3,10 +3,11 @@
 	text-align: left;
 }
 
-
+/*
 .workingText p {
 	text-indent: 4em;
 }
+*/
 
 .workingText p:hover {
 	background-color: #eeeeff;
@@ -16,3 +17,7 @@
 	color: darkred;
 }
 
+.workingText .chapter-number {
+	font-weight: bold;
+	display: block;
+}
