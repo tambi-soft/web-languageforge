@@ -13,8 +13,11 @@
 	</div>
 
 	<div class="left">
-		<div class="text" data-ng-bind-html="bookHTML" data-ng-click="textClick()"></div>
-		<div class="properties">{{properties}}</div>
+		<div class="text" data-ng-bind-html="bookHTML" data-ng-click="textClick()"
+		composition-selection sil-selected-text="selectedText"
+        content="bookHTML"></div>
+		
+		<div class="properties">{{selectedText}}</div>
 
 
 	</div>

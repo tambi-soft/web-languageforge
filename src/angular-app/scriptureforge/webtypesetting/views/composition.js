@@ -2,8 +2,7 @@
 
 angular.module(
 		'webtypesetting.composition',
-		[ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
-				'palaso.ui.notice', 'webtypesetting.compositionServices' ])
+		[ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'webtypesetting.compositionServices', 'composition.selection' ])
 
 .controller(
 		'compositionCtrl',
@@ -28,6 +27,7 @@ angular.module(
 
 					$scope.selectedPage = 1;
 					$scope.bookID = 1;
+					$scope.selectedText="";
 					$scope.properties = "test";
 					$scope.bookHTML = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean imperdiet semper luctus. Fusce feugiat urna orci, ut finibus metus eleifend a. Sed nibh quam, efficitur vitae lacus in, maximus malesuada elit. Nulla vulputate eget tellus nec tristique. Nulla blandit vitae arcu eu mollis. Integer ut mauris ut sem elementum fringilla ac ac diam. In non placerat arcu. Pellentesque eu mollis velit."+
 						"Sed sed vestibulum felis, id posuere purus. Sed eget sodales ex, porta blandit ante. Cras vel velit nec nisl placerat eleifend a vel urna. Praesent in elementum neque, eget gravida enim. Donec eget quam sed eros ullamcorper pellentesque. Praesent tellus turpis, maximus et mi non, tristique condimentum enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce feugiat sit amet felis eu ultrices."+
@@ -69,7 +69,7 @@ angular.module(
 						$scope.selectedPage = $scope.pageInput;
 					};
 					$scope.textClick = function textClick(){
-						$scope.properties = "clicked";
+						//$scope.selectedText = "clicked";
 					};
 					$scope.getBookHTML();
 				} ]);
