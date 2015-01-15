@@ -70,13 +70,10 @@ angular.module(
 					$scope.$watch('paragraphNode', function(){
 						if(!$scope.paragraphNode)return;
 						$scope.selectedText = $scope.paragraphNode.innerHTML;
-						$scope.verse = $scope.paragraphNode.firstElementChild.innerText;
-						$scope.temp = $scope.paragraphNode;
-						while(!$scope.temp.innerText || $scope.temp.innerText.indexOf("Chapter") == -1){
-							$scope.temp = $scope.temp.previousSibling;
-						}
-						$scope.chapter = $scope.temp.innerText.replace("Chapter ", "");
-						currentVerse = 'c'+$scope.chapter+'v'+$scope.verse;
+						currentVerse = $scope.paragraphNode.id;
+						var temp = currentVerse.replace("c","").split("v");
+						$scope.verse = temp[1];
+						$scope.chapter = temp[0];
 						var currentParagraphProperties = paragraphProperties[currentVerse];
 						$scope.paragraphGrowthFactor =  (currentParagraphProperties)? currentParagraphProperties.growthfactor : 0;
 					});
