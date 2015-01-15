@@ -4,9 +4,9 @@
 	<tab heading="Edit Text">
 		<form class="well " ng-submit="updateText(editedText)">
 		<label>Title</label>
-		<input type="text" class="span4" ng-model="editedText.title" placeholder="Text Name"/>
+		<input type="text" class="col-md-4" ng-model="editedText.title" placeholder="Text Name"/>
 		<label>Text</label>
-		<textarea ng-model="editedText.content" class="span4" rows="4" placeholder="Paste the USX text here"></textarea>
+		<textarea ng-model="editedText.content" class="col-md-4" rows="4" placeholder="Paste the USX text here"></textarea>
 		<label></label>
 		<button type="submit" class="btn"><i class="icon-pencil"></i>Save</button>
 		<h3 id="message" ng-show="showMessage">Saved.</h3>
