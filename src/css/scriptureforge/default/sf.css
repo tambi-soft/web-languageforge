@@ -221,7 +221,7 @@ div#promotion-ribbon {
 	width: 99px;
 	height: 102px;
 	top: -6px;
-	right: -6px;
+	right: -22px;
 	background: transparent url(/images/scriptureforge/default/sf_sprite.png) no-repeat right -36px;
 	z-index: 3;
 }
