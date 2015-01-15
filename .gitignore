@@ -30,3 +30,5 @@ src/vendor_bower/*/*/*/*
 !src/vendor_bower/angular-bootstrap/ui-bootstrap-tpls.js
 !src/vendor_bower/bootstrap/dist/css/bootstrap.css
 !src/vendor_bower/bootstrap/dist/css/bootstrap.css.map
+
+docs/usfm/

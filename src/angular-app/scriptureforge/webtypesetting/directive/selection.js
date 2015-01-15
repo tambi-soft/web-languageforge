@@ -5,7 +5,7 @@ angular.module('composition.selection', [])
 		return {
 			restrict: 'A',
 			scope: {
-				silSelectedText : "=",
+				paragraphNode : "=",
 				content : "=",
 			},
 			controller: function() {
@@ -27,7 +27,7 @@ angular.module('composition.selection', [])
 					}
 				);
 				scope.oldHighlightedRange = null;
-				scope.$watch('silSelectedText', function(newSelection) {
+				scope.$watch('paragraphNode', function(newSelection) {
 					if (!newSelection) {
 						// Client code cleared the selection; we should clear
 						// the highlight if there is one.
@@ -61,19 +61,19 @@ angular.module('composition.selection', [])
 
 					if (scope.validMouseDown) {
 						var selection = rangy.getSelection();
-						scope.silSelectedText = selection.toHtml();
+						scope.paragraphNode = selection.toHtml();
 						var parent = selection.anchorNode;
 						  while (parent != null && (parent.localName == null || parent.localName.toUpperCase() != "P")) {
 						    parent = parent.parentNode;
 						  }
 						  
 						  if (parent == null) {
-						    scope.silSelectedText = "";
+						    scope.paragraphNode = "";
 						  } else {
 							  var range = rangy.createRange();
 							  range.selectNodeContents(parent);
 							  selection.setSingleRange(range);
-							  scope.silSelectedText = parent.innerText || parent.textContent;
+							  scope.paragraphNode = parent;
 						  }
 						//var selectedHtml = selection.toHtml();
 						/*var range = selection.getRangeAt(0);
@@ -81,8 +81,8 @@ angular.module('composition.selection', [])
 						scope.oldHighlightedRange = range;
 
 						scope.$apply(function() {
-							if (scope.silSelectedText != undefined) {
-								scope.silSelectedText = selectedHtml;
+							if (scope.paragraphNode != undefined) {
+								scope.paragraphNode = selectedHtml;
 							}
 						});*/
 					}
