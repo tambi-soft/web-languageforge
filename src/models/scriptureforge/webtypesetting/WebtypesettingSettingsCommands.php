@@ -46,6 +46,24 @@ class WebtypesettingSettingsCommands {
 		$webtypesettingProject->updateProjectConfig($config);
 	}
 	
+	/**
+	 * 
+	 * @var string
+	 */
+	public $fontSize;
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	public $illustrations;
+	
+	/**
+	 * 
+	 * @var string
+	 */
+	public $name;
+	
 }
 
 ?>
