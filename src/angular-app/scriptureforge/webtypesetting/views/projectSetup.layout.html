@@ -1,46 +1,133 @@
-<div data-ng-cloak data-ng-controller="projectSetupLayoutCtrl as layout" style="text-align: center;">
+<div data-ng-cloak data-ng-controller="projectSetupLayoutCtrl as layout"
+	style="text-align: center;">
+	</br>
+	<tabset> 
+		<tab heading="Margins" class="form-group"> 
+			</br>
+			<div class="col-md-2">
+				<label for="insideMarginInput">Inside Margin</label> <input
+					class="form-control" type="number"
+					data-ng-model="layout.insideMargin" id="insideMarginInput" />
+			</div>
+			<div class="col-md-2">
+				<label for="outsideMarginInput">Outside Margin</label> <input
+					class="form-control" type="number"
+					data-ng-model="layout.outsideMargin" id="outsideMarginInput" />
+			</div>
+			<div class="col-md-2">
+				<label for="topMarginInput">Top Margin</label> <input
+					class="form-control" type="number" data-ng-model="layout.topMargin"
+					id="topMarginInput" />
+			</div>
+			<div class="col-md-2">
+				<label for="bottomMarginInput">Bottom Margin</label> <input
+					class="form-control" type="number"
+					data-ng-model="layout.bottomMargin" id="bottomMarginInput" />
+			</div>
+			</br>
+			</br>
+		</tab> 
+		<tab heading="Header/Footer" class="form-group">
+			</br>
+			<div class="col-md-2">
+				<label class="checkbox-inline">
+	  				<input type="checkbox">Header
+				</label>
+			</div>
+			<div class="col-md-2">
+				<label class="checkbox-inline">
+  					<input type="checkbox">Footer
+				</label>
+			</div>
+			<div class="col-md-1">
+				<label for="headerPositionInput">Footer Position</label>
+			</div>
+			<div class="col-md-1"> 
+				<input class="form-control" type="number" id="headerPositionInput" />
+			</div>
+			<div class="col-md-1">
+				<label for="footerPositionInput">Header Position</label>
+			</div>
+			<div class="col-md-1"> 
+				<input class="form-control" type="number" id="footerPositionInput" />
+			</div>
+			</br>
+			</br>
+		</tab> 
+		<tab heading="Columns" class="form-group">
+			</br>
+			<div class="row">
+				<div class="col-md-2">
+					<label class="checkbox-inline">
+	  					<input type="checkbox">Page Columns
+					</label>
+				</div>
+				<div class="col-md-2">
+					<label class="checkbox-inline">
+	  					<input type="checkbox">Title Columns
+					</label>
+				</div>
+				<div class="col-md-2">
+					<label class="checkbox-inline">
+	  					<input type="checkbox">Intro Columns
+					</label>
+				</div>
+			</div>
+			</br>
+			</br>
+			<div class="row">
+				<div class="col-md-2">
+					<label class="checkbox-inline">
+	  					<input type="checkbox">Line Separator
+					</label>
+				</div>
+				<div class="col-md-1">
+					<label for="columnSizeInput1">Column Offset</label>
+				</div>
+				<div class="col-md-1"> 
+					<input class="form-control" type="number" id="columnSizeInput1" />
+				</div>
+				<div class="col-md-1">
+					<label for="columnSizeInput2">Column Gap Width</label>
+				</div>
+				<div class="col-md-1">  
+					<input class="form-control" type="number" id="columnSizeInput2" />
+				</div>
+			</div>
+		</tab> 
+		<tab heading="Printer Options" class="form-group">
+		</tab> 
+		<tab heading="Background" class="form-group">
+		</tab>
+		<tab heading="Body Text" class="form-group">
+		</tab>
+		<tab heading="Misc" class="form-group">
+		</tab>
+	</tabset>
+	</br>
 
-  Inside Margin:
-  <input class="form-control" type="number" data-ng-model="layout.insideMargin"/>
-  </br>
 
-  Outside Margin:
-  <input class="form-control" type="number" data-ng-model="layout.outsideMargin"/>
-  </br>
+	<div class="row">
 
-  Top Margin:
-  <input class="form-control" type="number" data-ng-model="layout.topMargin"/>
-  </br>
+		<!-- left page -->
+		<div class="pages" id="page-left" data-ng-style="layout.css.leftPage">
+			<div class="margins" data-ng-style="layout.css.leftMargins">
+				<p>Qui occaecati incidunt delectus itaque maiores. Accusantium
+					blanditiis debitis numquam et ad modi autem. Omnis exercitationem
+					consectetur tenetur veniam. Est qui et non occaecati.</p>
+			</div>
+		</div>
 
-  Bottom Margin:
-  <input class="form-control" type="number" data-ng-model="layout.bottomMargin"/>
-  </br>
+		<!-- right page -->
+		<div class="pages" id="page-right"
+			data-ng-style="layout.css.rightPage">
+			<div class="margins" data-ng-style="layout.css.rightMargins">
+				<p>Sed quod voluptas nihil. Dolores molestiae in soluta.
+					Distinctio veniam illum et velit aut. Voluptates tenetur et ab non
+					quo consectetur.</p>
+			</div>
+		</div>
 
-
-
-  <div class="row">
-
-    <!-- left page -->
-    <div class="pages" id="page-left" data-ng-style="layout.css.leftPage">
-      <div class="margins" data-ng-style="layout.css.leftMargins">
-        <p>
-        Qui occaecati incidunt delectus itaque maiores. Accusantium blanditiis
-        debitis numquam et ad modi autem. Omnis exercitationem consectetur
-        tenetur veniam. Est qui et non occaecati.
-        </p>
-      </div>
-    </div>
-
-    <!-- right page -->
-    <div class="pages" id="page-right" data-ng-style="layout.css.rightPage">
-      <div class="margins" data-ng-style="layout.css.rightMargins">
-        <p>
-        Sed quod voluptas nihil. Dolores molestiae in soluta. Distinctio veniam
-        illum et velit aut. Voluptates tenetur et ab non quo consectetur.
-        </p>
-      </div>
-    </div>
-
-  </div>
+	</div>
 
 </div>
