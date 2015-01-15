@@ -1,6 +1,6 @@
 <div data-ng-cloak data-ng-controller="compositionCtrl"
 	style="text-align: center;">
-	<h3 align= "left">Component Name</h3>
+	<h3 align="left">Component Name</h3>
 	<div class="control-bar">
 		<div class="button-bar">
 			<button type="button" class="btn btn-primary btn-sm" data-ng-click="">Save
@@ -25,31 +25,35 @@
 				data-ng-click="decreasePage()">&laquo</button>
 		</div>
 		<div class="page-select">
-		page: <input data-ng-keyup="$event.keyCode==13 && update()"
+			page: <input data-ng-keyup="$event.keyCode==13 && update()"
 				class="pageNumber" data-ng-model="pageInput">
-			<button type="button" class="btn btn-primary btn-sm" data-ng-click="update()">GO</button>
+			<button type="button" class="btn btn-primary btn-sm"
+				data-ng-click="update()">GO</button>
 		</div>
 	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="text" data-ng-bind-html="bookHTML"
+					data-ng-click="textClick()" composition-selection
+					paragraph-node="paragraphNode" content="bookHTML"></div>
 
-	<div class="left">
-		<div class="text" data-ng-bind-html="bookHTML"
-			data-ng-click="textClick()" composition-selection
-			paragraph-node="paragraphNode" content="bookHTML"></div>
-
-		<div class="properties">
-			<p>Chapter: {{chapter}}, verse: {{verse}}</p>
-			Growth factor: <input class="form-control"
-				style="display: inline-block; width: 50%;" type="number"
-				data-ng-model="paragraphGrowthFactor" />
+				<div class="properties">
+					<p>Chapter: {{chapter}}, verse: {{verse}}</p>
+					Growth factor: <input class="form-control"
+						style="display: inline-block; width: 50%;" type="number"
+						data-ng-model="paragraphGrowthFactor" />
+				</div>
+			</div>
+			
+			<div class="col-sm-4">
+				<div style="margin-top: 10px"></div>
+			</div>
+			
+			<div class="col-sm-4"
+				data-ng-init="renderedImage='http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png'">
+				<img data-ng-src="{{renderedImage}}" class="triColor" />
+			</div>
 		</div>
-
-
-	</div>
-	<div class="center">
-		<div style="margin-top: 10px"></div>
-	</div>
-	<div class="right"
-		data-ng-init="renderedImage='http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png'">
-		<img data-ng-src="{{renderedImage}}" class="triColor" />
 	</div>
 </div>
