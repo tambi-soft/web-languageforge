@@ -15,11 +15,77 @@ class RapmumaSettingModelLayout
 	 * @var integer
 	 */
 	public $insideMargin;
-	
+
 	/**
 	 * @var integer
 	 */
 	public $outsideMargin;
+
+	/**
+	 * @var integer
+	 */
+	public $topMargin;
+
+	/**
+	 * @var integer
+	 */
+	public $bottomMargin;
+
+	/**
+	 * @var integer
+	 */
+	public $pageWidth;
+
+	/**
+	 * @var integer
+	 */
+	public $pageHeight;
+
+	/**
+	 * @var Boolean
+	 */
+	public $hasGutter;
+
+	/**
+	 * @var integer
+	 */
+	public $gutterSize;
+
+	/**
+	 * @var Boolean
+	 */
+	public $introColumnsTwo;
+
+	/**
+	 * @var Boolean
+	 */
+	public $titleColumnsTwo;
+
+	/**
+	 * @var Boolean
+	 */
+	public $bodyColumnsTwo;
+
+	/**
+	 * @var integer
+	 */
+	public $columnSpacingSize;
+
+	/**
+	 * @var Boolean
+	 */
+	public $showColumnSeparatorLine;
+
+	/**
+	 * @var integer
+	 */
+	public $headerPosition;
+
+	/**
+	 * @var integer
+	 */
+	public $footerPosition;
+
 }
 
 class RapumaSettingModel extends \models\mapper\MapperModel
@@ -29,7 +95,7 @@ class RapumaSettingModel extends \models\mapper\MapperModel
         $this->id = new Id();
 
         $this->layout = new RapmumaSettingModelLayout();
-        
+
         $this->workflowState = "open"; // default workflow state
         $this->description = '';
         $this->title = '';
@@ -66,7 +132,7 @@ class RapumaSettingModel extends \models\mapper\MapperModel
      * @var RapumaSettingModelLayout
      */
     public $layout;
-    
+
     /**
      * @var string
      */
