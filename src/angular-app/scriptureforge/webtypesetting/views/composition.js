@@ -72,4 +72,12 @@ angular.module(
 						//$scope.selectedText = "clicked";
 					};
 					$scope.getBookHTML();
+					$scope.$watch('paragraphNode', function(){
+						$scope.selectedText = $scope.paragraphNode.innerHTML;
+						$scope.verse = $scope.paragraphNode.firstElementChild.innerText;
+						while(!$scope.paragraphNode.innerText || $scope.paragraphNode.innerText.indexOf("Chapter") == -1){
+							$scope.paragraphNode = $scope.paragraphNode.previousSibling;
+						}
+						$scope.chapter = $scope.paragraphNode.innerText.replace("Chapter ", "");
+					});
 				} ]);

@@ -14,10 +14,12 @@
 
 	<div class="left">
 		<div class="text" data-ng-bind-html="bookHTML" data-ng-click="textClick()"
-		composition-selection sil-selected-text="selectedText"
+		composition-selection paragraph-node="paragraphNode"
         content="bookHTML"></div>
 		
-		<div class="properties">{{selectedText}}</div>
+		<div class="properties">
+		<p> Chapter: {{chapter}}, verse: {{verse}}</p>
+		</div>
 
 
 	</div>
