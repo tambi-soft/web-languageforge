@@ -1,6 +1,6 @@
 <div data-ng-cloak data-ng-controller="compositionCtrl"
 	style="text-align: center;">
-	<h3>Hello webtypesetting world!</h3>
+	<h3 align= "left">Component Name</h3>
 	<div class="control-bar">
 		<div class="button-bar">
 			<button type="button" class="btn btn-primary btn-sm" data-ng-click="">Save
@@ -21,11 +21,13 @@
 				data-ng-style="{width: 100/numPages + '%', 'background-color':page}"></span>
 		</div>
 		<div class="prev">
-			page: <input data-ng-keyup="$event.keyCode==13 && update()"
-				class="pageNumber" data-ng-model="pageInput">
-			<button type="button" class="btn btn-primary btn-sm" data-ng-click="update()">GO</button>
 			<button type="button" class="btn btn-link "
 				data-ng-click="decreasePage()">&laquo</button>
+		</div>
+		<div class="page-select">
+		page: <input data-ng-keyup="$event.keyCode==13 && update()"
+				class="pageNumber" data-ng-model="pageInput">
+			<button type="button" class="btn btn-primary btn-sm" data-ng-click="update()">GO</button>
 		</div>
 	</div>
 
