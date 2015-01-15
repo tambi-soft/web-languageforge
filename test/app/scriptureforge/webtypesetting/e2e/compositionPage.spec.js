@@ -21,7 +21,21 @@ describe('the composition page', function(){
 		
 		it('has page navigation', function(){
 			expect(true).toBe(true);
+			expect(compositionPage.slider.leftButton.isPresent()).toBe(true);
+			expect(compositionPage.slider.rightButton.isPresent()).toBe(true);
+			expect(compositionPage.slider.goButton.isPresent()).toBe(true);
 			expect(compositionPage.slider.pageInput.isPresent()).toBe(true);
+			
+			expect(compositionPage.slider.pageInput.getAttribute('value')).toEqual('1');
+			
+			compositionPage.slider.rightButton.click();
+			expect(compositionPage.slider.pageInput.getAttribute('value')).toEqual('2');
+			
+			compositionPage.slider.rightButton.click();
+			expect(compositionPage.slider.pageInput.getAttribute('value')).toEqual('3');
+			
+			compositionPage.slider.leftButton.click();
+			expect(compositionPage.slider.pageInput.getAttribute('value')).toEqual('2');
 		});
 		
 		//it('has slider navigation', function(){});
