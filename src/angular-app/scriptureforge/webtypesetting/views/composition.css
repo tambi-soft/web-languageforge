@@ -41,12 +41,13 @@
 .progress-bar {
 	margin-top: 10px;
 	margin-bottom: 20px;
-	margin-left:350px;
+	margin-left:10px;
 	width: 50%;
 	height: 12px;
 	/*background: #f2f1f1;*/
 	/*border: 1px solid #dfdfdf;
 	box-shadow: 0 0 2px #D5D4D4 inset;*/
+	float: right;
   	position: relative;
 }
 
@@ -111,6 +112,11 @@
 	float:left;
 }
 
-.slider-bar{
+.prev{
+	float:right;
+}
 
+.next{
+	float:right;
+	margin-left:10px;
 }

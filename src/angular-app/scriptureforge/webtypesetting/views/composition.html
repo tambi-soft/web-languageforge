@@ -1,40 +1,48 @@
 <div data-ng-cloak data-ng-controller="compositionCtrl"
 	style="text-align: center;">
 	<h3>Hello webtypesetting world!</h3>
-	<button class="render" data-ng-click="">Render!</button>
-	<div class="progress-bar progress-bar-slider">
-		<input class="progress-slider" type="range" min="0" max="{{numPages}}"
-			data-ng-model="selectedPage">
-		<div class="inner"
-			data-ng-style="{ width: (selectedPage)/numPages*100 + '%' || '0%' }"></div>
-		<span class="sliderRanges"
-			data-ng-repeat="page in pages track by $index"
-			data-ng-style="{width: 100/numPages + '%', 'background-color':page}"></span>
+	<div class="control-bar">
+		<div class="button-bar">
+			<button type="button" class="btn btn-primary" data-ng-click="">Save All</button>
+			<button type="button" class="btn btn-primary" data-ng-click="">Render!</button>
+		</div>
+		<div class="next">
+			<button type="button" class="btn btn-link" data-ng-click="increasePage()">&raquo</button>
+		</div>
+		<div class="progress-bar progress-bar-slider">
+			<input class="progress-slider" type="range" min="0"
+				max="{{numPages}}" data-ng-model="selectedPage">
+			<div class="inner"
+				data-ng-style="{ width: (selectedPage)/numPages*100 + '%' || '0%' }"></div>
+			<span class="sliderRanges"
+				data-ng-repeat="page in pages track by $index"
+				data-ng-style="{width: 100/numPages + '%', 'background-color':page}"></span>
+		</div>
+		<div class="prev">
+			<button type="button" class="btn btn-link " data-ng-click="decreasePage()">&laquo</button>
+		</div>
 	</div>
 
 	<div class="left">
-		<div class="text" data-ng-bind-html="bookHTML" data-ng-click="textClick()"
-		composition-selection paragraph-node="paragraphNode"
-        content="bookHTML"></div>
-		
+		<div class="text" data-ng-bind-html="bookHTML"
+			data-ng-click="textClick()" composition-selection
+			paragraph-node="paragraphNode" content="bookHTML"></div>
+
 		<div class="properties">
 		<p> Chapter: {{chapter}}, verse: {{verse}}</p>
 		</div>
 
 
 	</div>
-	<div class="center">
-		<div>
-			<button data-ng-click="decreasePage()">left</button>
-			<button data-ng-click="increasePage()">right</button>
-		</div>
-		<div style="margin-top:10px">
-			page: <input data-ng-keyup="$event.keyCode==13 && update()" class="pageNumber" data-ng-model="pageInput" >
+	 	<div class="center">
+		<div style="margin-top: 10px">
+			page: <input data-ng-keyup="$event.keyCode==13 && update()"
+				class="pageNumber" data-ng-model="pageInput">
 			<button data-ng-click="update()">GO</button>
 		</div>
-	</div>
+	</div> 
 	<div class="right"
 		data-ng-init="renderedImage='http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png'">
-		<img data-ng-src="{{renderedImage}}"  class="triColor"/>
+		<img data-ng-src="{{renderedImage}}" class="triColor" />
 	</div>
 </div>
