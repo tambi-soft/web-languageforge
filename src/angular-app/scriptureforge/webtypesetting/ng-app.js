@@ -71,5 +71,10 @@ angular.module('webtypesetting',
 	}])
 	.controller('MainCtrl', ['$scope', function($scope) {
 		$scope.selectedBtn = 0;
+		
+        $scope.settingsButton = {
+            isopen: false
+        };
+
 	}])
 	;
