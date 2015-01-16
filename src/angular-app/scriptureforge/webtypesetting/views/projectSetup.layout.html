@@ -1,26 +1,28 @@
 <div class="container" data-ng-cloak data-ng-controller="projectSetupLayoutCtrl as layout">
     <h2>Layout Settings</h2>
+    <span class="save-notice pull-right text-muted">{{saveNotice()}}</span>
+    <form name="layoutForm" novalidate>
     <tabset style="text-align: center;"> 
         <tab heading="Margins" class="form-group"> 
             <br />
             <div class="col-md-2">
-                <label for="insideMarginInput">Inside Margin</label> <input
-                    class="form-control" type="number"
+                <label for="insideMarginInput">Inside Margin</label>
+                <input class="form-control" type="number"
                     data-ng-model="layout.insideMargin" id="insideMarginInput" />
             </div>
             <div class="col-md-2">
-                <label for="outsideMarginInput">Outside Margin</label> <input
-                    class="form-control" type="number"
+                <label for="outsideMarginInput">Outside Margin</label>
+                <input class="form-control" type="number"
                     data-ng-model="layout.outsideMargin" id="outsideMarginInput" />
             </div>
             <div class="col-md-2">
-                <label for="topMarginInput">Top Margin</label> <input
-                    class="form-control" type="number" data-ng-model="layout.topMargin"
+                <label for="topMarginInput">Top Margin</label>
+                <input class="form-control" type="number" data-ng-model="layout.topMargin"
                     id="topMarginInput" />
             </div>
             <div class="col-md-2">
-                <label for="bottomMarginInput">Bottom Margin</label> <input
-                    class="form-control" type="number"
+                <label for="bottomMarginInput">Bottom Margin</label>
+                <input class="form-control" type="number"
                     data-ng-model="layout.bottomMargin" id="bottomMarginInput" />
             </div>
             <br />
@@ -103,6 +105,7 @@
         <tab heading="Misc" class="form-group">
         </tab>
     </tabset>
+    </form>
     <br />
 
     <div class="row">
