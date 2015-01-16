@@ -3,7 +3,7 @@
 
 				<?php foreach ($columns as $num => $column): ?>
 
-				<div class="span4 sf-3up-<?php echo $num + 1 ?>">
+				<div class="col-md-4 sf-3up-<?php echo $num + 1 ?>">
 					<h3 class="sf-jamaican-yellow"><?php echo $column['title'] ?></h3>
 					<p><?php echo $column['summary']?></p>
 					<?php if ($column['target_url'] != '#'):?>

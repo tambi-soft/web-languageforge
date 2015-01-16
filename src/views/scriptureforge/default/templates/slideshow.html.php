@@ -1,7 +1,7 @@
 		<div id="promotion" class="container">
 			<div id="slides">
 				<div id="promotion-ribbon"></div>
-				<div id="promotionCutout"></div>
+				<!-- <div id="promotionCutout"></div> -->
 				<div class="slides_container">
 
 					<?php foreach ($slides as $slide): ?>
