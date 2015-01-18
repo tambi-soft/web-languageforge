@@ -8,6 +8,7 @@ use models\mapper\IdReference;
 
 use models\mapper\Id;
 use models\mapper\MapOf;
+use models\mapper\ArrayOf;
 
 class SettingModelLayout
 {
@@ -95,19 +96,15 @@ class SettingModel extends \models\mapper\MapperModel
         $this->id = new Id();
 
         $this->layout = new SettingModelLayout();
+        $this->assets = new ArrayOf(function ($data) {
+			return new IdReference();
+        });
 
-        $this->templateName = "";
         $this->workflowState = "open"; // default workflow state
         $this->description = '';
         $this->title = '';
         $this->dateCreated = new \DateTime();
         $this->dateEdited = new \DateTime();
-        $this->textRef = new IdReference();
-//         $this->answers = new MapOf(
-//             function () {
-//                 return new AnswerModel();
-//             }
-//         );
 
         $databaseName = $projectModel->databaseName();
         parent::__construct(SettingModelMongoMapper::connect($databaseName), $id);
@@ -135,11 +132,10 @@ class SettingModel extends \models\mapper\MapperModel
     public $layout;
     
     /**
-     *
-     * @var string - optional name if settings are a template
+     * @var ArrayOf
      */
-    public $templateName;
-
+    public $assets;
+    
     /**
      * @var string
      */
@@ -159,16 +155,6 @@ class SettingModel extends \models\mapper\MapperModel
      * @var \DateTime
      */
     public $dateEdited;
-
-    /**
-     * @var IdReference - Id of the referring text
-     */
-    public $textRef;
-
-    /**
-     * @var MapOf<AnswerModel>
-     */
-    public $answers;
 
     /**
      *

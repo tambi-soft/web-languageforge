@@ -1,44 +1,43 @@
 <?php
 
-
-use models\AnswerModel;
-use models\CommentModel;
-use models\QuestionModel;
-use models\TextModel;
-use models\scriptureforge\webtypesetting\TypesettingSettingsCommands;
+use models\scriptureforge\webtypesetting\SettingModel;
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingsCommands;
+use models\mapper\JsonDecoder;
+use models\mapper\JsonEncoder;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
-class TestWebtypesettingsSettingsCommands extends UnitTestCase
+class TestTypesettingSettingsCommands extends UnitTestCase
 {
-    public function testDeleteQuestions_NoThrow()
+    public function testUpdateReadBack_ReadsBack()
     {
         $e = new MongoTestEnvironment();
         $e->clean();
 
-        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-        $projectId = $project->id->asString();
+        $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $projectModel->id->asString();
         
-        // setup preconditions // REVIEW: Somewhat inane comment CP 2015-01
-        $settings = array(
-        	'fontSize' => 14,
-        	'illustrations' => array('one'),
-        	'name' => 'my first template',
-        );
+        $model = new SettingModel($projectModel);
+        $model->layout->bodyColumnsTwo = true;
+        $model->layout->gutterSize = 2;
+        $model->layout->insideMargin = 3;
+        $model->layout->outsideMargin = 4;
         
-        // method under test // REVIEW: Somewhat inane comment CP 2015-01
-        // REVIEW: Why do we need a createTemplate method?  We could just do ::saveSettingsAs($settingsID, $templateName) CP 2015-01
-        $templateId = TypesettingSettingsCommands::createTemplate($projectId, $settings);
+        $settings = JsonEncoder::encode($model);
         
-        // assertions to make sure things are working // REVIEW: Somewhat inane comment CP 2015-01
-        $templateModel = new SettingsTemplateModel($project, $projectId);
+        $result1 = TypesettingSettingsCommands::updateSettings($projectId, $settings);
+//         var_dump($result1);
         
-//         $templateModel->read(
+        $settingsId = $result1['id'];
+        $this->assertNotNull($settingsId);
         
-        $this->assertEqual($templateModel->fontSize, $settings['fontSize']);
-        $this->assertEqual($templateModel->illustrations->getArrayCopy(), $settings['illustrations']);
-        $this->assertEqual($templateModel->name, $settings['name']);
+        $result2 = TypesettingSettingsCommands::readSettings($projectId, $settingsId); 
+//         var_dump($result2);
+        
+        $this->assertEqual($result1, $result2);
+        
+        
     }
 }
