@@ -1,31 +1,32 @@
 <?php
-namespace models\scriptureforge\webtypesetting;
+namespace models\scriptureforge\webtypesetting\commands;
 
 use models\ProjectModel;
+use models\scriptureforge\webtypesetting\SettingModel;
+use models\mapper\JsonEncoder;
 
-class WebtypesettingSettingsCommands {
+class TypesettingSettingsCommands {
 	
 	/**
-	 * 
-	 * @param ProjectModel $project
+	 * Return a single Settings instance for the given $settingsId 
+	 * @param string $projectId
+	 * @param string $settingsId
 	 */
-	public static function readSettings($projectId) {
+	public static function readSettings($projectId, $settingsId) {
 		$project = new ProjectModel($projectId);
-		$webtypesettingProject = new WebtypesettingProject($project);
-		$config = $webtypesettingProject->readProjectConfig();
-
-		// provide filtering of properties
-		$generalSettingsAllowed = array('box', 'lines', 'cropmarks');
-		$projectInfoAllowed = array('languageCode', 'projectDescription', 'isbnNumber', 'projectName', 'typesetters', 'translators', 'projectTitle', 'finishDate', 'startDate');
-
-		$settings = array('GeneralSettings' => array(), 'ProjectInfo' => array());
-		foreach ($generalSettingsAllowed as $prop) {
-			$settings['GeneralSettings'][$prop] = $config['GeneralSettings'][$prop];
-		}
-		foreach ($projectInfoAllowed as $prop) {
-			$settings['ProjectInfo'][$prop] = $config['ProjectInfo'][$prop];
-		}
-		return $settings;
+		$model = new SettingModel($projectModel, $settingsId);
+		return JsonEncoder::encode($model);
+	}
+	
+	/**
+	 * Return a single Settings instance for the latest set of settings available
+	 * @param string $projectId
+	 * @param string $settingsId
+	 */
+	public static function readSettings($projectId, $settingsId) {
+		$project = new ProjectModel($projectId);
+		$model = new SettingModel($projectModel, $settingsId);
+		return JsonEncoder::encode($model);
 	}
 	
 	public static function updateSettings($projectId, $settings) {

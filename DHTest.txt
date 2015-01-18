@@ -1,1 +1,0 @@
-This is a file testing DH's ability to commit to our team's Git repository.

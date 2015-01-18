@@ -5,9 +5,9 @@ use models\AnswerModel;
 use models\CommentModel;
 use models\QuestionModel;
 use models\TextModel;
-use models\scriptureforge\webtypesetting\WebtypesettingSettingsCommands;
+use models\scriptureforge\webtypesetting\TypesettingSettingsCommands;
 
-require_once dirname(__FILE__) . '/../../TestConfig.php';
+require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
@@ -21,20 +21,21 @@ class TestWebtypesettingsSettingsCommands extends UnitTestCase
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
         
-        // setup preconditions
+        // setup preconditions // REVIEW: Somewhat inane comment CP 2015-01
         $settings = array(
         	'fontSize' => 14,
         	'illustrations' => array('one'),
         	'name' => 'my first template',
         );
         
-        // method under test
-        $templateId = WebtypesettingSettingsCommands::createTemplate($projectId, $settings);
+        // method under test // REVIEW: Somewhat inane comment CP 2015-01
+        // REVIEW: Why do we need a createTemplate method?  We could just do ::saveSettingsAs($settingsID, $templateName) CP 2015-01
+        $templateId = TypesettingSettingsCommands::createTemplate($projectId, $settings);
         
-        // assertions to make sure things are working
+        // assertions to make sure things are working // REVIEW: Somewhat inane comment CP 2015-01
         $templateModel = new SettingsTemplateModel($project, $projectId);
         
-        $templateModel->read(
+//         $templateModel->read(
         
         $this->assertEqual($templateModel->fontSize, $settings['fontSize']);
         $this->assertEqual($templateModel->illustrations->getArrayCopy(), $settings['illustrations']);

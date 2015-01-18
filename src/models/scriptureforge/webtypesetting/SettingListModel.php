@@ -1,7 +1,7 @@
 <?php
 namespace models\scriptureforge\webtypesetting;
 
-class RapumaSettingListModel extends \models\mapper\MapperListModel
+class SettingListModel extends \models\mapper\MapperListModel
 {
 
 	public function __construct($projectModel, $templatesOnly = false)
@@ -13,7 +13,7 @@ class RapumaSettingListModel extends \models\mapper\MapperListModel
 			$query = array('description' => array('$regex' => ''));
 		}
 		parent::__construct(
-				RapumaSettingModelMongoMapper::connect($projectModel->databaseName()),
+				SettingModelMongoMapper::connect($projectModel->databaseName()),
 				$query,
 				array('description')
 		);
