@@ -8,8 +8,8 @@ class RapumaAssetListModel extends \models\mapper\MapperListModel
 	{
 		parent::__construct(
 				RapumaAssetModelMongoMapper::connect($projectModel->databaseName()),
-				array('description' => array('$regex' => '')),
-				array('description')
+				array('title' => array('$regex' => '')),
+				array('title')
 		);
 	}
 

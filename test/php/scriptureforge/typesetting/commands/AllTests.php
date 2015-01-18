@@ -3,12 +3,12 @@
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 
-class AllWebtypesettingsCommandsTests extends TestSuite
+class AllTypesettingCommandTests extends TestSuite
 {
     public function __construct()
     {
         parent::__construct();
-        $this->addFile(TestPath . 'scriptureforge/webtypesettings/commands/CompositionCommands_Test.php');
+        $this->addFile(TestPath . 'scriptureforge/typesetting/commands/CompositionCommands_Test.php');
     }
 
 }
