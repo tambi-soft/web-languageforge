@@ -4,7 +4,7 @@ use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCo
 use models\scriptureforge\webtypesetting\dto\WebtypesettingDiscussionListPageDto;
 
 use libraries\scriptureforge\sfchecks\Email;
-use models\scriptureforge\webtypesetting\WebtypesettingSettingsCommands;
+use models\scriptureforge\webtypesetting\TypesettingSettingsCommands;
 
 use libraries\scriptureforge\sfchecks\ParatextExport;
 use libraries\shared\palaso\exceptions\UserNotAuthenticatedException;
@@ -607,12 +607,20 @@ class sf
     	return array('pdfUrl' => "assets/ngTraining.pdf");
     }
     
-	public function typesetting_settings_read() {
-		return WebtypesettingSettingsCommands::readSettings($this->_projectId);
+	public function typesetting_settings_list() {
+		return TypesettingSettingsCommands::readSettings($this->_projectId);
+	}
+	
+    public function typesetting_settings_readCurrent() {
+		return TypesettingSettingsCommands::readSettingsCurrent($this->_projectId);
+	}
+	
+    public function typesetting_settings_read($id) {
+		return TypesettingSettingsCommands::readSettings($this->_projectId, $id);
 	}
 	
 	public function typesetting_settings_update($settings) {
-		return WebtypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
+		return TypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
 	}
 	
 	public function typesetting_composition_getBookHTML($bookId) {

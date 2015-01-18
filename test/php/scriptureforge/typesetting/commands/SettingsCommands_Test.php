@@ -5,7 +5,7 @@ use models\AnswerModel;
 use models\CommentModel;
 use models\QuestionModel;
 use models\TextModel;
-use models\scriptureforge\webtypesetting\WebtypesettingSettingsCommands;
+use models\scriptureforge\webtypesetting\TypesettingSettingsCommands;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
@@ -30,7 +30,7 @@ class TestWebtypesettingsSettingsCommands extends UnitTestCase
         
         // method under test // REVIEW: Somewhat inane comment CP 2015-01
         // REVIEW: Why do we need a createTemplate method?  We could just do ::saveSettingsAs($settingsID, $templateName) CP 2015-01
-        $templateId = WebtypesettingSettingsCommands::createTemplate($projectId, $settings);
+        $templateId = TypesettingSettingsCommands::createTemplate($projectId, $settings);
         
         // assertions to make sure things are working // REVIEW: Somewhat inane comment CP 2015-01
         $templateModel = new SettingsTemplateModel($project, $projectId);

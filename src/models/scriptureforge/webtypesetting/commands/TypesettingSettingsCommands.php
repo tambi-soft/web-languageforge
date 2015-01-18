@@ -1,9 +1,9 @@
 <?php
-namespace models\scriptureforge\webtypesetting;
+namespace models\scriptureforge\webtypesetting\commands;
 
 use models\ProjectModel;
 
-class WebtypesettingSettingsCommands {
+class TypesettingSettingsCommands {
 	
 	/**
 	 * 
