@@ -2,8 +2,10 @@
 namespace models\scriptureforge\webtypesetting\commands;
 
 use models\ProjectModel;
-use models\scriptureforge\webtypesetting\SettingModel;
 use models\mapper\JsonEncoder;
+use models\mapper\JsonDecoder;
+use models\scriptureforge\webtypesetting\SettingModel;
+use models\scriptureforge\webtypesetting\SettingListModel;
 
 class TypesettingSettingsCommands {
 	
@@ -13,7 +15,7 @@ class TypesettingSettingsCommands {
 	 * @param string $settingsId
 	 */
 	public static function readSettings($projectId, $settingsId) {
-		$project = new ProjectModel($projectId);
+		$projectModel = ProjectModel::getById($projectId);
 		$model = new SettingModel($projectModel, $settingsId);
 		return JsonEncoder::encode($model);
 	}
@@ -21,49 +23,27 @@ class TypesettingSettingsCommands {
 	/**
 	 * Return a single Settings instance for the latest set of settings available
 	 * @param string $projectId
-	 * @param string $settingsId
 	 */
-	public static function readSettings($projectId, $settingsId) {
-		$project = new ProjectModel($projectId);
+	public static function readSettingsLatest($projectId) {
+		$projectModel = ProjectModel::getById($projectId);
 		$model = new SettingModel($projectModel, $settingsId);
 		return JsonEncoder::encode($model);
 	}
 	
+	/**
+	 * Writes the Setting object from the (possibly partial) $settings json object.
+	 * @param string $projectId
+	 * @param array $settings A json like array of settings
+	 * @return array
+	 */
 	public static function updateSettings($projectId, $settings) {
-		$project = new ProjectModel($projectId);
-		$webtypesettingProject = new WebtypesettingProject($project);
-		$config = $webtypesettingProject->readProjectConfig();
-
-		// provide filtering of properties
-		$generalSettingsAllowed = array('box', 'lines', 'cropmarks');
-		$projectInfoAllowed = array('languageCode', 'projectDescription', 'isbnNumber', 'projectName', 'typesetters', 'translators', 'projectTitle', 'finishDate', 'startDate');
-
-		foreach ($generalSettingsAllowed as $prop) {
-			$config['GeneralSettings'][$prop] = $settings['GeneralSettings'][$prop];
-		}
-		foreach ($projectInfoAllowed as $prop) {
-			$config['ProjectInfo'][$prop] = $settings['ProjectInfo'][$prop];
-		}
-		$webtypesettingProject->updateProjectConfig($config);
+		$projectModel = ProjectModel::getById($projectId);
+		$id = array_key_exists('id', $settings) ? $settings['id'] : '';
+		$model = new SettingModel($projectModel, $id);
+		JsonDecoder::decode($model, $settings);
+		$model->write();
+		return JsonEncoder::encode($model);
 	}
-	
-	/**
-	 * 
-	 * @var string
-	 */
-	public $fontSize;
-	
-	/**
-	 * 
-	 * @var string
-	 */
-	public $illustrations;
-	
-	/**
-	 * 
-	 * @var string
-	 */
-	public $name;
 	
 }
 

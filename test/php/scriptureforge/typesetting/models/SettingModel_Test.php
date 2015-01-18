@@ -128,6 +128,7 @@ class TestSettingModel extends UnitTestCase
 
     }
     
+/* TODO Move to template test file CP 2015-01    
     public function testTemplate_Works(){
     	$e = new MongoTestEnvironment();
     	$projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
@@ -163,5 +164,5 @@ class TestSettingModel extends UnitTestCase
     	$this->assertEqual(1, $list->count);
     	
     }
-
+*/
 }
