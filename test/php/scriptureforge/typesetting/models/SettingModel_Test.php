@@ -1,8 +1,7 @@
 <?php
 use models\ProjectModel;
-
-use models\scriptureforge\webtypesetting\RapumaSettingListModel;
-use models\scriptureforge\webtypesetting\RapumaSettingModel;
+use models\scriptureforge\webtypesetting\SettingListModel;
+use models\scriptureforge\webtypesetting\SettingModel;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
@@ -10,9 +9,8 @@ require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
 require_once SourcePath . "models/ProjectModel.php";
-// require_once SourcePath . "models/RapumaSettingModel.php";
-
-class TestRapumaSettingModel extends UnitTestCase
+// 
+class TestSettingModel extends UnitTestCase
 {
     public function __construct()
     {
@@ -26,12 +24,12 @@ class TestRapumaSettingModel extends UnitTestCase
         $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
         // List
-        $list = new RapumaSettingListModel($projectModel);
+        $list = new SettingListModel($projectModel);
         $list->read();
         $this->assertEqual(0, $list->count);
 
         // Create
-        $setting = new RapumaSettingModel($projectModel);
+        $setting = new SettingModel($projectModel);
         $setting->layout->insideMargin = 1;
         $setting->layout->outsideMargin = 2;
         $setting->layout->topMargin = 3;
@@ -57,7 +55,7 @@ class TestRapumaSettingModel extends UnitTestCase
         $this->assertEqual($id, $setting->id->asString());
 
         // Read back
-        $otherSetting = new RapumaSettingModel($projectModel, $id);
+        $otherSetting = new SettingModel($projectModel, $id);
         $this->assertEqual($id, $otherSetting->id->asString());
         $this->assertEqual(1, $otherSetting->layout->insideMargin);
         $this->assertEqual(2, $otherSetting->layout->outsideMargin);
@@ -97,7 +95,7 @@ class TestRapumaSettingModel extends UnitTestCase
         $otherSetting->write();
 
         // Read back
-        $otherSetting = new RapumaSettingModel($projectModel, $id);
+        $otherSetting = new SettingModel($projectModel, $id);
         $this->assertEqual('OtherSetting', $otherSetting->description);
         $this->assertEqual($id, $otherSetting->id->asString());
         $this->assertEqual(100, $otherSetting->layout->insideMargin);
@@ -122,7 +120,7 @@ class TestRapumaSettingModel extends UnitTestCase
         $this->assertEqual(1, $list->count);
 
         // Delete
-        RapumaSettingModel::remove($projectModel->databaseName(), $id);
+        SettingModel::remove($projectModel->databaseName(), $id);
 
         // List
         $list->read();
@@ -135,12 +133,12 @@ class TestRapumaSettingModel extends UnitTestCase
     	$projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
     	
     	// List
-    	$list = new RapumaSettingListModel($projectModel, true);
+    	$list = new SettingListModel($projectModel, true);
     	$list->read();
     	$this->assertEqual(0, $list->count);
     	
     	// Create Template
-    	$setting = new RapumaSettingModel($projectModel);
+    	$setting = new SettingModel($projectModel);
     	$setting->templateName = "Template 1";
     	
     	$id = $setting->write();
@@ -149,12 +147,12 @@ class TestRapumaSettingModel extends UnitTestCase
     	$this->assertEqual($id, $setting->id->asString());
     	
     	// List
-    	$list = new RapumaSettingListModel($projectModel, true);
+    	$list = new SettingListModel($projectModel, true);
     	$list->read();
     	$this->assertEqual(1, $list->count);
     	
     	// Create NonTemplate
-    	$setting = new RapumaSettingModel($projectModel);
+    	$setting = new SettingModel($projectModel);
     	 
     	$id = $setting->write();
     	$this->assertNotNull($id);
@@ -162,31 +160,10 @@ class TestRapumaSettingModel extends UnitTestCase
     	$this->assertEqual($id, $setting->id->asString());
     	
     	// List
-    	$list = new RapumaSettingListModel($projectModel, true);
+    	$list = new SettingListModel($projectModel, true);
     	$list->read();
     	$this->assertEqual(1, $list->count);
     	
     }
-/*
-    public function testTextReference_NullRefValidRef_AllowsNullRef()
-    {
-        $projectModel = new MockProjectModel();
-        $mockTextRef = (string) new \MongoId();
 
-        // Test create with null textRef
-        $setting = new RapumaSettingModel($projectModel);
-        $id = $setting->write();
-
-        $otherSetting = new RapumaSettingModel($projectModel, $id);
-        $this->assertEqual('', $otherSetting->textRef->id);
-
-        // Test update with textRef
-        $setting->textRef->id = $mockTextRef;
-        $setting->write();
-
-        $otherSetting = new RapumaSettingModel($projectModel, $id);
-        $this->assertEqual($mockTextRef, $otherSetting->textRef->id);
-
-    }
-*/
 }

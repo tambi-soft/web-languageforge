@@ -9,7 +9,7 @@ class TypesettingSettingsCommands {
 	 * 
 	 * @param ProjectModel $project
 	 */
-	public static function readSettings($projectId) {
+	public static function readSettings($projectId, $settingsId) {
 		$project = new ProjectModel($projectId);
 		$webtypesettingProject = new WebtypesettingProject($project);
 		$config = $webtypesettingProject->readProjectConfig();
