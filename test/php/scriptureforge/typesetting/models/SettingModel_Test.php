@@ -24,7 +24,7 @@ class TestSettingModel extends UnitTestCase
         $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
         // List
-        $list = new SettingListModel($projectModel);
+        $list = SettingListModel::all($projectModel);
         $list->read();
         $this->assertEqual(0, $list->count);
 
@@ -133,7 +133,7 @@ class TestSettingModel extends UnitTestCase
     	$projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
     	
     	// List
-    	$list = new SettingListModel($projectModel, true);
+    	$list = SettingListModel::templates($projectModel);
     	$list->read();
     	$this->assertEqual(0, $list->count);
     	
@@ -147,7 +147,6 @@ class TestSettingModel extends UnitTestCase
     	$this->assertEqual($id, $setting->id->asString());
     	
     	// List
-    	$list = new SettingListModel($projectModel, true);
     	$list->read();
     	$this->assertEqual(1, $list->count);
     	
@@ -160,7 +159,6 @@ class TestSettingModel extends UnitTestCase
     	$this->assertEqual($id, $setting->id->asString());
     	
     	// List
-    	$list = new SettingListModel($projectModel, true);
     	$list->read();
     	$this->assertEqual(1, $list->count);
     	

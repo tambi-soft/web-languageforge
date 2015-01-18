@@ -4,21 +4,32 @@ namespace models\scriptureforge\webtypesetting;
 class SettingListModel extends \models\mapper\MapperListModel
 {
 
-	public function __construct($projectModel, $templatesOnly = false)
+	protected function __construct($projectModel, $query, $fields)
 	{
-		
-		if($templatesOnly){
-			$query = array('templateName' => array('$ne' => ""));
-		}else{
-			$query = array('description' => array('$regex' => ''));
-		}
 		parent::__construct(
 				SettingModelMongoMapper::connect($projectModel->databaseName()),
 				$query,
+				$fields
+		);
+	}
+	
+	public function all($projectModel)
+	{
+		return new SettingListModel(
+				$projectModel,
+				$query = array('description' => array('$regex' => '')),
 				array('description')
 		);
 	}
 	
+	public static function templates($projectModel)
+	{
+		return new SettingListModel(
+			$projectModel,
+			array('templateName' => array('$ne' => "")),
+			array('description')
+		);
+	}
 	
 
 }
