@@ -14,5 +14,34 @@ var SfProjectPage = function() {
 	this.bottomMarginForm = element(by.model('layout.bottomMargin'));
 	
 	this.marginDiv = element(by.id('pageLeftLayout'));
+	
+	//columns 
+	this.columnsTab = element(by.css("[heading='Columns']"));
+	this.twoBodyColCB = element.all(by.css("[type='checkbox']")).get(1);
+	this.twoTitleColCB = element.all(by.css("[type='checkbox']")).get(2);
+	this.TwoIntroColCB = element.all(by.css("[type='checkbox']")).get(3);
+	this.ColRuleCB = element.all(by.css("[type='checkbox']")).get(4);
+	/*
+	//header 
+	this.headFootTab = element(by.css("[heading='Header/Footer']"));
+	this.headerCheckbox = element.all(by.css("[type='checkbox']")).get(0);
+	this.footerCheckbox = element.all(by.css("[type='checkbox']")).get(1);
+	this.footerPosForm = element(by.id("footerPositionInput"));
+	this.headerPosForm =  element(by.id("headerPositionInput"));
+	
+	
+	
+	//printer options
+	this.printerOptionTab = element(by.css("[heading='Printer Options']"));
+	
+	//background
+	this.backgroundTab = element(by.css("[heading='Background']"));
+	
+	//body text
+	this.bodyTextTab = element(by.css("[heading='Body Text']"));
+	
+	//Misc
+	this.miscTab = element(by.css("[heading='Misc']"));*/
+	
 };
 module.exports = new SfProjectPage();
