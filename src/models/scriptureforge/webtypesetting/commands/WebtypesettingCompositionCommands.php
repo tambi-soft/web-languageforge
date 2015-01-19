@@ -34,7 +34,7 @@ class WebtypesettingCompositionCommands {
 	}
 	
 	public static function getRenderedPageForBook($projectId, $bookId, $pageNumber) {
-		
+		return "http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png";
 	}
 	
 }

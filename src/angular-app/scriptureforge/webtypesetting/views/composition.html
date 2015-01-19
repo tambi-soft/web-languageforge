@@ -39,10 +39,12 @@
 					paragraph-node="paragraphNode" content="bookHTML"></div>
 
 				<div class="properties">
+					<div  ng-hide="verse==''">
 					<p>Chapter: {{chapter}}, verse: {{verse}}</p>
 					Growth factor: <input class="form-control"
 						style="display: inline-block; width: 50%;" type="number"
 						data-ng-model="paragraphGrowthFactor" />
+					</div>
 				</div>
 			</div>
 			
@@ -52,8 +54,7 @@
 				</div>
 			</div>
 			
-			<div class="col-sm-4"
-				data-ng-init="renderedImage='http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png'">
+			<div class="col-sm-4">
 				<img data-ng-src="{{renderedImage}}" class="triColor" />
 			</div>
 		</div>

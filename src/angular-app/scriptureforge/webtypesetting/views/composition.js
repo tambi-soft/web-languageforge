@@ -27,19 +27,34 @@ angular.module(
 					$scope.selectedText="";
 					$scope.properties = "test";
 					$scope.bookHTML = "";
+					$scope.verse="";
+					$scope.renderedImage = "";
 					$scope.renderRapuma = function() {
-						compositionService.renderBook(function(result) {
-							if (result.ok) {
-								$scope.pdfUrl = result.data.pdfUrl;
-							}
+						compositionService.renderBook($scope.bookID, function(result) {
+							
 						});
 					};
 					$scope.getBookHTML = function getBookHTML() {
 						compositionService.getBookHTML($scope.bookID, function(result) {
 							$scope.bookHTML = result.data;
-							
 						});
 					};
+					$scope.getParagraphProperties = function getParagraphProperties() {
+						compositionService.getParagraphProperties($scope.bookID, function(result) {
+							paragraphProperties = result.data;
+						});
+					};
+					$scope.setParagraphProperties = function setParagraphProperties() {
+						compositionService.setParagraphProperties($scope.bookID, paragraphProperties, function(result) {
+							// nothing todo?
+						});
+					};
+					$scope.getRenderedPageForBook = function getRenderedPageForBook() {
+						compositionService.getRenderedPageForBook($scope.bookID, $scope.selectedPage, function(result) {
+							$scope.renderedImage = result.data;
+						});
+					};
+					
 					$scope.decreasePage = function(){
 						$scope.selectedPage = Math.max(1, $scope.selectedPage -1);
 					};
@@ -58,7 +73,7 @@ angular.module(
 						if($scope.selectedPage <= 0)$scope.selectedPage = 1;
 						if($scope.selectedPage > $scope.numPages)$scope.selectedPage=$scope.numPages;
 						$scope.pageInput = $scope.selectedPage;
-						
+						$scope.getRenderedPageForBook();
 					});
 					$scope.update = function(){
 						$scope.selectedPage = $scope.pageInput;
