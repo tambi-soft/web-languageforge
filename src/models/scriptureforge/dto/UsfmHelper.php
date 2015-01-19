@@ -66,6 +66,21 @@ class UsfmHelper
 	}
 	
 	public function toHtml() {
+		
+		
+		// Test data: Image placements for the book of John.
+		// TODO Get these from a parameter or something.
+		// They ultimately come from an "illustration.conf" file.
+		$illustrations = array(
+			'2:6' => 'lb00135',
+			'2:13' => 'lb00250',
+			'5:8' => 'lb00308',
+			'10:2' => 'bk00004',
+			'13:21' => 'lb00320',
+			'21:3' => 'hk00207',
+		);
+		
+		
 		// Preset marker collections
 		$markersToIgnore = array('id', 'ide');
 		$paragraphMarkers = array('p', 'm');
@@ -178,6 +193,19 @@ class UsfmHelper
 				} else {
 					$out .= ' <sup>' . $verseNumber . '</sup> ' . $verseText;
 				}
+				
+				// Output illustration placeholder, if any.
+				if (isset($illustrations[$chapter . ":" . $verseNumber])) {
+					$illustrationID = $illustrations[$chapter . ":" . $verseNumber];
+					if ($inParagraph) {
+						$paragraphText .= ' <span id="illustration-' . $illustrationID
+							. '" class="illustration-placeholder">Illustration</span> ';
+					} else {
+						$out .= ' <span id="illustration-' . $illustrationID
+							. '" class="illustration-placeholder">Illustration</span> ';
+					}
+				}
+				
 				continue;
 			} else if (in_array($firstMarker, $titleMarkers) || in_array($firstMarker, $poetryMarkers)) {
 				// Headings and poetry lines:
