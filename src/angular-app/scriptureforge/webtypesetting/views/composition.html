@@ -45,27 +45,27 @@
 							<tbody>
 								<tr>
 									<td>location</td>
-									<td><input class="form-control" ng-model="location"/></td>
+									<td><input class="form-control" ng-model="location" data-ng-change="illustrationSave()"/></td>
 								</tr>
 								<tr>
 									<td>width</td>
-									<td><input class="form-control" type="number" ng-model="width"/></td>
+									<td><input class="form-control" type="number" ng-model="width" data-ng-change="illustrationSave()"/></td>
 								</tr>
 								<tr>
 									<td>scale</td>
-									<td><input class="form-control" type="number" ng-model="scale" step="0.05"/></td>
+									<td><input class="form-control" type="number" ng-model="scale" step="0.05" data-ng-change="illustrationSave()"/></td>
 								</tr>
 								<tr>
 									<td>caption</td>
-									<td><input class="form-control" ng-model="caption"/></td>
+									<td><input class="form-control" ng-model="caption" data-ng-change="illustrationSave()"/></td>
 								</tr>
 								<tr>
 									<td>use caption</td>
-									<td><input class="form-control" type="checkbox" data-ng-model="useCaption"/></td>
+									<td><input class="checkbox" type="checkbox" data-ng-model="useCaption" data-ng-change="illustrationSave()"/></td>
 								</tr>
 								<tr>
 									<td>use illustration</td>
-									<td><input class="form-control" type="checkbox" data-ng-model="useIllustration"/></td>
+									<td><input class="checkbox" type="checkbox" data-ng-model="useIllustration" data-ng-change="illustrationSave()"/></td>
 								</tr>
 							</tbody>
 						</table>

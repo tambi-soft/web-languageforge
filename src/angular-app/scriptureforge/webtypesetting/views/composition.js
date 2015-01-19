@@ -18,7 +18,8 @@ angular.module(
 						compositionService, sessionService, modal,
 						notice) {
 					
-					var currentVerse;
+					var currentVerse = "";
+					var currentImage = "id1";
 					var paragraphChanged=false;
 					var paragraphProperties = {
 							//c1v1: {growthfactor:3},
@@ -102,6 +103,15 @@ angular.module(
 						$scope.setParagraphProperties();
 						$scope.pages[$scope.selectedPage]="green";
 					};
+					$scope.illustrationSave = function illustrationChange(){
+						illustrationProperties[currentImage].Location = $scope.location;
+						illustrationProperties[currentImage].width = $scope.width;
+						illustrationProperties[currentImage].scale = $scope.scale;
+						illustrationProperties[currentImage].caption = $scope.caption;
+						illustrationProperties[currentImage].useCaption = $scope.useCaption;
+						illustrationProperties[currentImage].useIllustration = $scope.illustration;
+					};
+					
 					$scope.getBookHTML();
 					$scope.$watch('paragraphNode', function(){
 						if(!$scope.paragraphNode)return;
@@ -126,10 +136,7 @@ angular.module(
 						else $scope.pages[$scope.selectedPage] = "orange";
 					});
 					
-					$scope.$watch('paragraphProperties', function(){
-//						if($scope.pages[0]=="green")
-//						else $scope.pages[0] = "green";
-					});
+					
 
 					$scope.getParagraphProperties();
 					$scope.getIllustrationProperties();
