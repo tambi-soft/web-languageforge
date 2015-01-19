@@ -1,21 +1,21 @@
 <?php
 namespace models\scriptureforge\webtypesetting;
 
-class RapumaSettingModelMongoMapper extends \models\mapper\MongoMapper
+class SettingModelMongoMapper extends \models\mapper\MongoMapper
 {
 	/**
-	 * @var RapumaSettingModelMongoMapper[]
+	 * @var SettingModelMongoMapper[]
 	 */
 	private static $_pool = array();
 
 	/**
 	 * @param string $databaseName
-	 * @return RapumaSettingModelMongoMapper
+	 * @return SettingModelMongoMapper
 	*/
 	public static function connect($databaseName)
 	{
 		if (!isset(static::$_pool[$databaseName])) {
-			static::$_pool[$databaseName] = new RapumaSettingModelMongoMapper($databaseName, 'RapumaSettings');
+			static::$_pool[$databaseName] = new SettingModelMongoMapper($databaseName, 'Settings');
 		}
 		return static::$_pool[$databaseName];
 	}

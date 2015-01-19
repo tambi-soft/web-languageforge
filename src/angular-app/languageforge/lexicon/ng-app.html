@@ -3,9 +3,10 @@
 		<div style="flex:4">
 			<ul id="top" class="topCrumbs" breadcrumbs></ul>
 		</div>
-		<div style="width:8%" class="dropdown {{interfaceConfig.pullToSide}}" data-ng-show="rights.edit">
-			<a class="btn btn-default {{interfaceConfig.pullToSide}}" href="#"><i class="icon-cog icon-large"></i>&nbsp;&nbsp;<span class="caret"></span></a>
-			<ul class="dropdown-menu {{interfaceConfig.pullToSide}}">
+		<div style="width:8%" class="dropdown" data-ng-class="interfaceConfig.pullToSide" data-dropdown data-ng-show="rights.edit">
+			<a role="button" class="btn btn-default dropdown-toggle" data-dropdown-toggle>
+                <i class="icon-cog icon-large"></i><span class="caret"></span></a>
+			<ul class="dropdown-menu" role="menu">
 				<li><a href="#/configuration" translate="Dictionary Configuration"></a></li>
 				<li><a href="#/viewSettings" translate="View Settings"></a></li>
 				<li class="divider"></li>

@@ -1,21 +1,61 @@
 <div class="content container" data-ng-cloak data-ng-controller="MainCtrl">
-	<div id="sfchecks-hmenu" class="hdrnav">
-		<ul class="topNav">
-			<li><a href="/app/projects">My Projects</a></li>
-			<li><a href="/app/activity">Activity</a></li>
-			<li ng-class="{ here: $state.includes('composition') }"><a ui-sref="composition">Composition</a></li>
-			<li ng-class="{ here: $state.includes('discussion') }"><a ui-sref="discussion">Discussion</a></li>
-			<li ng-class="{ here: $state.includes('render') }"><a ui-sref="render">Render</a></li>
-			<li ng-class="{ here: $state.includes('projectSetupAssets') }"><a ui-sref="projectSetupAssets">Assets</a></li>
-			<li ng-class="{ here: $state.includes('projectSetupLayout') }"><a ui-sref="projectSetupLayout">Layout</a></li>
-		</ul>
-		<ul id="top" class="topCrumbs" breadcrumbs></ul>
-	</div>
-	<div style="padding-top:10px">
-	<sil-notices></sil-notices>
-	<!-- <div data-wc-overlay="" data-wc-overlay-delay="6000">
+    <div id="typesetting-hmenu" class="hdrnav">
+        <div class="btn-group pull-right" data-dropdown data-is-open="settingsButton.isopen"
+            data-tooltip="{{(settingsButton.isopen) ? '' : 'Project Settings'}}" data-tooltip-placement="bottom">
+            <a role="button" class="btn btn-default dropdown-toggle" data-dropdown-toggle>
+                <i class="icon-cog icon-large"></i><span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a data-ui-sref="projectSetupAssets">Assets</a></li>
+                <li><a data-ui-sref="projectSetupLayout">Layout</a></li>
+            </ul>
+        </div>
+        <ul class="topNav">
+            <li><a href="/app/projects">My Projects</a></li>
+            <li><a href="/app/activity">Activity</a></li>
+            <li data-ng-class="{ here: $state.includes('composition') }"><a data-ui-sref="composition">Composition</a></li>
+            <li data-ng-class="{ here: $state.includes('discussion') }"><a data-ui-sref="discussion">Discussion</a></li>
+            <li data-ng-class="{ here: $state.includes('render') }"><a data-ui-sref="render">Render</a></li>
+        </ul>
+        <ul id="top" class="topCrumbs" breadcrumbs></ul>
+    </div>
+
+    <div style="padding-top:10px">
+            <div data-ng-controller="templateCtrl">
+                {{currentPath}}
+                <div class='row'>
+                    <div class="pull-right">
+                        <button class="btn btn-default" data-ng-click="uncollapseDivs('save')">
+                            Save Template
+                        </button>
+                        <button class="btn btn-default" data-ng-click="uncollapseDivs('load')">
+                            Load Template
+                        </button>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="pull-right">
+                        <div id="loadTemplateDiv" data-collapse="loadTemplateCollapsed">
+                            <form class="well form-inline">
+                               <input type="text" placeholder="Template Name..." ng-model="loadTemplateName">
+                               <button ng-click="handleLoadClick()" class="btn btn-default btn-sm" data-ng-disabled="loadTemplateName < 1"><i class="glyphicon glyphicon-folder-open"></i>Load</button>
+                            </form>
+                        </div>
+                
+                        <div id="saveTemplateDiv" data-collapse="saveTemplateCollapsed">
+                            <form class="well form-inline">
+                               <input type="text" placeholder="Template Name..." ng-model="saveTemplateName">
+                               <button ng-click="handleSaveClick()" class="btn btn-default btn-sm" data-ng-disabled="saveTemplateName < 1"><i class="icon-ok"></i>Save</button>
+                            </form>
+                        </div>
+                     </div>
+                </div>
+            </div>
+
+    <sil-notices></sil-notices>
+    <!-- <div data-wc-overlay="" data-wc-overlay-delay="6000">
     <img src="/images/shared/loading.gif" />&nbsp; Loading...
     </div>-->
-	<div ui-view></div>
-	</div>
+    <div data-ui-view></div>
+    </div>
 </div>
+

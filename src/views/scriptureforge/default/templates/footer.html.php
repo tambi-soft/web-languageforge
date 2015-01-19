@@ -16,7 +16,7 @@
 							</small>
 						</div>
 
-						<div class="col-md-1 offset4">
+						<div class="col-md-1 col-md-offset-4">
 							<p><a href="http://www.sil.org"><img src="/images/shared/SIL_logo.png" alt="SIL Logo" width="50" height="49" /></a></p>
 							<p><a href="http://www.unitedbiblesocieties.org/"><img src="/images/shared/ubs-logo.png" alt="ubs-logo" width="71" height="50" /></a></p>
 						</div>

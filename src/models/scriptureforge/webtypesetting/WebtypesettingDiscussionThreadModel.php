@@ -2,21 +2,22 @@
 
 namespace models\scriptureforge\webtypesetting;
 
-use models\mapper\MapOf;
-
 use models\mapper\ArrayOf;
 use models\mapper\Id;
 use models\mapper\IdReference;
 use models\ProjectModel;
 
-// TODO This doesn't need to be in a collection of its own.  It can be a member of the SettingsModel CP 2015-01
-class WebtypesettingBookModel extends \models\mapper\MapperModel
+/**
+ * 
+ *
+ */
+class WebtypesettingDiscussionThreadModel extends \models\mapper\MapperModel
 {
     public static function mapper($databaseName)
     {
         static $instance = null;
         if (null === $instance) {
-            $instance = new \models\mapper\MongoMapper($databaseName, 'webtypesettingBooks');
+            $instance = new \models\mapper\MongoMapper($databaseName, 'webtypesettingDiscussions');
         }
 
         return $instance;
@@ -29,12 +30,6 @@ class WebtypesettingBookModel extends \models\mapper\MapperModel
     public function __construct($projectModel, $id = '')
     {
         $this->id = new Id();
-        $this->paragraphProperties = new MapOf(
-		            function ($data) {
-		                return new ParagraphProperty();
-		            }
-        		);
-        $this->_projectModel = $projectModel;
         $databaseName = $projectModel->databaseName();
         parent::__construct(self::mapper($databaseName), $id);
     }
@@ -48,21 +43,21 @@ class WebtypesettingBookModel extends \models\mapper\MapperModel
      * 
      * @var string
      */
-    public $name;
+    public $title;
     
     /**
      * 
      * @var string
      */
-    public $assetId;
+    public $status;
     
     /**
      * 
-     * @var MapOf
+     * @var string
      */
-    public $paragraphProperties;
+    public $associatedItem;
     
-    public function getPngTempFolderPath() {
-    	
-    }
+    
+    
+    
  }

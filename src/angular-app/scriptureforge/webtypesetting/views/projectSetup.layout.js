@@ -3,7 +3,8 @@
 
 angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.services'])
 
-.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice) {
+.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', 
+function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
   var vm = this;
   
   vm.introColumnsTwo = false;
@@ -94,6 +95,67 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
   
   watchMaker("insideMargin", "maxInsideMargin", "width", "outsideMargin", "leftMargins", "marginRight", "rightMargins", "marginLeft");
   watchMaker("outsideMargin", "maxOutsideMargin", "width", "insideMargin", "rightMargins", "marginRight", "leftMargins", "marginLeft");
+  
+  var saving = false;
+  var saved = false;
 
+  $scope.saveNotice = function saveNotice() {
+    if (saving) return 'Saving';
+    if (saved) return 'Saved';
+    return '';
+  };
+  
+  function saveLayoutSettings() {
+    cancelAutoSaveTimer();
+    saving = true;
+    console.log('saveLayoutSettings');
+    
+    // TODO add code here to save layout settings. IJH 2015-01
+    
+      // TODO in successful save callback, set 'saved' to true and form to pristine IJH 2015-01 
+//      saved = true;
+      $scope.layoutForm.$setPristine();
+
+    // TODO always clear 'saving' irrespective of succesful save. IJH 2015-01
+//    saving = false;
+  };
+
+  var autoSaveTimer;
+  function startAutoSaveTimer() {
+    if (angular.isDefined(autoSaveTimer)) {
+      return;
+    }
+    autoSaveTimer = $interval(function() {
+      saveLayoutSettings();
+    }, 5000, 1);
+  };
+  function cancelAutoSaveTimer() {
+    if (angular.isDefined(autoSaveTimer)) {
+      $interval.cancel(autoSaveTimer);
+      autoSaveTimer = undefined;
+    }
+  };
+
+  $scope.$on('$destroy', function() {
+    cancelAutoSaveTimer();
+    saveLayoutSettings();
+  });
+
+  $scope.$on('$locationChangeStart', function(event, next, current) {
+    cancelAutoSaveTimer();
+    saveLayoutSettings();
+  });
+
+  $scope.$watch('layoutForm.$dirty', function(newValue) {
+    if (newValue != undefined && newValue) {
+      cancelAutoSaveTimer();
+      startAutoSaveTimer();
+    }
+  });
+
+  $rootScope.$on('handleSaveBroadcast', function() {
+		console.log("handledSaveBroadcast");
+		templateSaveObject.vm = vm;
+  });
   
 }]);
