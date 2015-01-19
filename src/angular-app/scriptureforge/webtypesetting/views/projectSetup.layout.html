@@ -5,104 +5,238 @@
     <tabset style="text-align: center;"> 
         <tab heading="Margins" class="form-group"> 
             <br />
-            <div class="col-md-2">
-                <label for="insideMarginInput">Inside Margin</label>
-                <input class="form-control" type="number"
-                    data-ng-model="layout.insideMargin" id="insideMarginInput" />
-            </div>
-            <div class="col-md-2">
-                <label for="outsideMarginInput">Outside Margin</label>
-                <input class="form-control" type="number"
-                    data-ng-model="layout.outsideMargin" id="outsideMarginInput" />
-            </div>
-            <div class="col-md-2">
-                <label for="topMarginInput">Top Margin</label>
-                <input class="form-control" type="number" data-ng-model="layout.topMargin"
-                    id="topMarginInput" />
-            </div>
-            <div class="col-md-2">
-                <label for="bottomMarginInput">Bottom Margin</label>
-                <input class="form-control" type="number"
-                    data-ng-model="layout.bottomMargin" id="bottomMarginInput" />
-            </div>
-            <br />
-            <br />
-        </tab> 
-        <tab heading="Header/Footer" class="form-group">
-            <br />
-            <div class="col-md-2">
-                <label class="checkbox-inline">
-                      <input type="checkbox">Header
-                </label>
-            </div>
-            <div class="col-md-2">
-                <label class="checkbox-inline">
-                      <input type="checkbox">Footer
-                </label>
-            </div>
-            <div class="col-md-1">
-                <label for="headerPositionInput">Footer Position</label>
-            </div>
-            <div class="col-md-1"> 
-                <input class="form-control" type="number" id="headerPositionInput" />
-            </div>
-            <div class="col-md-1">
-                <label for="footerPositionInput">Header Position</label>
-            </div>
-            <div class="col-md-1"> 
-                <input class="form-control" type="number" id="footerPositionInput" />
-            </div>
-            <br />
-            <br />
-        </tab> 
+            <div class="row">
+	            <div class="col-md-2">
+	                <label for="insideMarginInput">Inside Margin</label>
+	                <input class="form-control" type="number"
+	                    data-ng-model="layout.insideMargin" id="insideMarginInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label for="outsideMarginInput">Outside Margin</label>
+	                <input class="form-control" type="number"
+	                    data-ng-model="layout.outsideMargin" id="outsideMarginInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label for="topMarginInput">Top Margin</label>
+	                <input class="form-control" type="number" data-ng-model="layout.topMargin"
+	                    id="topMarginInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label for="bottomMarginInput">Bottom Margin</label>
+	                <input class="form-control" type="number"
+	                    data-ng-model="layout.bottomMargin" id="bottomMarginInput" />
+	            </div>
+	        </div>
+        </tab>
         <tab heading="Columns" class="form-group">
             <br />
             <div class="row">
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox">Page Columns
+                          <input type="checkbox">Two Body Columns
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox">Title Columns
+                          <input type="checkbox">Two Title Columns
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox">Intro Columns
+                          <input type="checkbox">Two Intro Columns
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <label class="checkbox-inline">
+                          <input type="checkbox">Column Rule
                     </label>
                 </div>
             </div>
-            <br />
+        </tab> 
+        <tab heading="Header" class="form-group">
             <br />
             <div class="row">
-                <div class="col-md-2">
-                    <label class="checkbox-inline">
-                          <input type="checkbox">Line Separator
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <label for="columnSizeInput1">Column Offset</label>
-                </div>
-                <div class="col-md-1"> 
-                    <input class="form-control" type="number" id="columnSizeInput1" />
-                </div>
-                <div class="col-md-1">
-                    <label for="columnSizeInput2">Column Gap Width</label>
-                </div>
-                <div class="col-md-1">  
-                    <input class="form-control" type="number" id="columnSizeInput2" />
-                </div>
-            </div>
-        </tab> 
-        <tab heading="Printer Options" class="form-group">
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Running Header
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label for="headerPositionInput">Header Position</label>
+	                <input class="form-control" type="number" id="headerPositionInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Running Header Rule
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label for="headerPositionRuleInput">Running Header Rule</label>
+	                <input class="form-control" type="number" id="headerPositionRuleInput" />
+	            </div>
+	        </div>
+        </tab>
+        <tab heading="Footer" class="form-group">
+            <br />
+            <div class="row">
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Running Footer
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label for="footerPositionInput">Footer Position</label>
+	                <input class="form-control" type="number" id="footerPositionInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Footnote Rule
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Reset Page Callers Footnotes
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Omit Caller In Footnotes
+	                </label>
+	            </div>
+	        </div>
+	        <br />
+	        <div class="row">
+	        	<div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Use Special Caller Footnotes
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Paragraphed Footnotes
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Use Numeric Callers Footnotes
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label for="specialCallerFootnotesInput">Special Caller Footnotes</label>
+	                <input class="form-control" type="text" id="specialCallerFootnotesInput" />
+	            </div>
+	        </div>
+        </tab>  
+        <tab heading="Cross References" class="form-group">
+        	<br />
+        	<div class="row">
+        		<div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Use Special Caller Crossrefs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Paragraphed Crossrefs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Use Numeric Callers Crossrefs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label for="specialCallerCrossrefsInput">Special Caller Crossrefs</label>
+	                <input class="form-control" type="text" id="specialCallerCrossrefsInput" />
+	            </div>
+        	</div>
         </tab> 
         <tab heading="Background" class="form-group">
+        	<br />
+        	<div class="row">
+        		<div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Use Background
+	                </label>
+	            </div>
+        	</div>
+        	<br />
+        	<label for="backgroundComponentsWell">Background Components</label>
+        	<div class="row well" id="backgroundComponentsWell">
+        		<div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Watermark
+	                </label>
+	            </div>
+        		<div class="col-md-2">
+	                <label for="watermarkTextInput">Watermark Text</label>
+	                <input class="form-control" type="text" id="watermarkTextInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Pagebox
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Cropmarks
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Lines
+	                </label>
+	            </div>
+        	</div>
+        </tab>
+        <tab heading="Print Options" class="form-group">
+        	<br />
+        	<div class="row">
+        		<div class="col-md-2">
+	                <label for="pageSizeCodeInput">Page Size Code</label>
+	        		<select class="form-control" id="pageSizeCodeInput">
+	        			<option>A5</option>
+	        			<option>US Letter</option>
+	        		</select>
+        		</div>
+        		<div class="col-md-2">
+	                <label for="printerPageSizeCodeInput">Printer Page Size Code</label>
+	        		<select class="form-control" id="printerPageSizeCodeInput">
+	        			<option>A4</option>
+	        			<option>US Letter</option>
+	        		</select>
+        		</div>
+        		<div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox">Use Doc Info
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label for="docInfoTextInput">Doc Info Text</label>
+	                <input class="form-control" type="text" id="docInfoTextInput" />
+	            </div>
+        	</div>
         </tab>
         <tab heading="Body Text" class="form-group">
+        	<br />
+        	<div class="row">
+        	
+        	</div>
         </tab>
         <tab heading="Misc" class="form-group">
+        	<br />
+        	<div class="row">
+                <div class="col-md-2">
+                    <label class="checkbox-inline">
+                          <input type="checkbox">Use Caption References 
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <label class="checkbox-inline">
+                          <input type="checkbox">Use Figure Placeholders  
+                    </label>
+                </div>
+        	</div>
         </tab>
     </tabset>
     </form>
