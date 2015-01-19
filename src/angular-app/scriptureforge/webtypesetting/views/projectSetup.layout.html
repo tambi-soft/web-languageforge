@@ -1,5 +1,15 @@
 <div class="container" data-ng-cloak data-ng-controller="projectSetupLayoutCtrl as layout">
     <h2>Layout Settings</h2>
+    
+    DEBUG INFO
+    <ul style="width: 100%;">
+      <li data-ng-repeat="(k, v) in layout.conf" style="float: left; width: 25%; font-size: xx-small;">
+        {{ k }} : {{ v }}
+      </li>
+    </ul>
+    <div style="height: 150px;"/>
+    <!-- END DEBUG INFO -->
+    
     <span class="save-notice pull-right text-muted">{{saveNotice()}}</span>
     <form name="layoutForm" novalidate>
     <tabset style="text-align: center;"> 
@@ -188,15 +198,15 @@
         	<br />
         	<div class="row">
         		<div class="col-md-2">
-	                <label for="pageSizeCodeInput" data-ng-model="layout.conf.pageSizeCode">Page Size Code</label>
-	        		<select class="form-control" id="pageSizeCodeInput">
+	                <label for="pageSizeCodeInput">Page Size Code</label>
+	        		<select class="form-control" id="pageSizeCodeInput" data-ng-model="layout.conf.pageSizeCode">
 	        			<option>A5</option>
 	        			<option>US Letter</option>
 	        		</select>
         		</div>
         		<div class="col-md-2">
-	                <label for="printerPageSizeCodeInput" data-ng-model="layout.conf.printerPageSizeCode">Printer Page Size Code</label>
-	        		<select class="form-control" id="printerPageSizeCodeInput">
+	                <label for="printerPageSizeCodeInput">Printer Page Size Code</label>
+	        		<select class="form-control" id="printerPageSizeCodeInput" data-ng-model="layout.conf.printerPageSizeCode">
 	        			<option>A4</option>
 	        			<option>US Letter</option>
 	        		</select>
@@ -291,5 +301,5 @@
         </div>
 
     </div>
-
+    
 </div>
