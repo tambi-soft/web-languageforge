@@ -58,7 +58,6 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       fontDefaultSize: 12,
       leadingDefaultSize: 14,
       // miscellaneous
-      useHangingPunctuation: false,
       useCaptionReferences: true,
       useFigurePlaceHolders: true,
   };
