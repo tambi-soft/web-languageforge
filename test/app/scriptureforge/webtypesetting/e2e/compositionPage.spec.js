@@ -53,7 +53,10 @@ describe('the composition page', function(){
 			expect(compositionPage.navigation.slider.evaluate('numPages')).toEqual(21);
 			expect(compositionPage.navigation.slider.evaluate('selectedPage')).toEqual(2);
 			
-			compositionPage.navigation.rightButton.click();
+			compositionPage.navigation.pageInput.sendKeys('1'); //doesn't remove existing input, so makes it 21
+			compositionPage.navigation.goButton.click();
+			expect(compositionPage.navigation.pageInput.getAttribute('value')).toEqual('21');
+			expect(compositionPage.navigation.slider.getAttribute('value')).toEqual('21');
 		});
 		
 		
@@ -74,7 +77,7 @@ describe('the composition page', function(){
 		 * both of these methods are nonstandard, relying on either a user input or some other mockup to
 		 * be tested fully. Will leave at manual testing for now.
 		 */
-		//it('has navigation', function(){});
+		//it('has slider navigation', function(){});
 		//it('has paragraph selection', function(){});
 		
 
