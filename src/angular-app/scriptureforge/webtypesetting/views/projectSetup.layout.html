@@ -182,11 +182,6 @@
 	                      <input type="checkbox">Cropmarks
 	                </label>
 	            </div>
-	            <div class="col-md-2">
-	                <label class="checkbox-inline">
-	                      <input type="checkbox">Lines
-	                </label>
-	            </div>
         	</div>
         </tab>
         <tab heading="Print Options" class="form-group">
@@ -220,7 +215,35 @@
         <tab heading="Body Text" class="form-group">
         	<br />
         	<div class="row">
-        	
+        		<div class="col-md-2">
+	                <label for="bodyTextLeadingInput">Leading Body Text</label>
+	                <input class="form-control" data-ng-model="layout.conf.bodyTextLeading" type="number" id="bodyTextLeadingInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label for="bodyFontSizeInput">Body Font Size</label>
+	                <input class="form-control" data-ng-model="layout.conf.bodyFontSize" type="number" id="bodyFontSizeInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label for="fontDefaultSizeInput">Font Default Size</label>
+	                <input class="form-control" data-ng-model="layout.conf.fontDefaultSize" type="number" id="fontDefaultSizeInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label for="leadingDefaultSizeInput">Leading Default Size</label>
+	                <input class="form-control" data-ng-model="layout.conf.leadingDefaultSize" type="number" id="leadingDefaultSize" />
+	            </div>
+        	</div>
+        	<br />
+        	<div class="row">
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input data-ng-model="layout.conf.justifyParagraphs" type="checkbox">Justify Paragraphs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input data-ng-model="layout.conf.rightToLeft" type="checkbox">Right to Left
+	                </label>
+	            </div>
         	</div>
         </tab>
         <tab heading="Misc" class="form-group">
