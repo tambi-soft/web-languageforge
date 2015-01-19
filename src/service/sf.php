@@ -647,6 +647,14 @@ class sf
 		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
 	
+	public function typesetting_composition_getIllustrationProperties($bookId) {
+		return WebtypesettingCompositionCommands::getIllustrationProperties($this->_projectId, $bookId);
+	}
+	
+	public function typesetting_composition_setIllustrationProperties($bookId, $illustrationModel) {
+		return WebtypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $bookId, $illustrationModel);
+	}
+	
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------

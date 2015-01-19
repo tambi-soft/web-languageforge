@@ -23,6 +23,7 @@ angular.module(
 					var paragraphProperties = {
 							//c1v1: {growthfactor:3},
 							};
+					var illustrationProperties = {};
 					$scope.selectedPage =1;
 					$scope.bookID = 1;
 					$scope.selectedText="";
@@ -48,6 +49,16 @@ angular.module(
 					};
 					$scope.setParagraphProperties = function setParagraphProperties() {
 						compositionService.setParagraphProperties($scope.bookID, paragraphProperties, function(result) {
+							// nothing todo?
+						});
+					};
+					$scope.getIllustrationProperties = function getIllustrationProperties() {
+						compositionService.getIllustrationProperties($scope.bookID, function(result) {
+							illustrationProperties = result.data;
+						});
+					};
+					$scope.setIllustrationProperties = function setIllustrationProperties() {
+						compositionService.setIllustrationProperties($scope.bookID, illustrationProperties, function(result) {
 							// nothing todo?
 						});
 					};
@@ -119,4 +130,7 @@ angular.module(
 //						if($scope.pages[0]=="green")
 //						else $scope.pages[0] = "green";
 					});
+
+					$scope.getParagraphProperties();
+					$scope.getIllustrationProperties();
 				} ]);

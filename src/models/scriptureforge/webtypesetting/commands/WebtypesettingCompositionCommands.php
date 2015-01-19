@@ -22,10 +22,18 @@ class WebtypesettingCompositionCommands {
 	}
 	
 	public static function getParagraphProperties($projectId, $bookId) {
-		
+		return array();
 	}
 	
 	public static function setParagraphProperties($projectId, $bookId, $propertiesModel) {
+		
+	}
+	
+	public static function getIllustrationProperties($projectId, $bookId) {
+		return array();
+	}
+	
+	public static function setIllustrationProperties($projectId, $bookId, $illustrationModel) {
 		
 	}
 	
