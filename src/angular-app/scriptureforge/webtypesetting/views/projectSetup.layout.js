@@ -19,38 +19,82 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       titleColumnsTwo: false,
       introColumnsTwo: false,
       columnGutterRule: false,
+      columnShift: 5,
+      columnGutterRuleSkip: 0,
+      columnGutterFactor: 15,
+
       // header
       headerPosition: 5,
       useRunningHeader: true,
       useRunningHeaderRule: false,
       runningHeaderRulePosition: 4,
+      
+      runningHeaderTitleLeft: "empty",
+      runningHeaderTitleCenter: "empty",
+      runningHeaderTitleRight: "empty",
+
+      runningHeaderEvenLeft: "firstref",
+      runningHeaderEvenCenter: "pagenumber",
+      runningHeaderEvenRight: "empty",
+
+      runningHeaderOddLeft: "empty",
+      runningHeaderOddCenter: "pagenumber",
+      runningHeaderOddRight: "lastref",
+      
+      omitChapterNumberRH: false,
+      showVerseReferences: true,
+      omitBookReference: false,
+
+      
+      
       // footer
       footerPosition: 5,
-      pageResetCallersFootnotes: false,
-      useFootnoteRule: true,
       useRunningFooter: false,
+      
+      runningFooterEvenLeft: "empty",
+      runningFooterEvenCenter: "empty",
+      runningFooterEvenRight: "empty",
+
+      runningFooterOddLeft: "empty",
+      runningFooterOddCenter: "empty",
+      runningFooterOddRight: "empty",
+
+      runningFooterTitleLeft: "empty",
+      runningFooterTitleCenter: "empty",
+      runningFooterTitleRight: "empty",
+
+      
+      //footnotes
+      useFootnoteRule: true,
+      pageResetCallersFootnotes: false,
+   
       omitCallerInFootnotes: false,
+      	//  omitCallerInFootnotes (string ‘f’)
+      
       useSpecialCallerFootnotes: false,
       paragraphedFootnotes: true,
       useNumericCallersFootnotes: false,
-      specialCallerFootnotes: "\\kern0.2em *\\kern0.4em",
+      useSpecialCallerFootnotes: false,
+      specialCallerFootnotes: "\krn0.2em *\kern0.4em",
+
+
       // cross references
-      omitCallerInCrossrefs: false,
       useSpecialCallerCrossrefs: false,
+      	//specialCallerCrossrefs: "\\kern0.2em *\\kern0.4em",
+      useAutoCallerCrossrefs: true,
+      omitCallerInCrossrefs: false,
       paragraphedCrossrefs: true,
       useNumericCallersCrossrefs: false,
-      specialCallerCrossrefs: "\\kern0.2em *\\kern0.4em",
-      // background
-      useBackground: false,
-      backgroundComponents: "watermark",
+      
+      //'editing' features
       watermarkText: "DRAFT",
+      
       // print options
-      pageSizeCode: "A5", // TODO
-      pageWidth: 148,
-      pageHeight: 210,
+      pageSizeCode: "A4", // TODO
       printerPageSizeCode: "A4", // TODO
       useDocInfo: false,
-      docInfoText: "",
+      //docInfoText: "",
+      
       // body text
       bodyTextLeading: 12,
       bodyFontSize: 10,
@@ -58,6 +102,14 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       justifyParagraphs: true,
       fontDefaultSize: 12,
       leadingDefaultSize: 14,
+    
+           
+      //Misc
+      
+      //advanced
+      extraRightMargin: 0,
+      chapterVerseSeperator: ":"
+
   };
   
   vm.components = {

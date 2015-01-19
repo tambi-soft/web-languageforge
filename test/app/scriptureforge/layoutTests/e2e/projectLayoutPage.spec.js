@@ -67,6 +67,35 @@ describe('the project dashboard AKA text list page', function() {
 				});
 			});
 		});*/
+		
+		describe('Layout page columns', function(){
+			it('should have columns tab', function(){
+				expect(projectLayout.columnsTab.isPresent()).toBe(true);
+				projectLayout.columnsTab.click();
+			});
+			
+			it('should have checkbox: two body columns', function(){
+				expect(projectLayout.pageColCheckbox.isDisplayed()).toBe(true);
+				projectLayout.pageColCheckbox.click();
+			});
+			
+			it('should have checkbox: two title columns', function(){
+				expect(projectLayout.titleColCheckbox.isDisplayed()).toBe(true);
+				projectLayout.titleColCheckbox.click();
+			});
+			
+			it('should have checkbox: two intro columns', function(){
+				expect(projectLayout.introColCheckbox.isDisplayed()).toBe(true);
+				projectLayout.introColCheckbox.click();
+			});
+			
+			it('should have checkbox: column rule', function(){
+				expect(projectLayout.lineSeperatorCheckbox.isDisplayed()).toBe(true);
+				projectLayout.lineSeperatorCheckbox.click();
+			});
+			
+		});
+		/*
 		describe('Layout page header/footer', function(){
 		
 			it('should have header/footer tab', function(){
@@ -95,42 +124,6 @@ describe('the project dashboard AKA text list page', function() {
 			});
 		});
 		
-		describe('Layout page columns', function(){
-			it('should have columns tab', function(){
-				expect(projectLayout.columnsTab.isPresent()).toBe(true);
-				projectLayout.columnsTab.click();
-			});
-			
-			it('should have checkbox: page columns', function(){
-				expect(projectLayout.pageColCheckbox.isDisplayed()).toBe(true);
-				projectLayout.pageColCheckbox.click();
-			});
-			
-			it('should have checkbox: title columns', function(){
-				expect(projectLayout.titleColCheckbox.isDisplayed()).toBe(true);
-				projectLayout.titleColCheckbox.click();
-			});
-			
-			it('should have checkbox: intro columns', function(){
-				expect(projectLayout.introColCheckbox.isDisplayed()).toBe(true);
-				projectLayout.introColCheckbox.click();
-			});
-			
-			it('should have checkbox: line separator', function(){
-				expect(projectLayout.lineSeperatorCheckbox.isDisplayed()).toBe(true);
-				projectLayout.lineSeperatorCheckbox.click();
-			});
-			
-			it('should have form: column offset', function(){
-				expect(projectLayout.colOffsetForm.isPresent()).toBe(true);
-			});
-			
-			it('should have form: column gap width', function(){
-				expect(projectLayout.colGapWidthForm.isPresent()).toBe(true);
-			});
-			
-			
-		});
 			
 		describe('Layout page printer options', function(){
 			it('should have printerOptionTab', function(){
@@ -158,6 +151,6 @@ describe('the project dashboard AKA text list page', function() {
 				expect(projectLayout.miscTab.isPresent()).toBe(true);
 				projectLayout.miscTab.click();
 			});
-		});
+		});*/
 	});
 });
