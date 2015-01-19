@@ -76,6 +76,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
   
   vm.width = 300;
   vm.height = 400;
+  vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"];
   
   vm.css = {
       pagesContainer: {
