@@ -74,7 +74,6 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       useSpecialCallerFootnotes: false,
       paragraphedFootnotes: true,
       useNumericCallersFootnotes: false,
-      useSpecialCallerFootnotes: false,
       specialCallerFootnotes: "\krn0.2em *\kern0.4em",
 
 
