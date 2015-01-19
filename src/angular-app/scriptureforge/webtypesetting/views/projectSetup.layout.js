@@ -3,7 +3,8 @@
 
 angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.services'])
 
-.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice) {
+.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', 
+function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
   var vm = this;
   
   vm.introColumnsTwo = false;
@@ -22,10 +23,6 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
 
   vm.width = 300;
   vm.height = 400;
-//  vm.insideMargin = 60;
-//  vm.outsideMargin = 50;
-//  vm.topMargin = 35;
-//  vm.bottomMargin = 40;
   vm.css = {
       leftPage: {
         height: vm.height,
@@ -49,27 +46,6 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
       },
   };
   
-  // variable watchers
-  /*
-  $scope.$watch('[layout.insideMargin, layout.outsideMargin, layout.topMargin, layout.bottomMargin]', function() {
-    vm.maxOutsideMargin = vm.width - vm.insideMargin;
-    vm.maxTopMargin = vm.height - vm.bottomMargin;
-    vm.maxBottomMargin = vm.height - vm.topMargin;
-    vm.css.leftPage = {
-    		width: vm.width + "px",
-    		height: vm.height + "px",
-    };
-    vm.css.rightPage = {
-        width: vm.width + "px",
-        height: vm.height + "px",
-    };
-    vm.css.rightMargins = {
-        height: vm.height - vm.topMargin - vm.bottomMargin + "px",
-        width: vm.width - vm.insideMargin - vm.outsideMargin + "px",
-        margin: vm.topMargin + "px " + vm.outsideMargin + "px " + vm.bottomMargin + "px " + vm.insideMargin + "px",
-    };
-  }, true);
-  */
   
   function watchMaker(margin, max, size, outside, left, margin_right, right, margin_left) {
     $scope.$watch("layout." + margin, function() {
@@ -119,56 +95,67 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
   
   watchMaker("insideMargin", "maxInsideMargin", "width", "outsideMargin", "leftMargins", "marginRight", "rightMargins", "marginLeft");
   watchMaker("outsideMargin", "maxOutsideMargin", "width", "insideMargin", "rightMargins", "marginRight", "leftMargins", "marginLeft");
- 
-/*
-  $scope.$watch('layout.insideMargin', function() {
-    vm.maxInsideMargin = vm.width - vm.outsideMargin;
+  
+  var saving = false;
+  var saved = false;
 
-    vm.css.leftMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.leftMargins["margin-right"] = vm.insideMargin + "px";
-    vm.css.rightMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.rightMargins["margin-left"] = vm.insideMargin + "px";
+  $scope.saveNotice = function saveNotice() {
+    if (saving) return 'Saving';
+    if (saved) return 'Saved';
+    return '';
+  };
+  
+  function saveLayoutSettings() {
+    cancelAutoSaveTimer();
+    saving = true;
+    console.log('saveLayoutSettings');
     
-    if (vm.maxInsideMargin < vm.insideMargin) {
-      vm.insideMargin = vm.maxInsideMargin;
+    // TODO add code here to save layout settings. IJH 2015-01
+    
+      // TODO in successful save callback, set 'saved' to true and form to pristine IJH 2015-01 
+//      saved = true;
+      $scope.layoutForm.$setPristine();
+
+    // TODO always clear 'saving' irrespective of succesful save. IJH 2015-01
+//    saving = false;
+  };
+
+  var autoSaveTimer;
+  function startAutoSaveTimer() {
+    if (angular.isDefined(autoSaveTimer)) {
+      return;
+    }
+    autoSaveTimer = $interval(function() {
+      saveLayoutSettings();
+    }, 5000, 1);
+  };
+  function cancelAutoSaveTimer() {
+    if (angular.isDefined(autoSaveTimer)) {
+      $interval.cancel(autoSaveTimer);
+      autoSaveTimer = undefined;
+    }
+  };
+
+  $scope.$on('$destroy', function() {
+    cancelAutoSaveTimer();
+    saveLayoutSettings();
+  });
+
+  $scope.$on('$locationChangeStart', function(event, next, current) {
+    cancelAutoSaveTimer();
+    saveLayoutSettings();
+  });
+
+  $scope.$watch('layoutForm.$dirty', function(newValue) {
+    if (newValue != undefined && newValue) {
+      cancelAutoSaveTimer();
+      startAutoSaveTimer();
     }
   });
-  $scope.$watch('layout.outsideMargin', function() {
-    vm.maxOutsideMargin = vm.width - vm.insideMargin;
 
-    vm.css.rightMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.rightMargins["margin-left"] = vm.outsideMargin + "px";
-    vm.css.leftMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.leftMargins["margin-right"] = vm.outsideMargin + "px";
-    
-    if (vm.maxOutsideMargin < vm.outsideMargin) {
-      vm.outsideMargin = vm.maxOutsideMargin;
-    }
+  $rootScope.$on('handleSaveBroadcast', function() {
+		console.log("handledSaveBroadcast");
+		templateSaveObject.vm = vm;
   });
-  $scope.$watch('layout.insideMargin', function() {
-    vm.maxInsideMargin = vm.width - vm.outsideMargin;
-
-    vm.css.leftMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.leftMargins["margin-right"] = vm.insideMargin + "px";
-    vm.css.rightMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.rightMargins["margin-left"] = vm.insideMargin + "px";
-    
-    if (vm.maxInsideMargin < vm.insideMargin) {
-      vm.insideMargin = vm.maxInsideMargin;
-    }
-  });
-  $scope.$watch('layout.insideMargin', function() {
-    vm.maxInsideMargin = vm.width - vm.outsideMargin;
-
-    vm.css.leftMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.leftMargins["margin-right"] = vm.insideMargin + "px";
-    vm.css.rightMargins.width = vm.width - vm.insideMargin - vm.outsideMargin + "px";
-    vm.css.rightMargins["margin-left"] = vm.insideMargin + "px";
-    
-    if (vm.maxInsideMargin < vm.insideMargin) {
-      vm.insideMargin = vm.maxInsideMargin;
-    }
-  });
-*/
   
 }]);

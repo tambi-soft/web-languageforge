@@ -1,0 +1,18 @@
+
+.workingText {
+	text-align: left;
+}
+
+
+.workingText p {
+	text-indent: 4em;
+}
+
+.workingText p:hover {
+	background-color: #eeeeff;
+}
+
+.workingText .usfm-wj {
+	color: darkred;
+}
+

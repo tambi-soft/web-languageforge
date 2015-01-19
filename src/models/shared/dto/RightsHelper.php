@@ -268,6 +268,8 @@ class RightsHelper
             	return $this->userHasSiteRight(Domain::USERS + Operation::EDIT);
             case 'webtypesetting_composition_getBookHTML':
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'webtypesetting_discussionList_createThread':
+            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);
 
             // LanguageForge (lexicon)
             case 'lex_configuration_update':

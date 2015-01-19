@@ -13,11 +13,13 @@ class WebtypesettingRoles extends ProjectRoles
         // Project Member
         $rights = array();
         $rights[] = Domain::TEXTS + Operation::VIEW;
+        $rights[] = Domain::QUESTIONS + Operation::VIEW;
         self::$_rights[self::CONTRIBUTOR] = $rights;
 
         // Project Manager (everything an user has... plus the following)
         $rights = self::$_rights[self::CONTRIBUTOR];
         $rights[] = Domain::TEXTS + Operation::EDIT;
+        self::grantAllOnDomain($rights, domain::QUESTIONS);
         self::$_rights[self::MANAGER] = $rights;
     }
 

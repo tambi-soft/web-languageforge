@@ -8,8 +8,9 @@ use models\mapper\IdReference;
 
 use models\mapper\Id;
 use models\mapper\MapOf;
+use models\mapper\ArrayOf;
 
-class RapmumaSettingModelLayout
+class SettingModelLayout
 {
 	/**
 	 * @var integer
@@ -88,38 +89,35 @@ class RapmumaSettingModelLayout
 
 }
 
-class RapumaSettingModel extends \models\mapper\MapperModel
+class SettingModel extends \models\mapper\MapperModel
 {
     public function __construct($projectModel, $id = '')
     {
         $this->id = new Id();
 
-        $this->layout = new RapmumaSettingModelLayout();
+        $this->layout = new SettingModelLayout();
+        $this->assets = new ArrayOf(function ($data) {
+			return new IdReference();
+        });
 
         $this->workflowState = "open"; // default workflow state
         $this->description = '';
         $this->title = '';
         $this->dateCreated = new \DateTime();
         $this->dateEdited = new \DateTime();
-        $this->textRef = new IdReference();
-//         $this->answers = new MapOf(
-//             function () {
-//                 return new AnswerModel();
-//             }
-//         );
 
         $databaseName = $projectModel->databaseName();
-        parent::__construct(RapumaSettingModelMongoMapper::connect($databaseName), $id);
+        parent::__construct(SettingModelMongoMapper::connect($databaseName), $id);
     }
 
     /**
-     * Removes this RapumaSetting from the collection
+     * Removes this Setting from the collection
      * @param string $databaseName
      * @param string $id
      */
     public static function remove($databaseName, $id)
     {
-        $mapper = RapumaSettingModelMongoMapper::connect($databaseName);
+        $mapper = SettingModelMongoMapper::connect($databaseName);
         $mapper->remove($id);
     }
 
@@ -129,17 +127,22 @@ class RapumaSettingModel extends \models\mapper\MapperModel
     public $id;
 
     /**
-     * @var RapumaSettingModelLayout
+     * @var SettingModelLayout
      */
     public $layout;
-
+    
+    /**
+     * @var ArrayOf
+     */
+    public $assets;
+    
     /**
      * @var string
      */
     public $title;
 
     /**
-     * @var string A content description/explanation of the RapumaSetting being asked
+     * @var string A content description/explanation of the Setting being asked
      */
     public $description;
 
@@ -152,16 +155,6 @@ class RapumaSettingModel extends \models\mapper\MapperModel
      * @var \DateTime
      */
     public $dateEdited;
-
-    /**
-     * @var IdReference - Id of the referring text
-     */
-    public $textRef;
-
-    /**
-     * @var MapOf<AnswerModel>
-     */
-    public $answers;
 
     /**
      *

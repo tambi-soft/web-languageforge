@@ -1,6 +1,10 @@
 <?php
+use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCommands;
+
+use models\scriptureforge\webtypesetting\dto\WebtypesettingDiscussionListPageDto;
+
 use libraries\scriptureforge\sfchecks\Email;
-use models\scriptureforge\webtypesetting\WebtypesettingSettingsCommands;
+use models\scriptureforge\webtypesetting\TypesettingSettingsCommands;
 
 use libraries\scriptureforge\sfchecks\ParatextExport;
 use libraries\shared\palaso\exceptions\UserNotAuthenticatedException;
@@ -36,6 +40,7 @@ use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
 use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommand;
 
 // TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
 use models\shared\commands\MediaResult;
@@ -105,7 +110,6 @@ class sf
     {
         return UserCommands::readUser($id);
     }
-
     /**
      * Read the user profile from $id
      *
@@ -534,7 +538,7 @@ class sf
     {
         return QuestionTemplateCommands::listTemplates($this->_projectId);
     }
-	
+
 
     // ---------------------------------------------------------------
     // Upload API
@@ -545,66 +549,99 @@ class sf
         return JsonEncoder::encode($response);
     }
 
-    	
-    /*
-     * --------------------------------------------------------------- SCRIPTUREFORGE - TYPESETTING ---------------------------------------------------------------
-     */
 
-    // ---------------------------------------------------------------
-    // API
-    // ---------------------------------------------------------------
+    public function typesetting_discussionList_getPageDto() {
+    	return WebtypesettingDiscussionListPageDto::encode($this->_projectId);
+    }
     
-
-    	
-    /*
-     * --------------------------------------------------------------- SCRIPTUREFORGE - TYPESETTING ---------------------------------------------------------------
-     */
-
-    // ---------------------------------------------------------------
-    // API
-    // ---------------------------------------------------------------
+    public function typesetting_discussionList_createThread($title, $itemId) {
+    	return WebtypesettingDiscussionListCommands::createThread($this->_projectId, $title, $itemId);
+    }
     
+	public function typesetting_discussionList_deleteThread($threadId) {
+    	return WebtypesettingDiscussionListCommands::deleteThread($this->_projectId, $threadId);
+    }
+    
+	public function typesetting_discussionList_updateThread($threadId, $title) {
+    	return WebtypesettingDiscussionListCommands::updateThread($this->_projectId, $threadId, $title);
+    }
+    
+	public function typesetting_discussionList_createPost($threadId, $post) {
+    	return WebtypesettingDiscussionListCommands::createPost($this->_projectId, $threadId, $post);
+    }
+    
+	public function typesetting_discussionList_deletePost($threadId, $postId) {
+    	return WebtypesettingDiscussionListCommands::deletePost($this->_projectId, $threadId, $postId);
+    }
+    
+	public function typesetting_discussionList_updatePost($threadId, $postId, $content) {
+    	return WebtypesettingDiscussionListCommands::updatePost($this->_projectId, $threadId, $postId, $content);
+    }
+    
+	public function typesetting_discussionList_createReply($threadId, $postId, $reply) {
+    	return WebtypesettingDiscussionListCommands::createReply($this->_projectId, $threadId, $postId, $reply);
+    }
+    
+	public function typesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
+    	return WebtypesettingDiscussionListCommands::deleteReply($this->_projectId, $threadId, $postId, $replyId);
+    }
+    
+	public function typesetting_discussionList_updateReply($threadId, $postId, $replyId, $content) {
+    	return WebtypesettingDiscussionListCommands::updateReply($this->_projectId, $threadId, $postId, $replyId, $content);
+    }
+    
+	public function typesetting_discussionList_updateStatus($threadId, $status) {
+    	return WebtypesettingDiscussionListCommands::updateStatus($this->_projectId, $status);
+    }
 	
-    public function webtypesetting_rapuma_render(){
+    public function typesetting_rapuma_render(){
     	return array('pdfUrl' => "assets/ngTraining.pdf");
     }
     
-	public function webtypesetting_settings_read() {
-		return WebtypesettingSettingsCommands::readSettings($this->_projectId);
+	public function typesetting_settings_list() {
+		return TypesettingSettingsCommands::readSettings($this->_projectId);
 	}
 	
-	public function webtypesetting_settings_update($settings) {
-		return WebtypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
+    public function typesetting_settings_readCurrent() {
+		return TypesettingSettingsCommands::readSettingsCurrent($this->_projectId);
 	}
 	
-	public function webtypesetting_composition_getBookHTML($bookId) {
+    public function typesetting_settings_read($id) {
+		return TypesettingSettingsCommands::readSettings($this->_projectId, $id);
+	}
+	
+	public function typesetting_settings_update($settings) {
+		return TypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
+	}
+	
+	public function typesetting_composition_getBookHTML($bookId) {
 		return WebtypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
 	}
 	
-	public function webtypesetting_composition_getListOfBooks() {
+	public function typesetting_composition_getListOfBooks() {
 		return WebtypesettingCompositionCommands::getListOfBooks($this->_projectId);
 	}
 	
-	public function webtypesetting_composition_getParagraphProperties($bookId) {
+	public function typesetting_composition_getParagraphProperties($bookId) {
 		return WebtypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
 	}
 	
-	public function webtypesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
+	public function typesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
 		return WebtypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
 	}
 	
-	public function webtypesetting_composition_renderBook($bookId) {
+	public function typesetting_composition_renderBook($bookId) {
 		return WebtypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
 	}
 	
-	public function webtypesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
+	public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
 		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
-	
+
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------
-    public function sfTypesetting_uploadFile($mediaType, $tmpFilePath)
+    public function typesetting_uploadFile($mediaType, $tmpFilePath)
     {
 //        $response = SfchecksUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
 		$response = new UploadResponse();
@@ -613,6 +650,29 @@ class sf
 		$response->data->fileName = "Fake filename";
 		$response->data->path = "Fake/path/not";
         return JsonEncoder::encode($response);
+    }
+
+    // ---------------------------------------------------------------
+    // TypesettingSettingCommand API
+    // ---------------------------------------------------------------
+    public function typesettingSettingCommand_update($model)
+    {
+        return TypesettingSettingCommand::updateTypesettingSetting($this->_projectId, $model);
+    }
+
+    public function typesettingSettingCommand_read($id)
+    {
+        return TypesettingSettingCommand::readTypesettingSetting($this->_projectId, $id);
+    }
+
+    public function typesettingSettingCommand_delete($id)
+    {
+        return TypesettingSettingCommand::deleteTypesettingSetting($this->_projectId, $id);
+    }
+
+    public function typesettingSettingCommand_list()
+    {
+        return TypesettingSettingCommand::listTypesettingSetting($this->_projectId);
     }
 
     /*

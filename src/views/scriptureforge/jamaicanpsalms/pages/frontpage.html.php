@@ -21,12 +21,12 @@
 
 			<div class="container">
 				<div class="row">
-					<div class="span7">
+					<div class="col-md-7">
 						<h2 class="lifted-text">Welcome to the <span class="sf-jamaican-green">Jamaican Psalms Project</span></h2>
 						<p>Oudi! Wa'a gwaan?</p>
 						<p>Imagine hundreds, maybe thousands, of Jamaicans from all over the world (male and female, all ages, all churches and job backgrounds), helping to translate their favourite Psalms into Jamaican. We do this face-to-face in our home and church groups using this Jamaican Psalms translation website. This is a translation of the Psalms by Jamaicans for Jamaicans. Gad wod iina fi wi langwij! Join the cause by creating a user account now. It frii!</p>
 					</div>
-					<div class="span5">
+					<div class="col-md-5">
 						<iframe width="380" height="285" src="//www.youtube.com/embed/hYlECJ35Wos" frameborder="0" allowfullscreen></iframe>
 					</div>
 					</div>
@@ -64,8 +64,8 @@
 			<div id="sub-foot">
 				<div class="container">
 					<div class="row">
-						<div class="span3"><img src="/images/scriptureforge/jamaicanpsalms/sf-sub-footer-pic.png" alt="Israel's Story" style="width:146px;height:150px;margin-top:72px; margin-left:60px" /></div>
-						<div class="span9">
+						<div class="col-md-3"><img src="/images/scriptureforge/jamaicanpsalms/sf-sub-footer-pic.png" alt="Israel's Story" style="width:146px;height:150px;margin-top:72px; margin-left:60px" /></div>
+						<div class="col-md-9">
 							<h3>The Impact of the Bible</h3>
 							<p>Many Jamaicans have been touched by the Jamaican New Testament! Take Israel, for example, a young British-Jamaican young man living in England. He talks to us regularly on our Facebook page. Ever so often he reads for his family members from the Jamaican New Testament (JNT). One day, he read to his grandmother from the JNT. His grandmother then told her pastor about the JNT. The pastor was curious, so Israel was asked to take his JNT to church and read from it during worship! Israel messaged us after the service, this was what he said:</p>
 

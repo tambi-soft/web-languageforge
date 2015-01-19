@@ -17,3 +17,11 @@
 #page-right {
     float: right;
 }
+
+.checkbox-inline {
+	font-weight: bold;	
+}
+
+.save-notice {
+    margin-top: 11px;
+}

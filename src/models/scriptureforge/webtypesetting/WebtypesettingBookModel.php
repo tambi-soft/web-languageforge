@@ -9,6 +9,7 @@ use models\mapper\Id;
 use models\mapper\IdReference;
 use models\ProjectModel;
 
+// TODO This doesn't need to be in a collection of its own.  It can be a member of the SettingsModel CP 2015-01
 class WebtypesettingBookModel extends \models\mapper\MapperModel
 {
     public static function mapper($databaseName)

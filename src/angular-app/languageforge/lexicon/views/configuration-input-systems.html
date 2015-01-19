@@ -25,10 +25,10 @@
 	<div class="col-md-9">
 		<!-- control buttons -->
 		<div class="form-group">
-			<div class="btn-group">
-				<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="font-weight:normal"> 
-					{{'More' | translate}} <span class="caret"></span></a>
-				<ul class="dropdown-menu">
+			<div class="btn-group" data-dropdown>
+				<button type="button" class="btn btn-info dropdown-toggle" data-dropdown-toggle> 
+					{{'More' | translate}} <span class="caret"></span></button>
+				<ul class="dropdown-menu" role="menu">
 					<li data-ng-class="{disabled: newExists(selects.special.optionsOrder[1])}">
 						<a tabindex="-1" data-ng-click="addInputSystem(inputSystemViewModels[currentInputSystemTag].language, inputSystemViewModels[currentInputSystemTag].inputSystem.languageName, selects.special.optionsOrder[1])">
 						<i class="icon-plus"></i> {{'Add IPA for' | translate}} {{inputSystemViewModels[currentInputSystemTag].inputSystem.languageName}}</a></li>

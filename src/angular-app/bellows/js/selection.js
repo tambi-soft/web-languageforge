@@ -62,11 +62,9 @@ angular.module('palaso.ui.selection', [])
 					if (scope.validMouseDown) {
 						var selection = rangy.getSelection();
 						var selectedHtml = selection.toHtml();
-
 						var range = selection.getRangeAt(0);
 						controller.cssApplier.applyToRange(range);
 						scope.oldHighlightedRange = range;
-
 						scope.$apply(function() {
 							if (scope.silSelectedText != undefined) {
 								scope.silSelectedText = selectedHtml;
