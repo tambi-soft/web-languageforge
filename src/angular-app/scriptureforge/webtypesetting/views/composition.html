@@ -3,9 +3,8 @@
 	<h3 align="left">Component Name</h3>
 	<div class="control-bar">
 		<div class="button-bar">
-			<button type="button" class="btn btn-primary btn-sm" data-ng-click="">Save
-				All</button>
-			<button type="button" class="btn btn-primary btn-sm" data-ng-click="">Render!</button>
+			<button type="button" class="btn btn-primary btn-sm" data-ng-click="save()">Save</button>
+			<button type="button" class="btn btn-primary btn-sm" data-ng-click="">Render All</button>
 		</div>
 		<div class="next">
 			<button type="button" class="btn btn-link"
@@ -39,20 +38,21 @@
 					paragraph-node="paragraphNode" content="bookHTML"></div>
 
 				<div class="properties">
+					<div  ng-hide="verse==''">
 					<p>Chapter: {{chapter}}, verse: {{verse}}</p>
 					Growth factor: <input class="form-control"
-						style="display: inline-block; width: 50%;" type="number"
+						style="display: inline-block; width: 50%;" type="number""
 						data-ng-model="paragraphGrowthFactor" />
+					</div>
 				</div>
 			</div>
 			
-			<div class="col-sm-4">
-				<div style="margin-top: 10px"></div>
+			<div class="col-sm-4" ng-class="{grey:selectedPage%2==1}">
+				<img data-ng-src="{{renderedImageLeft || '//:0'}}" class="left" />
 			</div>
 			
-			<div class="col-sm-4"
-				data-ng-init="renderedImage='http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png'">
-				<img data-ng-src="{{renderedImage}}" class="triColor" />
+			<div class="col-sm-4" ng-class="{grey:selectedPage%2==0}">
+				<img data-ng-src="{{renderedImageRight || '//:0'}}" class="right" />
 			</div>
 		</div>
 	</div>

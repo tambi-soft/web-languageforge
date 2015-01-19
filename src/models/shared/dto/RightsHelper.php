@@ -264,10 +264,20 @@ class RightsHelper
             case 'sfTypesetting_uploadFile':
                 return $this->userHasSiteRight(Domain::USERS + Operation::EDIT_OWN);
 
-            case 'webtypesetting_rapuma_render':
-            	return $this->userHasSiteRight(Domain::USERS + Operation::EDIT);
-            case 'webtypesetting_composition_getBookHTML':
+            case 'typesetting_composition_renderBook':
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getBookHTML':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getListOfBooks':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getParagraphProperties':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_setParagraphProperties':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_composition_getRenderedPageForBook':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            	
+            	
             case 'webtypesetting_discussionList_createThread':
             	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);
 

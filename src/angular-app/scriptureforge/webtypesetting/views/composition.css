@@ -28,6 +28,7 @@
 	border: 1px solid;
 	
 	margin-top: 5px;
+	margin-bottom: 10px;
 }
 .text{
 	border: 1px solid;
@@ -97,8 +98,12 @@
 	width:3em;
 }
 
-.triColor{
-	width:80%;
+.left{
+	width:90%;
+	height:80%;
+}
+.right{
+	width:90%;
 	height:80%;
 }
 
@@ -124,4 +129,8 @@
 	float:right;
 	margin-right:40px;
 	margin-bottom:3px;	
+}
+
+.grey{
+	opacity:0.5;
 }
