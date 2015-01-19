@@ -18,8 +18,8 @@ var SfCompositionPage = function() {
 			pageInput: element(protractor.By.css('.pageNumber')),
 			
 			renderButton: element(by.partialButtonText('Render')),
-			saveAllButton: element(by.partialButtonText('Save All')),
-			//slider: element() //need to be able to access slider functionality, not as simple as button presses
+			saveAllButton: element(by.partialButtonText('Save')),
+			slider: element(by.className('progress-slider')), //need to be able to access slider functionality, not as simple as button presses
 	};
 
 	this.left = {
@@ -30,7 +30,8 @@ var SfCompositionPage = function() {
 
 	this.right = {
 			//image:, placeholder for now.
-			image: element(by.className('triColor')),
+			rightPage: element(by.className('right')),
+			leftPage: element(by.className('left')),
 	};
 
 };
