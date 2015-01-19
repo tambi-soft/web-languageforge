@@ -12,5 +12,7 @@ var SfProjectPage = function() {
 	this.outerMarginForm = element(by.model('layout.outsideMargin'));
 	this.topMarginForm = element(by.model('layout.topMargin'));
 	this.bottomMarginForm = element(by.model('layout.bottomMargin'));
+	
+	this.marginDiv = element(by.id('pageLeftLayout'));
 };
 module.exports = new SfProjectPage();

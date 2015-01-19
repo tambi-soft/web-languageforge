@@ -11,12 +11,12 @@ describe('the project dashboard AKA text list page', function() {
 	var projectLayout 		= require('../pages/projectLayoutPage.js');
 	
 	
-	describe('project member/user', function() {
-		it('setup: logout, login as project member, go to project dashboard', function() {
-			loginPage.logout();
-			loginPage.loginAsMember();
-		});
-	});
+	//describe('project member/user', function() {
+	//	it('setup: logout, login as project member, go to project dashboard', function() {
+	//		loginPage.logout();
+	//		loginPage.loginAsMember();
+	//	});
+	//});
 		
 	describe('Layout page', function(){
 		
@@ -40,20 +40,32 @@ describe('the project dashboard AKA text list page', function() {
 		});
 		it('should set the values', function(){	
 			projectLayout.innerMarginForm.clear().then(function(){
-				projectLayout.innerMarginForm.sendKeys('80');
+				projectLayout.innerMarginForm.sendKeys('80').then(function(){
+					expect(projectLayout.marginDiv.isPresent()).toBe(true);
+					expect(projectLayout.marginDiv.getCssValue('margin-right')).toBe('80px');
+				});
 			});
+			
 			projectLayout.outerMarginForm.clear().then(function(){
-				projectLayout.outerMarginForm.sendKeys('30');
+				projectLayout.outerMarginForm.sendKeys('30').then(function(){
+					expect(projectLayout.marginDiv.isPresent()).toBe(true);
+					expect(projectLayout.marginDiv.getCssValue('margin-left')).toBe('30px');
+				});
 			});
+			
 			projectLayout.topMarginForm.clear().then(function(){
-				projectLayout.topMarginForm.sendKeys('60');
+				projectLayout.topMarginForm.sendKeys('60').then(function(){
+					expect(projectLayout.marginDiv.isPresent()).toBe(true);
+					expect(projectLayout.marginDiv.getCssValue('margin-top')).toBe('60px');
+				});
 			});
+			
 			projectLayout.bottomMarginForm.clear().then(function(){
-				projectLayout.bottomMarginForm.sendKeys('150');
+				projectLayout.bottomMarginForm.sendKeys('150').then(function(){
+					expect(projectLayout.marginDiv.isPresent()).toBe(true);
+					expect(projectLayout.marginDiv.getCssValue('height')).toBe('190px');
+				});
 			});
 		});
 	});
-		
-		
-	//	.sendKeys('myemail@myemail.com');
 });
