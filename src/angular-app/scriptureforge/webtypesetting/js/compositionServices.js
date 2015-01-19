@@ -35,6 +35,14 @@ angular.module('webtypesetting.compositionServices', ['jsonRpc'])
     	jsonRpc.call("typesetting_composition_getPageDto", [], callback);
     };
     
+    this.getIllustrationProperties = function getIllustrationProperties(bookId, callback){
+    	jsonRpc.call("typesetting_composition_getIllustrationProperties", [bookId, callback]);
+    };
+    
+    this.setIllustrationProperties = function setIllustrationProperties(bookId, properties, callback){
+    	jsonRpc.call("typesetting_composition_setIllustrationProperties", [bookId, properties, callback]);
+    };
+    
   }])
   .service('webtypesettingSetupService', ['jsonRpc',
   function(jsonRpc) {

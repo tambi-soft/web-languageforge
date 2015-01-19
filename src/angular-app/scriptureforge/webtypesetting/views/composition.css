@@ -1,12 +1,11 @@
 .left{
-	width: 40%; 
-	float: left;
-	padding-bottom: 30px;
+	border:1px solid black;
 }
 .right{
-	width: 40%;
-	float:right;
+	border:1px solid black;
 }
+
+
 
 .center{
 	float:left;
@@ -24,7 +23,8 @@
 }
 
 .properties{
-	height: 100px;
+	/*height: 100px;*/
+	height: 100%;
 	border: 1px solid;
 	
 	margin-top: 5px;
@@ -99,12 +99,10 @@
 }
 
 .left{
-	width:90%;
-	height:80%;
+	width:100%;
 }
 .right{
-	width:90%;
-	height:80%;
+	width:100%;
 }
 
 

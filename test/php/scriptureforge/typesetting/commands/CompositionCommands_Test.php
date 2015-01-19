@@ -22,7 +22,7 @@ class TestWebtypesettingsCompositionCommands extends UnitTestCase
         
         
         // method under test
-        $html = WebtypesettingCompositionCommands::getBookHTML(6, 44.333333333);
+        $html = WebtypesettingCompositionCommands::getBookHTML(6, 44);
         
         // assertions to make sure things are working
         $this->assertNotEqual($html, '');

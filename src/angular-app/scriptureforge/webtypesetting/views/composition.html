@@ -3,8 +3,10 @@
 	<h3 align="left">Component Name</h3>
 	<div class="control-bar">
 		<div class="button-bar">
-			<button type="button" class="btn btn-primary btn-sm" data-ng-click="save()">Save</button>
-			<button type="button" class="btn btn-primary btn-sm" data-ng-click="">Render All</button>
+			<button type="button" class="btn btn-primary btn-sm"
+				data-ng-click="save()">Save</button>
+			<button type="button" class="btn btn-primary btn-sm"
+				data-ng-click="renderRapuma()">Render All</button>
 		</div>
 		<div class="next">
 			<button type="button" class="btn btn-link"
@@ -33,25 +35,58 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-				<div class="text" data-ng-bind-html="bookHTML"
+				<div class="text workingText" data-ng-bind-html="bookHTML"
 					data-ng-click="textClick()" composition-selection
 					paragraph-node="paragraphNode" content="bookHTML"></div>
 
 				<div class="properties">
-					<div  ng-hide="verse==''">
-					<p>Chapter: {{chapter}}, verse: {{verse}}</p>
-					Growth factor: <input class="form-control"
-						style="display: inline-block; width: 50%;" type="number""
+					<div ng-show="verse==''">
+						<table>
+							<tbody>
+								<tr>
+									<td>location</td>
+									<td><input class="form-control" ng-model="location"/></td>
+								</tr>
+								<tr>
+									<td>width</td>
+									<td><input class="form-control" type="number" ng-model="width"/></td>
+								</tr>
+								<tr>
+									<td>scale</td>
+									<td><input class="form-control" type="number" ng-model="scale" step="0.05"/></td>
+								</tr>
+								<tr>
+									<td>caption</td>
+									<td><input class="form-control" ng-model="caption"/></td>
+								</tr>
+								<tr>
+									<td>use caption</td>
+									<td><input class="form-control" type="checkbox" data-ng-model="useCaption"/></td>
+								</tr>
+								<tr>
+									<td>use illustration</td>
+									<td><input class="form-control" type="checkbox" data-ng-model="useIllustration"/></td>
+								</tr>
+							</tbody>
+						</table>
+
+						
+					</div>
+					<div ng-show="verse!=''">
+						<p>Chapter: {{chapter}}, verse: {{verse}}</p>
+						Growth factor: <input class="form-control"
+							style="display: inline-block; width: 50%;" type="number"
+							"
 						data-ng-model="paragraphGrowthFactor" />
 					</div>
 				</div>
 			</div>
-			
-			<div class="col-sm-4" ng-class="{grey:selectedPage%2==1}">
+
+			<div class="col-sm-4 imageDiv" ng-class="{grey:selectedPage%2==1}">
 				<img data-ng-src="{{renderedImageLeft || '//:0'}}" class="left" />
 			</div>
-			
-			<div class="col-sm-4" ng-class="{grey:selectedPage%2==0}">
+
+			<div class="col-sm-4 imageDiv" ng-class="{grey:selectedPage%2==0}">
 				<img data-ng-src="{{renderedImageRight || '//:0'}}" class="right" />
 			</div>
 		</div>

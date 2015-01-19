@@ -227,6 +227,7 @@ class RightsHelper
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::VIEW);
 
             case 'project_create':
+            case 'project_create_switchSession':
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
             case 'projectcode_exists':
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
@@ -274,6 +275,10 @@ class RightsHelper
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
             case 'typesetting_composition_setParagraphProperties':
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_composition_getIllustrationProperties':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_setIllustrationProperties':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
             case 'typesetting_composition_getRenderedPageForBook':
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
             	
@@ -284,7 +289,7 @@ class RightsHelper
             // LanguageForge (lexicon)
             case 'lex_configuration_update':
             case 'lex_upload_importLift':
-            case 'lex_uploadProjectZip':
+            case 'lex_upload_importProjectZip':
                 return $this->userHasProjectRight(Domain::PROJECTS + Operation::EDIT);
 
             case 'lex_baseViewDto':
