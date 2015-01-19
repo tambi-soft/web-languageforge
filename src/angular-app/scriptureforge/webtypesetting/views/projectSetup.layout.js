@@ -22,6 +22,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       // header
       headerPosition: 5,
       useRunningHeader: true,
+      useRunningHeaderRule: false,
       runningHeaderRulePosition: 4,
       // footer
       footerPosition: 5,
@@ -41,7 +42,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       specialCallerCrossrefs: "\\kern0.2em *\\kern0.4em",
       // background
       useBackground: false,
-      backgroundComponents: ["watermark"],
+      backgroundComponents: "watermark",
       watermarkText: "DRAFT",
       // print options
       pageSizeCode: "A5", // TODO
@@ -57,11 +58,22 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       justifyParagraphs: true,
       fontDefaultSize: 12,
       leadingDefaultSize: 14,
-      // miscellaneous
-      useCaptionReferences: true,
-      useFigurePlaceHolders: true,
   };
-
+  
+  vm.components = {
+      watermark: true,
+  };
+  vm.backgroundComponentsUpdate = function() {
+    var comps = [];
+    var comp;
+    for (comp in vm.components) {
+      if (vm.components[comp]) {
+        comps.push(comp);
+      }
+    };
+    vm.conf.backgroundComponents = comps.join(", ");
+  };
+  
   vm.width = 300;
   vm.height = 400;
   
