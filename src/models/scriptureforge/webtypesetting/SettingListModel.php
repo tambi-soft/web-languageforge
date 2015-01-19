@@ -4,16 +4,26 @@ namespace models\scriptureforge\webtypesetting;
 class SettingListModel extends \models\mapper\MapperListModel
 {
 
+    public static function mapper($databaseName)
+    {
+        static $instance = null;
+        if (null === $instance) {
+            $instance = new \models\mapper\MongoMapper($databaseName, 'settings');
+        }
+
+        return $instance;
+    }
+
 	protected function __construct($projectModel, $query, $fields)
 	{
 		parent::__construct(
-				SettingModelMongoMapper::connect($projectModel->databaseName()),
+				self::mapper($projectModel->databaseName()),
 				$query,
 				$fields
 		);
 	}
 	
-	public function all($projectModel)
+	public static function all($projectModel)
 	{
 		return new SettingListModel(
 				$projectModel,

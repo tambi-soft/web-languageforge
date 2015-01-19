@@ -2,6 +2,8 @@
 
 namespace models\scriptureforge\webtypesetting;
 
+use models\ProjectModel;
+
 use models\mapper\MongoMapper;
 
 use models\mapper\IdReference;
@@ -12,6 +14,11 @@ use models\mapper\ArrayOf;
 
 class SettingModelLayout
 {
+	
+	public function __construct() {
+		// default settings here
+	}
+	
 	/**
 	 * @var integer
 	 */
@@ -103,21 +110,31 @@ class SettingModel extends \models\mapper\MapperModel
         $this->workflowState = "open"; // default workflow state
         $this->description = '';
         $this->title = '';
-        $this->dateCreated = new \DateTime();
-        $this->dateEdited = new \DateTime();
+        $this->isArchived = false;
 
         $databaseName = $projectModel->databaseName();
-        parent::__construct(SettingModelMongoMapper::connect($databaseName), $id);
+        parent::__construct(self::mapper($databaseName), $id);
+    }
+
+    public static function mapper($databaseName)
+    {
+        static $instance = null;
+        if (null === $instance) {
+            $instance = new \models\mapper\MongoMapper($databaseName, 'settings');
+        }
+
+        return $instance;
     }
 
     /**
      * Removes this Setting from the collection
-     * @param string $databaseName
+     * @param ProjectModel $projectModel
      * @param string $id
      */
-    public static function remove($databaseName, $id)
+    public static function remove($projectModel, $id)
     {
-        $mapper = SettingModelMongoMapper::connect($databaseName);
+    	$databaseName = $projectModel->databaseName();
+        $mapper = self::mapper($databaseName);
         $mapper->remove($id);
     }
 
@@ -145,16 +162,6 @@ class SettingModel extends \models\mapper\MapperModel
      * @var string A content description/explanation of the Setting being asked
      */
     public $description;
-
-    /**
-     * @var \DateTime
-     */
-    public $dateCreated;
-
-    /**
-     * @var \DateTime
-     */
-    public $dateEdited;
 
     /**
      *
