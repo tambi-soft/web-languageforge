@@ -266,7 +266,7 @@ class RightsHelper
 
             case 'webtypesetting_rapuma_render':
             	return $this->userHasSiteRight(Domain::USERS + Operation::EDIT);
-            case 'webtypesetting_composition_getBookHTML':
+            case 'typesetting_composition_getBookHTML':
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
             case 'webtypesetting_discussionList_createThread':
             	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);
