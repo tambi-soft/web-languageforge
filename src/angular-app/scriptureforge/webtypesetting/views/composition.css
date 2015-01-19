@@ -1,12 +1,11 @@
 .left{
-	width: 40%; 
-	float: left;
-	padding-bottom: 30px;
+	border:1px solid black;
 }
 .right{
-	width: 40%;
-	float:right;
+	border:1px solid black;
 }
+
+
 
 .center{
 	float:left;
@@ -24,10 +23,12 @@
 }
 
 .properties{
-	height: 100px;
+	/*height: 100px;*/
+	height: 100%;
 	border: 1px solid;
 	
 	margin-top: 5px;
+	margin-bottom: 10px;
 }
 .text{
 	border: 1px solid;
@@ -97,9 +98,11 @@
 	width:3em;
 }
 
-.triColor{
-	width:80%;
-	height:80%;
+.left{
+	width:100%;
+}
+.right{
+	width:100%;
 }
 
 
@@ -124,4 +127,8 @@
 	float:right;
 	margin-right:40px;
 	margin-bottom:3px;	
+}
+
+.grey{
+	opacity:0.5;
 }
