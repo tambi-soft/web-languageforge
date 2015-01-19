@@ -128,11 +128,10 @@ angular.module(
 						if(!currentVerse)return;
 						if(paragraphProperties[currentVerse]){
 							paragraphProperties[currentVerse].growthfactor = $scope.paragraphGrowthFactor;
-							
 						} else {
 							paragraphProperties[currentVerse] = {growthfactor:$scope.paragraphGrowthFactor};
 						}
-						if(paragraphChanged)paragraphChanged=false;
+						if(paragraphChanged)paragraphChanged = false;
 						else $scope.pages[$scope.selectedPage] = "orange";
 					});
 					
