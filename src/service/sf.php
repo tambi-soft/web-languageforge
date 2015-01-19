@@ -40,6 +40,7 @@ use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
 use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommand;
 
 // TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
 use models\shared\commands\MediaResult;
@@ -109,7 +110,6 @@ class sf
     {
         return UserCommands::readUser($id);
     }
-
     /**
      * Read the user profile from $id
      *
@@ -538,7 +538,7 @@ class sf
     {
         return QuestionTemplateCommands::listTemplates($this->_projectId);
     }
-	
+
 
     // ---------------------------------------------------------------
     // Upload API
@@ -549,15 +549,6 @@ class sf
         return JsonEncoder::encode($response);
     }
 
-    	
-    /*
-     * --------------------------------------------------------------- SCRIPTUREFORGE - TYPESETTING ---------------------------------------------------------------
-     */
-
-    // ---------------------------------------------------------------
-    // API
-    // ---------------------------------------------------------------
-    
 
     public function typesetting_discussionList_getPageDto() {
     	return WebtypesettingDiscussionListPageDto::encode($this->_projectId);
@@ -646,7 +637,7 @@ class sf
 	public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
 		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
-	
+
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------
@@ -659,6 +650,29 @@ class sf
 		$response->data->fileName = "Fake filename";
 		$response->data->path = "Fake/path/not";
         return JsonEncoder::encode($response);
+    }
+
+    // ---------------------------------------------------------------
+    // TypesettingSettingCommand API
+    // ---------------------------------------------------------------
+    public function typesettingSettingCommand_update($model)
+    {
+        return TypesettingSettingCommand::updateTypesettingSetting($this->_projectId, $model);
+    }
+
+    public function typesettingSettingCommand_read($id)
+    {
+        return TypesettingSettingCommand::readTypesettingSetting($this->_projectId, $id);
+    }
+
+    public function typesettingSettingCommand_delete($id)
+    {
+        return TypesettingSettingCommand::deleteTypesettingSetting($this->_projectId, $id);
+    }
+
+    public function typesettingSettingCommand_list()
+    {
+        return TypesettingSettingCommand::listTypesettingSetting($this->_projectId);
     }
 
     /*

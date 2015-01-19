@@ -88,8 +88,7 @@ class TestSettingModel extends UnitTestCase
         $otherSetting->layout->introColumnsTwo = true;
         $otherSetting->layout->titleColumnsTwo = true;
         $otherSetting->layout->bodyColumnsTwo = true;
-        $otherSetting->layout->columnSpacingSize = 50;
-        $otherSetting->layout->showColumnSeparatorLine = true;
+        $otherSetting->layout->columnSpacingSize = 50;        $otherSetting->layout->showColumnSeparatorLine = true;
         $otherSetting->layout->headerPosition = 50;
         $otherSetting->layout->footerPosition = 50;
         $otherSetting->write();
