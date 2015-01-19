@@ -8,22 +8,22 @@
             <div class="col-md-2">
                 <label for="insideMarginInput">Inside Margin</label>
                 <input class="form-control" type="number"
-                    data-ng-model="layout.insideMargin" id="insideMarginInput" />
+                    data-ng-model="layout.conf.insideMargin" id="insideMarginInput" />
             </div>
             <div class="col-md-2">
                 <label for="outsideMarginInput">Outside Margin</label>
                 <input class="form-control" type="number"
-                    data-ng-model="layout.outsideMargin" id="outsideMarginInput" />
+                    data-ng-model="layout.conf.outsideMargin" id="outsideMarginInput" />
             </div>
             <div class="col-md-2">
                 <label for="topMarginInput">Top Margin</label>
-                <input class="form-control" type="number" data-ng-model="layout.topMargin"
+                <input class="form-control" type="number" data-ng-model="layout.conf.topMargin"
                     id="topMarginInput" />
             </div>
             <div class="col-md-2">
                 <label for="bottomMarginInput">Bottom Margin</label>
                 <input class="form-control" type="number"
-                    data-ng-model="layout.bottomMargin" id="bottomMarginInput" />
+                    data-ng-model="layout.conf.bottomMargin" id="bottomMarginInput" />
             </div>
             <br />
             <br />
@@ -107,9 +107,13 @@
     </tabset>
     </form>
     <br />
+    
 
-    <div class="row">
-
+    <div class="row" data-ng-style="layout.css.pagesContainer">
+    <br>
+    <p style="text-align: center;">
+    Preview (only displays adjustable margins)
+    </p>
         <!-- left page -->
         <div class="pages" id="page-left" data-ng-style="layout.css.leftPage">
             <div class="margins" data-ng-style="layout.css.leftMargins">
