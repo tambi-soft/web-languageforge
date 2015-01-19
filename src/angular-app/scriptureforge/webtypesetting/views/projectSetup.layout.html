@@ -9,22 +9,22 @@
 	            <div class="col-md-2">
 	                <label for="insideMarginInput">Inside Margin</label>
 	                <input class="form-control" type="number"
-	                    data-ng-model="layout.insideMargin" id="insideMarginInput" />
+	                    data-ng-model="layout.conf.insideMargin" id="insideMarginInput" />
 	            </div>
 	            <div class="col-md-2">
 	                <label for="outsideMarginInput">Outside Margin</label>
 	                <input class="form-control" type="number"
-	                    data-ng-model="layout.outsideMargin" id="outsideMarginInput" />
+	                    data-ng-model="layout.conf.outsideMargin" id="outsideMarginInput" />
 	            </div>
 	            <div class="col-md-2">
 	                <label for="topMarginInput">Top Margin</label>
-	                <input class="form-control" type="number" data-ng-model="layout.topMargin"
+	                <input class="form-control" type="number" data-ng-model="layout.conf.topMargin"
 	                    id="topMarginInput" />
 	            </div>
 	            <div class="col-md-2">
 	                <label for="bottomMarginInput">Bottom Margin</label>
 	                <input class="form-control" type="number"
-	                    data-ng-model="layout.bottomMargin" id="bottomMarginInput" />
+	                    data-ng-model="layout.conf.bottomMargin" id="bottomMarginInput" />
 	            </div>
 	        </div>
         </tab>
@@ -33,22 +33,22 @@
             <div class="row">
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox">Two Body Columns
+                          <input type="checkbox" data-ng-model="layout.conf.bodyColumnsTwo">Two Body Columns
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox">Two Title Columns
+                          <input type="checkbox" data-ng-model="layout.conf.titleColumnsTwo">Two Title Columns
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox">Two Intro Columns
+                          <input type="checkbox" data-ng-model="layout.conf.introColumnsTwo">Two Intro Columns
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox">Column Rule
+                          <input type="checkbox" data-ng-model="layout.conf.columnGutterRule">Column Rule
                     </label>
                 </div>
             </div>
@@ -58,21 +58,21 @@
             <div class="row">
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Running Header
+	                      <input type="checkbox" data-ng-model="layout.conf.useRunningHeader">Running Header
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label for="headerPositionInput">Header Position</label>
-	                <input class="form-control" type="number" id="headerPositionInput" />
+	                <input class="form-control" type="number" data-ng-model="layout.conf.headerPosition" id="headerPositionInput" />
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Running Header Rule
+	                      <input type="checkbox" data-ng-model="layout.conf.useRunningHeaderRule">Running Header Rule
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label for="headerPositionRuleInput">Running Header Rule</label>
-	                <input class="form-control" type="number" id="headerPositionRuleInput" />
+	                <input class="form-control" type="number" data-ng-model="layout.conf.runningHeaderRulePosition" id="headerPositionRuleInput" />
 	            </div>
 	        </div>
         </tab>
@@ -81,26 +81,26 @@
             <div class="row">
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Running Footer
+	                      <input type="checkbox" data-ng-model="layout.conf.useRunningFooter">Running Footer
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label for="footerPositionInput">Footer Position</label>
-	                <input class="form-control" type="number" id="footerPositionInput" />
+	                <input class="form-control" type="number" data-ng-model="layout.conf.footerPosition" id="footerPositionInput" />
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Footnote Rule
+	                      <input type="checkbox" data-ng-model="layout.conf.useFootnoteRule">Footnote Rule
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Reset Page Callers Footnotes
+	                      <input type="checkbox" data-ng-model="layout.conf.pageResetCallersFootnotes">Reset Page Callers Footnotes
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Omit Caller In Footnotes
+	                      <input type="checkbox" data-ng-model="layout.conf.omitCallerInFootnotes">Omit Caller In Footnotes
 	                </label>
 	            </div>
 	        </div>
@@ -108,22 +108,22 @@
 	        <div class="row">
 	        	<div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Use Special Caller Footnotes
+	                      <input type="checkbox" data-ng-model="layout.conf.useSpecialCallerFootnotes">Use Special Caller Footnotes
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Paragraphed Footnotes
+	                      <input type="checkbox" data-ng-model="layout.conf.paragraphedFootnotes">Paragraphed Footnotes
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Use Numeric Callers Footnotes
+	                      <input type="checkbox" data-ng-model="layout.conf.useNumericCallersFootnotes">Use Numeric Callers Footnotes
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label for="specialCallerFootnotesInput">Special Caller Footnotes</label>
-	                <input class="form-control" type="text" id="specialCallerFootnotesInput" />
+	                <input class="form-control" data-ng-model="layout.conf.specialCallerFootnotes" type="text" id="specialCallerFootnotesInput" />
 	            </div>
 	        </div>
         </tab>  
@@ -132,22 +132,22 @@
         	<div class="row">
         		<div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Use Special Caller Crossrefs
+	                      <input type="checkbox" data-ng-model="layout.conf.useSpecialCallerCrossrefs">Use Special Caller Crossrefs
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Paragraphed Crossrefs
+	                      <input type="checkbox" data-ng-model="layout.conf.paragraphedCrossrefs">Paragraphed Crossrefs
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Use Numeric Callers Crossrefs
+	                      <input type="checkbox" data-ng-model="layout.conf.useNumericCallersCrossrefs">Use Numeric Callers Crossrefs
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label for="specialCallerCrossrefsInput">Special Caller Crossrefs</label>
-	                <input class="form-control" type="text" id="specialCallerCrossrefsInput" />
+	                <input class="form-control" type="text" id="specialCallerCrossrefsInput" data-ng-model="layout.conf.specialCallerCrossrefs" />
 	            </div>
         	</div>
         </tab> 
@@ -156,7 +156,7 @@
         	<div class="row">
         		<div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Use Background
+	                      <input type="checkbox" data-ng-model="layout.conf.useBackground">Use Background
 	                </label>
 	            </div>
         	</div>
@@ -165,21 +165,21 @@
         	<div class="row well" id="backgroundComponentsWell">
         		<div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Watermark
+	                      <input type="checkbox" data-ng-model="layout.components.watermark" data-ng-change="layout.backgroundComponentsUpdate()">Watermark
 	                </label>
 	            </div>
         		<div class="col-md-2">
 	                <label for="watermarkTextInput">Watermark Text</label>
-	                <input class="form-control" type="text" id="watermarkTextInput" />
+	                <input class="form-control" data-ng-model="layout.conf.watermarkText" type="text" id="watermarkTextInput" />
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Pagebox
+	                      <input type="checkbox" data-ng-model="layout.components.pagebox" data-ng-change="layout.backgroundComponentsUpdate()">Pagebox
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Cropmarks
+	                      <input type="checkbox" data-ng-model="layout.components.cropmarks" data-ng-change="layout.backgroundComponentsUpdate()">Cropmarks
 	                </label>
 	            </div>
         	</div>
@@ -188,14 +188,14 @@
         	<br />
         	<div class="row">
         		<div class="col-md-2">
-	                <label for="pageSizeCodeInput">Page Size Code</label>
+	                <label for="pageSizeCodeInput" data-ng-model="layout.conf.pageSizeCode">Page Size Code</label>
 	        		<select class="form-control" id="pageSizeCodeInput">
 	        			<option>A5</option>
 	        			<option>US Letter</option>
 	        		</select>
         		</div>
         		<div class="col-md-2">
-	                <label for="printerPageSizeCodeInput">Printer Page Size Code</label>
+	                <label for="printerPageSizeCodeInput" data-ng-model="layout.conf.printerPageSizeCode">Printer Page Size Code</label>
 	        		<select class="form-control" id="printerPageSizeCodeInput">
 	        			<option>A4</option>
 	        			<option>US Letter</option>
@@ -203,12 +203,12 @@
         		</div>
         		<div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox">Use Doc Info
+	                      <input type="checkbox" data-ng-model="layout.conf.useDocInfo">Use Doc Info
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label for="docInfoTextInput">Doc Info Text</label>
-	                <input class="form-control" type="text" id="docInfoTextInput" />
+	                <input class="form-control" data-ng-model="layout.conf.docInfoText" type="text" id="docInfoTextInput" />
 	            </div>
         	</div>
         </tab>
@@ -248,7 +248,7 @@
         </tab>
         <tab heading="Misc" class="form-group">
         	<br />
-        	<div class="row">
+        	<!-- <div class="row">
                 <div class="col-md-2">
                     <label class="checkbox-inline">
                           <input type="checkbox">Use Caption References 
@@ -259,14 +259,18 @@
                           <input type="checkbox">Use Figure Placeholders  
                     </label>
                 </div>
-        	</div>
+        	</div> -->
         </tab>
     </tabset>
     </form>
     <br />
+    
 
-    <div class="row">
-
+    <div class="row" data-ng-style="layout.css.pagesContainer">
+    <br>
+    <p style="text-align: center;">
+    Preview (only displays adjustable margins)
+    </p>
         <!-- left page -->
         <div class="pages" id="page-left" data-ng-style="layout.css.leftPage">
             <div id="pageLeftLayout" class="margins" data-ng-style="layout.css.leftMargins">
