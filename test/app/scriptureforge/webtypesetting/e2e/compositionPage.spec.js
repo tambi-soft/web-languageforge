@@ -19,26 +19,51 @@ describe('the composition page', function(){
 		});
 		
 		
-		it('has page navigation', function(){
-			expect(true).toBe(true);
-			expect(compositionPage.slider.leftButton.isPresent()).toBe(true);
-			expect(compositionPage.slider.rightButton.isPresent()).toBe(true);
-			expect(compositionPage.slider.goButton.isPresent()).toBe(true);
-			expect(compositionPage.slider.pageInput.isPresent()).toBe(true);
+		it('has all elements present', function(){
+			expect(compositionPage.navigation.leftButton.isPresent()).toBe(true);
+			expect(compositionPage.navigation.rightButton.isPresent()).toBe(true);
+			expect(compositionPage.navigation.goButton.isPresent()).toBe(true);
+			expect(compositionPage.navigation.pageInput.isPresent()).toBe(true);
 			
-			expect(compositionPage.slider.pageInput.getAttribute('value')).toEqual('1');
+			expect(compositionPage.navigation.renderButton.isPresent()).toBe(true);
+			expect(compositionPage.navigation.saveAllButton.isPresent()).toBe(true);
 			
-			compositionPage.slider.rightButton.click();
-			expect(compositionPage.slider.pageInput.getAttribute('value')).toEqual('2');
 			
-			compositionPage.slider.rightButton.click();
-			expect(compositionPage.slider.pageInput.getAttribute('value')).toEqual('3');
-			
-			compositionPage.slider.leftButton.click();
-			expect(compositionPage.slider.pageInput.getAttribute('value')).toEqual('2');
 		});
 		
-		//it('has slider navigation', function(){});
+		
+		it('has page navigation', function(){
+					
+			expect(compositionPage.navigation.pageInput.getAttribute('value')).toEqual('1');
+			
+			compositionPage.navigation.rightButton.click();
+			expect(compositionPage.navigation.pageInput.getAttribute('value')).toEqual('2');
+			
+			compositionPage.navigation.rightButton.click();
+			expect(compositionPage.navigation.pageInput.getAttribute('value')).toEqual('3');
+			
+			compositionPage.navigation.leftButton.click();
+			expect(compositionPage.navigation.pageInput.getAttribute('value')).toEqual('2');
+		});
+		
+		
+		/*
+		 * most testing is going to have to wait for actual functionality to exist.
+		 */
+		it('can render image', function(){
+			compositionPage.navigation.renderButton.click();
+			expect(compositionPage.right.image.isPresent()).toBe(true);
+			expect(compositionPage.right.image.getAttribute('src')).toEqual('http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png');
+			
+		});
+		
+		
+		/*
+		 * both of these methods are nonstandard, relying on either a user input or some other mockup to
+		 * be tested fully. Will leave at manual testing for now.
+		 */
+		//it('has navigation', function(){});
+		//it('has paragraph selection', function(){});
 		
 
 
