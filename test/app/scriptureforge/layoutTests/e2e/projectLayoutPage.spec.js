@@ -18,7 +18,7 @@ describe('the project dashboard AKA text list page', function() {
 	//	});
 	//});
 		
-	describe('Layout page', function(){
+	describe('Layout page margins', function(){
 		
 		it("setup: login, go to layout page", function(){
 			
@@ -26,19 +26,19 @@ describe('the project dashboard AKA text list page', function() {
 			projectLayoutPage.get();
 		});
 	
-		it('should have text: Inside Margin', function(){
+		it('should have form: Inside Margin', function(){
 			expect(projectLayout.innerMarginForm.isDisplayed()).toBe(true);
 		});
-		it('should have text: Outside Margin', function(){
+		it('should have form: Outside Margin', function(){
 			expect(projectLayout.innerMarginForm.isDisplayed()).toBe(true);
 		});
-		it('should have text: Top Margin', function(){
+		it('should have form: Top Margin', function(){
 			expect(projectLayout.innerMarginForm.isDisplayed()).toBe(true);
 		});
-		it('should have text: Bottom Margin', function(){
+		it('should have form: Bottom Margin', function(){
 			expect(projectLayout.innerMarginForm.isDisplayed()).toBe(true);
 		});
-		it('should set the values', function(){	
+		/*it('should set the values', function(){	
 			projectLayout.innerMarginForm.clear().then(function(){
 				projectLayout.innerMarginForm.sendKeys('80').then(function(){
 					expect(projectLayout.marginDiv.isPresent()).toBe(true);
@@ -65,6 +65,98 @@ describe('the project dashboard AKA text list page', function() {
 					expect(projectLayout.marginDiv.isPresent()).toBe(true);
 					expect(projectLayout.marginDiv.getCssValue('height')).toBe('190px');
 				});
+			});
+		});*/
+		describe('Layout page header/footer', function(){
+		
+			it('should have header/footer tab', function(){
+				expect(projectLayout.headFootTab.isPresent()).toBe(true);
+				projectLayout.headFootTab.click();
+			});
+			
+			it('should have header checkbox',function(){
+				expect(projectLayout.headerCheckbox.isDisplayed()).toBe(true);
+		
+				projectLayout.headerCheckbox.click();
+			});
+			
+			it('should have footer checkbox',function(){
+				expect(projectLayout.footerCheckbox.isDisplayed()).toBe(true);
+				
+				projectLayout.footerCheckbox.click();
+			});
+			
+			it('should have form: footer position', function(){
+				expect(projectLayout.footerPosForm.isPresent()).toBe(true);
+			});
+			
+			it('should have form: header position', function(){
+				expect(projectLayout.headerPosForm.isPresent()).toBe(true);
+			});
+		});
+		
+		describe('Layout page columns', function(){
+			it('should have columns tab', function(){
+				expect(projectLayout.columnsTab.isPresent()).toBe(true);
+				projectLayout.columnsTab.click();
+			});
+			
+			it('should have checkbox: page columns', function(){
+				expect(projectLayout.pageColCheckbox.isDisplayed()).toBe(true);
+				projectLayout.pageColCheckbox.click();
+			});
+			
+			it('should have checkbox: title columns', function(){
+				expect(projectLayout.titleColCheckbox.isDisplayed()).toBe(true);
+				projectLayout.titleColCheckbox.click();
+			});
+			
+			it('should have checkbox: intro columns', function(){
+				expect(projectLayout.introColCheckbox.isDisplayed()).toBe(true);
+				projectLayout.introColCheckbox.click();
+			});
+			
+			it('should have checkbox: line separator', function(){
+				expect(projectLayout.lineSeperatorCheckbox.isDisplayed()).toBe(true);
+				projectLayout.lineSeperatorCheckbox.click();
+			});
+			
+			it('should have form: column offset', function(){
+				expect(projectLayout.colOffsetForm.isPresent()).toBe(true);
+			});
+			
+			it('should have form: column gap width', function(){
+				expect(projectLayout.colGapWidthForm.isPresent()).toBe(true);
+			});
+			
+			
+		});
+			
+		describe('Layout page printer options', function(){
+			it('should have printerOptionTab', function(){
+				expect(projectLayout.printerOptionTab.isPresent()).toBe(true);
+				projectLayout.printerOptionTab.click();
+			});
+		});
+			
+		describe('Layout page background', function(){
+			it('should have background tab', function(){
+				expect(projectLayout.backgroundTab.isPresent()).toBe(true);
+				projectLayout.backgroundTab.click();
+			});
+		});
+			
+		describe('Layout page body text', function(){
+			it('should have bodyTextTab', function(){
+				expect(projectLayout.bodyTextTab.isPresent()).toBe(true);
+				projectLayout.bodyTextTab.click();
+			});
+		});
+			
+		describe('Layout page misc tab', function(){
+			it('should have misc tab', function(){
+				expect(projectLayout.miscTab.isPresent()).toBe(true);
+				projectLayout.miscTab.click();
 			});
 		});
 	});
