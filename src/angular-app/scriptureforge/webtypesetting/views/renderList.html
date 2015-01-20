@@ -1,0 +1,19 @@
+<div data-ng-controller="renderListCtrl">
+    <h1>Render List</h1>
+    <table class="table">
+        <tr>
+            <th>Component</th>
+            <th>Renderer</th>
+            <th>Rendered On</th>
+            <th>Comments</th>
+            <th>Tags</th>
+        </tr>
+        <tr data-ng-repeat="item in list">
+            <td>{{ item.component }}</td>
+            <td>{{ item.renderer }}</td>
+            <td>{{ item.renderedOn }}</td>
+            <td>{{ item.comments }}</td>
+            <td>{{ item.tags }}</td>
+        </tr>
+    </table>
+</div>
