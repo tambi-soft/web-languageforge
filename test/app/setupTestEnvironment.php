@@ -44,6 +44,10 @@ $projectArrays = array(
     $constants['testProjectName']  => $constants['testProjectCode'],
     $constants['otherProjectName'] => $constants['otherProjectCode']);
 
+if ($site == 'scriptureforge') {
+	$projectArrays[$constants['typesettingProjectName']] = $constants['typesettingProjectCode'];
+}
+
 foreach ($projectArrays as $projectName => $projectCode) {
     $projectModel = new ProjectModel();
     $projectModel->projectName = $projectName;
@@ -124,9 +128,24 @@ $otherProjectModel->projectCode = $constants['otherProjectCode'];
 $otherProjectModel->allowInviteAFriend = $constants['otherProjectAllowInvites'];
 $otherProjectModel->write();
 
+
+$typesettingProject = ProjectCommands::createProject(
+		$constants['typesettingProjectName'],
+		$constants['typesettingProjectCode'],
+		SfProjectModel::WEBTYPESETTING_APP,
+		$managerUser,
+		$website
+);
+$typesettingProjectModel = new ProjectModel($typesettingProject);
+$typesettingProjectModel->projectCode = $constants['typesettingProjectCode'];
+$typesettingProjectModel->write();
+
 ProjectCommands::updateUserRole($testProject, $managerUser, ProjectRoles::MANAGER);
 ProjectCommands::updateUserRole($testProject, $memberUser, ProjectRoles::CONTRIBUTOR);
 ProjectCommands::updateUserRole($otherProject, $adminUser, ProjectRoles::MANAGER);
+ProjectCommands::updateUserRole($typesettingProject, $adminUser, ProjectRoles::MANAGER);
+// ProjectCommands::updateUserRole($typesettingProject, $managerUser, ProjectRoles::MANAGER);
+// ProjectCommands::updateUserRole($typesettingProject, $memberUser, ProjectRoles::CONTRIBUTOR);
 
 if ($site == 'scriptureforge') {
     $text1 = TextCommands::updateText($testProject, array(

@@ -1,11 +1,12 @@
 <?php
+use Palaso\Utilities\FileUtilities;
 use libraries\shared\Website;
-use models\ProjectModel;
-use models\UserModel;
-use models\languageforge\lexicon\LexiconProjectModel;
 use models\shared\rights\ProjectRoles;
 use models\shared\rights\SystemRoles;
-use Palaso\Utilities\FileUtilities;
+use models\languageforge\lexicon\LexiconProjectModel;
+use models\scriptureforge\WebtypesettingProjectModel;
+use models\ProjectModel;
+use models\UserModel;
 
 require_once TestPath . 'common/MockProjectModel.php';
 
@@ -293,6 +294,33 @@ class MongoTestEnvironment
     public function fixJson($input)
     {
         return json_decode(json_encode($input), true);
+    }
+}
+
+class TypesettingMongoTestEnvironment extends MongoTestEnvironment
+{
+    public function __construct()
+    {
+        parent::__construct('scriptureforge.org');
+    }
+
+    /**
+     *
+     * @var WebtypesettingProjectModel
+     */
+    public $project;
+
+    public function createProject($name, $code)
+    {
+        $projectModel = new WebtypesettingProjectModel();
+        $projectModel->projectName = $name;
+        $projectModel->projectCode = $code;
+        $projectModel->siteName = $this->website->domain;
+        $this->cleanProjectEnvironment($projectModel);
+        $projectModel->write();
+        $this->project = $projectModel;
+
+        return $projectModel;
     }
 }
 

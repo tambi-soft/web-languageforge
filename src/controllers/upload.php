@@ -52,11 +52,28 @@ class Upload extends Secure_base
                     $response = $api->sfChecks_uploadFile($mediaType, $tmpFilePath);
                 } elseif ($app == 'sf-typesetting') {
                 	$api = new Sf($this);
-                	$api->checkPermissions('sfTypesetting_uploadFile', array(
-                		$mediaType,
-                		$tmpFilePath
-                	));
-                	$response = $api->sfTypesetting_uploadFile($mediaType, $tmpFilePath);
+                    switch ($mediaType) {
+                        case 'import-zip':
+                            $api->checkPermissions('typesetting_upload_importProjectZip', array(
+                                $mediaType,
+                                $tmpFilePath
+                            ));
+                            $response = $api->typsetting_upload_importProjectZip($mediaType, $tmpFilePath);
+                            break;
+/*
+                        case 'png':
+                        	$api->checkPermissions('typesetting_upload_png', array(
+                        		$mediaType,
+                        		$tmpFilePath
+                        	));
+*/
+                        default:
+		                	$api->checkPermissions('typesetting_uploadFile', array(
+		                		$mediaType,
+		                		$tmpFilePath
+		                	));
+		                	$response = $api->typesetting_uploadFile($mediaType, $tmpFilePath);
+                    }
                 } elseif ($app == 'lf-lexicon') {
                     $api = new Sf($this);
                     switch ($mediaType) {
