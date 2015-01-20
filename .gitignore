@@ -32,3 +32,5 @@ src/vendor_bower/*/*/*/*
 !src/vendor_bower/bootstrap/dist/css/bootstrap.css.map
 
 docs/usfm/
+
+docs/samples/GospelTestPDF.png
