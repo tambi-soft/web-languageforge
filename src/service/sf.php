@@ -42,7 +42,7 @@ use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
 use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
-use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommand;
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
 
 // TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
 use models\shared\commands\MediaResult;
@@ -655,11 +655,13 @@ class sf
     }
 
     // ---------------------------------------------------------------
-    // TypesettingSettingCommand API
+    // TypesettingSettingCommands API
     // ---------------------------------------------------------------
+    
+    // update should only ever update the "latest" setting
     public function typesettingSettingCommand_update($model)
     {
-        return TypesettingSettingCommand::updateTypesettingSetting($this->_projectId, $model);
+        return TypesettingSettingCommands::updateTypesettingSetting($this->_projectId, $model);
     }
 
     public function typesetting_layoutPage_dto($settingId)
@@ -667,14 +669,16 @@ class sf
         return TypesettingLayoutPageDto::encode($this->_projectId, $settingId);
     }
 
+    /* we don't actually want to delete a setting. ever. - cjh 2015-01
     public function typesettingSettingCommand_delete($id)
     {
-        return TypesettingSettingCommand::deleteTypesettingSetting($this->_projectId, $id);
+        return TypesettingSettingCommands::deleteTypesettingSetting($this->_projectId, $id);
     }
+    */
 
     public function typesettingSettingCommand_list()
     {
-        return TypesettingSettingCommand::listTypesettingSetting($this->_projectId);
+        return TypesettingSettingCommands::listTypesettingSetting($this->_projectId);
     }
 
     /*

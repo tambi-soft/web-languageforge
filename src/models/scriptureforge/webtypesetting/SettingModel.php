@@ -2,6 +2,10 @@
 
 namespace models\scriptureforge\webtypesetting;
 
+use models\mapper\JsonDecoder;
+
+use models\mapper\JsonEncoder;
+
 use models\ProjectModel;
 
 use models\mapper\MongoMapper;
@@ -359,6 +363,7 @@ class SettingModel extends \models\mapper\MapperModel
     public function __construct($projectModel, $id = '')
     {
         $this->id = new Id();
+        $this->isCurrent = false;
 
         $this->layout = new SettingModelLayout();
         $this->assets = new ArrayOf(function ($data) {
@@ -396,16 +401,30 @@ class SettingModel extends \models\mapper\MapperModel
         $mapper->remove($id);
     }
 
-    public static function getLatest($projectModel) {
+    public static function getCurrent($projectModel) {
     	$settingsList = new SettingListModel($projectModel);
     	$settingsList->read();
     	if ($settingsList->count > 0) {
+
+    		// get the latest setting by modification time
 	    	$settingId = $settingsList->entries[0]['id'];
-	    	$settingModel = SettingModel($projectModel, $settingId);
+	    	$settingModel = new SettingModel($projectModel, $settingId);
+
+	    	if (!$settingModel->isCurrent) {
+	    		
+	    		// make a copy of the latest setting if the latest setting is not "current"
+	    		$newSettingModel = new SettingModel($projectModel);
+	    		JsonDecoder::decode($newSettingModel, JsonEncoder::encode($settingModel));
+	    		$newSettingModel->isCurrent = true;
+	    		$settingModel = $newSettingModel;
+	    	}
     	}
     	else {
     		$settingModel = new SettingModel($projectModel);
+    		$settingModel->isCurrent = true;
     	}
+
+    	$settingModel->write();
     	return $settingModel;
     }
 
@@ -444,6 +463,12 @@ class SettingModel extends \models\mapper\MapperModel
      * @var Boolean
      */
     public $isArchived;
+    
+    /**
+     * 
+     * @var boolean
+     */
+    public $isCurrent;
 
 }
 
