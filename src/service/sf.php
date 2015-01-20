@@ -687,9 +687,9 @@ class sf
         return TypesettingSettingsCommands::updateLayoutSettings($this->_projectId, $model);
     }
 
-    public function typesetting_layoutPage_dto($settingId)
+    public function typesetting_layoutPage_dto()
     {
-        return TypesettingLayoutPageDto::encode($this->_projectId, $settingId);
+        return TypesettingLayoutPageDto::encode($this->_projectId);
     }
 
     /* we don't actually want to delete a setting. ever. - cjh 2015-01
