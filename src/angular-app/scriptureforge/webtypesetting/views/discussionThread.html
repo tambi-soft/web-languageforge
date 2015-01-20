@@ -1,3 +1,64 @@
-<div data-ng-cloak data-ng-controller="discussionThreadCtrl">
-<h3>HELLO!</h3>
+<!-- <div data-ng-cloak data-ng-controller="discussionThreadCtrl">
+	<div data-ng-repeat="post in thread.posts">
+		
+		
+
+	<h3>{{post.content}}</h3>
+	</div>
+</div> -->
+<div data-ng-cloak data-ng-controller="discussionThreadCtrl" class="col-md-12">
+    <h2>{{thread.title}}</h2> 
+    <div>
+    	<button class= "btn btn-{{thread.status.buttonColor}}" disabled>{{thread.status.buttonText}}
+    	</button>
+				<b class="h4" >
+					<a href="#">{{thread.author.name}}</a>
+				</b> 
+				<i class="h4 small"> created this discussion.</i>
+    </div>
+   
+    <hr/>
+    
+	<div data-ng-repeat="post in thread.posts" >
+		<img class = "img iconImage" src={{post.thumbnail}} align="left" style="MARGIN-RIGHT: 15px"/>
+		<table class="table-bordered">
+		    <tbody>
+			<tr class= "discussionPost">
+				<td>
+					<b class="h4">
+						<a href="#">{{post.author.name}}</a>
+					</b> 
+					<i class="h4 small"> created this post on {{post.creationDate}}</i>
+				</td>
+				<td>
+					<button class="btn customBtn1">Delete</button>
+					<button class="btn customBtn1">Edit</button>
+				</td>
+			</tr>
+			<tr id="whiterow" >
+				
+				<td colspan="2">{{post.content}}</td>
+			</tr>
+			<tr data-ng-repeat="reply in post.replies" class="noColumnBorder">
+				<td class="replyMargin"  colspan="2">
+			 		<h5 class="replyHeader"><b>
+			 			<a href="#">{{reply.author.name}}</a>
+			 			<i class="small"> replied on {{reply.creationDate}} </i></b>
+			 			<button class="btn customBtn2">X</button>
+					
+			 		</h5> 
+			 		<p class="replyContent">{{reply.content}}</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button onclick="setVisibility()" class="button">Add Reply</button>
+					<div data-ng-show="addReply"></div>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<br>
+	</div>
+	<br>
 </div>

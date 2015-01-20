@@ -1,9 +1,9 @@
-// controller for discussionThread
+// controller for discussionList
 'use strict';
 
-angular.module('webtypesetting.discussionThread', ['ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.discussionServices'])
+angular.module('webtypesetting.discussionList', ['ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.discussionServices'])
 
-.controller('discussionThreadCtrl', ['$scope', '$state', 'webtypesettingDiscussionService', 'sessionService', 'modalService', 'silNoticeService',
+.controller('discussionListCtrl', ['$scope', '$state', 'webtypesettingDiscussionService', 'sessionService', 'modalService', 'silNoticeService',
                                        function($scope, $state, discussionApi, sessionService, modal, notice) {
 
 	
@@ -11,6 +11,9 @@ angular.module('webtypesetting.discussionThread', ['ui.bootstrap', 'bellows.serv
 	
 	// $scope.name = "Chris";
 	
+	$scope.isManager=function(){
+		return true;
+	};
 	
 
 
@@ -54,7 +57,11 @@ angular.module('webtypesetting.discussionThread', ['ui.bootstrap', 'bellows.serv
 	
 	var onePost = {
 			author: {
-				name: "chris", 
+<<<<<<< HEAD
+				name: "Chris", 
+=======
+				name: "Benjamin Braker", 
+>>>>>>> origin/feature/discussionThread
 				url: "http://profileUrl"
 			},
 			content: "My first post!",
@@ -72,7 +79,8 @@ angular.module('webtypesetting.discussionThread', ['ui.bootstrap', 'bellows.serv
 		content: "my first reply to the post!"
 			
 	};
-		
+	
+	
 	
 	
 }]);
