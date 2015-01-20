@@ -1,10 +1,7 @@
-.left{
+.imageBorder{
 	border:1px solid black;
+	width:100%;
 }
-.right{
-	border:1px solid black;
-}
-
 
 
 .center{
@@ -26,7 +23,8 @@
 	/*height: 100px;*/
 	height: 100%;
 	border: 1px solid;
-	
+	min-height: 100px;
+	padding: 5px;
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
@@ -44,7 +42,7 @@
 	margin-bottom: 20px;
 	margin-left:10px;
 	width: 50%;
-	height: 12px;
+	height: 14px;
 	/*background: #f2f1f1;*/
 	/*border: 1px solid #dfdfdf;
 	box-shadow: 0 0 2px #D5D4D4 inset;*/
@@ -97,13 +95,6 @@
 
 .pageNumber{
 	width:3em;
-}
-
-.left{
-	width:100%;
-}
-.right{
-	width:100%;
 }
 
 

@@ -30,8 +30,9 @@ class WebtypesettingCompositionCommands {
 	}
 	
 	public static function getIllustrationProperties($projectId, $bookId) {
-		return array('id1' => array('location'=> '2:6',
+		return array('lb00135' => array('location'=> '2:6',
 									'width'=>'60', 'scale'=>1, 'caption'=>'a caption', 'useCaption'=>'true', 'useIllustration'=>'true'));
+		//return array();
 	}
 	
 	public static function setIllustrationProperties($projectId, $bookId, $illustrationModel) {

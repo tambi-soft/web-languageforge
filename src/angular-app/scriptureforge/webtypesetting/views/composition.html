@@ -26,7 +26,7 @@
 				data-ng-click="decreasePage()">&laquo</button>
 		</div>
 		<div class="page-select">
-			page: <input data-ng-keyup="$event.keyCode==13 && update()"
+			page: <input data-ng-keyup="$event.keyCode==13 && updatePage()"
 				class="pageNumber" data-ng-model="pageInput">
 			<button type="button" class="btn btn-primary btn-sm"
 				data-ng-click="update()">GO</button>
@@ -40,54 +40,68 @@
 					paragraph-node="paragraphNode" content="bookHTML"></div>
 
 				<div class="properties">
-					<div ng-show="verse==''">
+					<span ng-show="currentImage==''&&verse==''">
+					Properties panel <br/><br/>
+					Click on a paragraph or an illustration placeholder to edit their properties
+					</span>
+					<div data-ng-show="currentImage!=''">
 						<table>
 							<tbody>
 								<tr>
 									<td>location</td>
-									<td><input class="form-control" ng-model="location" data-ng-change="illustrationSave()"/></td>
+									<td><input class="form-control" data-ng-model="location"
+										data-ng-change="illustrationSave()" /></td>
 								</tr>
 								<tr>
 									<td>width</td>
-									<td><input class="form-control" type="number" ng-model="width" data-ng-change="illustrationSave()"/></td>
+									<td><input class="form-control" type="number"
+										data-ng-model="imageWidth" data-ng-change="illustrationSave()" /></td>
 								</tr>
 								<tr>
 									<td>scale</td>
-									<td><input class="form-control" type="number" ng-model="scale" step="0.05" data-ng-change="illustrationSave()"/></td>
+									<td><input class="form-control" type="number"
+										data-ng-model="scale" step="0.05"
+										data-ng-change="illustrationSave()" /></td>
 								</tr>
 								<tr>
 									<td>caption</td>
-									<td><input class="form-control" ng-model="caption" data-ng-change="illustrationSave()"/></td>
+									<td><input class="form-control" data-ng-model="caption"
+										data-ng-change="illustrationSave()" /></td>
 								</tr>
 								<tr>
 									<td>use caption</td>
-									<td><input class="checkbox" type="checkbox" data-ng-model="useCaption" data-ng-change="illustrationSave()"/></td>
+									<td><input class="checkbox" type="checkbox"
+										data-ng-model="useCaption" data-ng-change="illustrationSave()" /></td>
 								</tr>
 								<tr>
 									<td>use illustration</td>
-									<td><input class="checkbox" type="checkbox" data-ng-model="useIllustration" data-ng-change="illustrationSave()"/></td>
+									<td><input class="checkbox" type="checkbox"
+										data-ng-model="useIllustration"
+										data-ng-change="illustrationSave()" /></td>
 								</tr>
 							</tbody>
 						</table>
 
-						
+
 					</div>
-					<div ng-show="verse!=''">
+					<div data-ng-show="verse!=''">
 						<p>Chapter: {{chapter}}, verse: {{verse}}</p>
 						Growth factor: <input class="form-control"
-							style="display: inline-block; width: 50%;" type="number"
-							"
-						data-ng-model="paragraphGrowthFactor" />
+							style="display: inline-block; width: 50%; margin-bottom: 10px;"
+							type="number" data-ng-model="paragraphGrowthFactor"
+							data-ng-change=changeGrowth() />
 					</div>
 				</div>
 			</div>
 
-			<div class="col-sm-4 imageDiv" ng-class="{grey:selectedPage%2==1}">
-				<img data-ng-src="{{renderedImageLeft || '//:0'}}" class="left" />
+			<div class="col-sm-4 imageDiv"
+				data-ng-class="{grey:selectedPage%2==1}">
+				<img data-ng-src="{{renderedImageLeft || '//:0'}}" ng-class="{imageBorder:renderedImageLeft}" />
 			</div>
 
-			<div class="col-sm-4 imageDiv" ng-class="{grey:selectedPage%2==0}">
-				<img data-ng-src="{{renderedImageRight || '//:0'}}" class="right" />
+			<div class="col-sm-4 imageDiv"
+				data-ng-class="{grey:selectedPage%2==0}">
+				<img data-ng-src="{{renderedImageRight || '//:0'}}" ng-class="{imageBorder:renderedImageRight}" />
 			</div>
 		</div>
 	</div>

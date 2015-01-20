@@ -36,7 +36,8 @@ angular.module('webtypesetting.compositionServices', ['jsonRpc'])
     };
     
     this.getIllustrationProperties = function getIllustrationProperties(bookId, callback){
-    	jsonRpc.call("typesetting_composition_getIllustrationProperties", [bookId, callback]);
+    	jsonRpc.call("typesetting_composition_getIllustrationProperties", [bookId], callback);
+
     };
     
     this.setIllustrationProperties = function setIllustrationProperties(bookId, properties, callback){
