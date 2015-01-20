@@ -383,8 +383,17 @@
 	        		<select class="form-control" id="pageSizeCodeInput" data-ng-model="layout.pageSizeCode">
 	        			<option>A5</option>
 	        			<option>US Letter</option>
+	        			<option>custom</option>
 	        		</select>
         		</div>
+        		<div class="col-md-2">
+	                <label for="pageHeightInput">Page Height</label>
+	                <input class="form-control" data-ng-model="layout.conf.pageHeight" type="text" id="pageHeightInput" />
+	            </div>
+        		<div class="col-md-2">
+	                <label for="pageWidthInput">Page Width</label>
+	                <input class="form-control" data-ng-model="layout.conf.pageWidth" type="text" id="pageWidthInput" />
+	            </div>
         		<div class="col-md-2">
 	                <label for="printerPageSizeCodeInput">Printer Page Size Code</label>
 	        		<select class="form-control" id="printerPageSizeCodeInput" data-ng-model="layout.conf.printerPageSizeCode">
@@ -448,6 +457,19 @@
                     </label>
                 </div>
         	</div> -->
+        </tab>
+        <tab heading="Adv" class="form-group">
+        	<br />
+        	<div class="row">
+                <div class="col-md-2">
+                	<label for="extraRightMarginInput">Extra Right Margin</label>
+	                <input class="form-control" data-ng-model="layout.conf.extraRightMargin" type="text" id="extraRightMarginInput" />
+                </div>
+                <div class="col-md-2">
+                	<label for="chapterVerseSeperatorInput">Chapter Verse Seperator</label>
+	                <input class="form-control" data-ng-model="layout.conf.chapterVerseSeperator" type="text" id="chapterVerseSeperatorInput" />
+                </div>
+        	</div>
         </tab>
     </tabset>
     </form>

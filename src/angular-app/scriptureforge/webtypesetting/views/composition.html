@@ -3,9 +3,10 @@
 	<h3 align="left">Component Name</h3>
 	<div class="control-bar">
 		<div class="button-bar">
-			<button type="button" class="btn btn-primary btn-sm" data-ng-click="">Save
-				All</button>
-			<button type="button" class="btn btn-primary btn-sm" data-ng-click="">Render!</button>
+			<button type="button" class="btn btn-primary btn-sm"
+				data-ng-click="save()">Save</button>
+			<button type="button" class="btn btn-primary btn-sm"
+				data-ng-click="renderRapuma()">Render All</button>
 		</div>
 		<div class="next">
 			<button type="button" class="btn btn-link"
@@ -25,34 +26,82 @@
 				data-ng-click="decreasePage()">&laquo</button>
 		</div>
 		<div class="page-select">
-			page: <input data-ng-keyup="$event.keyCode==13 && update()"
+			page: <input data-ng-keyup="$event.keyCode==13 && updatePage()"
 				class="pageNumber" data-ng-model="pageInput">
 			<button type="button" class="btn btn-primary btn-sm"
-				data-ng-click="update()">GO</button>
+				data-ng-click="updatePage()">GO</button>
 		</div>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-				<div class="text" data-ng-bind-html="bookHTML"
+				<div class="text workingText" data-ng-bind-html="bookHTML"
 					data-ng-click="textClick()" composition-selection
 					paragraph-node="paragraphNode" content="bookHTML"></div>
 
 				<div class="properties">
-					<p>Chapter: {{chapter}}, verse: {{verse}}</p>
-					Growth factor: <input class="form-control"
-						style="display: inline-block; width: 50%;" type="number"
-						data-ng-model="paragraphGrowthFactor" />
+					<span ng-show="currentImage==''&&verse==''">
+					Properties panel <br/><br/>
+					Click on a paragraph or an illustration placeholder to edit their properties
+					</span>
+					<div data-ng-show="currentImage!=''">
+						<table>
+							<tbody>
+								<tr>
+									<td>location</td>
+									<td><input class="form-control" data-ng-model="location"
+										data-ng-change="illustrationSave()" /></td>
+								</tr>
+								<tr>
+									<td>width</td>
+									<td><input class="form-control" type="number"
+										data-ng-model="imageWidth" data-ng-change="illustrationSave()" /></td>
+								</tr>
+								<tr>
+									<td>scale</td>
+									<td><input class="form-control" type="number"
+										data-ng-model="scale" step="0.05"
+										data-ng-change="illustrationSave()" /></td>
+								</tr>
+								<tr>
+									<td>caption</td>
+									<td><input class="form-control" data-ng-model="caption"
+										data-ng-change="illustrationSave()" /></td>
+								</tr>
+								<tr>
+									<td>use caption</td>
+									<td><input class="checkbox" type="checkbox"
+										data-ng-model="useCaption" data-ng-change="illustrationSave()" /></td>
+								</tr>
+								<tr>
+									<td>use illustration</td>
+									<td><input class="checkbox" type="checkbox"
+										data-ng-model="useIllustration"
+										data-ng-change="illustrationSave()" /></td>
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+					<div data-ng-show="verse!=''">
+						<p>Chapter: {{chapter}}, verse: {{verse}}</p>
+						Growth factor: <input class="form-control"
+							style="display: inline-block; width: 50%; margin-bottom: 10px;"
+							type="number" data-ng-model="paragraphGrowthFactor" min="-1" max="2"
+							data-ng-change=changeGrowth() />
+					</div>
 				</div>
 			</div>
-			
-			<div class="col-sm-4">
-				<div style="margin-top: 10px"></div>
+
+			<div class="col-sm-4 imageDiv"
+				data-ng-class="{grey:selectedPage%2==1}">
+				<img data-ng-src="{{renderedImageLeft || '//:0'}}" ng-class="{imageBorder:renderedImageLeft}" />
 			</div>
-			
-			<div class="col-sm-4"
-				data-ng-init="renderedImage='http://upload.wikimedia.org/wikipedia/commons/6/6a/Tricoloring.png'">
-				<img data-ng-src="{{renderedImage}}" class="triColor" />
+
+			<div class="col-sm-4 imageDiv"
+				data-ng-class="{grey:selectedPage%2==0}">
+				<img data-ng-src="{{renderedImageRight || '//:0'}}" ng-class="{imageBorder:renderedImageRight}" />
 			</div>
 		</div>
 	</div>

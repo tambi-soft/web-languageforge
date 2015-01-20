@@ -14,6 +14,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       outsideMargin: 10,
       topMargin: 15,
       bottomMargin: 10,
+      
       // columns
       bodyColumnsTwo: true,
       titleColumnsTwo: false,
@@ -74,8 +75,9 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       useSpecialCallerFootnotes: false,
       paragraphedFootnotes: true,
       useNumericCallersFootnotes: false,
+      //specialCallerFootnotes: "\krn0.2em *\kern0.4em",
 
-
+      
       // cross references
       useSpecialCallerCrossrefs: false,
       specialCallerCrossrefs: "\\kern0.2em *\\kern0.4em",
@@ -93,9 +95,10 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       
       // print options
       pageSizeCode: "custom", // this shouldn't be visible
-      pageWidth: 148,
       pageHeight: 210,
+      pageWidth: 148,
       printerPageSizeCode: "A4",
+
       useDocInfo: false,
       docInfoText: "",
       
@@ -172,6 +175,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
         marginLeft: vm.insideMargin + "px",
       },
   };
+  
   // variable watchers
   function makeMarginWatch(size, margin, opposite, cssMargin, cssOpposite, mirror) {
     $scope.$watch("layout.conf."+margin+"Margin", function() {

@@ -3,7 +3,7 @@ use models\ProjectModel;
 
 use models\scriptureforge\webtypesetting\RapumaSettingListModel;
 use models\scriptureforge\webtypesetting\RapumaSettingModel;
-use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommand;
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
 use models\mapper\JsonDecoder;
 use models\mapper\JsonEncoder;
 
@@ -15,7 +15,7 @@ require_once TestPath . 'common/MongoTestEnvironment.php';
 require_once SourcePath . "models/ProjectModel.php";
 // require_once SourcePath . "models/RapumaSettingModel.php";
 
-class TypesettingSettingCommand_Test extends UnitTestCase
+class TypesettingSettingCommands_Test extends UnitTestCase
 {
     public function __construct()
     {
@@ -34,12 +34,12 @@ class TypesettingSettingCommand_Test extends UnitTestCase
         //var_dump($testSettingData);
 
         // List
-        $list = TypesettingSettingCommand::listTypesettingSetting($projectId);
+        $list = TypesettingSettingCommands::listTypesettingSetting($projectId);
         $list->read();
         $this->assertEqual(0, $list->count);
 
         // Create
-        $settingId = TypesettingSettingCommand::updateTypesettingSetting($projectId, $testSettingData);
+        $settingId = TypesettingSettingCommands::updateTypesettingSetting($projectId, $testSettingData);
         $setting = new RapumaSettingModel($projectModel, $settingId);
         $this->assertNotNull($setting->layout);
         foreach(get_object_vars($setting->layout) as $attribute){
@@ -47,7 +47,7 @@ class TypesettingSettingCommand_Test extends UnitTestCase
         }
 
         // Read back
-        $differentSetting = TypesettingSettingCommand::readTypesettingSetting($projectId, $settingId);
+        $differentSetting = TypesettingSettingCommands::readTypesettingSetting($projectId, $settingId);
         $newSetting = JsonDecoder::decode($setting, $differentSetting);
         $this->assertNotEqual('',$differentSetting['id']);
         $newSetting = new RapumaSettingModel($projectModel,$differentSetting['id']);
@@ -62,10 +62,10 @@ class TypesettingSettingCommand_Test extends UnitTestCase
         $newTestSettingData['id'] = $settingId;
         $newTestSettingData['layout']['insideMargin'] = 50;
         $newTestSettingData['layout']['outsideMargin'] = 50;
-        $settingId = TypesettingSettingCommand::updateTypesettingSetting($projectId, $newTestSettingData);
+        $settingId = TypesettingSettingCommands::updateTypesettingSetting($projectId, $newTestSettingData);
 
         // Read back
-        $differentSetting = TypesettingSettingCommand::readTypesettingSetting($projectId, $settingId);
+        $differentSetting = TypesettingSettingCommands::readTypesettingSetting($projectId, $settingId);
         $newSetting = JsonDecoder::decode($setting, $differentSetting);
         $this->assertEqual(50,$differentSetting['layout']['insideMargin']);
         $this->assertEqual(50,$differentSetting['layout']['outsideMargin']);
@@ -75,12 +75,12 @@ class TypesettingSettingCommand_Test extends UnitTestCase
         $this->assertTrue($setting == $newSetting);
 
         // List
-        $list = TypesettingSettingCommand::listTypesettingSetting($projectId);
+        $list = TypesettingSettingCommands::listTypesettingSetting($projectId);
         $list->read();
         $this->assertEqual(1, $list->count);
 
         // Delete
-        $totalDeleted = TypesettingSettingCommand::deleteTypesettingSetting($projectId, $settingId);
+        $totalDeleted = TypesettingSettingCommands::deleteTypesettingSetting($projectId, $settingId);
         $this->assertEqual(1,$totalDeleted);
 
         // List

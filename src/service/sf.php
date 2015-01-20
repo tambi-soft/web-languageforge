@@ -42,7 +42,7 @@ use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
 use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
-use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommand;
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
 
 // TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
 use models\shared\commands\MediaResult;
@@ -259,11 +259,26 @@ class sf
      * @param string $projectName
      * @param string $projectCode
      * @param string $appName
-     * @return string - projectId
+     * @return string | boolean - $projectId on success, false if project code is not unique
      */
     public function project_create($projectName, $projectCode, $appName)
     {
         return ProjectCommands::createProject($projectName, $projectCode, $appName, $this->_userId, $this->_website);
+    }
+
+    /**
+     * Creates project and switches the session to the new project
+     *
+     * @param string $projectName
+     * @param string $projectCode
+     * @param string $appName
+     * @return string | boolean - $projectId on success, false if project code is not unique
+     */
+    public function project_create_switchSession($projectName, $projectCode, $appName)
+    {
+        $projectId = $this->project_create($projectName, $projectCode, $appName);
+        $this->_controller->session->set_userdata('projectId', $projectId);
+        return $projectId;
     }
 
     /**
@@ -640,6 +655,14 @@ class sf
 		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
 
+	public function typesetting_composition_getIllustrationProperties($bookId) {
+		return WebtypesettingCompositionCommands::getIllustrationProperties($this->_projectId, $bookId);
+	}
+	
+	public function typesetting_composition_setIllustrationProperties($bookId, $illustrationModel) {
+		return WebtypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $bookId, $illustrationModel);
+	}
+	
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------
@@ -655,11 +678,13 @@ class sf
     }
 
     // ---------------------------------------------------------------
-    // TypesettingSettingCommand API
+    // TypesettingSettingCommands API
     // ---------------------------------------------------------------
+    
+    // update should only ever update the "latest" setting
     public function typesettingSettingCommand_update($model)
     {
-        return TypesettingSettingCommand::updateTypesettingSetting($this->_projectId, $model);
+        return TypesettingSettingCommands::updateTypesettingSetting($this->_projectId, $model);
     }
 
     public function typesetting_layoutPage_dto($settingId)
@@ -667,14 +692,16 @@ class sf
         return TypesettingLayoutPageDto::encode($this->_projectId, $settingId);
     }
 
+    /* we don't actually want to delete a setting. ever. - cjh 2015-01
     public function typesettingSettingCommand_delete($id)
     {
-        return TypesettingSettingCommand::deleteTypesettingSetting($this->_projectId, $id);
+        return TypesettingSettingCommands::deleteTypesettingSetting($this->_projectId, $id);
     }
+    */
 
     public function typesettingSettingCommand_list()
     {
-        return TypesettingSettingCommand::listTypesettingSetting($this->_projectId);
+        return TypesettingSettingCommands::listTypesettingSetting($this->_projectId);
     }
 
     /*
@@ -787,19 +814,9 @@ class sf
         return LexOptionListCommands::updateList($this->_projectId, $params);
     }
 
-    public function lex_uploadProjectZip($mediaType, $tmpFilePath, $projectId = '')
+    public function lex_upload_importProjectZip($mediaType, $tmpFilePath)
     {
-        // Sometimes we need to upload to a newly-created project ID, which is not yet in the session cookie.
-        // In those cases, the optional $projectId parameter will be set to a non-empty value.
-        if (empty($projectId)) { $projectId = $this->_projectId; }
-        $response = LexUploadCommands::uploadProjectZip($projectId, $mediaType, $tmpFilePath);
-        return JsonEncoder::encode($response);
-    }
-    public function lex_mockUploadProjectZip($mediaType, $tmpFilePath, $projectId = '')
-    {
-        // Used for testing zip upload UI without actually importing data
-        if (empty($projectId)) { $projectId = $this->_projectId; }
-        $response = LexUploadCommands::mockUploadProjectZip($projectId, $mediaType, $tmpFilePath);
+        $response = LexUploadCommands::importProjectZip($this->_projectId, $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
     }
 

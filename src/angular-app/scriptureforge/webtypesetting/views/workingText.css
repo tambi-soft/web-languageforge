@@ -3,10 +3,11 @@
 	text-align: left;
 }
 
-
+/*
 .workingText p {
 	text-indent: 4em;
 }
+*/
 
 .workingText p:hover {
 	background-color: #eeeeff;
@@ -16,3 +17,13 @@
 	color: darkred;
 }
 
+.workingText .chapter-number {
+	font-weight: bold;
+}
+
+.workingText .illustration-placeholder {
+	border: solid 1px #777777;
+	color: #777777;
+	text-transform: uppercase;
+	font-size: small;
+}
