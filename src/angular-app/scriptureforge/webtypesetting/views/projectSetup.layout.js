@@ -157,6 +157,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
         marginLeft: vm.insideMargin + "px",
       },
   };
+  
   // variable watchers
   function makeMarginWatch(size, margin, opposite, cssMargin, cssOpposite, mirror) {
     $scope.$watch("layout.conf."+margin+"Margin", function() {
