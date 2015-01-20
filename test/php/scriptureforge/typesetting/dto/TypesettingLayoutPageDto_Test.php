@@ -56,7 +56,7 @@ class TestTypesettingLayoutPageDto extends UnitTestCase
         $settingModel->layout->insideMargin = 50;
         $settingModel->write();
         
-        sleep(1);
+        //sleep(1);
 
         $settingModel = new SettingModel($projectModel);
         $settingModel->layout->outsideMargin = 3;
