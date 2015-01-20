@@ -29,6 +29,23 @@ var SfProjectPage = function() {
 	this.headerPosForm = element(by.id("headerPositionInput"));
 	this.runningHeaderRuleForm =  element(by.id("headerPositionRuleInput"));
 	
+	this.omitChapNumRunHeadCB = element.all(by.css("[type='checkbox']")).get(6);
+	this.runningHeadTitleLeftForm = element(by.id("runningHeaderTitleLeftInput"));
+	this.runningHeadTitleCenterForm = element(by.id("runningHeaderTitleCenterInput"));
+	this.runningHeadTitleRightForm = element(by.id("runningHeaderTitleRightInput"));
+	
+	this.showVerseRefCB = element.all(by.css("[type='checkbox']")).get(7);
+	this.omitBookRefCB = element.all(by.css("[type='checkbox']")).get(8);
+	this.runningHeadevenLeftForm = element(by.id("runningHeaderEvenLeftInput"));
+	this.runningHeadevenCenterForm = element(by.id("runningHeaderEvenCenterInput"));
+
+	this.runningHeadevenRightForm = element(by.id("runningHeaderEvenRightInput"));
+	this.runningHeadOddLeftForm = element(by.id("runningHeaderOddLeftInput"));
+	this.runningHeadOddCenterForm = element(by.id("runningHeaderOddCenterInput"));
+	this.runningHeadOddRightForm = element(by.id("runningHeaderOddRightInput"));
+
+
+	/*
 	//footer
 	this.footerTab = element(by.css("[heading='Footer']"));
 	
