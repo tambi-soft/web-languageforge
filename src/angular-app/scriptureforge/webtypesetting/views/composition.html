@@ -88,7 +88,7 @@
 						<p>Chapter: {{chapter}}, verse: {{verse}}</p>
 						Growth factor: <input class="form-control"
 							style="display: inline-block; width: 50%; margin-bottom: 10px;"
-							type="number" data-ng-model="paragraphGrowthFactor"
+							type="number" data-ng-model="paragraphGrowthFactor" min="-1" max="2"
 							data-ng-change=changeGrowth() />
 					</div>
 				</div>
