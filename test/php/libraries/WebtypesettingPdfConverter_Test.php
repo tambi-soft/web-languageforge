@@ -14,28 +14,19 @@ class TestWebtypesettingPdfConverter extends UnitTestCase
 		$e = new MongoTestEnvironment();
 		$e->clean();
 		
-		$projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $projectModel->id->asString();
+
 		
-		// make the assets path if it doesn't exist
-		// (I'm not sure why it disappears)
-		try {
-			mkdir($projectModel->getAssetsFolderPath());
-		} catch (Exception $e) { }
-		
+
 		// copy the test PDF file to the assets folder
 		$testFilepath = dirname(__FILE__) . '/../../../docs/samples';
-		$testFilename = 'GospelTestPDF.pdf';
-		$targetFile = $projectModel->getAssetsFolderPath() . '/' . $testFilename;
-		var_dump($testFilepath . '/' . $testFilename);
-		copy($testFilepath . '/' . $testFilename, $targetFile);
-	
+		$testFilename = 'GospelTestPDF';
+		
+		$testSourceName = $testFilepath . '/' . $testFilename . '.pdf';
+		$testDestName = $testFilepath . '/' . $testFilename . '.png';
+			
 		// assert that the file was copied successfully
-		$this->assertTrue(file_exists($targetFile));
 		
-		
- 		$converter = new WebtypesettingPdfConverter($projectModel, 'GospelTestPDF');
- 		$converter->getPng(0);
+ 		WebtypesettingPdfConverter::getPng($testSourceName,$testDestName,0);
  		
 	}
 

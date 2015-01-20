@@ -7,34 +7,17 @@ use Imagick;
 
 class WebtypesettingPdfConverter {
 	
-	private $_path;
-	private $_pdfName;
-	private $_fullPathName;
-	
-	
-	/**
-	 * 
-	 * @param ProjectModel $projectModel
-	 * @param string $pdfId
-	 */
-	public function __construct($projectModel, $pdfId) {
-		$this->_path = $projectModel->getAssetsFolderPath();
-		$this->_pdfName = $pdfId;
-		
-		//combines the assets folder path name and the pdf name to build the name to access the pdf.
-		$this->_fullPathName = $this->_path . '/' . $this->_pdfName . ".pdf";
-	}
 	
 	/**
 	 * getPng takes an integer page number and creates a png object of that page.
 	 * 
 	 * 
 	 */
-	public function getPng($pages = 0) {
+	static public function getPng($sourceName, $destName, $page=1) {
 		
 		
 		//open a file location, read write access
-		$file = fopen($this->_fullPathName ,"w+");
+// 		$file = fopen($this->_fullPathName ,"w+");
 		
 		
 		//declare a new imagick container to stick our image in and modify.
@@ -43,8 +26,10 @@ class WebtypesettingPdfConverter {
 			//$im->setResolution(300,300);
 			
 		
+		
+		
 		//read the pdf page, 0 indexed.
-		$im->readimagefile($file);
+		$im->readimage($sourceName);
 		
 		//flattenImages can be used if transparancy layer is showing up as black.
 		//$imagick = $imagick->flattenImages();
@@ -52,7 +37,7 @@ class WebtypesettingPdfConverter {
 		//setImageFormat changes the local im model format to png.
 		$im->setImageFormat('png');
 		//writeImage then takes the local png stored in im and writes it out to file, ready to be sent on 
-		$im->writeImage($this->_path . '/' . $this->_pdfName . '.png');
+		$im->writeImage($destName);
 		
 		//clean up after ourselves.
 		$im->clear(); 
