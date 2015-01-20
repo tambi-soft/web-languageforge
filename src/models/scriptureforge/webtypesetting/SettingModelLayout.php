@@ -5,6 +5,7 @@ class SettingModelLayout
 {
 	public function __construct() {
 		// default settings here
+		$this->insideMargin = 10;
 	}
     /**
      * @var integer
