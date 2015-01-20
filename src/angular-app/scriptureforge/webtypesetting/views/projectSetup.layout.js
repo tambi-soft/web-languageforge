@@ -131,10 +131,28 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
     };
     vm.conf.backgroundComponents = comps.join(", ");
   };
-  
   vm.width = 300;
   vm.height = 400;
-  vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"];
+  vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"]
+  $scope.getHeaderOptions = function getHeaderOptions(item){
+	  var headerOptionsArray = vm.headerOptions;
+	  var index = headerOptionsArray.indexOf(item);
+	  headerOptionsArray.splice(index, 1);
+	  headerOptionsArray.unshift(item);
+	  return headerOptionsArray;
+  }
+  $scope.mutuallyExclusive= function mutuallyExclusive(name){
+	  switch (name){
+	  	case "background":
+	  		if (vm.conf.useBackground == true) {
+	  			vm.conf.useDiagnostic = false;
+	  		}
+	  	case "diagnostic":
+	  		if (vm.conf.useDiagnostic == true) {
+	  			vm.conf.useBackground = false;
+	  		}
+	  }
+  }
   
   vm.css = {
       pagesContainer: {
@@ -157,6 +175,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
         marginLeft: vm.insideMargin + "px",
       },
   };
+  
   // variable watchers
   function makeMarginWatch(size, margin, opposite, cssMargin, cssOpposite, mirror) {
     $scope.$watch("layout.conf."+margin+"Margin", function() {
