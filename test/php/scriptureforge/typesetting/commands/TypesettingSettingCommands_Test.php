@@ -1,4 +1,10 @@
 <?php
+use models\scriptureforge\webtypesetting\SettingModel;
+
+use models\scriptureforge\webtypesetting\SettingModelLayout;
+
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingsCommands;
+
 use models\ProjectModel;
 
 use models\scriptureforge\webtypesetting\RapumaSettingListModel;
@@ -17,11 +23,26 @@ require_once SourcePath . "models/ProjectModel.php";
 
 class TypesettingSettingCommands_Test extends UnitTestCase
 {
-    public function __construct()
-    {
+    public function testUpdateLayoutSetting_currentSetting_layoutUpdated() {
         $e = new MongoTestEnvironment();
         $e->clean();
+        
+        $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $projectModel->id->asString();
+        
+        $layoutSetting = array();
+        $layoutSetting['docInfoText'] = 'my text';
+
+    	$currentSetting = SettingModel::getCurrent($projectModel);
+    	$this->assertEqual($currentSetting->layout->docInfoText, "");
+        
+    	TypesettingSettingsCommands::updateLayoutSettings($projectId, $layoutSetting);
+    	
+    	$currentSetting = SettingModel::getCurrent($projectModel);
+    	$this->assertEqual($currentSetting->layout->docInfoText, "my text");
+    	
     }
+    
 
     /* cjh disabled since it's using the wrong models (should use SettingsModel)
     public function testCRUD_Works() {
