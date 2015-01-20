@@ -178,6 +178,34 @@ class MongoTestEnvironment
     }
 
     /**
+     * Returns a string of utf-8 usfm
+     *
+     * @return string
+     */
+    public static function usfmSample()
+    {
+        global $rootPath;
+        $testFilePath = $rootPath . 'docs/usfm/KJV/44JHNKJVT.SFM';
+        $usfm = file_get_contents($testFilePath);
+
+        return $usfm;
+    }
+
+    /**
+     * Returns a string of utf-8 usfm
+     *
+     * @return string
+     */
+    public static function usfmSampleWithPoetryMarkers()
+    {
+        global $rootPath;
+        $testFilePath = $rootPath . 'docs/usfm/KJV/19PSAKJVT.SFM';
+        $usfm = file_get_contents($testFilePath);
+
+        return $usfm;
+    }
+
+    /**
      * Simulate the upload of a Text audio file
      *
      * @param string $filePathToCopy
@@ -275,6 +303,12 @@ class LexiconMongoTestEnvironment extends MongoTestEnvironment
         parent::__construct('languageforge.org');
     }
 
+    /**
+     *
+     * @var LexiconProjectModel
+     */
+    public $project;
+
     public function createProject($name, $code)
     {
         $projectModel = new LexiconProjectModel();
@@ -283,6 +317,7 @@ class LexiconMongoTestEnvironment extends MongoTestEnvironment
         $projectModel->siteName = $this->website->domain;
         $this->cleanProjectEnvironment($projectModel);
         $projectModel->write();
+        $this->project = $projectModel;
 
         return $projectModel;
     }
