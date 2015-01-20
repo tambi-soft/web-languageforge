@@ -36,7 +36,7 @@ class TypesettingSettingsCommands {
 	 * @param array $settings A json like array of settings
 	 * @return array
 	 */
-	public static function updateSettings($projectId, $settings) {
+	public static function updateLayoutSettings($projectId, $settings) {
 		$projectModel = ProjectModel::getById($projectId);
 		$id = array_key_exists('id', $settings) ? $settings['id'] : '';
 		$model = new SettingModel($projectModel, $id);

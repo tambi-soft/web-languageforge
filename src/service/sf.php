@@ -681,10 +681,10 @@ class sf
     // TypesettingSettingCommands API
     // ---------------------------------------------------------------
     
-    // update should only ever update the "latest" setting
-    public function typesettingSettingCommand_update($model)
+    public function typesetting_layoutSettings_update($model)
     {
-        return TypesettingSettingCommands::updateTypesettingSetting($this->_projectId, $model);
+	    // update should only ever update the "latest" setting
+        return TypesettingSettingsCommands::updateLayoutSettings($this->_projectId, $model);
     }
 
     public function typesetting_layoutPage_dto($settingId)

@@ -36,7 +36,7 @@ class SettingListModel extends \models\mapper\MapperListModel
             $startDate = new \MongoDate($newerThanTimestamp);
             parent::__construct( self::mapper($projectModel->databaseName()), array('dateModified'=> array('$gte' => $startDate), 'isArchived' => false), array(), array('dateCreated' => -1));
         } else {
-            parent::__construct( self::mapper($projectModel->databaseName()), array('isArchived' => false), array(), array('dateCreated' => -1));
+            parent::__construct( self::mapper($projectModel->databaseName()), array('isArchived' => false), array(), array('$natural' => -1));
         }
     }
 
