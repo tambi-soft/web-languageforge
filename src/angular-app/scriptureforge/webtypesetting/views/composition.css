@@ -1,12 +1,8 @@
-.left{
-	width: 40%; 
-	float: left;
-	padding-bottom: 30px;
+.imageBorder{
+	border:1px solid black;
+	width:100%;
 }
-.right{
-	width: 40%;
-	float:right;
-}
+
 
 .center{
 	float:left;
@@ -24,15 +20,19 @@
 }
 
 .properties{
-	height: 100px;
+	/*height: 100px;*/
+	height: 100%;
 	border: 1px solid;
-	
+	min-height: 100px;
+	padding: 5px;
 	margin-top: 5px;
+	margin-bottom: 10px;
 }
 .text{
 	border: 1px solid;
 	overflow:auto;
 	height: 400px;
+	padding: 5px 5px 5px 5px;
 }
 
 
@@ -42,7 +42,7 @@
 	margin-bottom: 20px;
 	margin-left:10px;
 	width: 50%;
-	height: 12px;
+	height: 14px;
 	/*background: #f2f1f1;*/
 	/*border: 1px solid #dfdfdf;
 	box-shadow: 0 0 2px #D5D4D4 inset;*/
@@ -97,11 +97,6 @@
 	width:3em;
 }
 
-.triColor{
-	width:80%;
-	height:80%;
-}
-
 
 .control-bar{
 	width:100%;
@@ -124,4 +119,8 @@
 	float:right;
 	margin-right:40px;
 	margin-bottom:3px;	
+}
+
+.grey{
+	opacity:0.5;
 }

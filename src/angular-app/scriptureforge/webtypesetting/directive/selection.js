@@ -63,7 +63,7 @@ angular.module('composition.selection', [])
 						var selection = rangy.getSelection();
 						scope.paragraphNode = selection.toHtml();
 						var parent = selection.anchorNode;
-						  while (parent != null && (parent.localName == null || parent.localName.toUpperCase() != "P")) {
+						  while (parent != null && (parent.localName == null || (parent.localName.toUpperCase() != "P" && parent.className.toLowerCase() != "illustration-placeholder"))) {
 						    parent = parent.parentNode;
 						  }
 						  
