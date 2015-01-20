@@ -38,7 +38,7 @@ describe('the project dashboard AKA text list page', function() {
 		it('should have form: Bottom Margin', function(){
 			expect(projectLayout.innerMarginForm.isDisplayed()).toBe(true);
 		});
-		/*it('should set the values', function(){	
+		it('should set the values', function(){	
 			projectLayout.innerMarginForm.clear().then(function(){
 				projectLayout.innerMarginForm.sendKeys('80').then(function(){
 					expect(projectLayout.marginDiv.isPresent()).toBe(true);
@@ -66,7 +66,7 @@ describe('the project dashboard AKA text list page', function() {
 					expect(projectLayout.marginDiv.getCssValue('height')).toBe('190px');
 				});
 			});
-		});*/
+		});
 		
 		describe('Layout page columns', function(){
 			it('should have columns tab', function(){
@@ -75,56 +75,114 @@ describe('the project dashboard AKA text list page', function() {
 			});
 			
 			it('should have checkbox: two body columns', function(){
-				expect(projectLayout.pageColCheckbox.isDisplayed()).toBe(true);
-				projectLayout.pageColCheckbox.click();
+				expect(projectLayout.twoBodyColCB.isDisplayed()).toBe(true);
+				projectLayout.twoBodyColCB.click();
 			});
 			
 			it('should have checkbox: two title columns', function(){
-				expect(projectLayout.titleColCheckbox.isDisplayed()).toBe(true);
-				projectLayout.titleColCheckbox.click();
+				expect(projectLayout.twoTitleColCB.isDisplayed()).toBe(true);
+				projectLayout.twoTitleColCB.click();
 			});
 			
 			it('should have checkbox: two intro columns', function(){
-				expect(projectLayout.introColCheckbox.isDisplayed()).toBe(true);
-				projectLayout.introColCheckbox.click();
+				expect(projectLayout.TwoIntroColCB.isDisplayed()).toBe(true);
+				projectLayout.TwoIntroColCB.click();
 			});
 			
 			it('should have checkbox: column rule', function(){
-				expect(projectLayout.lineSeperatorCheckbox.isDisplayed()).toBe(true);
-				projectLayout.lineSeperatorCheckbox.click();
+				expect(projectLayout.ColRuleCB.isDisplayed()).toBe(true);
+				projectLayout.ColRuleCB.click();
 			});
 			
 		});
-		/*
-		describe('Layout page header/footer', function(){
 		
-			it('should have header/footer tab', function(){
-				expect(projectLayout.headFootTab.isPresent()).toBe(true);
-				projectLayout.headFootTab.click();
+		describe('Layout page header', function(){
+		
+			it('should have header tab', function(){
+				expect(projectLayout.headerTab.isPresent()).toBe(true);
+				projectLayout.headerTab.click();
 			});
 			
-			it('should have header checkbox',function(){
-				expect(projectLayout.headerCheckbox.isDisplayed()).toBe(true);
+			it('should have running header checkbox',function(){
+				expect(projectLayout.runningHeadCB.isDisplayed()).toBe(true);
 		
-				projectLayout.headerCheckbox.click();
+				projectLayout.runningHeadCB.click();
 			});
 			
-			it('should have footer checkbox',function(){
-				expect(projectLayout.footerCheckbox.isDisplayed()).toBe(true);
+			it('should have running header rule checkbox',function(){
+				expect(projectLayout.runningHeadRuleCB.isDisplayed()).toBe(true);
 				
-				projectLayout.footerCheckbox.click();
-			});
-			
-			it('should have form: footer position', function(){
-				expect(projectLayout.footerPosForm.isPresent()).toBe(true);
+				projectLayout.runningHeadRuleCB.click();
 			});
 			
 			it('should have form: header position', function(){
 				expect(projectLayout.headerPosForm.isPresent()).toBe(true);
 			});
+			
+			it('should have form: header rule', function(){
+				expect(projectLayout.runningHeaderRuleForm.isPresent()).toBe(true);
+			});
 		});
 		
+		describe('Layout page footer', function(){
+			it('should have footer tab', function(){
+				expect(projectLayout.footerTab.isPresent()).toBe(true);
+				projectLayout.footerTab.click();
+			});
 			
+			it('should have running footer checkbox',function(){
+				expect(projectLayout.runningFootCB.isDisplayed()).toBe(true);
+		
+				projectLayout.runningFootCB.click();
+			});
+			
+			it('should have footenote rule checkbox',function(){
+				expect(projectLayout.footnoteRuleCB.isDisplayed()).toBe(true);
+		
+				projectLayout.footnoteRuleCB.click();
+			});
+			
+			it('should have reset page callers footnotes checkbox',function(){
+				expect(projectLayout.resetPageCallFootCB.isDisplayed()).toBe(true);
+		
+				projectLayout.resetPageCallFootCB.click();
+			});
+			
+			it('should have omit callers in footnotes checkbox',function(){
+				expect(projectLayout.omitCallInFoot.isDisplayed()).toBe(true);
+		
+				projectLayout.omitCallInFoot.click();
+			});
+			
+			it('should have use special caller in footnotes checkbox',function(){
+				expect(projectLayout.useSpecialCallFootCB.isDisplayed()).toBe(true);
+		
+				projectLayout.useSpecialCallFootCB.click();
+			});
+			
+			it('should have paragraphed footnotes checkbox',function(){
+				expect(projectLayout.paragFootCB.isDisplayed()).toBe(true);
+		
+				projectLayout.paragFootCB.click();
+			});
+			
+			it('should have use numerical callers footnotes checkbox',function(){
+				expect(projectLayout.useNumCallFootCB.isDisplayed()).toBe(true);
+		
+				projectLayout.useNumCallFootCB.click();
+			});
+			
+			it('should have form: footer position', function(){
+				expect(projectLayout.footPosForm.isPresent()).toBe(true);
+			});
+			
+			it('should have form: special caller footnotes', function(){
+				expect(projectLayout.specialCallFootForm.isPresent()).toBe(true);
+			});
+		});
+		
+		
+		/*	
 		describe('Layout page printer options', function(){
 			it('should have printerOptionTab', function(){
 				expect(projectLayout.printerOptionTab.isPresent()).toBe(true);
