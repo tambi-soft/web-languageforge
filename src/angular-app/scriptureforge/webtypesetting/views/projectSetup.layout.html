@@ -61,6 +61,21 @@
                           <input type="checkbox" data-ng-model="layout.conf.columnGutterRule">Column Rule
                     </label>
                 </div>
+	            <div class="col-md-2">
+	                <label for="columnGutterRuleSkipInput">Column Gutter Rule Skip</label>
+	                <input class="form-control" type="number" data-ng-model="layout.conf.columnGutterRuleSkip" id="columnGutterRuleSkipInput" />
+	            </div>
+            </div>
+            <br />
+            <div class="row">
+            	<div class="col-md-2">
+	                <label for="columnShiftInput">Column Shift</label>
+	                <input class="form-control" type="number" data-ng-model="layout.conf.columnShift" id="columnShiftInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label for="columnGutterFactorInput">Column Gutter Factor</label>
+	                <input class="form-control" type="number" data-ng-model="layout.conf.columnGutterFactor" id="columnGutterFactorInput" />
+	            </div>
             </div>
         </tab> 
         <tab heading="Header" class="form-group">
@@ -292,28 +307,50 @@
 	                </label>
 	            </div>
 	            <div class="col-md-2">
+	                <label for="specialCallerCrossrefsInput">Special Caller Crossrefs</label>
+	                <input class="form-control" type="text" id="specialCallerCrossrefsInput" data-ng-model="layout.conf.specialCallerCrossrefs" />
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="layout.conf.useAutoCallerCrossrefs">Use Auto Caller Crossrefs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="layout.conf.omitCallerInCrossrefs">Omit Caller In Crossrefs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
 	                <label class="checkbox-inline">
 	                      <input type="checkbox" data-ng-model="layout.conf.paragraphedCrossrefs">Paragraphed Crossrefs
 	                </label>
 	            </div>
-	            <div class="col-md-2">
+        	</div>
+        	<br />
+        	<div class="row">
+        		<div class="col-md-2">
 	                <label class="checkbox-inline">
 	                      <input type="checkbox" data-ng-model="layout.conf.useNumericCallersCrossrefs">Use Numeric Callers Crossrefs
 	                </label>
 	            </div>
-	            <div class="col-md-2">
-	                <label for="specialCallerCrossrefsInput">Special Caller Crossrefs</label>
-	                <input class="form-control" type="text" id="specialCallerCrossrefsInput" data-ng-model="layout.conf.specialCallerCrossrefs" />
-	            </div>
         	</div>
         </tab> 
-        <tab heading="Background" class="form-group">
+        <tab heading="Editing Features" class="form-group">
         	<br />
         	<div class="row">
         		<div class="col-md-2">
 	                <label class="checkbox-inline">
 	                      <input type="checkbox" data-ng-model="layout.conf.useBackground">Use Background
 	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="layout.conf.useDiagnostic">Use Diagnostic
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label for="diagnosticComponentsInput">Diagnostic Components</label>
+	                <input class="form-control" data-ng-model="layout.conf.diagnosticComponents" type="text" id="diagnosticComponentsInput" />
 	            </div>
         	</div>
         	<br />
