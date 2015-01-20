@@ -1,4 +1,6 @@
 <?php
+use models\scriptureforge\webtypesetting\dto\TypesettingLayoutPageDto;
+
 use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCommands;
 
 use models\scriptureforge\webtypesetting\dto\WebtypesettingDiscussionListPageDto;
@@ -40,6 +42,7 @@ use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
 use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
 
 // TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
 use models\shared\commands\MediaResult;
@@ -109,7 +112,6 @@ class sf
     {
         return UserCommands::readUser($id);
     }
-
     /**
      * Read the user profile from $id
      *
@@ -553,7 +555,7 @@ class sf
     {
         return QuestionTemplateCommands::listTemplates($this->_projectId);
     }
-	
+
 
     // ---------------------------------------------------------------
     // Upload API
@@ -564,15 +566,6 @@ class sf
         return JsonEncoder::encode($response);
     }
 
-    	
-    /*
-     * --------------------------------------------------------------- SCRIPTUREFORGE - TYPESETTING ---------------------------------------------------------------
-     */
-
-    // ---------------------------------------------------------------
-    // API
-    // ---------------------------------------------------------------
-    
 
     public function typesetting_discussionList_getPageDto() {
     	return WebtypesettingDiscussionListPageDto::encode($this->_projectId);
@@ -661,7 +654,7 @@ class sf
 	public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
 		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
-	
+
 	public function typesetting_composition_getIllustrationProperties($bookId) {
 		return WebtypesettingCompositionCommands::getIllustrationProperties($this->_projectId, $bookId);
 	}
@@ -682,6 +675,33 @@ class sf
 		$response->data->fileName = "Fake filename";
 		$response->data->path = "Fake/path/not";
         return JsonEncoder::encode($response);
+    }
+
+    // ---------------------------------------------------------------
+    // TypesettingSettingCommands API
+    // ---------------------------------------------------------------
+    
+    public function typesetting_layoutSettings_update($model)
+    {
+	    // update should only ever update the "latest" setting
+        return TypesettingSettingsCommands::updateLayoutSettings($this->_projectId, $model);
+    }
+
+    public function typesetting_layoutPage_dto($settingId)
+    {
+        return TypesettingLayoutPageDto::encode($this->_projectId, $settingId);
+    }
+
+    /* we don't actually want to delete a setting. ever. - cjh 2015-01
+    public function typesettingSettingCommand_delete($id)
+    {
+        return TypesettingSettingCommands::deleteTypesettingSetting($this->_projectId, $id);
+    }
+    */
+
+    public function typesettingSettingCommand_list()
+    {
+        return TypesettingSettingCommands::listTypesettingSetting($this->_projectId);
     }
 
     /*

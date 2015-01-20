@@ -7,24 +7,158 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
 function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
   var vm = this;
   
-  vm.introColumnsTwo = false;
-  vm.pageSizeCode = "A5";
-  vm.pageWidth = 148;
-  vm.topMargin = 15;
-  vm.bodyColumnsTwo = true;
-  vm.insideMargin = 10;
-  vm.outsideMargin = 10;
-  vm.headerPosition = 5;
-  vm.printerPageSizeCode = "A4";
-  vm.titleColumnsTwo = false;
-  vm.footerPosition = 5;
-  vm.bottomMargin = 10;
-  vm.pageHeight = 210;
+  // default settings
+  vm.conf = {
+      // margins
+      insideMargin: 10,
+      outsideMargin: 10,
+      topMargin: 15,
+      bottomMargin: 10,
+      
+      // columns
+      bodyColumnsTwo: true,
+      titleColumnsTwo: false,
+      introColumnsTwo: false,
+      columnGutterRule: false,
+      columnShift: 5,
+      columnGutterRuleSkip: 0,
+      columnGutterFactor: 15,
 
+      // header
+      headerPosition: 5,
+      useRunningHeader: true,
+      useRunningHeaderRule: false,
+      runningHeaderRulePosition: 4,
+      
+      runningHeaderTitleLeft: "empty",
+      runningHeaderTitleCenter: "empty",
+      runningHeaderTitleRight: "empty",
+
+      runningHeaderEvenLeft: "firstref",
+      runningHeaderEvenCenter: "pagenumber",
+      runningHeaderEvenRight: "empty",
+
+      runningHeaderOddLeft: "empty",
+      runningHeaderOddCenter: "pagenumber",
+      runningHeaderOddRight: "lastref",
+      
+      omitChapterNumberRH: false,
+      showVerseReferences: true,
+      omitBookReference: false,
+
+      
+      
+      // footer
+      footerPosition: 5,
+      useRunningFooter: false,
+      
+      runningFooterEvenLeft: "empty",
+      runningFooterEvenCenter: "empty",
+      runningFooterEvenRight: "empty",
+
+      runningFooterOddLeft: "empty",
+      runningFooterOddCenter: "empty",
+      runningFooterOddRight: "empty",
+
+      runningFooterTitleLeft: "empty",
+      runningFooterTitleCenter: "empty",
+      runningFooterTitleRight: "empty",
+
+      
+      //footnotes
+      useFootnoteRule: true,
+      pageResetCallersFootnotes: false,
+   
+      omitCallerInFootnotes: false,
+      //  omitCallerInFootnotes (string ‘f’)
+      
+      useSpecialCallerFootnotes: false,
+      paragraphedFootnotes: true,
+      useNumericCallersFootnotes: false,
+      //specialCallerFootnotes: "\krn0.2em *\kern0.4em",
+
+      
+      // cross references
+      useSpecialCallerCrossrefs: false,
+      specialCallerCrossrefs: "\\kern0.2em *\\kern0.4em",
+      useAutoCallerCrossrefs: true,
+      omitCallerInCrossrefs: false,
+      paragraphedCrossrefs: true,
+      useNumericCallersCrossrefs: false,
+      
+      //'editing' features
+      useBackground: false,
+      backgroundComponents: "watermark",
+      watermarkText: "DRAFT",
+      useDiagnostic: false,
+      diagnosticComponents: "leading",
+      
+      // print options
+      pageSizeCode: "custom", // this shouldn't be visible
+      pageHeight: 210,
+      pageWidth: 148,
+      printerPageSizeCode: "A4",
+
+      useDocInfo: false,
+      docInfoText: "",
+      
+      // body text
+      bodyTextLeading: 12,
+      bodyFontSize: 10,
+      rightToLeft: false,
+      justifyParagraphs: true,
+    
+           
+      //Misc
+      
+      //advanced
+      extraRightMargin: 0,
+      chapterVerseSeperator: ":",
+
+  };
+  vm.pageSizeCode = "A5";
+  
+  vm.components = {
+      watermark: true,
+  };
+  vm.backgroundComponentsUpdate = function() {
+    var comps = [];
+    var comp;
+    for (comp in vm.components) {
+      if (vm.components[comp]) {
+        comps.push(comp);
+      }
+    };
+    vm.conf.backgroundComponents = comps.join(", ");
+  };
   vm.width = 300;
   vm.height = 400;
+  vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"]
+  $scope.getHeaderOptions = function getHeaderOptions(item){
+	  var headerOptionsArray = vm.headerOptions;
+	  var index = headerOptionsArray.indexOf(item);
+	  headerOptionsArray.splice(index, 1);
+	  headerOptionsArray.unshift(item);
+	  return headerOptionsArray;
+  }
+  $scope.mutuallyExclusive= function mutuallyExclusive(name){
+	  switch (name){
+	  	case "background":
+	  		if (vm.conf.useBackground == true) {
+	  			vm.conf.useDiagnostic = false;
+	  		}
+	  	case "diagnostic":
+	  		if (vm.conf.useDiagnostic == true) {
+	  			vm.conf.useBackground = false;
+	  		}
+	  }
+  }
+  
   vm.css = {
-      leftPage: {
+      pagesContainer: {
+        width: vm.width * 2 + 25,
+      },
+      page: {
         height: vm.height,
         width: vm.width,
       },
@@ -34,10 +168,6 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
         marginTop: vm.topMargin + "px",
         marginRight: vm.insideMargin + "px",
       },
-      rightPage: {
-        height: vm.height,
-        width: vm.width,
-      },
       rightMargins: {
         height: vm.height - vm.topMargin - vm.bottomMargin + "px",
         width: vm.width - vm.insideMargin - vm.outsideMargin + "px",
@@ -46,55 +176,31 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       },
   };
   
-  
-  function watchMaker(margin, max, size, outside, left, margin_right, right, margin_left) {
-    $scope.$watch("layout." + margin, function() {
-      vm[max] = vm[size] - vm[outside];
-      vm.css[left][size] = vm[size] - vm[margin] - vm[outside] + "px";
-      vm.css[left][margin_right] = vm[margin] + "px";
-      vm.css[right][size] = vm.css[left][size];
-      vm.css[right][margin_left] = vm[margin] + "px";
-      if (vm[max] < vm[margin]) {
-        vm[margin] = vm[max];
+  // variable watchers
+  function makeMarginWatch(size, margin, opposite, cssMargin, cssOpposite, mirror) {
+    $scope.$watch("layout.conf."+margin+"Margin", function() {
+      vm[margin+"MarginMax"] = vm[size] - vm.conf[opposite+"Margin"];
+      vm.css.leftMargins[size] = vm[size] - vm.conf[margin+"Margin"] - vm.conf[opposite+"Margin"] + "px";
+      vm.css.leftMargins[cssOpposite] = vm.conf[margin+"Margin"] + "px";
+      vm.css.rightMargins[size] = vm.css.leftMargins[size];
+      if (mirror) {
+        vm.css.rightMargins[cssMargin] = vm.css.leftMargins[cssOpposite];
+      } else {
+        vm.css.rightMargins[cssOpposite] = vm.css.leftMargins[cssOpposite];
       }
-      if (vm[margin] < 0) {
-        vm[margin] = 0;
+      if (vm[margin+"MarginMax"] < vm.conf[margin+"Margin"]) {
+        vm.conf[margin+"Margin"] = vm[margin+"MarginMax"];
+      }
+      if (vm.conf[margin+"Margin"] < 0) {
+        vm.conf[margin+"Margin"] = 0;
       }
     });
   }
-  
-  $scope.$watch('layout.bottomMargin', function() {
-    vm.maxbottomMargin = vm.height - vm.topMargin;
-    vm.css.leftMargins.height = vm.height - vm.bottomMargin - vm.topMargin + "px";
-    vm.css.leftMargins.marginbottom = vm.bottomMargin + "px";
-    vm.css.rightMargins.height = vm.css.leftMargins.height;
-    vm.css.rightMargins.marginbottom = vm.bottomMargin + "px";
-    
-    if (vm.maxbottomMargin < vm.bottomMargin) {
-      vm.bottomMargin = vm.maxbottomMargin;
-    }
-    if (vm.bottomMargin < 0) {
-      vm.bottomMargin = 0;
-    }
-  });
+  makeMarginWatch("width", "inside", "outside", "marginLeft", "marginRight", true);
+  makeMarginWatch("width", "outside", "inside", "marginRight", "marginLeft", true);
+  makeMarginWatch("height", "top", "bottom", "marginBottom", "marginTop");
+  makeMarginWatch("height", "bottom", "top", "marginTop", "marginBottom");
 
-  $scope.$watch('layout.topMargin', function() {
-    vm.maxTopMargin = vm.height - vm.bottomMargin;
-    vm.css.leftMargins.height = vm.height - vm.topMargin - vm.bottomMargin + "px";
-    vm.css.leftMargins.marginTop = vm.topMargin + "px";
-    vm.css.rightMargins.height = vm.css.leftMargins.height;
-    vm.css.rightMargins.marginTop = vm.topMargin + "px";
-    
-    if (vm.maxTopMargin < vm.topMargin) {
-      vm.topMargin = vm.maxTopMargin;
-    }
-    if (vm.topMargin < 0) {
-      vm.topMargin = 0;
-    }
-  });
-  
-  watchMaker("insideMargin", "maxInsideMargin", "width", "outsideMargin", "leftMargins", "marginRight", "rightMargins", "marginLeft");
-  watchMaker("outsideMargin", "maxOutsideMargin", "width", "insideMargin", "rightMargins", "marginRight", "leftMargins", "marginLeft");
   
   var saving = false;
   var saved = false;

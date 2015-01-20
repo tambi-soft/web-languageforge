@@ -8,6 +8,7 @@ class AllTypesettingTests extends TestSuite
     {
         parent::__construct();
         $this->addFile(TestPath . 'scriptureforge/typesetting/commands/AllTests.php');
+        $this->addFile(TestPath . 'scriptureforge/typesetting/dto/AllTests.php');
         $this->addFile(TestPath . 'scriptureforge/typesetting/models/AllTests.php');
     }
 
