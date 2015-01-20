@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('webtypesetting', ['ui.router', 'webtypesetting.projectSetup', 'bellows.filters', 'webtypesetting.composition', 'webtypesetting.discussionList', 'webtypesetting.services', 'webtypesetting.projectSetupLayout', 'webtypesetting.projectSetupAssets']).run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
+angular.module('webtypesetting', ['ui.router', 'webtypesetting.projectSetup', 'bellows.filters', 'webtypesetting.composition', 'webtypesetting.discussionList', 'webtypesetting.services', 'webtypesetting.projectSetupLayout', 'webtypesetting.projectSetupAssets', 'webtypesetting.renderList']).run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
   // Add $state and $stateParams to the $rootScope so that we can access them
   // from any scope.
   // <li ng-class="{ active: $state.includes('contacts.list') }"> will set the

@@ -1,5 +1,7 @@
 <?php
 
+use models\scriptureforge\webtypesetting\SettingListModel;
+
 use models\scriptureforge\webtypesetting\dto\TypesettingLayoutPageDto;
 
 use models\scriptureforge\webtypesetting\SettingModel;
@@ -25,7 +27,7 @@ class TestTypesettingLayoutPageDto extends UnitTestCase
         $e->clean();
     }
 
-    public function testEncode_existingSetting_dtoAsExpected()
+    public function testEncode_oneExistingSetting_dtoReturnsExistingSetting()
     {
         $e = new MongoTestEnvironment();
         $e->clean();
@@ -37,14 +39,13 @@ class TestTypesettingLayoutPageDto extends UnitTestCase
         
         $settingId = $settingModel->write();
         
-        $result = TypesettingLayoutPageDto::encode($projectModel->id->asString(), $settingId);
+        $result = TypesettingLayoutPageDto::encode($projectModel->id->asString());
         
         $this->assertEqual($result['layout']['outsideMargin'], 2);
         $this->assertEqual($result['layout']['insideMargin'], 50);
-
     }
 
-    public function testEncode_latestKeyword_dtoDisplaysLatestSetting()
+    public function testEncode_twoExistingSettings_dtoDisplaysLatestSetting()
     {
         $e = new MongoTestEnvironment();
         $e->clean();
@@ -53,20 +54,16 @@ class TestTypesettingLayoutPageDto extends UnitTestCase
         $settingModel = new SettingModel($projectModel);
         $settingModel->layout->outsideMargin = 2;
         $settingModel->layout->insideMargin = 50;
-        
-        $settingId = $settingModel->write();
-
-        $settingModel = new SettingModel($projectModel);
-        $settingModel->layout->outsideMargin = 1;
-        $settingModel->layout->insideMargin = 5;
         $settingModel->write();
         
+        //sleep(1);
+
         $settingModel = new SettingModel($projectModel);
         $settingModel->layout->outsideMargin = 3;
         $settingModel->layout->insideMargin = 40;
         $settingModel->write();
-
-        $result = TypesettingLayoutPageDto::encode($projectModel->id->asString(), 'latest');
+        
+        $result = TypesettingLayoutPageDto::encode($projectModel->id->asString());
         
         $this->assertEqual($result['layout']['outsideMargin'], 3);
         $this->assertEqual($result['layout']['insideMargin'], 40);

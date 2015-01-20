@@ -1,4 +1,10 @@
 <?php
+use models\scriptureforge\webtypesetting\SettingModel;
+
+use models\scriptureforge\webtypesetting\SettingModelLayout;
+
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingsCommands;
+
 use models\ProjectModel;
 
 use models\scriptureforge\webtypesetting\RapumaSettingListModel;
@@ -7,7 +13,7 @@ use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
 use models\mapper\JsonDecoder;
 use models\mapper\JsonEncoder;
 
-require_once dirname(__FILE__) . '/../../TestConfig.php';
+require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 
 require_once TestPath . 'common/MongoTestEnvironment.php';
@@ -17,14 +23,29 @@ require_once SourcePath . "models/ProjectModel.php";
 
 class TypesettingSettingCommands_Test extends UnitTestCase
 {
-    public function __construct()
-    {
+    public function testUpdateLayoutSetting_currentSetting_layoutUpdated() {
         $e = new MongoTestEnvironment();
         $e->clean();
-    }
+        
+        $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $projectModel->id->asString();
+        
+        $layoutSetting = array();
+        $layoutSetting['docInfoText'] = 'my text';
 
-    public function testCRUD_Works()
-    {
+    	$currentSetting = SettingModel::getCurrent($projectModel);
+    	$this->assertEqual($currentSetting->layout->docInfoText, "");
+        
+    	TypesettingSettingsCommands::updateLayoutSettings($projectId, $layoutSetting);
+    	
+    	$currentSetting = SettingModel::getCurrent($projectModel);
+    	$this->assertEqual($currentSetting->layout->docInfoText, "my text");
+    	
+    }
+    
+
+    /* cjh disabled since it's using the wrong models (should use SettingsModel)
+    public function testCRUD_Works() {
         $e = new MongoTestEnvironment();
         $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $projectModel->id->asString();
@@ -39,7 +60,7 @@ class TypesettingSettingCommands_Test extends UnitTestCase
         $this->assertEqual(0, $list->count);
 
         // Create
-        $settingId = TypesettingSettingCommands::updateTypesettingSetting($projectId, $testSettingData);
+        $settingId = TypesettingSettingCommands::updateLayoutSettings($projectId, $testSettingData);
         $setting = new RapumaSettingModel($projectModel, $settingId);
         $this->assertNotNull($setting->layout);
         foreach(get_object_vars($setting->layout) as $attribute){
@@ -62,7 +83,7 @@ class TypesettingSettingCommands_Test extends UnitTestCase
         $newTestSettingData['id'] = $settingId;
         $newTestSettingData['layout']['insideMargin'] = 50;
         $newTestSettingData['layout']['outsideMargin'] = 50;
-        $settingId = TypesettingSettingCommands::updateTypesettingSetting($projectId, $newTestSettingData);
+        $settingId = TypesettingSettingCommands::updateLayoutSettings($projectId, $newTestSettingData);
 
         // Read back
         $differentSetting = TypesettingSettingCommands::readTypesettingSetting($projectId, $settingId);
@@ -88,4 +109,5 @@ class TypesettingSettingCommands_Test extends UnitTestCase
         $this->assertEqual(0, $list->count);
 
     }
+    */
 }
