@@ -1,4 +1,6 @@
 <?php
+use models\scriptureforge\webtypesetting\dto\TypesettingLayoutPageDto;
+
 use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCommands;
 
 use models\scriptureforge\webtypesetting\dto\WebtypesettingDiscussionListPageDto;
@@ -660,9 +662,9 @@ class sf
         return TypesettingSettingCommand::updateTypesettingSetting($this->_projectId, $model);
     }
 
-    public function typesettingSettingCommand_read($id)
+    public function typesetting_layoutPage_dto($settingId)
     {
-        return TypesettingSettingCommand::readTypesettingSetting($this->_projectId, $id);
+        return TypesettingLayoutPageDto::encode($this->_projectId, $settingId);
     }
 
     public function typesettingSettingCommand_delete($id)

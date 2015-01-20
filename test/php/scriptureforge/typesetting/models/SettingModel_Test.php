@@ -119,7 +119,7 @@ class TestSettingModel extends UnitTestCase
         $this->assertEqual(1, $list->count);
 
         // Delete
-        SettingModel::remove($projectModel->databaseName(), $id);
+        SettingModel::remove($projectModel, $id);
 
         // List
         $list->read();
