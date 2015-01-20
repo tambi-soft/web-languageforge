@@ -74,7 +74,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       useSpecialCallerFootnotes: false,
       paragraphedFootnotes: true,
       useNumericCallersFootnotes: false,
-      specialCallerFootnotes: "\krn0.2em *\kern0.4em",
+      specialCallerFootnotes: "\\krn0.2em *\\kern0.4em",
 
 
       // cross references
@@ -89,8 +89,8 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       watermarkText: "DRAFT",
       
       // print options
-      pageSizeCode: "A4", // TODO
-      printerPageSizeCode: "A4", // TODO
+      pageSizeCode: "A4",
+      printerPageSizeCode: "A4",
       useDocInfo: false,
       //docInfoText: "",
       
@@ -107,7 +107,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       
       //advanced
       extraRightMargin: 0,
-      chapterVerseSeperator: ":"
+      chapterVerseSeperator: ":",
 
   };
   

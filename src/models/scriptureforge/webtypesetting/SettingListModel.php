@@ -12,8 +12,8 @@ class SettingListModel extends \models\mapper\MapperListModel
 				$fields
 		);
 	}
-	
-	public function all($projectModel)
+
+	public static function all($projectModel)
 	{
 		return new SettingListModel(
 				$projectModel,
@@ -21,7 +21,7 @@ class SettingListModel extends \models\mapper\MapperListModel
 				array('description')
 		);
 	}
-	
+
 	public static function templates($projectModel)
 	{
 		return new SettingListModel(
@@ -30,6 +30,6 @@ class SettingListModel extends \models\mapper\MapperListModel
 			array('description')
 		);
 	}
-	
+
 
 }
