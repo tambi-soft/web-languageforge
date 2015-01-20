@@ -18,11 +18,11 @@ class WebtypesettingPdfConverter {
 	 * @param string $pdfId
 	 */
 	public function __construct($projectModel, $pdfId) {
-		$_path = $projectModel->getAssetsFolderPath();
-		$_pdfName = $pdfId;
+		$this->_path = $projectModel->getAssetsFolderPath();
+		$this->_pdfName = $pdfId;
 		
 		//combines the assets folder path name and the pdf name to build the name to access the pdf.
-		$_fullPathName = $_path . '/' . $_pdfName . ".pdf";
+		$this->_fullPathName = $this->_path . '/' . $this->_pdfName . ".pdf";
 	}
 	
 	/**
@@ -34,7 +34,7 @@ class WebtypesettingPdfConverter {
 		
 		
 		//open a file location, read write access
-		$file = fopen($_fullPathName ,"a+");
+		$file = fopen($this->_fullPathName ,"w+");
 		
 		
 		//declare a new imagick container to stick our image in and modify.
@@ -52,7 +52,7 @@ class WebtypesettingPdfConverter {
 		//setImageFormat changes the local im model format to png.
 		$im->setImageFormat('png');
 		//writeImage then takes the local png stored in im and writes it out to file, ready to be sent on 
-		$im->writeImage($_pdfName . '.png');
+		$im->writeImage($this->_path . '/' . $this->_pdfName . '.png');
 		
 		//clean up after ourselves.
 		$im->clear(); 
