@@ -14,6 +14,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       outsideMargin: 10,
       topMargin: 15,
       bottomMargin: 10,
+      
       // columns
       bodyColumnsTwo: true,
       titleColumnsTwo: false,
@@ -74,7 +75,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       useSpecialCallerFootnotes: false,
       paragraphedFootnotes: true,
       useNumericCallersFootnotes: false,
-      specialCallerFootnotes: "\krn0.2em *\kern0.4em",
+      //specialCallerFootnotes: "\krn0.2em *\kern0.4em",
 
 
       // cross references
@@ -89,10 +90,12 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       watermarkText: "DRAFT",
       
       // print options
-      pageSizeCode: "A4", // TODO
+      pageSizeCode: "A5", // TODO
+      pageHeight: 210, //TODO
+      pageWidth: 148, //TODO
       printerPageSizeCode: "A4", // TODO
       useDocInfo: false,
-      //docInfoText: "",
+      docInfoText: "",
       
       // body text
       bodyTextLeading: 12,
