@@ -348,14 +348,15 @@ angular.module('sfchecks.questions', ['bellows.services', 'sfchecks.services', '
       // take the first file only
       var file = $files[0];
       $scope.file = file;
-      if (file['size'] <= ss.fileSizeMax()) {
+      if (file.size <= ss.fileSizeMax()) {
         $upload.upload({
           
           // upload.php script
           url: '/upload/sf-checks/audio',
           // headers: {'myHeaderKey': 'myHeaderVal'},
           data: {
-            textId: textId,
+          	filename: file.name,
+            textId: textId
           },
           file: file
         }).progress(function(evt) {

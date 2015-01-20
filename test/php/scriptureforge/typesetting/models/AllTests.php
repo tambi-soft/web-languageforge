@@ -7,7 +7,7 @@ class AllTypesettingModelTests extends TestSuite
     public function __construct()
     {
         parent::__construct();
-        $this->addFile(TestPath . 'scriptureforge/typesetting/models/RapumaAssetModel_Test.php');
+        $this->addFile(TestPath . 'scriptureforge/typesetting/models/TypesettingAssetModel_Test.php');
         $this->addFile(TestPath . 'scriptureforge/typesetting/models/SettingModel_Test.php');
     }
 

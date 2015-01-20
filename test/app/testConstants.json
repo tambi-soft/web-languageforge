@@ -30,6 +30,8 @@
   
   "testProjectName"  : "Test Project",
   "testProjectCode"  : "test_project",
+  "typesettingProjectName" : "Typesetting Project",
+  "typesettingProjectCode" : "typesetting_project",
   "testProjectAllowInvites" : false,
   "otherProjectName" : "Other Project for Testing",
   "otherProjectCode" : "otherproject",

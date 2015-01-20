@@ -1,41 +1,38 @@
 <div class="container" ng-controller="projectSetupAssetsCtrl">
-    <h2>Assets Settings</h2>
+	<h2>Assets Settings</h2>
 	<!-- <div data-wc-overlay="" data-wc-overlay-delay="6000">
     <img src="/images/shared/loading.gif" />&nbsp; Loading...
     </div>-->
-	<div data-ng-repeat="sectionTitle in sectionTitles">
-		<div class="row">
-			<div class='col-xs-6'>
-				<h3 data-ng-cloak>{{ sectionTitle }}</h3>
-			</div>
-			<div class='col-xs-6'>
-				<button class="btn"
-					data-ng-click="newTextCollapsed = !newTextCollapsed">
-					<i class="icon-plus"></i>Add
-				</button>
-			</div>
-		</div>
+	<div class="row" data-ng-repeat="section in sections">
+		<div class="panel col-xs-12 col-md-6">
+			<h3 data-ng-cloak>
+				{{ section.title }}
+				<div class="pull-right">
+					<button class="btn btn-default"
+						data-ng-click="newTextCollapsed = !newTextCollapsed">Add</button>
+<!-- 					<a role="button" class="btn btn-default dropdown-toggle" -->
+<!-- 						data-dropdown-toggle="" aria-haspopup="true" aria-expanded="false"><i -->
+<!-- 						class="icon-cog icon-large"></i><span class="caret"></span></a> -->
+				</div>
+			</h3>
 
-		<div class="new-item" data-collapse="newTextCollapsed">
-			<form class="well" name="">
-				<fieldset class="col-xs-4">
-					<div class="drop-box" data-ng-file-drop="onPdfFile($files)"
-						data-ng-file-drop-available="dropSupported=true">
-						<h4>Or drop a PDF file here</h4>
-						<br />
-						<p>or if you prefer...</p>
-						<input type="button" class="btn" value="Browse..."
-							onclick="javascript:document.getElementById('pdffile').click();">
-						<input id="pdffile" type="file" style="display: none;"
-							data-ng-file-select="onPdfFile($files)">
+			<form name="" data-collapse="newTextCollapsed">
+				<fieldset class="col-xs-12">
+					<!-- TODO: Should move style into a css file!!! -->
+					<div class="drop-box btn"
+						style="width: 100%; height: auto; padding-top: 0; cursor: pointer;"
+						data-ng-file-drop-available="dropSupported=true"
+						data-ng-file-drop="onFileSelect($files, section)"
+						data-ng-file-select="onFileSelect($files, section)">
+						<h4>Click here or drop a {{section.fileType}} file here to upload.</h4>
 					</div>
 					<div data-ng-show="!dropSupported">HTML5 Drop File is not
 						supported on this browser</div>
-					<div data-ng-show="file != null">
+					<div data-ng-show="section.tempFile != null">
 						<p>
-							<strong>{{file.name}}</strong> {{file.size | bytes }}
+							<strong>{{section.tempFile.name}}</strong> {{section.tempFile.size | bytes }}
 						</p>
-						<div class="col-md-4">
+						<div class="col-xs-12">
 							<progressbar data-value="progress" data-max="100.0"></progressbar>
 						</div>
 						&nbsp;
@@ -44,13 +41,12 @@
 				</fieldset>
 				<div style="clear: left"></div>
 			</form>
+			<ul class="list-group">
+				<li class="list-group-item text-left" data-ng-repeat="asset in section.assets">
+					<span>{{ asset.name }}</span>
+<!-- 					<span class="btn badge" ng-click="deleteFile(section.assets,$index)">X</span> -->
+				</li>
+			</ul>
 		</div>
-		
-		<ul class="list-group">			
-			<li class="list-group-item text-left" data-ng-repeat="paratext in paratexts">
-				<span>{{ paratext }}</span><span class="badge" ng-click="deleteFile($index)">X</span>
-			</li>
-		</ul>
-		<!--<p>{{ $index }}</p> -->
 	</div>
 </div>
