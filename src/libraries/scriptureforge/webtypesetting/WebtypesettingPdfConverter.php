@@ -13,7 +13,7 @@ class WebtypesettingPdfConverter {
 	 * 
 	 * 
 	 */
-	static public function getPng($sourceName, $destName, $page=1) {
+	static public function getPng($sourceName, $destName, $page=0) {
 		
 		
 		//open a file location, read write access
@@ -26,10 +26,10 @@ class WebtypesettingPdfConverter {
 			//$im->setResolution(300,300);
 			
 		
-		
+		$im->setresolution(150, 150);
 		
 		//read the pdf page, 0 indexed.
-		$im->readimage($sourceName);
+		$im->readimage("{$sourceName}[{$page}]");
 		
 		//flattenImages can be used if transparancy layer is showing up as black.
 		//$imagick = $imagick->flattenImages();

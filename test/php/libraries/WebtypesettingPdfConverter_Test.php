@@ -26,7 +26,15 @@ class TestWebtypesettingPdfConverter extends UnitTestCase
 			
 		// assert that the file was copied successfully
 		
- 		WebtypesettingPdfConverter::getPng($testSourceName,$testDestName,0);
+		if(file_exists($testDestName)){
+			unlink($testDestName);
+		}
+		
+		$this->assertFalse(file_exists($testDestName));
+		
+ 		WebtypesettingPdfConverter::getPng($testSourceName,$testDestName,3);
+ 		
+ 		$this->assertTrue(file_exists($testDestName));
  		
 	}
 
