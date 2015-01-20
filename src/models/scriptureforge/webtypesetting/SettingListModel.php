@@ -14,6 +14,7 @@ class SettingListModel extends \models\mapper\MapperListModel
         return $instance;
     }
 
+    /*
 	protected function __construct($projectModel, $query, $fields)
 	{
 		parent::__construct(
@@ -22,7 +23,24 @@ class SettingListModel extends \models\mapper\MapperListModel
 				$fields
 		);
 	}
+	*/
+
+    /**
+     *
+     * @param ProjectModel $projectModel
+     * @param int $newerThanTimestamp
+     */
+    public function __construct($projectModel, $newerThanTimestamp = null)
+    {
+        if (!is_null($newerThanTimestamp)) {
+            $startDate = new \MongoDate($newerThanTimestamp);
+            parent::__construct( self::mapper($projectModel->databaseName()), array('dateModified'=> array('$gte' => $startDate), 'isArchived' => false), array(), array('dateCreated' => -1));
+        } else {
+            parent::__construct( self::mapper($projectModel->databaseName()), array('isArchived' => false), array(), array('dateCreated' => -1));
+        }
+    }
 	
+    /*
 	public static function all($projectModel)
 	{
 		return new SettingListModel(
@@ -40,6 +58,7 @@ class SettingListModel extends \models\mapper\MapperListModel
 			array('description')
 		);
 	}
+	*/
 	
 
 }

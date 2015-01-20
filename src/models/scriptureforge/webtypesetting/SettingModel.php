@@ -137,6 +137,19 @@ class SettingModel extends \models\mapper\MapperModel
         $mapper = self::mapper($databaseName);
         $mapper->remove($id);
     }
+    
+    public static function getLatest($projectModel) {
+    	$settingsList = new SettingListModel($projectModel);
+    	$settingsList->read();
+    	if ($settingsList->count > 0) {
+	    	$settingId = $settingsList->entries[0]['id'];
+	    	$settingModel = SettingModel($projectModel, $settingId);
+    	}
+    	else {
+    		$settingModel = new SettingModel($projectModel);
+    	}
+    	return $settingModel;
+    }
 
      /**
      * @var Id
