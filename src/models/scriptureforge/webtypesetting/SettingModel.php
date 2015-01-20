@@ -410,21 +410,12 @@ class SettingModel extends \models\mapper\MapperModel
 	    	$settingId = $settingsList->entries[0]['id'];
 	    	$settingModel = new SettingModel($projectModel, $settingId);
 
-	    	if (!$settingModel->isCurrent) {
-	    		
-	    		// make a copy of the latest setting if the latest setting is not "current"
-	    		$newSettingModel = new SettingModel($projectModel);
-	    		JsonDecoder::decode($newSettingModel, JsonEncoder::encode($settingModel));
-	    		$newSettingModel->isCurrent = true;
-	    		$settingModel = $newSettingModel;
-	    	}
     	}
     	else {
     		$settingModel = new SettingModel($projectModel);
-    		$settingModel->isCurrent = true;
+	    	$settingModel->write();
     	}
 
-    	$settingModel->write();
     	return $settingModel;
     }
 
@@ -464,11 +455,5 @@ class SettingModel extends \models\mapper\MapperModel
      */
     public $isArchived;
     
-    /**
-     * 
-     * @var boolean
-     */
-    public $isCurrent;
-
 }
 
