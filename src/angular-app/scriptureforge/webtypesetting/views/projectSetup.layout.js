@@ -14,6 +14,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       outsideMargin: 10,
       topMargin: 15,
       bottomMargin: 10,
+      
       // columns
       bodyColumnsTwo: true,
       titleColumnsTwo: false,
@@ -69,47 +70,53 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       pageResetCallersFootnotes: false,
    
       omitCallerInFootnotes: false,
-      	//  omitCallerInFootnotes (string ‘f’)
+      //  omitCallerInFootnotes (string ‘f’)
       
       useSpecialCallerFootnotes: false,
       paragraphedFootnotes: true,
       useNumericCallersFootnotes: false,
-      specialCallerFootnotes: "\krn0.2em *\kern0.4em",
+      //specialCallerFootnotes: "\krn0.2em *\kern0.4em",
 
-
+      
       // cross references
       useSpecialCallerCrossrefs: false,
-      	//specialCallerCrossrefs: "\\kern0.2em *\\kern0.4em",
+      specialCallerCrossrefs: "\\kern0.2em *\\kern0.4em",
       useAutoCallerCrossrefs: true,
       omitCallerInCrossrefs: false,
       paragraphedCrossrefs: true,
       useNumericCallersCrossrefs: false,
       
       //'editing' features
+      useBackground: false,
+      backgroundComponents: "watermark",
       watermarkText: "DRAFT",
+      useDiagnostic: false,
+      diagnosticComponents: "leading",
       
       // print options
-      pageSizeCode: "A4", // TODO
-      printerPageSizeCode: "A4", // TODO
+      pageSizeCode: "custom", // this shouldn't be visible
+      pageHeight: 210,
+      pageWidth: 148,
+      printerPageSizeCode: "A4",
+
       useDocInfo: false,
-      //docInfoText: "",
+      docInfoText: "",
       
       // body text
       bodyTextLeading: 12,
       bodyFontSize: 10,
       rightToLeft: false,
       justifyParagraphs: true,
-      fontDefaultSize: 12,
-      leadingDefaultSize: 14,
     
            
       //Misc
       
       //advanced
       extraRightMargin: 0,
-      chapterVerseSeperator: ":"
+      chapterVerseSeperator: ":",
 
   };
+  vm.pageSizeCode = "A5";
   
   vm.components = {
       watermark: true,

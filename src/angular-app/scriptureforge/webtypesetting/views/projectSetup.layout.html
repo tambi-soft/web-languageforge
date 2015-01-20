@@ -1,14 +1,14 @@
 <div class="container" data-ng-cloak data-ng-controller="projectSetupLayoutCtrl as layout">
     <h2>Layout Settings</h2>
     
-    <!-- DEBUG INFO
+    DEBUG INFO
     <ul style="width: 100%;">
       <li data-ng-repeat="(k, v) in layout.conf" style="float: left; width: 25%; font-size: xx-small;">
         {{ k }} : {{ v }}
       </li>
     </ul>
-    <div style="height: 150px;"/>
-    END DEBUG INFO -->
+    <div style="height: 200px;"/>
+    <!-- END DEBUG INFO -->
     
     <span class="save-notice pull-right text-muted">{{saveNotice()}}</span>
     <form name="layoutForm" novalidate>
@@ -61,6 +61,21 @@
                           <input type="checkbox" data-ng-model="layout.conf.columnGutterRule">Column Rule
                     </label>
                 </div>
+	            <div class="col-md-2">
+	                <label for="columnGutterRuleSkipInput">Column Gutter Rule Skip</label>
+	                <input class="form-control" type="number" data-ng-model="layout.conf.columnGutterRuleSkip" id="columnGutterRuleSkipInput" />
+	            </div>
+            </div>
+            <br />
+            <div class="row">
+            	<div class="col-md-2">
+	                <label for="columnShiftInput">Column Shift</label>
+	                <input class="form-control" type="number" data-ng-model="layout.conf.columnShift" id="columnShiftInput" />
+	            </div>
+	            <div class="col-md-2">
+	                <label for="columnGutterFactorInput">Column Gutter Factor</label>
+	                <input class="form-control" type="number" data-ng-model="layout.conf.columnGutterFactor" id="columnGutterFactorInput" />
+	            </div>
             </div>
         </tab> 
         <tab heading="Header" class="form-group">
@@ -259,10 +274,6 @@
 	                      <input type="checkbox" data-ng-model="layout.conf.useNumericCallersFootnotes">Use Numeric Callers Footnotes
 	                </label>
 	            </div>
-	            <div class="col-md-2">
-	                <label for="specialCallerFootnotesInput">Special Caller Footnotes</label>
-	                <input class="form-control" data-ng-model="layout.conf.specialCallerFootnotes" type="text" id="specialCallerFootnotesInput" />
-	            </div>
 	        </div>
 	        <br />
 	        <div class="row">
@@ -292,28 +303,47 @@
 	                </label>
 	            </div>
 	            <div class="col-md-2">
-	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="layout.conf.paragraphedCrossrefs">Paragraphed Crossrefs
-	                </label>
-	            </div>
-	            <div class="col-md-2">
-	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="layout.conf.useNumericCallersCrossrefs">Use Numeric Callers Crossrefs
-	                </label>
-	            </div>
-	            <div class="col-md-2">
 	                <label for="specialCallerCrossrefsInput">Special Caller Crossrefs</label>
 	                <input class="form-control" type="text" id="specialCallerCrossrefsInput" data-ng-model="layout.conf.specialCallerCrossrefs" />
 	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="layout.conf.useAutoCallerCrossrefs">Use Auto Caller Crossrefs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="layout.conf.omitCallerInCrossrefs">Omit Caller In Crossrefs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="layout.conf.useAutoCallerCrossrefs">Use Auto Caller in Crossrefs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="layout.conf.omitCallerInCrossrefs">Omit Caller In Crossrefs
+	                </label>
+	            </div>
         	</div>
         </tab> 
-        <tab heading="Background" class="form-group">
+        <tab heading="Editing Features" class="form-group">
         	<br />
         	<div class="row">
         		<div class="col-md-2">
 	                <label class="checkbox-inline">
 	                      <input type="checkbox" data-ng-model="layout.conf.useBackground">Use Background
 	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="layout.conf.useDiagnostic">Use Diagnostic
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label for="diagnosticComponentsInput">Diagnostic Components</label>
+	                <input class="form-control" data-ng-model="layout.conf.diagnosticComponents" type="text" id="diagnosticComponentsInput" />
 	            </div>
         	</div>
         	<br />
@@ -345,11 +375,20 @@
         	<div class="row">
         		<div class="col-md-2">
 	                <label for="pageSizeCodeInput">Page Size Code</label>
-	        		<select class="form-control" id="pageSizeCodeInput" data-ng-model="layout.conf.pageSizeCode">
+	        		<select class="form-control" id="pageSizeCodeInput" data-ng-model="layout.pageSizeCode">
 	        			<option>A5</option>
 	        			<option>US Letter</option>
+	        			<option>custom</option>
 	        		</select>
         		</div>
+        		<div class="col-md-2">
+	                <label for="pageHeightInput">Page Height</label>
+	                <input class="form-control" data-ng-model="layout.conf.pageHeight" type="text" id="pageHeightInput" />
+	            </div>
+        		<div class="col-md-2">
+	                <label for="pageWidthInput">Page Width</label>
+	                <input class="form-control" data-ng-model="layout.conf.pageWidth" type="text" id="pageWidthInput" />
+	            </div>
         		<div class="col-md-2">
 	                <label for="printerPageSizeCodeInput">Printer Page Size Code</label>
 	        		<select class="form-control" id="printerPageSizeCodeInput" data-ng-model="layout.conf.printerPageSizeCode">
