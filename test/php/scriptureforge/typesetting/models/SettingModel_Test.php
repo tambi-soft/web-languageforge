@@ -24,7 +24,7 @@ class TestSettingModel extends UnitTestCase
         $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
         // List
-        $list = SettingListModel::all($projectModel);
+        $list = new SettingListModel($projectModel);
         $list->read();
         $this->assertEqual(0, $list->count);
 
