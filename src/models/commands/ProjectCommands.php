@@ -7,6 +7,7 @@ use libraries\shared\Website;
 use Palaso\Utilities\CodeGuard;
 use libraries\scriptureforge\sfchecks\Email;
 use models\ProjectModel;
+use models\LayoutTemplateModel;
 use models\ProjectSettingsModel;
 use models\UserModel;
 use models\shared\dto\ManageUsersDto;
@@ -14,6 +15,7 @@ use models\mapper\Id;
 use models\mapper\JsonDecoder;
 use models\mapper\JsonEncoder;
 use models\shared\rights\Domain;
+use models\scriptureforge\webtypesetting;
 
 use models\shared\rights\ProjectRoles;
 use models\sms\SmsSettings;
@@ -249,5 +251,4 @@ class ProjectCommands
 
         return $project->readByProperties(array('projectCode' => $code));
     }
-
 }

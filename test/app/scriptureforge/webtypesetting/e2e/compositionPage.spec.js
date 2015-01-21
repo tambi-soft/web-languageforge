@@ -1,4 +1,5 @@
 'use strict';
+/*
 
 describe('the composition page', function(){
 	var constants 			= require('../../../testConstants.json');
@@ -84,3 +85,4 @@ describe('the composition page', function(){
 
 	});
 });
+*/

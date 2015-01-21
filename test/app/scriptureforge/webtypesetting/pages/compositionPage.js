@@ -33,6 +33,13 @@ var SfCompositionPage = function() {
 			rightPage: element(by.className('right')),
 			leftPage: element(by.className('left')),
 	};
+	
+	this.buttons = {
+			saveTemplate: element(by.partialButtonText('Save Template')),
+			save: element(by.id('save')),
+			loadTemplate: element(by.partialButtonText('Load Template')),
+			load: element(by.id('load')),
+	};
 
 };
 

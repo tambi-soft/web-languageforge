@@ -111,42 +111,4 @@ class TestSettingModel extends UnitTestCase
         $this->assertEqual(0, $list->count);
 
     }
-
-/* TODO Move to template test file CP 2015-01
-    public function testTemplate_Works(){
-    	$e = new MongoTestEnvironment();
-    	$projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-
-    	// List
-    	$list = SettingListModel::templates($projectModel);
-    	$list->read();
-    	$this->assertEqual(0, $list->count);
-
-    	// Create Template
-    	$setting = new SettingModel($projectModel);
-    	$setting->templateName = "Template 1";
-
-    	$id = $setting->write();
-    	$this->assertNotNull($id);
-    	$this->assertIsA($id, 'string');
-    	$this->assertEqual($id, $setting->id->asString());
-
-    	// List
-    	$list->read();
-    	$this->assertEqual(1, $list->count);
-
-    	// Create NonTemplate
-    	$setting = new SettingModel($projectModel);
-
-    	$id = $setting->write();
-    	$this->assertNotNull($id);
-    	$this->assertIsA($id, 'string');
-    	$this->assertEqual($id, $setting->id->asString());
-
-    	// List
-    	$list->read();
-    	$this->assertEqual(1, $list->count);
-
-    }
-*/
 }

@@ -20,7 +20,6 @@ angular.module('webtypesetting.projectSetup', ['jsonRpc', 'ui.bootstrap', 'bello
 	                        'Fonts',
 	                        'Cover / Maps'
 	                        ];
-
 	// For the buttons.
 	$scope.newTextCollapsed = true;
 
@@ -47,76 +46,5 @@ angular.module('webtypesetting.projectSetup', ['jsonRpc', 'ui.bootstrap', 'bello
 			}
 		});
 		reader.readAsText(file);
-	};
-	
-}])
-.controller('templateCtrl', ['$scope', '$state', 'webtypesettingSetupService',  'sessionService', 'modalService', 'silNoticeService',
-function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice) {
-    $scope.loadTemplateCollapsed = true;
-    $scope.saveTemplateCollapsed = true;
-    $scope.disableAddButton = true;
-    $scope.saveTemplateName = "";
-    $scope.loadTemplateName = "";
-    
-    $scope.uncollapseDivs = function(div){
-      if (div ==="load"){
-        if (!$scope.loadTemplateCollapsed){
-          $scope.loadTemplateCollapsed = true;
-        }else{
-          $scope.loadTemplateCollapsed = false;
-          $scope.saveTemplateCollapsed = true;
-        }
-      }
-      if (div==="save"){
-        if (!$scope.saveTemplateCollapsed){
-          $scope.saveTemplateCollapsed = true;
-        }else{
-          $scope.saveTemplateCollapsed = false;
-          $scope.loadTemplateCollapsed = true;
-        }
-      }
-    };
-    
-    $scope.handleSaveClick = function() {
-    	templateSaveObject.prepForBroadcast($scope.saveTemplateName);
-    };
-    
-    $scope.handleLoadClick = function() {
-    	templateLoadObject.prepForBroadcast($scope.loadTemplateName);
-    };
-	
-	/*$scope.$on('handleSaveBroadcast', function() {
-		
-        //Functionality for collecting other controller data using the sharedService variable
-    }); 
-	
-	$scope.$on('handleLoadBroadcast', function() {
-		
-        //Functionality for collecting other controller data using the sharedService variable
-    });*/
-    
-}])
-/*
-.controller('settingsLayout', ['$scope', '$state', 'webtypesettingSetupService',  'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService',
-function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject) {
-	$scope.$on('handleSaveBroadcast', function() {
-		
-    }); 
-	$scope.$on('handleLoadBroadcast', function() {
-		
-    });
-}])
-
-.controller('settingsAssets', ['$scope', '$state', 'webtypesettingSetupService',  'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService',
-function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject) {
-	$scope.$on('handleSaveBroadcast', function() {
-		
-    }); 
-	$scope.$on('handleLoadBroadcast', function() {
-		
-    }); 
-}]);*/
-
-
-
-
+	};	
+}]);

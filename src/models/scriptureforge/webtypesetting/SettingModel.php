@@ -17,6 +17,7 @@ use models\mapper\MapOf;
 use models\mapper\ArrayOf;
 
 
+
 class SettingModel extends \models\mapper\MapperModel
 {
     public function __construct($projectModel, $id = '')
@@ -97,7 +98,7 @@ class SettingModel extends \models\mapper\MapperModel
      * @var string
      */
     public $title;
-
+    
     /**
      * @var string A content description/explanation of the Setting being asked
      */

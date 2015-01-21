@@ -8,6 +8,7 @@ use models\shared\rights\SiteRoles;
 use models\shared\rights\SystemRoles;
 use models\ProjectModel;
 use models\UserModel;
+use models\LayoutTemplateModel;
 
 class RightsHelper
 {
@@ -230,6 +231,10 @@ class RightsHelper
             case 'project_create_switchSession':
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
             case 'projectcode_exists':
+                return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
+            
+            case 'template_save':
+            case 'template_load':
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
 
             case 'questionTemplate_update':

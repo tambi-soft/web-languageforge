@@ -38,6 +38,7 @@ use models\commands\TextCommands;
 use models\commands\UserCommands;
 use models\mapper\Id;
 use models\mapper\JsonEncoder;
+use models\mapper\JsonDecoder;
 use models\ProjectModel;
 use models\QuestionModel;
 use models\UserModel;
@@ -47,6 +48,7 @@ use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
 // TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
 use models\shared\commands\MediaResult;
 use models\shared\commands\UploadResponse;
+use models\scriptureforge\webtypesetting\commands\TypesettingTemplateCommands;
 
 require_once APPPATH . 'vendor/autoload.php';
 require_once APPPATH . 'config/sf_config.php';
@@ -709,6 +711,20 @@ class sf
     public function typesettingSettingCommand_list()
     {
         return TypesettingSettingCommands::listTypesettingSetting($this->_projectId);
+    }
+    
+    // ---------------------------------------------------------------
+    // TypesettingTemplateCommands API
+    // ---------------------------------------------------------------
+
+    public function template_save($data)
+    {
+    	return TypesettingTemplateCommands::updateTemplate($data["templateName"], $data["vm"]["conf"]);
+    }
+    
+    public function template_load($data)
+    {
+    	return TypesettingTemplateCommands::getTemplate($data);
     }
 
     /*
