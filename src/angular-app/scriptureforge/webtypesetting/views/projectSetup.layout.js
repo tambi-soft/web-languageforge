@@ -221,7 +221,7 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   
   // variable watchers
   function makeMarginWatch(size, margin, opposite, cssMargin, cssOpposite, mirror) {
-    $scope.$watch("layout.conf."+margin+"Margin", function() {
+    $scope.$watch("conf."+margin+"Margin", function() {
       vm[margin+"MarginMax"] = vm[size] - vm.conf[opposite+"Margin"];
       vm.css.leftMargins[size] = vm[size] - vm.conf[margin+"Margin"] - vm.conf[opposite+"Margin"] + "px";
       vm.css.leftMargins[cssOpposite] = vm.conf[margin+"Margin"] + "px";
