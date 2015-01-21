@@ -173,7 +173,8 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   vm.width = 300;
   vm.height = 400;
   vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"];
-
+  vm.footerOptions = vm.headerOptions;
+  
   $scope.mutuallyExclusive= function mutuallyExclusive(name){
 	  switch (name){
 	  	case "background":

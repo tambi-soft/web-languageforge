@@ -124,57 +124,41 @@
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningHeaderTitleCenterInput">Running Header Title Center</label>
-		        		<select class="form-control" id="runningHeaderTitleCenterInput" data-ng-model="conf.runningHeaderTitleCenter">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningHeaderTitleCenter)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningHeaderTitleCenterInput" ng-model="conf.runningHeaderTitleCenter" ng-options="item for item in headerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningHeaderTitleRightInput">Running Header Title Right</label>
-		        		<select class="form-control" id="runningHeaderTitleRightInput" data-ng-model="conf.runningHeaderTitleRight">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningHeaderTitleRight)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningHeaderTitleRightInput" ng-model="conf.runningHeaderTitleRight" ng-options="item for item in headerOptions"></select>
 	        		</div>
 		        </div>
 		        <br />
 		        <div class="row">
 		        	<div class="col-md-4">
 		                <label for="runningHeaderEvenLeftInput">Running Header Even Left</label>
-		        		<select class="form-control" id="runningHeaderEvenLeftInput" data-ng-model="conf.runningHeaderEvenLeft">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningHeaderEvenLeft)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningHeaderEvenLeftInput" ng-model="conf.runningHeaderEvenLeft" ng-options="item for item in headerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningHeaderEvenCenterInput">Running Header Even Center</label>
-		        		<select class="form-control" id="runningHeaderEvenCenterInput" data-ng-model="conf.runningHeaderEvenCenter">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningHeaderEvenCenter)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningHeaderEvenCenterInput" ng-model="conf.runningHeaderEvenCenter" ng-options="item for item in headerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningHeaderEvenRightInput">Running Header Even Right</label>
-		        		<select class="form-control" id="runningHeaderEvenRightInput" data-ng-model="conf.runningHeaderEvenRight">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningHeaderEvenRight)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningHeaderEvenRightInput" ng-model="conf.runningHeaderEvenRight" ng-options="item for item in headerOptions"></select>
 	        		</div>
 		        </div>
 		        <br />
 		        <div class="row">
 		        	<div class="col-md-4">
 		                <label for="runningHeaderOddLeftInput">Running Header Odd Left</label>
-		        		<select class="form-control" id="runningHeaderOddLeftInput" data-ng-model="conf.runningHeaderOddLeft">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningHeaderOddLeft)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningHeaderOddLeftInput" ng-model="conf.runningHeaderOddLeft" ng-options="item for item in headerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningHeaderOddCenterInput">Running Header Odd Center</label>
-		        		<select class="form-control" id="runningHeaderOddCenterInput" data-ng-model="conf.runningHeaderOddCenter">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningHeaderOddCenter)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningHeaderOddCenterInput" ng-model="conf.runningHeaderOddCenter" ng-options="item for item in headerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningHeaderOddRightInput">Running Header Odd Right</label>
-		        		<select class="form-control" id="runningHeaderOddRightInput" data-ng-model="conf.runningHeaderOddRight">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningHeaderOddRight)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningHeaderOddRightInput" ng-model="conf.runningHeaderOddRight" ng-options="item for item in headerOptions"></select>
 	        		</div>
 		        </div>
 		  	</div>
@@ -197,63 +181,45 @@
 	        	<div class="row">
 		        	<div class="col-md-4">
 		                <label for="runningFooterTitleLeftInput">Running Footer Title Left</label>
-		        		<select class="form-control" id="runningFooterTitleLeftInput" data-ng-model="conf.runningFooterTitleLeft">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningFooterTitleLeft)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningFooterTitleLeftInput" ng-model="conf.runningFooterTitleLeft" ng-options="item for item in footerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningFooterTitleCenterInput">Running Footer Title Center</label>
-		        		<select class="form-control" id="runningFooterTitleCenterInput" data-ng-model="conf.runningFooterTitleCenter">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningFooterTitleCenter)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningFooterTitleCenterInput" ng-model="conf.runningFooterTitleCenter" ng-options="item for item in footerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningFooterTitleRightInput">Running Footer Title Right</label>
-		        		<select class="form-control" id="runningFooterTitleRightInput" data-ng-model="conf.runningFooterTitleRight">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningFooterTitleRight)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningFooterTitleRightInput" ng-model="conf.runningFooterTitleRight" ng-options="item for item in footerOptions"></select>
 	        		</div>
 		        </div>
 		        <br />
 		        <div class="row">
 		        	<div class="col-md-4">
 		                <label for="runningFooterEvenLeftInput">Running Footer Even Left</label>
-		        		<select class="form-control" id="runningFooterEvenLeftInput" data-ng-model="conf.runningFooterEvenLeft">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningFooterEvenLeft)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningFooterEvenLeftInput" ng-model="conf.runningFooterEvenLeft" ng-options="item for item in footerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningFooterEvenCenterInput">Running Footer Even Center</label>
-		        		<select class="form-control" id="runningFooterEvenCenterInput" data-ng-model="conf.runningFooterEvenCenter">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningFooterEvenCenter)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningFooterEvenCenterInput" ng-model="conf.runningFooterEvenCenter" ng-options="item for item in footerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningFooterEvenRightInput">Running Footer Even Right</label>
-		        		<select class="form-control" id="runningFooterEvenRightInput" data-ng-model="conf.runningFooterEvenRight">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningFooterEvenRight)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningFooterEvenRightInput" ng-model="conf.runningFooterEvenRight" ng-options="item for item in footerOptions"></select>
 	        		</div>
 	        	</div>
 	        	<br />
 		        <div class="row">
 		        	<div class="col-md-4">
 		                <label for="runningFooterOddLeftInput">Running Footer Odd Left</label>
-		        		<select class="form-control" id="runningFooterOddLeftInput" data-ng-model="conf.runningFooterOddLeft">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningFooterOddLeft)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningFooterOddLeftInput" ng-model="conf.runningFooterOddLeft" ng-options="item for item in footerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningFooterOddCenterInput">Running Footer Odd Center</label>
-		        		<select class="form-control" id="runningFooterOddCenterInput" data-ng-model="conf.runningFooterOddCenter">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningFooterOddCenter)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningFooterOddCenterInput" ng-model="conf.runningFooterOddCenter" ng-options="item for item in footerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningFooterOddRightInput">Running Footer Odd Right</label>
-		        		<select class="form-control" id="runningFooterOddRightInput" data-ng-model="conf.runningFooterOddRight">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningFooterOddRight)">{{ setting }}</option>
-		        		</select>
+		                <select class="form-control" id="runningFooterOddRightInput" ng-model="conf.runningFooterOddRight" ng-options="item for item in footerOptions"></select>
 	        		</div>
 		        </div>
 		   	</div>
