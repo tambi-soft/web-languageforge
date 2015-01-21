@@ -1,7 +1,7 @@
 //controller for setupProjectAssets
 'use strict';
 
-angular.module('webtypesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.services', 'angularFileUpload'])
+angular.module('webtypesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.services', 'angularFileUpload', 'palaso.ui.mockUpload'])
 .controller('projectSetupAssetsCtrl', ['$scope', '$state', '$upload', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService'/*, 'breadcrumbService'*/,
                                        function($scope, $state, $upload, webtypesettingSetupApi, sessionService, modal, notice/*, breadcrumbService*/) {
 
@@ -22,19 +22,8 @@ angular.module('webtypesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 
 				     	'assets':[]},*/
                       ];
 
-	$scope.deleteFile = function deleteFile(assets, index){
-		assets.splice(index, 1);
-		$scope.uploadResult = "File deleted sucessfully.";
-		notice.push(notice.SUCCESS, $scope.uploadResult);
-	};
-
 	// For the buttons.
 	$scope.newTextCollapsed = true;
-	
-	/* This is necessary to properly bind the uploaded file to the input element to submit it */
-	$scope.callUploadClickEvent = function(elementId) {
-		document.getElementById(elementId).click();
-	};
 
 	$scope.onFileSelect = function($files, section) {
 
@@ -43,7 +32,6 @@ angular.module('webtypesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 
 		section.tempFile = file; // This is to display the name of the file temporarily during upload
 		if (file.size <= sessionService.fileSizeMax()) {
 			$upload.upload({
-
 				// upload.php script
 				url: '/upload/sf-typesetting/' + section.fileType,
 				// headers: {'myHeaderKey': 'myHeaderVal'},
@@ -59,6 +47,9 @@ angular.module('webtypesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 
 					$scope.progress = 100.0;
 					$scope.uploadResult = 'File uploaded successfully.';
 					notice.push(notice.SUCCESS, $scope.uploadResult);
+/* TODO: Merge confusion. Delete this if the other works.
+					section.assets.push(data.data);
+*/
 					section.assets.push(file);
 				} else {
 					$scope.progress = 0;
@@ -74,6 +65,20 @@ angular.module('webtypesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 
 			section.tempFile = null;
 			$scope.uploadResult = file.name + " is too large.";
 		}
+	};
+
+	$scope.deleteFile = function deleteFile(assets, index){
+		assets.splice(index, 1);
+		$scope.uploadResult = "File deleted sucessfully.";
+		notice.push(notice.SUCCESS, $scope.uploadResult);
+	};
+
+	// For the buttons.
+	$scope.newTextCollapsed = true;
+
+	/* This is necessary to properly bind the uploaded file to the input element to submit it */
+	$scope.callUploadClickEvent = function(elementId) {
+		document.getElementById(elementId).click();
 	};
 
 	// Add Text

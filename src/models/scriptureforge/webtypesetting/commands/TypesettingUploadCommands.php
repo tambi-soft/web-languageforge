@@ -168,7 +168,7 @@ class TypesettingUploadCommands
             // construct server response
             if ($moveOk && $tmpFilePath) {
             	$data = new MediaResult();
-                $data->path = '';
+                $data->path = '/' . $project->getAssetsPath() . '/_' . $fileName; // May be better to create a variable of this
                 $data->fileName = $fileName;
                 $response->result = true;
             } else {
@@ -376,4 +376,33 @@ class TypesettingUploadCommands
     		}
     	}
     }
+
+    public static function deleteFile($projectId, $fileName) {
+    	$response = new UploadResponse();
+    	$response->result = false;
+    	$project = new WebtypesettingProjectModel($projectId);
+    	$folderPath = $project->getAssetsFolderPath();
+    	$filePath = $folderPath . '/' . $fileName;
+    	if (file_exists($filePath) and ! is_dir($filePath)) {
+    		if (@unlink($filePath)) {
+    			$data = new MediaResult();
+    			$data->path = $project->getAssetsPath();
+    			$data->fileName = $fileName;
+    			$response->data = $data;
+    			$response->result = true;
+    		} else {
+    			$data = new ErrorResult();
+    			$data->errorType = 'UserMessage';
+    			$data->errorMessage = "$fileName could not be deleted. Contact your Site Administrator.";
+    		}
+    		$response->data = $data;
+    		return $response;
+    	}
+    	$data = new ErrorResult();
+    	$data->errorType = 'UserMessage';
+    	$data->errorMessage = "$fileName does not exist in this project. Contact your Site Administrator.";
+    	$response->data = $data;
+    	return $response;
+    }
+    
 }

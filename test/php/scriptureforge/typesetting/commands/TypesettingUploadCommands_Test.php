@@ -35,8 +35,8 @@ class TestTypesettingUploadCommands extends UnitTestCase
     {
     	$project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
-        $fileName = 'pngTest.png';
-        $tmpFilePath = $this->environ->uploadFile(TestPath . "scriptureforge/typesetting/commands/$fileName", $fileName);
+        $fileName = 'TestImage.png';
+        $tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
 
         $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
 
@@ -47,45 +47,39 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $this->assertTrue($response->result, 'Import should succeed');
         $this->assertPattern("/$fileName/", $response->data->fileName, 'Imported PNG fileName should contain the original fileName');
         $this->assertTrue(file_exists($filePath), 'Imported PNG file should exist');
-    }
-    
-    public function testUploadUsfmFile_UsfmFile_UploadAllowed()
-    {
-    	$project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-        $projectId = $project->id->asString();
-        $fileName = '44JHNKJVT.SFM';
-        $tmpFilePath = $this->environ->uploadFile(TestPath . "scriptureforge/typesetting/commands/$fileName", $fileName);
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, 'usfm', $tmpFilePath);
 
-        $projectSlug = $project->databaseName();
-        $folderPath = '/home/rapuma/Publishing/' . $projectSlug;
-        $filePath = $folderPath . '/_' . $response->data->fileName;
-
-        $this->assertTrue($response->result, 'Import should succeed');
-        $this->assertPattern("/$fileName/", $response->data->fileName, 'Imported USFM fileName should contain the original fileName');
-        $this->assertTrue(file_exists($filePath), 'Imported USFM file should exist');
+/*		TODO: Uncomment after we can reupload a file of the same name. Currently this is unsupported. - Justin Southworth 1/2015
+ * 
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
+        
+        $this->assertTrue($response->result, 'Reimport should replace existing file');
+        $this->assertPattern("/$fileName/", $response->data->fileName, 'Reimported PNG fileName should contain the original fileName');
+        $this->assertTrue(file_exists($filePath), 'Imported PNG file should exist');
+*/        
+        
     }
 
-    public function testUploadUsfmFile_TifFile_UploadDisallowed()
+    public function testUploadPngFile_JpgFile_UploadDisallowed()
     {
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
-        $tmpFilePath = $this->environ->uploadFile(TestPath . 'common/TestImage.tif', '44JHNKJVT.SFM');
+        $fileName = 'TestImage.png';        
+        $tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", 'NotAJpg.jpg');
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, 'usfm', $tmpFilePath);
-
-        $this->assertFalse($response->result, 'Import should fail');
-        $this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
-        $this->assertPattern('/not an allowed USFM file/', $response->data->errorMessage, 'Error message should match the error');
-
-        $tmpFilePath = $this->environ->uploadFile(TestPath . 'scriptureforge/typesetting/commands/44JHNKJVT.SFM', 'TestImage.tif');
-
-        $response = TypesettingUploadCommands::uploadFile($projectId, 'usfm', $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
 
         $this->assertFalse($response->result, 'Import should fail');
         $this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
-        $this->assertPattern('/not an allowed USFM file/', $response->data->errorMessage, 'Error message should match the error');
+        $this->assertPattern('/not an allowed PNG file/', $response->data->errorMessage, 'Error message should match the error');
+
+        $tmpFilePath = $this->environ->uploadFile(TestPath . 'common/TestImage.jpg', 'TestImage.png');
+
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
+
+        $this->assertFalse($response->result, 'Import should fail');
+        $this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
+        $this->assertPattern('/not an allowed PNG file/', $response->data->errorMessage, 'Error message should match the error');
     }
 
     public function testImportProjectZip_ZipFile_UsfmExtracted()
@@ -130,29 +124,46 @@ class TestTypesettingUploadCommands extends UnitTestCase
     	$this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
     	$this->assertPattern('/not an allowed compressed file/', $response->data->errorMessage, 'Error message should match the error');
     }
-/*
-    public function testDeleteImageFile_JpgFile_FileDeleted()
+
+    public function testDeleteFile_pngFile_FileDeleted()
     {
-        $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-        $projectId = $project->id->asString();
-        $fileName = 'TestImage.jpg';
-        $tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
+    	$project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+    	$projectId = $project->id->asString();
+    	$fileName = 'TestImage.png';
+    	$filePath = $project->getAssetsFolderPath() . '/_' . $fileName;
+    	$tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
 
-        $response = LexUploadCommands::uploadImageFile($projectId, 'sense-image', $tmpFilePath);
-
-        $this->assertTrue($response->result, 'Import should succeed');
-
-        $folderPath = LexUploadCommands::imageFolderPath($project->getAssetsFolderPath());
-        $fileName = $response->data->fileName;
-        $filePath = $folderPath . '/' . $fileName;
-
-        $this->assertTrue(file_exists($filePath), 'Imported LIFT file should exist');
-
-        $response = LexUploadCommands::deleteMediaFile($projectId, 'sense-image', $fileName);
-
-        $this->assertTrue($response->result, 'Import should succeed');
-        $this->assertFalse(file_exists($filePath), 'Imported LIFT file should be deleted');
+    	$response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
+    
+    	$this->assertTrue($response->result, 'Upload should succeed');
+    	$this->assertTrue(file_exists($filePath), 'Uploaded file should exist');
+    	
+    	$response = TypesettingUploadCommands::deleteFile($projectId, '_' . $fileName);
+    
+    	$this->assertTrue($response->result, 'Delete should succeed');
+    	$this->assertFalse(file_exists($filePath), 'Uploaded file should be deleted');
     }
+
+    public function testDeleteFile_zipFile_FileDeleted()
+    {
+    	$project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+    	$projectId = $project->id->asString();
+    	$fileName = 'TestTypesettingProject.zip';
+        $usfmFileName = '44JHNKJVT.SFM';
+        $filePath = $project->getAssetsFolderPath() . '/' . $fileName;
+        $tmpFilePath = $this->environ->uploadFile(TestPath . "scriptureforge/typesetting/commands/$fileName", $fileName);
+
+        $response = TypesettingUploadCommands::importProjectZip($projectId, 'usfm-zip', $tmpFilePath);
+    
+    	$this->assertTrue($response->result, 'Upload should succeed');
+    	$this->assertTrue(file_exists($filePath), 'Uploaded file should exist');
+    	 
+    	$response = TypesettingUploadCommands::deleteFile($projectId, $fileName);
+    
+    	$this->assertTrue($response->result, 'Delete should succeed');
+    	$this->assertFalse(file_exists($filePath), 'Uploaded file should be deleted');
+    }
+/*
 
     public function testDeleteImageFile_UnsupportedMediaType_Exception()
     {
@@ -172,6 +183,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $this->environ->restoreErrorDisplay();
     }
 
+/*
     public function testImportProjectZip_7zFile_StatsOk()
     {
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
@@ -339,27 +351,6 @@ EOD;
         $this->assertEqual($response->data->stats->entriesMerged, 0);
         $this->assertEqual($response->data->stats->entriesDuplicated, 1);
         $this->assertEqual($response->data->stats->entriesDeleted, 0);
-    }
-
-    public function testImportLift_JpgFile_UploadDisallowed()
-    {
-        $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-        $projectId = $project->id->asString();
-        $tmpFilePath =  $this->environ->uploadLiftFile(self::liftOneEntryV0_13, 'OneEntryV0_13.jpg', LiftMergeRule::IMPORT_LOSES);
-
-        $response = LexUploadCommands::importLiftFile($projectId, 'import-lift', $tmpFilePath);
-
-        $this->assertFalse($response->result, 'Import should fail');
-        $this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
-        $this->assertPattern('/not an allowed LIFT file/', $response->data->errorMessage, 'Error message should match the error');
-
-        $tmpFilePath = $this->environ->uploadFile(TestPath . 'common/TestImage.jpg', 'TestImage.lift');
-
-        $response = LexUploadCommands::importLiftFile($projectId, 'import-lift', $tmpFilePath);
-
-        $this->assertFalse($response->result, 'Import should fail');
-        $this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
-        $this->assertPattern('/not an allowed LIFT file/', $response->data->errorMessage, 'Error message should match the error');
     }
 */
 }

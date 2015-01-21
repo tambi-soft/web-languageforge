@@ -8,7 +8,8 @@ angular.module('palaso.ui.mockUpload', [])
       restrict : 'E',
       templateUrl : '/angular-app/bellows/directive/pui-mock-upload.html',
       scope : {
-        puiDoUpload : "&"
+        puiDoUpload : "&",
+        puiDoUploadParam2 : "="
       },
       controller: ['$scope', function($scope) {
         
@@ -20,7 +21,11 @@ angular.module('palaso.ui.mockUpload', [])
         $scope.doUpload = function doUpload() {
           
           // see http://stackoverflow.com/questions/23477859/angularjs-call-function-on-directive-parent-scope-with-directive-scope-argumen
-          $scope.puiDoUpload({filesArray: $scope.mockFiles});
+          if (angular.isDefined($scope.puiDoUploadParam2)) {
+            $scope.puiDoUpload({filesArray: $scope.mockFiles, param2: $scope.puiDoUploadParam2});
+          } else {
+            $scope.puiDoUpload({filesArray: $scope.mockFiles});
+          }
         };
 
       }]
