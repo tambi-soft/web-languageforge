@@ -1,8 +1,14 @@
 <div data-ng-cloak data-ng-controller="discussionListCtrl">
 
+<<<<<<< HEAD
 	<h2>Discussions</h2>
-	<br><br>
+	
 	<br>
+=======
+	<!--  <p>my name is {{name}}</p> 
+	<input type="text" ng-model="name" /> -->
+	<br><br>
+>>>>>>> origin/feature/discussionThread
 	<table class=" table table-hover">
 		<thead>
 			<tr>
@@ -23,10 +29,17 @@
 				<td class="col-md-2">{{thread.item.title}}</td>
 				<td class="col-md-1">{{thread.status}}</td>
 				<td class="col-md-2">{{thread.lastModified}}</td>
+<<<<<<< HEAD
 				<td class="col-md-1"><button class="btn btn-danger" >Delete</button></td>
+=======
+				<td class="col-md-1"><button class= "btn btn-danger" data-ng-show="isManager()"> Delete</button></td>
+>>>>>>> origin/feature/discussionThread
 			</tr>
 			
 		</tbody>
+		
+	</table>
+<<<<<<< HEAD
 	
 	<div>
 		<button class="btn btn-success">Create New Thread</button>
@@ -51,7 +64,8 @@
 				<option value="100">100</option></select>
 		</div>
 	</div>
-		
-	</table>
+
+=======
 	<button class= "btn btn-success" data-ng-show="isManager()">Create New Thread</button>
+>>>>>>> origin/feature/discussionThread
 </div>

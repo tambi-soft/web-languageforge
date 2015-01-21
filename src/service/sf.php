@@ -2,10 +2,11 @@
 use models\scriptureforge\webtypesetting\dto\TypesettingLayoutPageDto;
 
 use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCommands;
-
 use models\scriptureforge\webtypesetting\dto\WebtypesettingDiscussionListPageDto;
-
 use libraries\scriptureforge\sfchecks\Email;
+
+use models\scriptureforge\webtypesetting\commands\TypesettingUploadCommands;
+use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
 use models\scriptureforge\webtypesetting\TypesettingSettingsCommands;
 
 use libraries\scriptureforge\sfchecks\ParatextExport;
@@ -41,7 +42,6 @@ use models\ProjectModel;
 use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
-use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
 use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
 
 // TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
@@ -666,14 +666,15 @@ class sf
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------
+    public function typsetting_upload_importProjectZip($mediaType, $tmpFilePath)
+    {
+    	$response = TypesettingUploadCommands::importProjectZip($this->_projectId, $mediaType, $tmpFilePath);
+    	return JsonEncoder::encode($response);
+    }
+    
     public function typesetting_uploadFile($mediaType, $tmpFilePath)
     {
-//        $response = SfchecksUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
-		$response = new UploadResponse();
-		$response->result = true;
-		$response->data = new MediaResult();
-		$response->data->fileName = "Fake filename";
-		$response->data->path = "Fake/path/not";
+    	$response = TypesettingUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
     }
 

@@ -17,7 +17,7 @@ class WebtypesettingDiscussionThreadModel extends \models\mapper\MapperModel
     {
         static $instance = null;
         if (null === $instance) {
-            $instance = new \models\mapper\MongoMapper($databaseName, 'webtypesettingDiscussions');
+            $instance = new \models\mapper\MongoMapper($databaseName, 'typesettingDiscussions');
         }
 
         return $instance;
@@ -30,6 +30,7 @@ class WebtypesettingDiscussionThreadModel extends \models\mapper\MapperModel
     public function __construct($projectModel, $id = '')
     {
         $this->id = new Id();
+        $this->isDeleted = false;
         $databaseName = $projectModel->databaseName();
         parent::__construct(self::mapper($databaseName), $id);
     }
@@ -57,7 +58,11 @@ class WebtypesettingDiscussionThreadModel extends \models\mapper\MapperModel
      */
     public $associatedItem;
     
-    
+    /**
+     * 
+     * @var boolean
+     */
+    public $isDeleted;
     
     
  }

@@ -11,9 +11,6 @@ angular.module('webtypesetting.discussionList', ['ui.bootstrap', 'bellows.servic
 	
 	// $scope.name = "Chris";
 	
-	$scope.isManager=function(){
-		return true;
-	};
 	
 
 
@@ -57,7 +54,7 @@ angular.module('webtypesetting.discussionList', ['ui.bootstrap', 'bellows.servic
 	
 	var onePost = {
 			author: {
-				name: "Benjamin Braker", 
+				name: "Chris", 
 				url: "http://profileUrl"
 			},
 			content: "My first post!",

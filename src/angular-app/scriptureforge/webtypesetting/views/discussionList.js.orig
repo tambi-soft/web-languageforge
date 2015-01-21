@@ -57,7 +57,11 @@ angular.module('webtypesetting.discussionList', ['ui.bootstrap', 'bellows.servic
 	
 	var onePost = {
 			author: {
+<<<<<<< HEAD
+				name: "Chris", 
+=======
 				name: "Benjamin Braker", 
+>>>>>>> origin/feature/discussionThread
 				url: "http://profileUrl"
 			},
 			content: "My first post!",
