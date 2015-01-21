@@ -92,7 +92,7 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
       backgroundComponents: "watermark",
       watermarkText: "DRAFT",
       useDiagnostic: false,
-      diagnosticComponents: "leading",
+      diagnosticComponents: "",
       
       // print options
       pageSizeCode: "custom", // this shouldn't be visible
@@ -120,7 +120,42 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   */
   vm.conf = {};
   vm.pageSizeCode = "A5";
+  $scope.setPageSize = function setPageSize(pageCode) {
+	  console.log("TEST pageSize:" + pageCode, "end");
+	  
+	  switch (pageCode) {
+		  case 'A5':
+			  vm.conf.pageHeight = 210;
+			  vm.conf.pageWidth = 148;
+			  break;
+		  case 'A4':
+			  vm.conf.pageHeight = 298;
+			  vm.conf.pageWidth = 210;
+			  break;
+		  case 'US Letter':
+			  vm.conf.pageHeight = 279.4;
+			  vm.conf.pageWidth = 215.9;
+			  break;
+		  case 'custom':
+			  break;
+		  
+	  }
+  }
   
+  vm.diagnostics = {
+		  leading: false,
+  };
+  vm.diagnosticsComponentsUpdate = function() {
+	  var diags = [];
+	  var diag;
+	    for (diag in vm.diagnostics) {
+	      if (vm.diagnostics[diag]) {
+	        diags.push(diag);
+	      }
+	    };
+	    vm.conf.diagnosticComponents = diags.join(", ");
+  };
+	  
   vm.components = {
       watermark: true,
   };
@@ -134,26 +169,23 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
     };
     vm.conf.backgroundComponents = comps.join(", ");
   };
+  
   vm.width = 300;
   vm.height = 400;
-  vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"]
-  $scope.getHeaderOptions = function getHeaderOptions(item){
-	  var headerOptionsArray = vm.headerOptions;
-	  var index = headerOptionsArray.indexOf(item);
-	  headerOptionsArray.splice(index, 1);
-	  headerOptionsArray.unshift(item);
-	  return headerOptionsArray;
-  }
+  vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"];
+
   $scope.mutuallyExclusive= function mutuallyExclusive(name){
 	  switch (name){
 	  	case "background":
 	  		if (vm.conf.useBackground == true) {
 	  			vm.conf.useDiagnostic = false;
-	  		}
+	  		};
+	  		break;
 	  	case "diagnostic":
 	  		if (vm.conf.useDiagnostic == true) {
 	  			vm.conf.useBackground = false;
-	  		}
+	  		};
+	  		break;
 	  }
   };
   
@@ -164,7 +196,6 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   };
   
   getPageDto();
-  
   
   vm.css = {
       pagesContainer: {
@@ -234,7 +265,7 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
     	saving = false;
     });
     
-    // TODO always clear 'saving' irrespective of succesful save. IJH 2015-01
+    // TODO always clear 'saving' irrespective of successful save. IJH 2015-01
   };
 
   var autoSaveTimer;
