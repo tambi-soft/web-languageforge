@@ -7,7 +7,7 @@ use libraries\scriptureforge\sfchecks\Email;
 
 use models\scriptureforge\webtypesetting\commands\TypesettingUploadCommands;
 use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
-use models\scriptureforge\webtypesetting\TypesettingSettingsCommands;
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingsCommands;
 
 use libraries\scriptureforge\sfchecks\ParatextExport;
 use libraries\shared\palaso\exceptions\UserNotAuthenticatedException;
@@ -688,9 +688,9 @@ class sf
         return TypesettingSettingsCommands::updateLayoutSettings($this->_projectId, $model);
     }
 
-    public function typesetting_layoutPage_dto($settingId)
+    public function typesetting_layoutPage_dto()
     {
-        return TypesettingLayoutPageDto::encode($this->_projectId, $settingId);
+        return TypesettingLayoutPageDto::encode($this->_projectId);
     }
 
     /* we don't actually want to delete a setting. ever. - cjh 2015-01

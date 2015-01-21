@@ -1,4 +1,7 @@
 <div data-ng-controller="renderListCtrl">
+    <input type="text" class="form-control" placeholder="Search for..."
+        data-ng-model="search" /> <input type="number"
+        class="form-control col-lg-6" min=0 data-ng-model="pageSize">Results per page</input>
     <h1>Render List</h1>
     <table class="table">
         <tr>
@@ -8,7 +11,7 @@
             <th>Comments</th>
             <th>Tags</th>
         </tr>
-        <tr data-ng-repeat="item in list">
+        <tr data-ng-repeat="item in list" data-ng-if="contains(item, search)">
             <td>{{ item.component }}</td>
             <td>{{ item.renderer }}</td>
             <td>{{ item.renderedOn }}</td>

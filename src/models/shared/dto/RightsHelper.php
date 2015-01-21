@@ -281,6 +281,10 @@ class RightsHelper
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
             case 'typesetting_composition_getRenderedPageForBook':
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_layoutSettings_update':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_layoutPage_dto':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
             	
             	
             case 'webtypesetting_discussionList_createThread':

@@ -1,13 +1,14 @@
 // controller for setupProjectLayout
 'use strict';
 
-angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.services'])
+angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.layoutServices'])
 
-.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', 
-function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
-  var vm = this;
+.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingLayoutService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', 
+function($scope, $state, layoutService, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
+	var vm = $scope;
   
   // default settings
+  /*
   vm.conf = {
       // margins
       insideMargin: 10,
@@ -91,7 +92,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       backgroundComponents: "watermark",
       watermarkText: "DRAFT",
       useDiagnostic: false,
-      diagnosticComponents: "leading",
+      diagnosticComponents: "",
       
       // print options
       pageSizeCode: "custom", // this shouldn't be visible
@@ -116,8 +117,45 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       chapterVerseSeperator: ":",
 
   };
+  */
+  vm.conf = {};
   vm.pageSizeCode = "A5";
+  $scope.setPageSize = function setPageSize(pageCode) {
+	  console.log("TEST pageSize:" + pageCode, "end");
+	  
+	  switch (pageCode) {
+		  case 'A5':
+			  vm.conf.pageHeight = 210;
+			  vm.conf.pageWidth = 148;
+			  break;
+		  case 'A4':
+			  vm.conf.pageHeight = 298;
+			  vm.conf.pageWidth = 210;
+			  break;
+		  case 'US Letter':
+			  vm.conf.pageHeight = 279.4;
+			  vm.conf.pageWidth = 215.9;
+			  break;
+		  case 'custom':
+			  break;
+		  
+	  }
+  }
   
+  vm.diagnostics = {
+		  leading: false,
+  };
+  vm.diagnosticsComponentsUpdate = function() {
+	  var diags = [];
+	  var diag;
+	    for (diag in vm.diagnostics) {
+	      if (vm.diagnostics[diag]) {
+	        diags.push(diag);
+	      }
+	    };
+	    vm.conf.diagnosticComponents = diags.join(", ");
+  };
+	  
   vm.components = {
       watermark: true,
   };
@@ -131,28 +169,34 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
     };
     vm.conf.backgroundComponents = comps.join(", ");
   };
+  
   vm.width = 300;
   vm.height = 400;
-  vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"]
-  $scope.getHeaderOptions = function getHeaderOptions(item){
-	  var headerOptionsArray = vm.headerOptions;
-	  var index = headerOptionsArray.indexOf(item);
-	  headerOptionsArray.splice(index, 1);
-	  headerOptionsArray.unshift(item);
-	  return headerOptionsArray;
-  }
+  vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"];
+  vm.footerOptions = vm.headerOptions;
+  
   $scope.mutuallyExclusive= function mutuallyExclusive(name){
 	  switch (name){
 	  	case "background":
 	  		if (vm.conf.useBackground == true) {
 	  			vm.conf.useDiagnostic = false;
-	  		}
+	  		};
+	  		break;
 	  	case "diagnostic":
 	  		if (vm.conf.useDiagnostic == true) {
 	  			vm.conf.useBackground = false;
-	  		}
+	  		};
+	  		break;
 	  }
-  }
+  };
+  
+  var getPageDto = function getPageDto() {
+	  layoutService.getPageDto(function(result) {
+		  vm.conf = result.data.layout;
+	  });
+  };
+  
+  getPageDto();
   
   vm.css = {
       pagesContainer: {
@@ -178,7 +222,7 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
   
   // variable watchers
   function makeMarginWatch(size, margin, opposite, cssMargin, cssOpposite, mirror) {
-    $scope.$watch("layout.conf."+margin+"Margin", function() {
+    $scope.$watch("conf."+margin+"Margin", function() {
       vm[margin+"MarginMax"] = vm[size] - vm.conf[opposite+"Margin"];
       vm.css.leftMargins[size] = vm[size] - vm.conf[margin+"Margin"] - vm.conf[opposite+"Margin"] + "px";
       vm.css.leftMargins[cssOpposite] = vm.conf[margin+"Margin"] + "px";
@@ -216,14 +260,13 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
     saving = true;
     console.log('saveLayoutSettings');
     
-    // TODO add code here to save layout settings. IJH 2015-01
+    layoutService.save(vm.conf, function(result){
+    	saved = true;
+    	$scope.layoutForm.$setPristine();
+    	saving = false;
+    });
     
-      // TODO in successful save callback, set 'saved' to true and form to pristine IJH 2015-01 
-//      saved = true;
-      $scope.layoutForm.$setPristine();
-
-    // TODO always clear 'saving' irrespective of succesful save. IJH 2015-01
-//    saving = false;
+    // TODO always clear 'saving' irrespective of successful save. IJH 2015-01
   };
 
   var autoSaveTimer;
