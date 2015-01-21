@@ -7,7 +7,7 @@ use libraries\scriptureforge\sfchecks\Email;
 
 use models\scriptureforge\webtypesetting\commands\TypesettingUploadCommands;
 use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
-use models\scriptureforge\webtypesetting\TypesettingSettingsCommands;
+use models\scriptureforge\webtypesetting\commands\TypesettingSettingsCommands;
 
 use libraries\scriptureforge\sfchecks\ParatextExport;
 use libraries\shared\palaso\exceptions\UserNotAuthenticatedException;
