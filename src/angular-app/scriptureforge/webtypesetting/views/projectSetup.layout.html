@@ -335,23 +335,20 @@
         </tab> 
         <tab heading="Editing Features" class="form-group">
         	<br />
-        	<div class="row">
+        	<input type="checkbox" data-ng-model="layout.conf.useDiagnostic" ng-change="mutuallyExclusive('diagnostic')">
+        	<label for="diagnosticWell">Diagnostic Components</label>
+        	<div class="row well" id="diagnosticWell">
         		<div class="col-md-2">
-	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="layout.conf.useBackground" ng-change="mutuallyExclusive('background')">Use Background
-	                </label>
-	            </div>
-	            <div class="col-md-2">
-	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="layout.conf.useDiagnostic" ng-change="mutuallyExclusive('diagnostic')">Use Diagnostic
-	                </label>
-	            </div>
-	            <div class="col-md-2">
-	                <label for="diagnosticComponentsInput">Diagnostic Components</label>
-	                <input class="form-control" data-ng-model="layout.conf.diagnosticComponents" type="text" id="diagnosticComponentsInput" />
+        			<div class="input-group">
+      					<span class="input-group-addon">
+        					<input type="checkbox" data-ng-model="layout.diagnostics.leading" data-ng-change="layout.diagnosticsComponentsUpdate()" >
+      					</span>
+      					<input class="form-control" data-ng-model="layout.conf.diagnosticComponents" type="text" id="diagnosticComponentsInput" data-ng-disabled="!layout.diagnostics.leading">
+    				</div>
 	            </div>
         	</div>
         	<br />
+        	<input type="checkbox" data-ng-model="layout.conf.useBackground" ng-change="mutuallyExclusive('background')">
         	<label for="backgroundComponentsWell">Background Components</label>
         	<div class="row well" id="backgroundComponentsWell">
         		<div class="col-md-2">
@@ -380,19 +377,20 @@
         	<div class="row">
         		<div class="col-md-2">
 	                <label for="pageSizeCodeInput">Page Size Code</label>
-	        		<select class="form-control" id="pageSizeCodeInput" data-ng-model="layout.pageSizeCode">
+	        		<select class="form-control" id="pageSizeCodeInput" data-ng-model="layout.pageSizeCode" data-ng-change="setPageSize(layout.pageSizeCode)">
 	        			<option>A5</option>
+	        			<option>A4</option>
 	        			<option>US Letter</option>
 	        			<option>custom</option>
 	        		</select>
         		</div>
         		<div class="col-md-2">
 	                <label for="pageHeightInput">Page Height</label>
-	                <input class="form-control" data-ng-model="layout.conf.pageHeight" type="text" id="pageHeightInput" />
+	                <input class="form-control" data-ng-model="layout.conf.pageHeight" type="text" id="pageHeightInput" data-ng-disabled="layout.pageSizeCode != 'custom' " />
 	            </div>
         		<div class="col-md-2">
 	                <label for="pageWidthInput">Page Width</label>
-	                <input class="form-control" data-ng-model="layout.conf.pageWidth" type="text" id="pageWidthInput" />
+	                <input class="form-control" data-ng-model="layout.conf.pageWidth" type="text" id="pageWidthInput" data-ng-disabled="layout.pageSizeCode != 'custom' " />
 	            </div>
         		<div class="col-md-2">
 	                <label for="printerPageSizeCodeInput">Printer Page Size Code</label>
@@ -424,14 +422,6 @@
 	                <input class="form-control" data-ng-model="layout.conf.bodyFontSize" type="number" id="bodyFontSizeInput" />
 	            </div>
 	            <div class="col-md-2">
-	                <label for="fontDefaultSizeInput">Font Default Size</label>
-	                <input class="form-control" data-ng-model="layout.conf.fontDefaultSize" type="number" id="fontDefaultSizeInput" />
-	            </div>
-	            <div class="col-md-2">
-	                <label for="leadingDefaultSizeInput">Leading Default Size</label>
-	                <input class="form-control" data-ng-model="layout.conf.leadingDefaultSize" type="number" id="leadingDefaultSize" />
-	            </div>
-	            <div class="col-md-2">
 	                <label class="checkbox-inline">
 	                      <input data-ng-model="layout.conf.justifyParagraphs" type="checkbox">Justify Paragraphs
 	                </label>
@@ -443,9 +433,9 @@
 	            </div>
         	</div>
         </tab>
-        <tab heading="Misc" class="form-group">
+<!--         <tab heading="Misc" class="form-group">
         	<br />
-        	<!-- <div class="row">
+        	<div class="row">
                 <div class="col-md-2">
                     <label class="checkbox-inline">
                           <input type="checkbox">Use Caption References 
@@ -456,8 +446,8 @@
                           <input type="checkbox">Use Figure Placeholders  
                     </label>
                 </div>
-        	</div> -->
-        </tab>
+        	</div>
+        </tab> -->
         <tab heading="Adv" class="form-group">
         	<br />
         	<div class="row">
