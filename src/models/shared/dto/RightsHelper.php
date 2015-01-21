@@ -298,28 +298,28 @@ class RightsHelper
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
             case 'typesetting_renderPage_dto':
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
-            	
-            	
-            case 'webtypesetting_discussionList_createThread':
+
+
+            case 'typesetting_discussionList_createThread':
             	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);
-            case 'webtypesetting_discussionList_deleteThread':
+            case 'typesetting_discussionList_deleteThread':
             	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::DELETE_OWN);
-            case 'webtypesetting_discussionList_updateThread':
+            case 'typesetting_discussionList_updateThread':
             	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);
-            case 'webtypesetting_discussionList_createPost':
+            case 'typesetting_discussionList_createPost':
             	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);
-            case 'webtypesetting_discussionList_deletePost':
-            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::DELETE_OWN);   
-            case 'webtypesetting_discussionList_updatePost':
-            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);       
-            case 'webtypesetting_discussionList_createReply':
-            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);  
-            case 'webtypesetting_discussionList_deleteReply':
-            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::DELETE_OWN);  
-            case 'webtypesetting_discussionList_updateReply':
-            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN); 
-            case 'webtypesetting_discussionList_updateStatus':
-            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);	         	
+            case 'typesetting_discussionList_deletePost':
+            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::DELETE_OWN);
+            case 'typesetting_discussionList_updatePost':
+            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);
+            case 'typesetting_discussionList_createReply':
+            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);
+            case 'typesetting_discussionList_deleteReply':
+            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::DELETE_OWN);
+            case 'typesetting_discussionList_updateReply':
+            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);
+            case 'typesetting_discussionList_updateStatus':
+            	return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);
 
             // LanguageForge (lexicon)
             case 'lex_configuration_update':
