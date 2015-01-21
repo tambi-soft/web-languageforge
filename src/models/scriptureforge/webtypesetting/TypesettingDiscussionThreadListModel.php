@@ -22,7 +22,7 @@ class TypesettingDiscussionThreadListModel extends \models\mapper\MapperListMode
      */
     public function __construct($projectModel, $newerThanTimestamp = null)
     {
-    	$orderBy = array('dateCreated' => -1);
+    	$orderBy = array('$natural' => -1);
         if (!is_null($newerThanTimestamp)) {
             $startDate = new \MongoDate($newerThanTimestamp);
             parent::__construct( self::mapper($projectModel->databaseName()), array('dateModified'=> array('$gte' => $startDate), 'isDeleted' => false), array(), $orderBy);

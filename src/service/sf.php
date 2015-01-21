@@ -589,8 +589,8 @@ class sf
     	return WebtypesettingDiscussionListCommands::updateThread($this->_projectId, $threadId, $title);
     }
     
-	public function typesetting_discussionList_createPost($threadId, $post) {
-    	return WebtypesettingDiscussionListCommands::createPost($this->_projectId, $threadId, $post);
+	public function typesetting_discussionList_createPost($threadId, $content) {
+    	return WebtypesettingDiscussionListCommands::createPost($this->_projectId, $threadId, $content);
     }
     
 	public function typesetting_discussionList_deletePost($threadId, $postId) {
@@ -601,8 +601,8 @@ class sf
     	return WebtypesettingDiscussionListCommands::updatePost($this->_projectId, $threadId, $postId, $content);
     }
     
-	public function typesetting_discussionList_createReply($threadId, $postId, $reply) {
-    	return WebtypesettingDiscussionListCommands::createReply($this->_projectId, $threadId, $postId, $reply);
+	public function typesetting_discussionList_createReply($threadId, $postId, $content) {
+    	return WebtypesettingDiscussionListCommands::createReply($this->_projectId, $threadId, $postId, $content);
     }
     
 	public function typesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
@@ -614,9 +614,21 @@ class sf
     }
     
 	public function typesetting_discussionList_updateStatus($threadId, $status) {
-    	return WebtypesettingDiscussionListCommands::updateStatus($this->_projectId, $status);
+    	return WebtypesettingDiscussionListCommands::updateStatus($this->_projectId, $threadId, $status);
+    }
+    
+    
+    
+    public function typesetting_discussionList_getThread($threadId) {
+    	return WebtypesettingDiscussionListCommands::getThread($this->_projectId, $threadId);
+    }
+    
+    public function typesetting_discussionList_getThreadList() {
+    	return WebtypesettingDiscussionListCommands::getThreadList($this->_projectId);
     }
 	
+    
+    
     public function typesetting_rapuma_render(){
     	return array('pdfUrl' => "assets/ngTraining.pdf");
     }

@@ -1,8 +1,6 @@
 <div data-ng-cloak data-ng-controller="discussionListCtrl">
 
 	<h2>Discussions</h2>
-	<br><br>
-	<br>
 	<table class=" table table-hover">
 		<thead>
 			<tr>
@@ -23,20 +21,21 @@
 				<td class="col-md-2">{{thread.item.title}}</td>
 				<td class="col-md-1">{{thread.status}}</td>
 				<td class="col-md-2">{{thread.lastModified}}</td>
-				<td class="col-md-1"><button class="btn btn-danger" >Delete</button></td>
+				<td class="col-md-1"><button class="btn btn-danger" data-ng-click="deleteThread(thread)" >Delete</button></td>
 			</tr>
 			
 		</tbody>
+      </table>
 	
 	<div>
-		<button class="btn btn-success">Create New Thread</button>
+		<button class="btn btn-success" data-ng-show="isManager()" "data-ng-click="createThread(thread)">Create New Thread</button>
 	</div>
 
 	<div class="paginationblock">
 		<ul class="pagination ng-isolate-scope" boundary-links="true"
 			total-items="threads.length" page="currentPage"
-			items-per-page="itemsPerPage" previous-text="‹" next-text="›"
-			first-text="«" last-text="»">
+			items-per-page="itemsPerPage" previous-text="ï¿½" next-text="ï¿½"
+			first-text="ï¿½" last-text="ï¿½">
 			<!-- ngIf: boundaryLinks -->
 			<!-- ngIf: directionLinks -->
 			<!-- ngRepeat: page in pages track by $index -->
@@ -51,7 +50,4 @@
 				<option value="100">100</option></select>
 		</div>
 	</div>
-		
-	</table>
-	<button class= "btn btn-success" data-ng-show="isManager()">Create New Thread</button>
 </div>

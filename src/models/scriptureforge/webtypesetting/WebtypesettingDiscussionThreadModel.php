@@ -31,6 +31,7 @@ class WebtypesettingDiscussionThreadModel extends \models\mapper\MapperModel
     {
         $this->id = new Id();
         $this->isDeleted = false;
+        $this->status = "Open";
         $databaseName = $projectModel->databaseName();
         parent::__construct(self::mapper($databaseName), $id);
     }

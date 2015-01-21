@@ -77,7 +77,24 @@ angular.module('webtypesetting.discussionList', ['ui.bootstrap', 'bellows.servic
 	};
 	
 	
-	
+	 $scope.deleteThread = function(thread) {
+		var confirmBool = confirm("Are you sure you would like to delete this thread?");
+		if(confirmBool){
+			discussionApi.deleteThread(thread.id, function(result) {
+				    $scope.getPageDto();
+				    notice.push(notice.SUCCESS, "Thread deleted.");
+			});
+		}
+	  };
+	 $scope.createThread = function(thread) {
+		var title = prompt("Please enter a new thread name.");
+		var itemId = prompt("Please enter the passage, or image this thread is referencing (optional).");
+		discussionApi.createThread(title, itemId, function(result) {
+			    $scope.getPageDto();
+			    notice.push(notice.SUCCESS, "Thread created.");
+		});
+	 };
+	 
 	
 }]);
 

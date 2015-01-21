@@ -2,128 +2,110 @@
 namespace models\scriptureforge\webtypesetting\commands;
 
 use models\scriptureforge\webtypesetting\WebtypesettingDiscussionThreadModel;
-
 use models\ProjectModel;
+use models\scriptureforge\webtypesetting\TypesettingDiscussionPostModel;
+use models\languageforge\lexicon\LexCommentReply;
+use models\languageforge\lexicon\AuthorInfo;
 
 class WebtypesettingDiscussionListCommands {
 	
-	public static function createThread($projectId, $title, $itemId) {
-		
+	public static function createThread($projectId, $title, $itemId){
 		$projectModel = new ProjectModel($projectId);
-		
 		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
 		$threadModel->title = $title;
 		$threadModel->associatedItem = $itemId;
-		
 		return $threadModel->write();
 	}
 	
-	public static function deleteThread($threadId){
+	public static function deleteThread($projectId, $threadId){
 		$projectModel = new ProjectModel($projectId);
-		
-		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
-		$threadModel->threadId = $threadId;
-		
-		return $threadModel->write();
+		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
+		$threadModel->isDeleted = true;
+		$threadModel->write();
 	}
 	
-	public static function updateThread($threadId, $title){
+	
+	public static function updateThread($projectId, $threadId, $title){
 		$projectModel = new ProjectModel($projectId);
-		
-		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
-		$threadModel->threadId = $threadId;
+		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
 		$threadModel->title = $title;
-		
-		return $threadModel->write();
+		$threadModel->write();
 	}
 	
-	public static function createPost($threadId, $post){
+	
+	
+	public static function getThread($projectId, $threadId) {
 		$projectModel = new ProjectModel($projectId);
-		
-		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
-		$threadModel->threadId = $threadId;
-		$threadModel->post = $post;
-		
-		return $threadModel->write();
+		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
+		return $threadModel;
 	}
 	
-	public static function deletePost($threadId, $postId){
+// 	// how do we get a threadlist without a threadlist id? parameters are confusing. ask chris
+// 	public static function getThreadList($projectId) {
+
+// 		// we have an inkling this could work:
+// 		$projectModel = new ProjectModel($projectId);
+// 		$threadListModel = new WebtypesettingDiscussionThreadListModel($projectModel);
+// 		return $threadListModel;
+
+// 	}
+	
+	
+	
+	public static function createPost($projectId, $threadId, $content){
 		$projectModel = new ProjectModel($projectId);
-		
-		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
-		$threadModel->threadId = $threadId;
-		$threadModel->postId = $postId;
-		
-		return $threadModel->write();
+		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
+		$postModel = new TypesettingDiscussionPostModel($projectModel, $threadId);
+		$postModel->threadRef->id = $threadId;
+		$postModel->content = $content;
+		return $postModel->write();
 	}
 	
-	public static function updatePost($threadId, $postId, $content){
+	public static function deletePost($projectId, $threadId, $postId){
 		$projectModel = new ProjectModel($projectId);
-		
-		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
-		$threadModel->threadId = $threadId;
-		$threadModel->postId = $postId;
-		$threadModel->content = $content;
-		
-		return $threadModel->write();
+		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
+		$postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
+		$postModel->isDeleted = true;
+		$postModel->write();
 	}
 	
-	// We were instructed to write these functions, but considering how replies are handled
-	// in the database, it seems like they are unecessary. They are commented out for possible
-	// future use. - Calvin B
-	/*
-	public static function createReply($threadId, $postId, $reply){
+	public static function updatePost($projectId, $threadId, $postId, $content){
 		$projectModel = new ProjectModel($projectId);
-		
-		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
-		$threadModel->threadId = $threadId;
-		$threadModel->postId = $postId;
-		$threadModel->reply = $reply;
-		
-		return $threadModel->write();
+		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
+		$postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
+		$postModel->content = $content;
+		$postModel->write();
 	}
 	
-	public static function deleteReply($threadId, $postId, $replyId){
+	public static function createReply($projectId, $threadId, $postId, $content){
 		$projectModel = new ProjectModel($projectId);
-		
-		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
-		$threadModel->threadId = $threadId;
-		$threadModel->postId = $postId;
-		$threadModel->replyId = $replyId;
-		
-		return $threadModel->write();
+		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
+		$postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
+		$replyModel = new LexCommentReply();
+		$replyModel->content = $content;
+		$postModel->setReply($replyModel->id, $replyModel);
+		return $postModel->write();
 	}
 	
-	public static function updateReply($threadId, $postId, $replyId, $content){
+	public static function deleteReply($projectId, $threadId, $postId, $replyId){
 		$projectModel = new ProjectModel($projectId);
-		
-		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
-		$threadModel->threadId = $threadId;
-		$threadModel->postId = $postId;
-		$threadModel->replyId = $replyId;
-		$threadModel->content = $content;
-		
-		return $threadModel->write();
+		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
+		$postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
+		$postModel->deleteReply($replyId);
 	}
-	*/
 	
-	public static function updateStatus($threadId, $status){
+//	NOTE: Customer said that updating replies is not necessary at the moment of release.
+// 	public static function updateReply($projectId, $threadId, $postId, $replyId, $content){
+// 		$projectModel = new ProjectModel($projectId);
+// 		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
+// 		$postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
+// 		$replyModel = new LexCommentReply($replyId);
+// 	}
+	
+	public static function updateStatus($projectId, $threadId, $status){
 		$projectModel = new ProjectModel($projectId);
-		
-		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel);
-		
-		$threadModel->threadId = $threadId;
+		$threadModel = new WebtypesettingDiscussionThreadModel($projectModel, $threadId);
 		$threadModel->status = $status;
-		
-		return $threadModel->write();
+		$threadModel->write();
 	}
 }
