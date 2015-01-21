@@ -1,13 +1,14 @@
 // controller for setupProjectLayout
 'use strict';
 
-angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.services'])
+angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.layoutServices'])
 
-.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingSetupService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', 
-function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
-  var vm = this;
+.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingLayoutService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', 
+function($scope, $state, layoutService, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
+	var vm = $scope;
   
   // default settings
+  /*
   vm.conf = {
       // margins
       insideMargin: 10,
@@ -116,6 +117,8 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
       chapterVerseSeperator: ":",
 
   };
+  */
+  vm.conf = {};
   vm.pageSizeCode = "A5";
   $scope.setPageSize = function setPageSize(pageCode) {
 	  console.log("TEST pageSize:" + pageCode, "end");
@@ -192,6 +195,14 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
 	  }
   };
   
+  var getPageDto = function getPageDto() {
+	  layoutService.getPageDto(function(result) {
+		  vm.conf = result.data.layout;
+	  });
+  };
+  
+  getPageDto();
+  
   vm.css = {
       pagesContainer: {
         width: vm.width * 2 + 25,
@@ -254,14 +265,13 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
     saving = true;
     console.log('saveLayoutSettings');
     
-    // TODO add code here to save layout settings. IJH 2015-01
+    layoutService.save(vm.conf, function(result){
+    	saved = true;
+    	$scope.layoutForm.$setPristine();
+    	saving = false;
+    });
     
-      // TODO in successful save callback, set 'saved' to true and form to pristine IJH 2015-01 
-//      saved = true;
-      $scope.layoutForm.$setPristine();
-
-    // TODO always clear 'saving' irrespective of succesful save. IJH 2015-01
-//    saving = false;
+    // TODO always clear 'saving' irrespective of successful save. IJH 2015-01
   };
 
   var autoSaveTimer;
