@@ -267,6 +267,7 @@ class RightsHelper
                 return $this->userHasSiteRight(Domain::USERS + Operation::VIEW_OWN);
 
             // ScriptureForge (webtypesetting)
+            case 'typesetting_readAssetsDto':
             case 'typesetting_uploadFile':
                 return $this->userHasSiteRight(Domain::USERS + Operation::EDIT_OWN);
 

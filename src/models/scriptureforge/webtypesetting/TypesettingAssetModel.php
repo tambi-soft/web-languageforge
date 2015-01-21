@@ -31,6 +31,11 @@ class TypesettingAssetModel extends \models\mapper\MapperModel
 	public $path;
 	
 	/**
+	 * @var string
+	 */
+	public $type;
+	
+	/**
 	 * @var boolean
 	 */
 	public $uploaded;

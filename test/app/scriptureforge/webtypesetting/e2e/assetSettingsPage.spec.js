@@ -1,11 +1,11 @@
-describe('the project dashboard AKA text list page', function() {
+describe('the assets settings page', function() {
 	var constants 			= require('../../../testConstants.json');
 	var loginPage 			= require('../../../bellows/pages/loginPage.js');
 	var util 				= require('../../../bellows/pages/util.js');
 	var projectListPage 	= require('../../../bellows/pages/projectsPage.js');
 	var assetsPage			= require('../pages/assetSettingsPage.js');
 	
-	describe('project manager', function() {
+	describe('admin', function() {
 		
 		it('setup: logout, login as admin, navigate to assets settings page', function() {
 			loginPage.logout();
@@ -21,17 +21,28 @@ describe('the project dashboard AKA text list page', function() {
 		  assetsPage.addButtonList.first().click();
 		  expect(assetsPage.sections.paraTextTexts.isDisplayed()).toBe(true);
 		});
-/*		
-        it('can upload paraTExt zip file', function() {
-        });
+
 
         describe('Mock file upload', function() {
           
-          it('cannot upload large file', function() {
+          it('can upload zip file', function() {
+        	assetsPage.mockUpload.enableButton.click();
+            assetsPage.mockUpload.fileNameInput.sendKeys(constants.testMockTypesettingZipImportFile.name);
+            assetsPage.mockUpload.fileSizeInput.sendKeys(constants.testMockTypesettingZipImportFile.size);
+            expect(assetsPage.noticeList.count()).toBe(0);
+            assetsPage.mockUpload.uploadButton.click();
+            //expect(assetsPage.verifyDataPage.entriesImported.isDisplayed()).toBe(true);
+            expect(assetsPage.noticeList.count()).toBe(1);
+            expect(assetsPage.noticeList.get(0).getText()).toContain('File uploaded successfully');
+            //expect(assetsPage.assets.paraTextTexts).toContain(constants.testMockTypesettingZipImportFile.name);
+            //assetsPage.formStatus.expectHasNoError();
+          });
+          
+/*          it('cannot upload large file', function() {
             assetsPage.mockUpload.enableButton.click();
             expect(assetsPage.mockUpload.fileNameInput.isPresent()).toBe(true);
             expect(assetsPage.mockUpload.fileNameInput.isDisplayed()).toBe(true);
-            assetsPage.mockUpload.fileNameInput.sendKeys(constants.testMockZipImportFile.name);
+            assetsPage.mockUpload.fileNameInput.sendKeys(constants.testMockTypesettingZipImportFile.name);
             assetsPage.mockUpload.fileSizeInput.sendKeys(134217728);
             expect(assetsPage.noticeList.count()).toBe(0);
             assetsPage.mockUpload.uploadButton.click();
@@ -41,7 +52,7 @@ describe('the project dashboard AKA text list page', function() {
             assetsPage.mockUpload.fileSizeInput.clear();
             browser.pause();
           });
-/*        
+        
           it('cannot upload jpg', function() {
             assetsPage.mockUpload.fileNameInput.sendKeys(constants.testMockJpgImportFile.name);
             assetsPage.mockUpload.fileSizeInput.sendKeys(constants.testMockJpgImportFile.size);
@@ -56,31 +67,9 @@ describe('the project dashboard AKA text list page', function() {
             assetsPage.mockUpload.fileSizeInput.clear();
             assetsPage.firstNoticeCloseButton.click();
             assetsPage.firstNoticeCloseButton.click();
-          });
-
-          it('can upload zip file', function() {
-            assetsPage.mockUpload.fileNameInput.sendKeys(constants.testMockZipImportFile.name);
-            assetsPage.mockUpload.fileSizeInput.sendKeys(constants.testMockZipImportFile.size);
-            expect(assetsPage.noticeList.count()).toBe(0);
-            assetsPage.mockUpload.uploadButton.click();
-            expect(assetsPage.verifyDataPage.entriesImported.isDisplayed()).toBe(true);
-            expect(assetsPage.noticeList.count()).toBe(1);
-            expect(assetsPage.noticeList.get(0).getText()).toContain('Successfully imported ' + constants.testMockZipImportFile.name);
-            assetsPage.formStatus.expectHasNoError();
-          });
+          });*/
         
         });
-      
-        
-        
-/*		it('can add a new paraTExt file', function() {
-			expect(projectPage.newText.showFormButton.isDisplayed()).toBe(true);
-			projectPage.newText.showFormButton.click();
-			projectPage.newText.title.sendKeys(sampleTitle);
-			projectPage.newText.usx.sendKeys(projectPage.testData.simpleUsx1);
-			projectPage.newText.saveButton.click();
-			expect(projectPage.textLink(sampleTitle).isDisplayed()).toBe(true);
-		});*/
 		
 	});
 	

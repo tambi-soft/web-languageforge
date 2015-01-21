@@ -43,6 +43,7 @@ public function testCRUD_Works()
         $asset = new TypesettingAssetModel($projectModel);
         $asset->name = 'asset-name-1';
         $asset->path = 'asset-path-1';
+        $asset->type = 'usfm-zip';
         $asset->uploaded = true;
         
         
@@ -68,6 +69,7 @@ public function testCRUD_Works()
         $this->assertEqual($id, $otherAsset->id->asString());
         $this->assertEqual('asset-name-1', $otherAsset->name);
         $this->assertEqual('asset-path-1', $otherAsset->path);
+        $this->assertEqual('usfm-zip', $otherAsset->type);
         $this->assertEqual(true, $otherAsset->uploaded);
         
         // Read back font
@@ -81,6 +83,7 @@ public function testCRUD_Works()
         // Update asset
         $otherAsset->name = 'asset-name-2';
         $otherAsset->path = 'asset-path-2';
+        $otherAsset->type = 'png';
         $otherAsset->uploaded = false;
         $otherAsset->write();
         
@@ -95,6 +98,7 @@ public function testCRUD_Works()
         $otherAsset = new TypesettingAssetModel($projectModel, $id);
         $this->assertEqual('asset-name-2', $otherAsset->name);
         $this->assertEqual('asset-path-2', $otherAsset->path);
+        $this->assertEqual('png', $otherAsset->type);
         $this->assertEqual(false, $otherAsset->uploaded);
         
         // Read back font

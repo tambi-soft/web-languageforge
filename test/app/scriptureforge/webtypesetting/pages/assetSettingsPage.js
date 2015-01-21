@@ -14,12 +14,20 @@ var SfAssetSettingsPage = function() {
 
   this.title = element(by.tagName('h2'));
   this.addButtonList = element.all(by.partialButtonText('Add'));
-  //this.sectionList = element.all(by.repeater('section in sections'));
+  
   this.sectionList = element.all(by.css('.drop-box'));
   this.sections = {
-    paraTextTexts: this.sectionList.first()  
+    paraTextTexts: this.sectionList.first()
   };
   this.mockUpload = mockUpload;
+  
+  /*this.paraTextAssetList = element.all(by.repeater('section in sections')).first().all(by.repeater('asset in section.assets').column('asset.name'));
+  //this.asset = element.all(by.repeater('asset in section.assets')).first().element(by.css(".ng-binding")).getText();
+  this.assets = {
+    paraTextTexts: this.paraTextAssetList.first()
+  };*/
+  
+  
 };
 
 module.exports = new SfAssetSettingsPage();
