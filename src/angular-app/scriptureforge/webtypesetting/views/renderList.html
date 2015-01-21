@@ -1,22 +1,47 @@
 <div data-ng-controller="renderListCtrl">
-    <input type="text" class="form-control" placeholder="Search for..."
-        data-ng-model="search" /> <input type="number"
-        class="form-control col-lg-6" min=0 data-ng-model="pageSize">Results per page</input>
     <h1>Render List</h1>
+    <div class="row">
+        <div class="col-xs-9">
+            <button type="button" class="btn btn-default"
+                data-ng-click="doRender()">Render</button>
+        </div>
+        <div class="col-xs-3">
+            <input type="text" class="form-control"
+                placeholder="Filter results..." data-ng-model="search" />
+        </div>
+    </div>
+    <br/>
     <table class="table">
         <tr>
-            <th>Component</th>
-            <th>Renderer</th>
-            <th>Rendered On</th>
-            <th>Comments</th>
-            <th>Tags</th>
+            <th>Date Created</th>
+            <th>Workflow State</th>
+            <th>ID</th>
         </tr>
-        <tr data-ng-repeat="item in list" data-ng-if="contains(item, search)">
-            <td>{{ item.component }}</td>
-            <td>{{ item.renderer }}</td>
-            <td>{{ item.renderedOn }}</td>
-            <td>{{ item.comments }}</td>
-            <td>{{ item.tags }}</td>
+        <tr
+            data-ng-repeat="item in getPage(items, pageNumber, pageSize, search)">
+            <td>{{ item.dateCreated }}</td>
+            <td>{{ item.workflowState }}</td>
+            <td>{{ item.id }}</td>
         </tr>
     </table>
+    <div>
+        <div class="row">
+            <div class="col-xs-4" />
+            <div class="col-xs-4" style="text-align: center;">
+                <pagination style="margin: 0px;"
+                    total-items="totalItems(items, search)"
+                    items-per-page="pageSize" ng-model="pageNumber"
+                    max-size="5" class="pagination-sm" boundary-links="true"
+                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                    first-text="&laquo;" last-text="&raquo;" />
+            </div>
+            <div class="col-xs-4">
+                <label for="pageSizeId" >Number of items showing</label>
+                <select id="pageSizeId" class="form-control input-sm" data-ng-model="pageSize" style="width: auto;float: right;"
+                    data-ng-options="item for item in [10,20,30]" />
+            </div>
+        </div>
+    </div>
+    <!-- <pre>{{ list | json }}</pre> -->
+</div>
 </div>

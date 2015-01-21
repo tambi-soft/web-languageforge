@@ -9,6 +9,7 @@ class AllTypesettingDtoTests extends TestSuite
     {
         parent::__construct();
         $this->addFile(TestPath . 'scriptureforge/typesetting/dto/TypesettingLayoutPageDto_Test.php');
+        $this->addFile(TestPath . 'scriptureforge/typesetting/dto/TypesettingRenderPageDto_Test.php');
     }
 
 }

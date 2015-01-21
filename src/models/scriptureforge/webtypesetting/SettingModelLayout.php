@@ -70,7 +70,7 @@ class SettingModelLayout
 		$this->useSpecialCallerFootnotes = false;
 		$this->paragraphedFootnotes = true;
 		$this->useNumericCallersFootnotes = false;
-		// $this->specialCallerFootnotes = "\\krn0.2em *\\kern0.4em";
+		$this->specialCallerFootnotes = "\\krn0.2em *\\kern0.4em";
 
 
 		// cross references

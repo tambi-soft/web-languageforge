@@ -41,9 +41,16 @@ class TypesettingSettingsCommands {
 	 * @return array
 	 */
 
-	public static function updateLayoutSettings($projectId, $settings) {
+	public static function updateLayoutSettings($projectId, $userId, $settings) {
 		$projectModel = new ProjectModel($projectId);
 		$currentSettingModel = SettingModel::getCurrent($projectModel);
+		if ($currentSettingModel->author->createdByUserRef->asString() == "") {
+			$currentSettingModel->author->createdByUserRef->id = $userId;
+		}
+
+		$currentSettingModel->author->modifiedByUserRef->id = $userId;
+		$currentSettingModel->author->modifiedDate = new \DateTime();
+
 		JsonDecoder::decode($currentSettingModel->layout, $settings);
 		return $currentSettingModel->write();
 	}
