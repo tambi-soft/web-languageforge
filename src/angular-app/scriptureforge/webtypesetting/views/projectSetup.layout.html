@@ -1,16 +1,29 @@
 <div class="container" data-ng-cloak data-ng-controller="projectSetupLayoutCtrl">
-	<h2>Layout Settings</h2>
-    
-    DEBUG INFO
-    <ul style="width: 100%;">
-      <li data-ng-repeat="(k, v) in conf" style="float: left; width: 25%; font-size: xx-small;">
-        {{ k }} : {{ v }}
-      </li>
-    </ul>
-    <div style="height: 200px;"/>
-    <!-- END DEBUG INFO -->
 
-    <span class="save-notice pull-right text-muted">{{saveNotice()}}</span>
+    <div class="page-header row">
+    	<h2 class="col-md-9" style="margin-top: 0px;">
+    		Layout Settings
+    	</h2>
+    	<span class="save-notice text-muted col-md-1">{{saveNotice()}}</span>
+    	<button type="button" class="btn btn-primary col-md-2" data-ng-click="saveButtonClick()" >
+    		Save All Settings
+    	</button>
+
+
+    </div>
+
+    <br />
+
+<!--     DEBUG INFO -->
+<!--     <ul style="width: 100%;"> -->
+<!--       <li data-ng-repeat="(k, v) in conf" style="float: left; width: 25%; font-size: xx-small;"> -->
+<!--         {{ k }} : {{ v }} -->
+<!--       </li> -->
+<!--     </ul> -->
+<!--     <div style="height: 200px;"/> -->
+<!--     END DEBUG INFO -->
+
+
     <div data-ng-controller="templateCtrl">
                 {{currentPath}}
                 <div class='row'>
@@ -68,53 +81,55 @@
 	                    data-ng-model="conf.bottomMargin" id="bottomMarginInput" />
 	            </div>
 	        </div>
+	        <br />
         </tab>
         <tab heading="Columns" class="form-group">
             <br />
             <div class="row">
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox" data-ng-model="conf.bodyColumnsTwo">Two Body Columns
+                          <input type="checkbox" data-ng-model="conf.titleColumnsTwo" id="titleColumnsTwoInput">Two Title Columns
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox" data-ng-model="conf.titleColumnsTwo">Two Title Columns
+                          <input type="checkbox" data-ng-model="conf.introColumnsTwo" id="introColumnsTwoInput">Two Intro Columns
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox" data-ng-model="conf.introColumnsTwo">Two Intro Columns
+                          <input type="checkbox" data-ng-model="conf.bodyColumnsTwo" id="bodyColumnsTwoInput">Two Body Columns
                     </label>
                 </div>
                 <div class="col-md-2">
+	                <label for="columnShiftInput">Column Shift</label>
+	                <input class="form-control" type="number" data-ng-model="conf.columnShift" id="columnShiftInput" data-ng-disabled="!conf.bodyColumnsTwo" />
+	            </div>
+                <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox" data-ng-model="conf.columnGutterRule">Column Rule
+                          <input type="checkbox" data-ng-model="conf.columnGutterRule" id="columnGutterRuleInput">Body Column Rule
                     </label>
                 </div>
 	            <div class="col-md-2">
 	                <label for="columnGutterRuleSkipInput">Column Gutter Rule Skip</label>
-	                <input class="form-control" type="number" data-ng-model="conf.columnGutterRuleSkip" id="columnGutterRuleSkipInput" />
-	            </div>
-	            <div class="col-md-2">
-	                <label for="columnShiftInput">Column Shift</label>
-	                <input class="form-control" type="number" data-ng-model="conf.columnShift" id="columnShiftInput" />
+	                <input class="form-control" type="number" data-ng-model="conf.columnGutterRuleSkip" id="columnGutterRuleSkipInput" data-ng-disabled="!conf.columnGutterRule" />
 	            </div>
             </div>
             <br />
             <div class="row">
 	            <div class="col-md-2">
-	                <label for="columnGutterFactorInput">Column Gutter Factor</label>
+	                <label for="columnGutterFactorInput">Column Gutter Size</label>
 	                <input class="form-control" type="number" data-ng-model="conf.columnGutterFactor" id="columnGutterFactorInput" />
 	            </div>
             </div>
-        </tab> 
+            <br />
+        </tab>
         <tab heading="Header" class="form-group">
             <br />
             <div class="row">
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.useRunningHeader">Running Header
+	                      <input type="checkbox" data-ng-model="conf.useRunningHeader" id="useRunningHeaderInput">Running Header
 	                </label>
 	            </div>
 	            <div class="col-md-2">
@@ -125,24 +140,24 @@
         			<label for="headerPositionRuleInput">Running Header Rule Position</label>
 	                <div class="input-group">
       					<span class="input-group-addon">
-        					<input type="checkbox" data-ng-model="conf.useRunningHeaderRule">
+        					<input type="checkbox" data-ng-model="conf.useRunningHeaderRule" id="useRunningHeaderRuleInput">
       					</span>
       					<input class="form-control" type="number" data-ng-model="conf.runningHeaderRulePosition" id="headerPositionRuleInput" data-ng-disabled="!conf.useRunningHeaderRule">
     				</div>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.omitChapterNumberRH">Omit Chapter Number Running Header
+	                      <input type="checkbox" data-ng-model="conf.omitChapterNumberRH" id="omitChapterNumberRHInput">Omit Chapter Number Running Header
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.showVerseReferences">Show Verse References
+	                      <input type="checkbox" data-ng-model="conf.showVerseReferences" id="showVerseReferencesInput">Show Verse References
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.omitBookReference">Omit Book Reference
+	                      <input type="checkbox" data-ng-model="conf.omitBookReference" id="omitBookReferenceInput">Omit Book Reference
 	                </label>
 	            </div>
 	        </div>
@@ -151,7 +166,7 @@
 		        <div class="row">
 		        	<div class="col-md-4">
 		                <label for="runningHeaderTitleLeftInput">Running Header Title Left</label>
-                        <select class="form-control" id="runningHeaderTitleLeftInput" data-ng-model="conf.runningHeaderTitleLeft" data-ng-options="item for item in headerOptions"></select>		  
+                        <select class="form-control" id="runningHeaderTitleLeftInput" data-ng-model="conf.runningHeaderTitleLeft" data-ng-options="item for item in headerOptions"></select>
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningHeaderTitleCenterInput">Running Header Title Center</label>
@@ -193,13 +208,14 @@
 	        		</div>
 		        </div>
 		  	</div>
+		  	<br />
         </tab>
         <tab heading="Footer" class="form-group">
             <br />
             <div class="row">
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.useRunningFooter">Running Footer
+	                      <input type="checkbox" data-ng-model="conf.useRunningFooter" id="useRunningFooterInput">Running Footer
 	                </label>
 	            </div>
 	            <div class="col-md-2">
@@ -254,118 +270,111 @@
 	        		</div>
 		        </div>
 		   	</div>
+		   	<br />
         </tab>
         <tab heading="Footnotes" class="form-group">
         	<br />
         	<div class="row">
-	        	<div class="col-md-2">
-        			<label for="specialCallerFootnotesInput">Special Caller Footnotes</label>
-	                <div class="input-group">
-      					<span class="input-group-addon">
-        					<input type="checkbox" data-ng-model="conf.useSpecialCallerFootnotes">
-      					</span>
-      					<input class="form-control" data-ng-model="conf.specialCallerFootnotes" type="text" id="specialCallerFootnotesInput" data-ng-disabled="!conf.useSpecialCallerFootnotes">
-    				</div>
-	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.paragraphedFootnotes">Paragraphed Footnotes
+	                      <input type="checkbox" data-ng-model="conf.useSpecialCallerFootnotes" id="useSpecialCallerFootnotesInput">Use Special Caller Footnotes
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.useNumericCallersFootnotes">Use Numeric Callers Footnotes
+	                      <input type="checkbox" data-ng-model="conf.paragraphedFootnotes" id="paragraphedFootnotesInput">Paragraphed Footnotes
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.useFootnoteRule">Footnote Rule
+	                      <input type="checkbox" data-ng-model="conf.useNumericCallersFootnotes" id="useNumericCallersFootnotesInput">Use Numeric Callers Footnotes
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.pageResetCallersFootnotes">Reset Page Callers Footnotes
+	                      <input type="checkbox" data-ng-model="conf.useFootnoteRule" id="useFootnoteRuleInput">Footnote Rule
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="conf.pageResetCallersFootnotes" id="pageResetCallersFootnotesInput">Reset Page Callers Footnotes
 	                </label>
 	            </div>
 	        	<div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.omitCallerInFootnotes">Omit Caller In Footnotes
+	                      <input type="checkbox" data-ng-model="conf.omitCallerInFootnotes" id="omitCallerInFootnotesInput">Omit Caller In Footnotes
 	                </label>
 	            </div>
 		     </div>
+		     <br />
         </tab>
         <tab heading="Cross References" class="form-group">
         	<br />
         	<div class="row">
-        		<div class="col-md-4">
-        			<label for="specialCallerCrossrefsInput">Special Caller Crossrefs</label>
-	                <div class="input-group">
-      					<span class="input-group-addon">
-        					<input type="checkbox" data-ng-model="conf.useSpecialCallerCrossrefs">
-      					</span>
-      					<input type="text" class="form-control" data-ng-model="conf.specialCallerCrossrefs" type="text" id="specialCallerCrossrefsInput" data-ng-disabled="!conf.useSpecialCallerCrossrefs">
-    				</div>
-	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.useAutoCallerCrossrefs">Use Auto Caller Crossrefs
+	                      <input type="checkbox" data-ng-model="conf.useSpecialCallerCrossrefs" id="useSpecialCallerCrossrefsInput">Use Special Caller Crossrefs
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.omitCallerInCrossrefs">Omit Caller In Crossrefs
+	                      <input type="checkbox" data-ng-model="conf.useAutoCallerCrossrefs" id="useAutoCallerCrossrefsInput">Use Auto Caller Crossrefs
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.paragraphedCrossrefs">Paragraphed Crossrefs
+	                      <input type="checkbox" data-ng-model="conf.omitCallerInCrossrefs" id="omitCallerInCrossrefsInput">Omit Caller In Crossrefs
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="conf.useNumericCallersCrossrefs">Use Numeric Callers Crossrefs
+	                      <input type="checkbox" data-ng-model="conf.paragraphedCrossrefs" id="paragraphedCrossrefsInput">Paragraphed Crossrefs
+	                </label>
+	            </div>
+	            <div class="col-md-2">
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="conf.useNumericCallersCrossrefs" id="useNumericCallersCrossrefsInput">Use Numeric Callers Crossrefs
 	                </label>
 	            </div>
         	</div>
-        </tab> 
+        	<br />
+        </tab>
         <tab heading="Editing Features" class="form-group">
         	<br />
-        	<input type="checkbox" data-ng-model="conf.useDiagnostic" ng-change="mutuallyExclusive('diagnostic')">
-        	<label for="diagnosticWell">Diagnostic Components</label>
+        	<input type="checkbox" data-ng-model="conf.useDiagnostic" id="useDiagnosticInput" data-ng-change="mutuallyExclusive('diagnostic')">
+        	<label for="diagnosticWell">Use Diagnostic Components</label>
         	<div class="row well" id="diagnosticWell">
         		<div class="col-md-2">
-        			<div class="input-group">
-      					<span class="input-group-addon">
-        					<input type="checkbox" data-ng-model="diagnostics.leading" data-ng-change="diagnosticsComponentsUpdate()" >
-      					</span>
-      					<input class="form-control" data-ng-model="conf.diagnosticComponents" type="text" id="diagnosticComponentsInput" data-ng-disabled="!diagnostics.leading">
-    				</div>
+	                <label class="checkbox-inline">
+	                      <input type="checkbox" data-ng-model="diagnostics.leading" id="leadingInput" data-ng-change="diagnosticsComponentsUpdate()" data-ng-disabled="!conf.useDiagnostic">Leading
+	                </label>
 	            </div>
         	</div>
         	<br />
-        	<input type="checkbox" data-ng-model="conf.useBackground" ng-change="mutuallyExclusive('background')">
-        	<label for="backgroundComponentsWell">Background Components</label>
+        	<input type="checkbox" data-ng-model="conf.useBackground" id="useBackgroundInput" data-ng-change="mutuallyExclusive('background')">
+        	<label for="backgroundComponentsWell">Use Background Components</label>
         	<div class="row well" id="backgroundComponentsWell">
         		<div class="col-md-2">
         			<label for="watermarkTextInput">Watermark Text</label>
 	                <div class="input-group">
       					<span class="input-group-addon">
-        					<input type="checkbox" data-ng-model="components.watermark" data-ng-change="backgroundComponentsUpdate()">
+        					<input type="checkbox" data-ng-model="components.watermark" id="watermarkInput" data-ng-change="backgroundComponentsUpdate()" data-ng-disabled="!conf.useBackground">
       					</span>
-      					<input type="text" class="form-control" data-ng-model="conf.watermarkText" type="text" id="watermarkTextInput" data-ng-disabled="!components.watermark">
+      					<input type="text" class="form-control" data-ng-model="conf.watermarkText" type="text" id="watermarkTextInput" data-ng-disabled="!components.watermark || !conf.useBackground">
     				</div>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="components.pagebox" data-ng-change="backgroundComponentsUpdate()">Pagebox
+	                      <input type="checkbox" data-ng-model="components.pagebox" id="pageboxInput" data-ng-change="backgroundComponentsUpdate()" data-ng-disabled="!conf.useBackground">Pagebox
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input type="checkbox" data-ng-model="components.cropmarks" data-ng-change="backgroundComponentsUpdate()">Cropmarks
+	                      <input type="checkbox" data-ng-model="components.cropmarks" id="cropmarksInput" data-ng-change="backgroundComponentsUpdate()" data-ng-disabled="!conf.useBackground">Cropmarks
 	                </label>
 	            </div>
         	</div>
+        	<br />
         </tab>
         <tab heading="Print Options" class="form-group">
         	<br />
@@ -398,12 +407,13 @@
         			<label for="docInfoTextInput">Doc Info Text</label>
 	                <div class="input-group">
       					<span class="input-group-addon">
-        					<input type="checkbox" data-ng-model="conf.useDocInfo">
+        					<input type="checkbox" data-ng-model="conf.useDocInfo" id="useDocInfoInput">
       					</span>
       					<input type="text" class="form-control" data-ng-model="conf.docInfoText" type="text" id="docInfoTextInput" data-ng-disabled="!conf.useDocInfo">
     				</div>
 	            </div>
         	</div>
+        	<br />
         </tab>
         <tab heading="Body Text" class="form-group">
         	<br />
@@ -418,27 +428,28 @@
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input data-ng-model="conf.justifyParagraphs" type="checkbox">Justify Paragraphs
+	                      <input  type="checkbox" data-ng-model="conf.justifyParagraphs" id="justifyParagraphsInput">Justify Paragraphs
 	                </label>
 	            </div>
 	            <div class="col-md-2">
 	                <label class="checkbox-inline">
-	                      <input data-ng-model="conf.rightToLeft" type="checkbox">Right to Left
+	                      <input data-ng-model="conf.rightToLeft" id="rightToLeftInput" type="checkbox">Right to Left
 	                </label>
 	            </div>
         	</div>
+        	<br />
         </tab>
 <!--         <tab heading="Misc" class="form-group">
         	<br />
         	<div class="row">
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox">Use Caption References 
+                          <input type="checkbox">Use Caption References
                     </label>
                 </div>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                          <input type="checkbox">Use Figure Placeholders  
+                          <input type="checkbox">Use Figure Placeholders
                     </label>
                 </div>
         	</div>
@@ -455,17 +466,15 @@
 	                <input class="form-control" data-ng-model="conf.chapterVerseSeperator" type="text" id="chapterVerseSeperatorInput" />
                 </div>
         	</div>
+        	<br />
         </tab>
     </tabset>
     </form>
-    <br />
-    
-
     <div class="row" data-ng-style="css.pagesContainer">
-    <br>
-    <p style="text-align: center;">
-    Preview (only displays adjustable margins)
-    </p>
+    	<br>
+    	<p style="text-align: center;">
+    	Preview (only displays adjustable margins)
+    	</p>
         <!-- left page -->
         <div class="pages" id="page-left" data-ng-style="css.leftPage">
             <div id="pageLeftLayout" class="margins" data-ng-style="css.leftMargins">
@@ -486,5 +495,5 @@
         </div>
 
     </div>
-    
+
 </div>

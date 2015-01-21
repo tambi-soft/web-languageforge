@@ -1,4 +1,8 @@
 <?php
+use models\scriptureforge\webtypesetting\commands\TypesettingRenderCommands;
+
+use models\scriptureforge\webtypesetting\dto\TypesettingRenderPageDto;
+
 use models\scriptureforge\webtypesetting\dto\TypesettingLayoutPageDto;
 
 use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCommands;
@@ -617,6 +621,15 @@ class sf
     	return array('pdfUrl' => "assets/ngTraining.pdf");
     }
     
+    public function typesetting_renderPage_dto() {
+    	return TypesettingRenderPageDto::encode($this->_projectId);
+    }
+    public function typesetting_render_doRender() {
+    	TypesettingRenderCommands::doRender($this->_projectId, $this->_userId);
+    	
+    }
+
+    
 	public function typesetting_settings_list() {
 		return TypesettingSettingsCommands::readSettings($this->_projectId);
 	}
@@ -693,7 +706,7 @@ class sf
     public function typesetting_layoutSettings_update($model)
     {
 	    // update should only ever update the "latest" setting
-        return TypesettingSettingsCommands::updateLayoutSettings($this->_projectId, $model);
+        return TypesettingSettingsCommands::updateLayoutSettings($this->_projectId, $this->_userId, $model);
     }
 
     public function typesetting_layoutPage_dto()

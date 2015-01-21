@@ -95,7 +95,7 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
       diagnosticComponents: "",
       
       // print options
-      pageSizeCode: "custom", // this shouldn't be visible
+      pageSizeCode: "custom", // this shouldn't be visible in the UI
       pageHeight: 210,
       pageWidth: 148,
       printerPageSizeCode: "A4",
@@ -118,7 +118,13 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
 
   };
   */
+	
+  //conf object for the settings that are loaded from the database. Items that are not meant to be in the database should
+  // not be put in the conf object.
   vm.conf = {};
+  
+  //Default pageSizeCode in the database is 'custom' always, in the UI it is 'A5'. Default page sizes are handeled in the
+  // front end and just edit the pageHeight and pageWidth variables sent to the database.
   vm.pageSizeCode = "A5";
   $scope.setPageSize = function setPageSize(pageCode) {
 	  console.log("TEST pageSize:" + pageCode, "end");
@@ -142,6 +148,8 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
 	  }
   }
   
+  // the diagnosticComponents and backgroundComponents need a special function to set them in the conf object because they 
+  // are strings in the conf object but they are checkboxes in the UI. These next two functions turn the checkboxes into a string that is saved to the conf file.
   vm.diagnostics = {
 		  leading: false,
   };
@@ -170,11 +178,11 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
     vm.conf.backgroundComponents = comps.join(", ");
   };
   
-  vm.width = 300;
-  vm.height = 400;
+  // Header and footer options for the ng-options that create the option dropdowns.
   vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"];
   vm.footerOptions = vm.headerOptions;
   
+  // Function to keep two variables mutually Exclusive
   $scope.mutuallyExclusive= function mutuallyExclusive(name){
 	  switch (name){
 	  	case "background":
@@ -190,6 +198,11 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
 	  }
   };
   
+  $scope.saveButtonClick = function saveButtonClick() {
+	  console.log("TEST");
+	  saveLayoutSettings();
+  };
+  
   var getPageDto = function getPageDto() {
 	  layoutService.getPageDto(function(result) {
 		  vm.conf = result.data.layout;
@@ -198,6 +211,8 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   
   getPageDto();
   
+  vm.width = 300;
+  vm.height = 400;
   vm.css = {
       pagesContainer: {
         width: vm.width * 2 + 25,
@@ -220,7 +235,7 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
       },
   };
   
-  // variable watchers
+  // variable watchers 
   function makeMarginWatch(size, margin, opposite, cssMargin, cssOpposite, mirror) {
     $scope.$watch("conf."+margin+"Margin", function() {
       vm[margin+"MarginMax"] = vm[size] - vm.conf[opposite+"Margin"];
@@ -298,6 +313,7 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   $scope.$watch('layoutForm.$dirty', function(newValue) {
     if (newValue != undefined && newValue) {
       cancelAutoSaveTimer();
+      saving = true;
       startAutoSaveTimer();
     }
   });

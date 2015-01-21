@@ -2,6 +2,8 @@
 
 namespace models\scriptureforge\webtypesetting;
 
+use models\languageforge\lexicon\AuthorInfo;
+
 use models\mapper\JsonDecoder;
 
 use models\mapper\JsonEncoder;
@@ -23,13 +25,15 @@ class SettingModel extends \models\mapper\MapperModel
     public function __construct($projectModel, $id = '')
     {
         $this->id = new Id();
-        $this->isCurrent = false;
+        $this->setReadOnlyProp('author');
 
         $this->layout = new SettingModelLayout();
         $this->assets = new ArrayOf(function ($data) {
 			return new IdReference();
         });
-
+        $this->author = new AuthorInfo();
+        $this->renderedBy = new AuthorInfo();
+        
         $this->workflowState = "open"; // default workflow state
         $this->description = '';
         $this->title = '';
@@ -114,6 +118,18 @@ class SettingModel extends \models\mapper\MapperModel
      * @var Boolean
      */
     public $isArchived;
+    
+    /**
+     * 
+     * @var AuthorInfo
+     */
+    public $author;
+    
+    /**
+     * 
+     * @var AuthorInfo
+     */
+    public $renderedBy;
     
 }
 

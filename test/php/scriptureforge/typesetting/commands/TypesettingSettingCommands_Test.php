@@ -30,13 +30,15 @@ class TypesettingSettingCommands_Test extends UnitTestCase
         $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $projectModel->id->asString();
         
+        $userId = $e->createUser('me', 'me', 'me@me.com');
+        
         $layoutSetting = array();
         $layoutSetting['docInfoText'] = 'my text';
 
     	$currentSetting = SettingModel::getCurrent($projectModel);
     	$this->assertEqual($currentSetting->layout->docInfoText, "");
         
-    	TypesettingSettingsCommands::updateLayoutSettings($projectId, $layoutSetting);
+    	TypesettingSettingsCommands::updateLayoutSettings($projectId, $userId, $layoutSetting);
     	
     	$currentSetting = SettingModel::getCurrent($projectModel);
     	$this->assertEqual($currentSetting->layout->docInfoText, "my text");
