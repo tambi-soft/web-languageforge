@@ -7,9 +7,11 @@ angular.module('webtypesetting',
           'bellows.filters', 
           'webtypesetting.composition', 
           'webtypesetting.discussionList', 
+          'webtypesetting.discussionThread', 
           'webtypesetting.services', 
           'webtypesetting.projectSetupLayout', 
-          'webtypesetting.projectSetupAssets'
+          'webtypesetting.projectSetupAssets',
+          'webtypesetting.renderList'
 		])
 	.run(['$rootScope', '$state', '$stateParams', function ($rootScope,   $state,   $stateParams) {
 	    // Add $state and $stateParams to the $rootScope so that we can access them from any scope.
