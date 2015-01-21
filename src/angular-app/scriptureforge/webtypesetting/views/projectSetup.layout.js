@@ -173,13 +173,7 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   vm.width = 300;
   vm.height = 400;
   vm.headerOptions = ["empty", "bookname", "rangeref", "firstref", "lastref", "pagenumber"];
-  $scope.getHeaderOptions = function getHeaderOptions(item){
-	  var headerOptionsArray = vm.headerOptions;
-	  var index = headerOptionsArray.indexOf(item);
-	  headerOptionsArray.splice(index, 1);
-	  headerOptionsArray.unshift(item);
-	  return headerOptionsArray;
-  };
+
   $scope.mutuallyExclusive= function mutuallyExclusive(name){
 	  switch (name){
 	  	case "background":

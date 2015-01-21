@@ -120,9 +120,7 @@
 		        <div class="row">
 		        	<div class="col-md-4">
 		                <label for="runningHeaderTitleLeftInput">Running Header Title Left</label>
-		        		<select class="form-control" id="runningHeaderTitleLeftInput" data-ng-model="conf.runningHeaderTitleLeft">
-		        			<option data-ng-repeat="setting in getHeaderOptions(conf.runningHeaderTitleLeft)">{{ setting }}</option>
-		        		</select>
+                        <select class="form-control" id="runningHeaderTitleLeftInput" ng-model="conf.runningHeaderTitleLeft" ng-options="item for item in headerOptions"></select>		  
 	        		</div>
 	        		<div class="col-md-4">
 		                <label for="runningHeaderTitleCenterInput">Running Header Title Center</label>
