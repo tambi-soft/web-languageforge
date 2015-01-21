@@ -17,6 +17,8 @@ test/app/node_modules/.bin/
 .metadata/
 # TODO review inclusion below after jterm
 test/app/node_modules/
+# TODO Remove after jterm. You guys won't commit stuff like this. Justin Southworth
+*.orig
 # TODO review inclusion below after jterm
 test/php/assets/
 

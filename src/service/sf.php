@@ -677,7 +677,13 @@ class sf
     	$response = TypesettingUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
     }
-
+    
+    public function typesetting_deleteFile($fileName)
+    {
+    	$response = TypesettingUploadCommands::deleteFile($this->_projectId, $fileName);
+    	return JsonEncoder::encode($response);
+    }
+    
     // ---------------------------------------------------------------
     // TypesettingSettingCommands API
     // ---------------------------------------------------------------

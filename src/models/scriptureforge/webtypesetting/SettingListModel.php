@@ -41,6 +41,7 @@ class SettingListModel extends \models\mapper\MapperListModel
     }
 
     /*
+
 	public static function all($projectModel)
 	{
 		return new SettingListModel(

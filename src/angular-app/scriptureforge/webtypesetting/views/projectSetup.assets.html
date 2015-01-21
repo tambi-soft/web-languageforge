@@ -38,11 +38,22 @@
 						&nbsp;
 					</div>
 
+<!--
+Used to mock file upload. Assumes file is already in the right location.
+TODO: This should be removed from production code! IJH 2014-11
+ -->
+<pui-mock-upload data-pui-do-upload="onFileSelect(filesArray, param2)" data-pui-do-upload-param2="section" />
+
 				</fieldset>
 				<div style="clear: left"></div>
 			</form>
 			<ul class="list-group">
 				<li class="list-group-item text-left" data-ng-repeat="asset in section.assets">
+					<!-- TODO: Move styling to css -->
+<!--
+            		<img data-ng-show="section.fileType == 'png'" data-ng-src="{{asset.path}}" style="width:50px;" />
+					<span>{{ asset.fileName }}</span>
+-->
 					<span>{{ asset.name }}</span>
 <!-- 					<span class="btn badge" ng-click="deleteFile(section.assets,$index)">X</span> -->
 				</li>
