@@ -301,10 +301,57 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
       startAutoSaveTimer();
     }
   });
-
+  
+  vm.loadData = function(newConf) {
+	  $scope.newConf = newConf;
+	  vm.conf = $scope.newConf;
+  }
+  
+  $rootScope.$on('handleLoadBroadcast', function() {
+		$scope.loadTest = templateLoadObject.templateName;
+		vm.loadData(templateLoadObject.newConf);
+		//console.log(testData);
+		console.log(vm);
+		console.log("loaded");
+});
+  
   $rootScope.$on('handleSaveBroadcast', function() {
-		console.log("handledSaveBroadcast");
+		//console.log("handledSaveBroadcast");
 		templateSaveObject.vm = vm;
   });
-  
+}])
+.controller('templateCtrl', ['$scope', '$state', 'webtypesettingSetupService',  'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$location',
+function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject, $location) {
+    $scope.loadTemplateCollapsed = true;
+    $scope.saveTemplateCollapsed = true;
+    $scope.disableAddButton = true;
+    $scope.saveTemplateName = "";
+    $scope.loadTemplateName = "";
+    
+    $scope.uncollapseDivs = function(div){
+      if (div ==="load"){
+        if (!$scope.loadTemplateCollapsed){
+          $scope.loadTemplateCollapsed = true;
+        }else{
+          $scope.loadTemplateCollapsed = false;
+          $scope.saveTemplateCollapsed = true;
+        }
+      }
+      if (div==="save"){
+        if (!$scope.saveTemplateCollapsed){
+          $scope.saveTemplateCollapsed = true;
+        }else{
+          $scope.saveTemplateCollapsed = false;
+          $scope.loadTemplateCollapsed = true;
+        }
+      }
+    };
+    
+    $scope.handleSaveClick = function() {
+    	templateSaveObject.prepForBroadcast($scope.saveTemplateName);
+    };
+    
+    $scope.handleLoadClick = function() {
+    	templateLoadObject.prepForBroadcast($scope.loadTemplateName);
+    };
 }]);

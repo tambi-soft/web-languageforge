@@ -15,7 +15,6 @@ angular.module('webtypesetting.services', ['jsonRpc'])
   .service('webtypesettingSetupService', ['jsonRpc',
   function(jsonRpc) {
     jsonRpc.connect('/api/sf');
-    
 	
     this.setupPageDto = function(callback) {
     }; 
@@ -26,38 +25,57 @@ angular.module('webtypesetting.services', ['jsonRpc'])
 	  	  this.add = function(callback) {
 	  };
   }])
+  //This factory communicates with the layout controller and sends the jsonRpc call
   .factory('templateSaveService', function($rootScope, jsonRpc) {
     var templateSaveObject = {};
-    //Other controllers can add their data to the sharedService variable
-    templateSaveObject.templateName = "testString";
+    
+    //Other controllers can add their data to the  variable
     templateSaveObject.prepForBroadcast = function(templateName) {
     	templateSaveObject.templateName = templateName;
     	templateSaveObject.broadcastItem();
     };
     
     templateSaveObject.broadcastItem = function() {
-    	//console.log("handleSaveBroadcast");
     	$rootScope.$broadcast('handleSaveBroadcast');
-    	console.log(templateSaveObject);
+    	//console.log(templateSaveObject);
+    	jsonRpc.connect('/api/sf');
+    	console.log("blobbo");
+    	jsonRpc.call('template_save',[templateSaveObject], function(result) {
+            if (result.ok) {
+            	console.log(result);
+                console.log("saved");
+            }
+        });
     };
     
     return templateSaveObject;
   })
+  //This factory communicates with the layout controller and sends the jsonRpc call
   .factory('templateLoadService', function($rootScope, jsonRpc) {
     var templateLoadObject = {};
-    //Other controllers can add their data to the sharedService variable
+    //The load template name gets passed through here
     templateLoadObject.prepForBroadcast = function(templateName) {
     	templateLoadObject.templateName = templateName;
-    	//console.log(templateName);
+    	jsonRpc.call('template_load', [templateName], function(result){
+    		if(result.ok) {
+    			console.log(result);
+    			console.log("LOADED!");
+    			//Load the collected data into some object that the controller can access.
+    			templateLoadObject.newConf = result.data;
+    			templateLoadObject.broadcastItem();
+    		}
+    		else {
+    			console.log("We could not find your file. It's just a minor mistake.")
+    		}
+    	});
     	templateLoadObject.broadcastItem();
     };
     
+    //Broadcasts to the controller to either receive/send template data
     templateLoadObject.broadcastItem = function() {
-    	//console.log("handleLoadBroadcast");
     	$rootScope.$broadcast('handleLoadBroadcast');
     };
     
     return templateLoadObject;
   })
   ;
-  

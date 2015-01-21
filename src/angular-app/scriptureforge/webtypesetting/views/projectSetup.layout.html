@@ -1,5 +1,5 @@
 <div class="container" data-ng-cloak data-ng-controller="projectSetupLayoutCtrl">
-    <h2>Layout Settings</h2>
+	<h2>Layout Settings</h2>
     
     DEBUG INFO
     <ul style="width: 100%;">
@@ -11,6 +11,37 @@
     <!-- END DEBUG INFO -->
 
     <span class="save-notice pull-right text-muted">{{saveNotice()}}</span>
+    <div data-ng-controller="templateCtrl">
+                {{currentPath}}
+                <div class='row'>
+                    <div class="pull-right">
+                        <button id="layout-save-button" class="btn btn-default" data-ng-click="uncollapseDivs('save')">
+                            Save Template
+                        </button>
+                        <button id="layout-load-button" class="btn btn-default" data-ng-click="uncollapseDivs('load')">
+                            Load Template
+                        </button>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="pull-right">
+                        <div id="loadTemplateDiv" data-collapse="loadTemplateCollapsed">
+                            <form class="well form-inline">
+                               <input type="text" id="loadTemplateName" placeholder="Template Name..." data-ng-model="loadTemplateName">
+                               <button id="save" data-ng-click="handleLoadClick()" class="btn btn-default btn-sm" data-ng-disabled="loadTemplateName < 1"><i class="glyphicon glyphicon-folder-open"></i>Load</button>
+                            </form>
+                        </div>
+                
+                        <div id="saveTemplateDiv" data-collapse="saveTemplateCollapsed">
+                            <form class="well form-inline">
+                               <input type="text" id="saveTemplateName" placeholder="Template Name..." data-ng-model="saveTemplateName">
+                               <button id="load" data-ng-click="handleSaveClick()" class="btn btn-default btn-sm" data-ng-disabled="saveTemplateName < 1"><i class="icon-ok"></i>Save</button>
+                            </form>
+                        </div>
+                     </div>
+                </div>
+    </div>
+
     <form name="layoutForm" novalidate>
     <tabset style="text-align: center;"> 
         <tab heading="Margins" class="form-group"> 
