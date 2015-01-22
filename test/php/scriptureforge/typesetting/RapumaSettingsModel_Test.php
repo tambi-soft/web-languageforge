@@ -4,8 +4,8 @@
 
 use models\ProjectModel;
 
-use models\scriptureforge\webtypesetting\RapumaSettingListModel;
-use models\scriptureforge\webtypesetting\RapumaSettingModel;
+use models\scriptureforge\typesetting\RapumaSettingListModel;
+use models\scriptureforge\typesetting\RapumaSettingModel;
 
 
 

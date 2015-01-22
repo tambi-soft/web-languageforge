@@ -1,8 +1,8 @@
 <?php
 
-use models\scriptureforge\webtypesetting\TypesettingDiscussionPostModel;
-use models\scriptureforge\webtypesetting\dto\WebtypesettingDiscussionListPageDto;
-use models\scriptureforge\webtypesetting\WebtypesettingDiscussionThreadModel;
+use models\scriptureforge\typesetting\TypesettingDiscussionPostModel;
+use models\scriptureforge\typesetting\dto\WebtypesettingDiscussionListPageDto;
+use models\scriptureforge\typesetting\WebtypesettingDiscussionThreadModel;
 
 use models\languageforge\lexicon\LexCommentReply;
 use models\languageforge\lexicon\AuthorInfo;
@@ -11,7 +11,7 @@ use models\mapper\ArrayOf;
 use models\mapper\Id;
 use models\mapper\IdReference;
 
-use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCommands;
+use models\scriptureforge\typesetting\commands\WebtypesettingDiscussionListCommands;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';

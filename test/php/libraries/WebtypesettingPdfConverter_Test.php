@@ -1,6 +1,6 @@
 <?php
 
-use libraries\scriptureforge\webtypesetting\WebtypesettingPdfConverter;
+use libraries\scriptureforge\typesetting\WebtypesettingPdfConverter;
 
 require_once dirname(__FILE__) . '/../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';

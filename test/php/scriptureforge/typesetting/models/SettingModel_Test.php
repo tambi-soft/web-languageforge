@@ -1,7 +1,7 @@
 <?php
 use models\ProjectModel;
-use models\scriptureforge\webtypesetting\SettingListModel;
-use models\scriptureforge\webtypesetting\SettingModel;
+use models\scriptureforge\typesetting\SettingListModel;
+use models\scriptureforge\typesetting\SettingModel;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';

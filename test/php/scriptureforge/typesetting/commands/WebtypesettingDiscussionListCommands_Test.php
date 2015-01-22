@@ -1,10 +1,10 @@
 <?php
 
-use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCommands;
-use models\scriptureforge\webtypesetting\WebtypesettingDiscussionThreadModel;
-use models\scriptureforge\webtypesetting\WebtypesettingAssetModel;
-use models\scriptureforge\webtypesetting\TypesettingDiscussionThreadListModel;
-use models\scriptureforge\webtypesetting\TypesettingDiscussionPostListModel;
+use models\scriptureforge\typesetting\commands\WebtypesettingDiscussionListCommands;
+use models\scriptureforge\typesetting\WebtypesettingDiscussionThreadModel;
+use models\scriptureforge\typesetting\TypesettingAssetModel;
+use models\scriptureforge\typesetting\TypesettingDiscussionThreadListModel;
+use models\scriptureforge\typesetting\TypesettingDiscussionPostListModel;
 use models\languageforge\lexicon\LexCommentReply;
 use models\languageforge\lexicon\AuthorInfo;
 
@@ -22,7 +22,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -42,7 +42,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -63,7 +63,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -89,7 +89,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -109,7 +109,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -136,7 +136,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -169,7 +169,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -203,7 +203,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -235,7 +235,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -272,7 +272,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);
@@ -313,7 +313,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 		$projectId = $project->id->asString();
 		
-		$asset = new WebtypesettingAssetModel($project);
+		$asset = new TypesettingAssetModel($project);
 		$assetId = $asset->write();
 		
 		$threadListModel = new TypesettingDiscussionThreadListModel($project);

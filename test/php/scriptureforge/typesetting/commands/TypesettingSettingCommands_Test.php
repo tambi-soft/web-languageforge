@@ -1,15 +1,15 @@
 <?php
-use models\scriptureforge\webtypesetting\SettingModel;
+use models\scriptureforge\typesetting\SettingModel;
 
-use models\scriptureforge\webtypesetting\SettingModelLayout;
+use models\scriptureforge\typesetting\SettingModelLayout;
 
-use models\scriptureforge\webtypesetting\commands\TypesettingSettingsCommands;
+use models\scriptureforge\typesetting\commands\TypesettingSettingsCommands;
 
 use models\ProjectModel;
 
-use models\scriptureforge\webtypesetting\RapumaSettingListModel;
-use models\scriptureforge\webtypesetting\RapumaSettingModel;
-use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
+use models\scriptureforge\typesetting\RapumaSettingListModel;
+use models\scriptureforge\typesetting\RapumaSettingModel;
+use models\scriptureforge\typesetting\commands\TypesettingSettingCommands;
 use models\mapper\JsonDecoder;
 use models\mapper\JsonEncoder;
 

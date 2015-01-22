@@ -1,12 +1,12 @@
 <?php
 
-use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
+use models\scriptureforge\typesetting\commands\WebtypesettingCompositionCommands;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
-//require_once dirname(__FILE__) . '/../../../../../src/models/scriptureforge/webtypesetting/commands/WebtypesettingCompositionCommands.php';
+//require_once dirname(__FILE__) . '/../../../../../src/models/scriptureforge/typesetting/commands/WebtypesettingCompositionCommands.php';
 
 class TestWebtypesettingsCompositionCommands extends UnitTestCase
 {

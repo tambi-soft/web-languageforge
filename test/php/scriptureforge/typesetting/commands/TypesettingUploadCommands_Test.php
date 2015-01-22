@@ -1,7 +1,7 @@
 <?php
 
-use models\scriptureforge\webtypesetting\commands\TypesettingUploadCommands;
-use models\scriptureforge\webtypesetting\TypesettingAssetModel;
+use models\scriptureforge\typesetting\commands\TypesettingUploadCommands;
+use models\scriptureforge\typesetting\TypesettingAssetModel;
 
 require_once (dirname(__FILE__) . '/../../../TestConfig.php');
 require_once (SimpleTestPath . 'autorun.php');
