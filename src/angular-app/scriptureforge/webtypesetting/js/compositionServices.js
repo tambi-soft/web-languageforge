@@ -34,15 +34,26 @@ angular.module('webtypesetting.compositionServices', ['jsonRpc'])
     this.getPageDto = function getPageDto(callback) {
     	jsonRpc.call("typesetting_composition_getPageDto", [], callback);
     };
+    this.getBookDto = function getBookDto(bookId, callback) {
+    	jsonRpc.call("typesetting_composition_getBookDto", [bookId], callback);
+    };
     
-    this.getIllustrationProperties = function getIllustrationProperties(bookId, callback){
-    	jsonRpc.call("typesetting_composition_getIllustrationProperties", [bookId], callback);
+    this.getIllustrationProperties = function getIllustrationProperties(callback){
+    	jsonRpc.call("typesetting_composition_getIllustrationProperties", [], callback);
+    };
+    
+    this.setIllustrationProperties = function setIllustrationProperties(properties, callback){
+    	jsonRpc.call("typesetting_composition_setIllustrationProperties", [properties], callback);
+    };
 
+    this.getPageStatus = function getPageStatus(bookId, callback){
+    	jsonRpc.call("typesetting_composition_getPageStatus", [bookId], callback);
+    };
+    this.setPageStatus = function setPageStatus(bookId, pages, callback){
+    	jsonRpc.call("typesetting_composition_setPageStatus", [bookId, pages], callback);
     };
     
-    this.setIllustrationProperties = function setIllustrationProperties(bookId, properties, callback){
-    	jsonRpc.call("typesetting_composition_setIllustrationProperties", [bookId, properties, callback]);
-    };
+    
     
   }])
   .service('webtypesettingSetupService', ['jsonRpc',

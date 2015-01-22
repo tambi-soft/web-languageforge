@@ -4,26 +4,13 @@
 }
 
 
-.center{
-	float:left;
-	margin-left:20px;
-}
-/*.progress-bar{
-	height:30px;
-	width: 100%;
-	background-color:red;
-	margin-top: 50px;
-	margin-bottom:20px;
-}*/
 .render{
 	float:right;
 }
 
 .properties{
-	/*height: 100px;*/
 	height: 100%;
 	border: 1px solid;
-	min-height: 100px;
 	padding: 5px;
 	margin-top: 5px;
 	margin-bottom: 10px;
@@ -32,26 +19,21 @@
 	border: 1px solid;
 	overflow:auto;
 	height: 400px;
+	min-width: 200px;
 	padding: 5px 5px 5px 5px;
 }
 
 
 
-.progress-bar {
+.composition-progress-bar {
 	margin-top: 10px;
-	margin-bottom: 20px;
-	margin-left:10px;
-	width: 50%;
 	height: 14px;
-	/*background: #f2f1f1;*/
-	/*border: 1px solid #dfdfdf;
-	box-shadow: 0 0 2px #D5D4D4 inset;*/
 	float: right;
   	position: relative;
-  	position: relative;
+  	width: calc(100% - 70px)
 }
 
-.progress-bar .inner {
+.composition-progress-bar .inner {
   position: absolute;
 	height:100%;
 	transition: all 1s ease-out;
@@ -62,7 +44,7 @@
   transition: none;
 }
 
-.progress-bar .sliderRanges {
+.composition-progress-bar .sliderRanges {
 	display:inline-block;
 	height:100%;
 	transition: all 1s ease-out;
@@ -98,18 +80,8 @@
 	width:3em;
 }
 
-
-.control-bar{
-	width:100%;
-}
-
-.button-bar {
-	float:left;
-	margin-bottom:3px;
-}
-
 .prev{
-	float:right;
+	float:left;
 }
 
 .next{
@@ -117,11 +89,25 @@
 }
 
 .page-select{
-	float:right;
-	margin-right:40px;
-	margin-bottom:3px;	
+	margin-left: 5px;
+	display:inline-block;
+	vertical-align:middle;
 }
 
 .grey{
 	opacity:0.5;
 }
+
+.composition-bottom{
+	margin-top: 20px;
+}
+
+.books{
+	margin-left: 5px;
+	display: inline-block;
+	width:auto;
+}
+.invisible{
+	opacity:0;
+}
+

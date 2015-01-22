@@ -26,6 +26,12 @@ class SettingModel extends \models\mapper\MapperModel
     {
         $this->id = new Id();
         $this->setReadOnlyProp('author');
+        
+        $this->compositionBookAdjustments = new MapOf(function($data) {
+			return new TypesettingBookModel();
+        });
+        
+        $this->compositionIllustrationAdjustments = self::createIllustrationProperty();
 
         $this->layout = new SettingModelLayout();
         $this->assets = new ArrayOf(function ($data) {
@@ -53,6 +59,13 @@ class SettingModel extends \models\mapper\MapperModel
         return $instance;
     }
 
+    public static function createIllustrationProperty()
+    {
+    	return new MapOf(function($data) {
+			return new TypesettingIllustrationModel();
+    	});
+    }
+        
     /**
      * Removes this Setting from the collection
      * @param ProjectModel $projectModel
@@ -131,5 +144,14 @@ class SettingModel extends \models\mapper\MapperModel
      */
     public $renderedBy;
     
+    /**
+     * @var MapOf<TypesettingBookModel>
+     */
+    public $compositionBookAdjustments;
+
+    /**
+     * @var MapOf<TypesettingIllustrationModel>
+     */
+    public $compositionIllustrationAdjustments;
 }
 
