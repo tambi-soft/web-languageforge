@@ -1,6 +1,6 @@
 <?php
 
-namespace models\scriptureforge\webtypesetting;
+namespace models\scriptureforge\typesetting;
 
 class TypesettingIllustrationModel {
 	

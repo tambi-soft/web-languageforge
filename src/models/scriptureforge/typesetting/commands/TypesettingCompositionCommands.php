@@ -1,17 +1,18 @@
 <?php
-namespace models\scriptureforge\webtypesetting\commands;
+namespace models\scriptureforge\typesetting\commands;
 
 use models\scriptureforge\dto\UsfmHelper;
 use models\ProjectModel;
-use models\scriptureforge\webtypesetting\WebtypesettingBookModel;
+use models\scriptureforge\typesetting\WebtypesettingBookModel;
 use models\mapper\JsonEncoder;
 use models\mapper\JsonDecoder;
-use models\scriptureforge\webtypesetting\SettingModel;
-use models\scriptureforge\webtypesetting\ParagraphProperty;
-use models\scriptureforge\webtypesetting\TypesettingIllustrationModel;
-use models\scriptureforge\webtypesetting\TypesettingBookModel;
-use models\scriptureforge\webtypesetting\ParagraphPropertiesMapOf;
-use models\scriptureforge\webtypesetting\TypesettingIllustrationMapOf;
+use models\scriptureforge\typesetting\SettingModel;
+use models\scriptureforge\typesetting\ParagraphProperty;
+use models\scriptureforge\typesetting\TypesettingIllustrationModel;
+use models\scriptureforge\typesetting\TypesettingBookModel;
+use models\scriptureforge\typesetting\ParagraphPropertiesMapOf;
+use models\scriptureforge\typesetting\TypesettingIllustrationMapOf;
+
 class TypesettingCompositionCommands {
 	
 	public static function getBookHTML($projectId, $bookId) {

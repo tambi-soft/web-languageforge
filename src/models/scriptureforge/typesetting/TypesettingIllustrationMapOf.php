@@ -1,6 +1,6 @@
 <?php
 
-namespace models\scriptureforge\webtypesetting;
+namespace models\scriptureforge\typesetting;
 
 use models\mapper\MapOf;
 class TypesettingIllustrationMapOf extends MapOf{

@@ -1,10 +1,10 @@
 <?php
 
-use models\scriptureforge\webtypesetting\commands\TypesettingCompositionCommands;
-use models\scriptureforge\webtypesetting\SettingModel;
+use models\scriptureforge\typesetting\commands\TypesettingCompositionCommands;
+use models\scriptureforge\typesetting\SettingModel;
 use models\mapper\JsonEncoder;
-use models\scriptureforge\webtypesetting\TypesettingBookModel;
-use models\scriptureforge\webtypesetting\TypesettingIllustrationModel;
+use models\scriptureforge\typesetting\TypesettingBookModel;
+use models\scriptureforge\typesetting\TypesettingIllustrationModel;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
