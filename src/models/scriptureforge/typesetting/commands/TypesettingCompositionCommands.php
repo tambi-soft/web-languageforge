@@ -41,9 +41,9 @@ class TypesettingCompositionCommands {
 	public static function setParagraphProperties($projectId, $bookId, $propertiesModel) {
 		$projectModel = new ProjectModel($projectId);
 		$settingModel = SettingModel::getCurrent($projectModel);
-		$a = new ParagraphPropertiesMapOf();
-		JsonDecoder::decode($a, $propertiesModel);
-		$settingModel->compositionBookAdjustments[$bookId]->paragraphProperties = $a;
+		$model = TypesettingBookModel::createParagraphProperty();
+		JsonDecoder::decode($model, $propertiesModel);
+		$settingModel->compositionBookAdjustments[$bookId]->paragraphProperties = $model;
 		$settingModel->write();
 		// TODO What do we return?
 	}
@@ -57,9 +57,9 @@ class TypesettingCompositionCommands {
 	public static function setIllustrationProperties($projectId, $illustrationModel) {
 		$projectModel = new ProjectModel($projectId);
 		$settingModel = SettingModel::getCurrent($projectModel);
-		$a = new TypesettingIllustrationMapOf();
-		JsonDecoder::decode($a, $illustrationModel);
-		$settingModel->compositionIllustrationAdjustments = $a;
+		$model = SettingModel::createIllustrationProperty();
+		JsonDecoder::decode($model, $illustrationModel);
+		$settingModel->compositionIllustrationAdjustments = $model;
 		$settingModel->write();
 	}
 	

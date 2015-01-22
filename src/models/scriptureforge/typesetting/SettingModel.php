@@ -31,9 +31,7 @@ class SettingModel extends \models\mapper\MapperModel
 			return new TypesettingBookModel();
         });
         
-        $this->compositionIllustrationAdjustments = new MapOf(function($data) {
-			return new TypesettingIllustrationModel();
-        });
+        $this->compositionIllustrationAdjustments = self::createIllustrationProperty();
 
         $this->layout = new SettingModelLayout();
         $this->assets = new ArrayOf(function ($data) {
@@ -61,6 +59,13 @@ class SettingModel extends \models\mapper\MapperModel
         return $instance;
     }
 
+    public static function createIllustrationProperty()
+    {
+    	return new MapOf(function($data) {
+			return new TypesettingIllustrationModel();
+    	});
+    }
+        
     /**
      * Removes this Setting from the collection
      * @param ProjectModel $projectModel

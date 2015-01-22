@@ -15,9 +15,22 @@ class TypesettingBookModel
      */
     public function __construct()
     {
-        $this->paragraphProperties = new ParagraphPropertiesMapOf();
+        $this->paragraphProperties = self::createParagraphProperty();
     }
 
+    public static function create($bookId) {
+    	$model = new TypesettingBookModel();
+    	$model->bookId = $bookId;
+    	return $model;
+    }
+    
+    public static function createParagraphProperty()
+    {
+    	return new MapOf(function($data) {
+			return new ParagraphProperty();
+    	});
+    }
+    
     /**
      * @var Id
      */
@@ -29,14 +42,8 @@ class TypesettingBookModel
     public $name;
     
     /**
-     * @var ParagraphPropertiesMapOf
+     * @var MapOf<ParagraphProperty>
      */
     public $paragraphProperties;
-    
-    public static function create($bookId) {
-    	$model = new TypesettingBookModel();
-    	$model->bookId = $bookId;
-    	return $model;
-    }
     
  }
