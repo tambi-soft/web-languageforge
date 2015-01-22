@@ -1,10 +1,10 @@
 <?php
 
-use models\scriptureforge\webtypesetting\SettingModel;
-use models\scriptureforge\webtypesetting\commands\TypesettingSettingsCommands;
+use models\scriptureforge\typesetting\SettingModel;
+use models\scriptureforge\typesetting\commands\TypesettingSettingsCommands;
 use models\mapper\JsonDecoder;
 use models\mapper\JsonEncoder;
-use models\scriptureforge\webtypesetting\commands\TypesettingTemplateCommands;
+use models\scriptureforge\typesetting\commands\TypesettingTemplateCommands;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';

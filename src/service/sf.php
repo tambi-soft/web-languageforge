@@ -1,17 +1,17 @@
 <?php
-use models\scriptureforge\webtypesetting\commands\TypesettingRenderCommands;
+use models\scriptureforge\typesetting\commands\TypesettingRenderCommands;
 
-use models\scriptureforge\webtypesetting\dto\TypesettingRenderPageDto;
+use models\scriptureforge\typesetting\dto\TypesettingRenderPageDto;
 
-use models\scriptureforge\webtypesetting\dto\TypesettingLayoutPageDto;
+use models\scriptureforge\typesetting\dto\TypesettingLayoutPageDto;
 
-use models\scriptureforge\webtypesetting\commands\WebtypesettingDiscussionListCommands;
-use models\scriptureforge\webtypesetting\dto\WebtypesettingDiscussionListPageDto;
+use models\scriptureforge\typesetting\commands\WebtypesettingDiscussionListCommands;
+use models\scriptureforge\typesetting\dto\WebtypesettingDiscussionListPageDto;
 use libraries\scriptureforge\sfchecks\Email;
 
-use models\scriptureforge\webtypesetting\commands\TypesettingUploadCommands;
-use models\scriptureforge\webtypesetting\commands\WebtypesettingCompositionCommands;
-use models\scriptureforge\webtypesetting\commands\TypesettingSettingsCommands;
+use models\scriptureforge\typesetting\commands\TypesettingUploadCommands;
+use models\scriptureforge\typesetting\commands\WebtypesettingCompositionCommands;
+use models\scriptureforge\typesetting\commands\TypesettingSettingsCommands;
 
 use libraries\scriptureforge\sfchecks\ParatextExport;
 use libraries\shared\palaso\exceptions\UserNotAuthenticatedException;
@@ -47,13 +47,13 @@ use models\ProjectModel;
 use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
-use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
+use models\scriptureforge\typesetting\commands\TypesettingSettingCommands;
 
 // TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
 use models\shared\commands\MediaResult;
 use models\shared\commands\UploadResponse;
-use models\scriptureforge\webtypesetting\commands\TypesettingTemplateCommands;
-use models\scriptureforge\webtypesetting\dto\TypesettingAssetDto;
+use models\scriptureforge\typesetting\commands\TypesettingTemplateCommands;
+use models\scriptureforge\typesetting\dto\TypesettingAssetDto;
 
 require_once APPPATH . 'vendor/autoload.php';
 require_once APPPATH . 'config/sf_config.php';

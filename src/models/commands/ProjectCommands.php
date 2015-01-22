@@ -15,7 +15,7 @@ use models\mapper\Id;
 use models\mapper\JsonDecoder;
 use models\mapper\JsonEncoder;
 use models\shared\rights\Domain;
-use models\scriptureforge\webtypesetting;
+use models\scriptureforge\typesetting;
 
 use models\shared\rights\ProjectRoles;
 use models\sms\SmsSettings;

@@ -1,9 +1,9 @@
 <?php
 
 use models\shared\rights\ProjectRoles;
-use models\scriptureforge\webtypesetting\dto\TypesettingAssetDto;
-use models\scriptureforge\webtypesetting\TypesettingAssetModel;
-use models\scriptureforge\webtypesetting\commands\TypesettingUploadCommands;
+use models\scriptureforge\typesetting\dto\TypesettingAssetDto;
+use models\scriptureforge\typesetting\TypesettingAssetModel;
+use models\scriptureforge\typesetting\commands\TypesettingUploadCommands;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';

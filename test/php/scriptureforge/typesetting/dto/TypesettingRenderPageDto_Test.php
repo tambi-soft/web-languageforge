@@ -1,19 +1,19 @@
 <?php
 
-use models\scriptureforge\webtypesetting\dto\TypesettingRenderPageDto;
+use models\scriptureforge\typesetting\dto\TypesettingRenderPageDto;
 
-use models\scriptureforge\webtypesetting\commands\TypesettingRenderCommands;
+use models\scriptureforge\typesetting\commands\TypesettingRenderCommands;
 
-use models\scriptureforge\webtypesetting\SettingListModel;
+use models\scriptureforge\typesetting\SettingListModel;
 
-use models\scriptureforge\webtypesetting\dto\TypesettingLayoutPageDto;
+use models\scriptureforge\typesetting\dto\TypesettingLayoutPageDto;
 
-use models\scriptureforge\webtypesetting\SettingModel;
+use models\scriptureforge\typesetting\SettingModel;
 
 use models\ProjectModel;
 
-use models\scriptureforge\webtypesetting\RapumaAssetListModel;
-use models\scriptureforge\webtypesetting\RapumaAssetModel;
+use models\scriptureforge\typesetting\RapumaAssetListModel;
+use models\scriptureforge\typesetting\RapumaAssetModel;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';

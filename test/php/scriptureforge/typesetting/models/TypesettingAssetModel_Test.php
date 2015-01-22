@@ -4,12 +4,12 @@
 
 use models\ProjectModel;
 
-use models\scriptureforge\webtypesetting\TypesettingAssetListModel;
-use models\scriptureforge\webtypesetting\TypesettingAssetModel;
-use models\scriptureforge\webtypesetting\TypesettingAssetFile;
-use models\scriptureforge\webtypesetting\TypesettingAssetChild;
-use models\scriptureforge\webtypesetting\TypesettingAssetGroupList;
-use models\scriptureforge\webtypesetting\TypesettingAssetFont;
+use models\scriptureforge\typesetting\TypesettingAssetListModel;
+use models\scriptureforge\typesetting\TypesettingAssetModel;
+use models\scriptureforge\typesetting\TypesettingAssetFile;
+use models\scriptureforge\typesetting\TypesettingAssetChild;
+use models\scriptureforge\typesetting\TypesettingAssetGroupList;
+use models\scriptureforge\typesetting\TypesettingAssetFont;
 
 
 
@@ -19,7 +19,7 @@ require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
 require_once SourcePath . "models/ProjectModel.php";
-require_once SourcePath . "models/scriptureforge/webtypesetting/TypesettingAssetModel.php";
+require_once SourcePath . "models/scriptureforge/typesetting/TypesettingAssetModel.php";
 
 class TestTypesettingAssetModel extends UnitTestCase
 {

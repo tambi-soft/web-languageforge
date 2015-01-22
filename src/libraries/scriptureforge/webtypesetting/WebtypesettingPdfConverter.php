@@ -1,6 +1,6 @@
 <?php
 
-namespace libraries\scriptureforge\webtypesetting;
+namespace libraries\scriptureforge\typesetting;
 
 use models\ProjectModel;
 use Imagick;
