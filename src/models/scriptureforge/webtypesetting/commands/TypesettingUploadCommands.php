@@ -42,7 +42,7 @@ class TypesettingUploadCommands
     		default:
     			throw new \Exception('Unknown media type in Typesetting file upload.');
     	}
-	    if ($response->result){	
+	    if ($response->result){
 	    	$project = new ProjectModel($projectId);
 	    	$model = new TypesettingAssetModel($project, $assetId);
 	    	$model->name = $response->data->fileName;
@@ -50,7 +50,7 @@ class TypesettingUploadCommands
 	    	$model->type = $mediaType;
 	    	$model->uploaded = true;
 	    	$model->write();
-	    }	
+	    }
     	return $response;
     }
 
@@ -66,15 +66,15 @@ class TypesettingUploadCommands
     public static function uploadUsfmFile($projectId, $mediaType, $tmpFilePath)
     {
     	$file = $_FILES['file'];
-        $name = $file['name'];
+        $fileName = $file['name'];
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $fileType = finfo_file($finfo, $tmpFilePath);
         finfo_close($finfo);
 
-        $name = FileUtilities::replaceSpecialCharacters($name);
+        $fileName = FileUtilities::replaceSpecialCharacters($fileName);
 
-        $fileExt = (false === $pos = strrpos($name, '.')) ? '' : substr($name, $pos);
+        $fileExt = (false === $pos = strrpos($fileName, '.')) ? '' : substr($fileName, $pos);
 
         $allowedTypes = array(
             "text/plain"
@@ -89,14 +89,14 @@ class TypesettingUploadCommands
             // make the folders if they don't exist
             $project = new ProjectModel($projectId);
             $projectSlug = $project->databaseName();
-            $folderPath = '/home/rapuma/Publishing/' . $projectSlug;
+            $folderPath = $project->getAssetsFolderPath();;
             FileUtilities::createAllFolders($folderPath);
 
             // cleanup previous files of any allowed extension
             self::cleanupFiles($folderPath, '', $allowedExtensions);
 
             // move uploaded file from tmp location to assets
-            $filePath = self::mediaFilePath($folderPath, '', $name);
+            $filePath = self::mediaFilePath($folderPath, '', $fileName);
             $moveOk = copy($tmpFilePath, $filePath);
             @unlink($tmpFilePath);
 
@@ -104,12 +104,12 @@ class TypesettingUploadCommands
             if ($moveOk && $tmpFilePath) {
             	$data = new MediaResult();
                 $data->path = $folderPath;
-                $data->name = $name;
+                $data->fileName = $fileName;
                 $response->result = true;
             } else {
                 $data = new ErrorResult();
                 $data->errorType = 'UserMessage';
-                $data->errorMessage = "$name could not be saved to the right location. Contact your Site Administrator.";
+                $data->errorMessage = "$fileName could not be saved to the right location. Contact your Site Administrator.";
                 $response->result = false;
             }
         } else {
@@ -117,11 +117,11 @@ class TypesettingUploadCommands
             $data = new ErrorResult();
             $data->errorType = 'UserMessage';
             if (count($allowedExtensions) < 1) {
-                $data->errorMessage = "$name is not an allowed USFM file. No USFM file formats are currently enabled, contact your Site Administrator.";
+                $data->errorMessage = "$fileName is not an allowed USFM file. No USFM file formats are currently enabled, contact your Site Administrator.";
             } elseif (count($allowedExtensions) == 1) {
-                $data->errorMessage = "$name is not an allowed USFM file. Ensure the file is a $allowedExtensionsStr.";
+                $data->errorMessage = "$fileName is not an allowed USFM file. Ensure the file is a $allowedExtensionsStr.";
             } else {
-                $data->errorMessage = "$name is not an allowed USFM file. Ensure the file is one of the following types: $allowedExtensionsStr.";
+                $data->errorMessage = "$fileName is not an allowed USFM file. Ensure the file is one of the following types: $allowedExtensionsStr.";
             }
             $response->result = false;
         }
@@ -129,7 +129,7 @@ class TypesettingUploadCommands
         $response->data = $data;
         return $response;
     }
-    
+
     /**
      * Upload a png file
      *
@@ -142,27 +142,26 @@ class TypesettingUploadCommands
     public static function uploadPngFile($projectId, $mediaType, $tmpFilePath)
     {
     	$file = $_FILES['file'];
-        $name = $file['name'];
+        $fileName = $file['name'];
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $fileType = finfo_file($finfo, $tmpFilePath);
         finfo_close($finfo);
 
-        $name = FileUtilities::replaceSpecialCharacters($name);
+        $fileName = FileUtilities::replaceSpecialCharacters($fileName);
 
-        $fileExt = (false === $pos = strrpos($name, '.')) ? '' : substr($name, $pos);
+        $fileExt = (false === $pos = strrpos($fileName, '.')) ? '' : substr($fileName, $pos);
 
         $allowedTypes = array(
             "image/png"
         );
         $allowedExtensions = array(
-            ".png",
-            ".PNG"
+            ".png"
         );
 
         $response = new UploadResponse();
         if (in_array(strtolower($fileType), $allowedTypes) && in_array(strtolower($fileExt), $allowedExtensions)) {
-        	 
+
             // make the folders if they don't exist
             $project = new ProjectModel($projectId);
             $projectSlug = $project->databaseName();
@@ -173,20 +172,20 @@ class TypesettingUploadCommands
             self::cleanupFiles($folderPath, '', $allowedExtensions);
 
             // move uploaded file from tmp location to assets
-            $filePath = self::mediaFilePath($folderPath, '', $name);
+            $filePath = self::mediaFilePath($folderPath, '', $fileName);
             $moveOk = copy($tmpFilePath, $filePath);
             @unlink($tmpFilePath);
 
             // construct server response
             if ($moveOk && $tmpFilePath) {
             	$data = new MediaResult();
-                $data->path = '/' . $project->getAssetsPath() . '/_' . $name; // May be better to create a variable of this
-                $data->name = $name;
+                $data->path = '/' . $project->getAssetsPath();
+                $data->fileName = $fileName;
                 $response->result = true;
             } else {
                 $data = new ErrorResult();
                 $data->errorType = 'UserMessage';
-                $data->errorMessage = "$name could not be saved to the right location. Contact your Site Administrator.";
+                $data->errorMessage = "$fileName could not be saved to the right location. Contact your Site Administrator.";
                 $response->result = false;
             }
         } else {
@@ -194,11 +193,11 @@ class TypesettingUploadCommands
             $data = new ErrorResult();
             $data->errorType = 'UserMessage';
             if (count($allowedExtensions) < 1) {
-                $data->errorMessage = "$name is not an allowed PNG file. No PNG file formats are currently enabled, contact your Site Administrator.";
+                $data->errorMessage = "$fileName is not an allowed PNG file. No PNG file formats are currently enabled, contact your Site Administrator.";
             } elseif (count($allowedExtensions) == 1) {
-                $data->errorMessage = "$name is not an allowed PNG file. Ensure the file is a $allowedExtensionsStr.";
+                $data->errorMessage = "$fileName is not an allowed PNG file. Ensure the file is a $allowedExtensionsStr.";
             } else {
-                $data->errorMessage = "$name is not an allowed PNG file. Ensure the file is one of the following types: $allowedExtensionsStr.";
+                $data->errorMessage = "$fileName is not an allowed PNG file. Ensure the file is one of the following types: $allowedExtensionsStr.";
             }
             $response->result = false;
         }
@@ -206,7 +205,7 @@ class TypesettingUploadCommands
         $response->data = $data;
         return $response;
     }
-    
+
     /**
      *
      * @param string $folderPath
@@ -216,6 +215,9 @@ class TypesettingUploadCommands
      */
     public static function mediaFilePath($folderPath, $fileNamePrefix, $originalFileName)
     {
+        if (! $fileNamePrefix) {
+            return $folderPath . '/' . $originalFileName;
+        }
         return $folderPath . '/' . $fileNamePrefix . '_' . $originalFileName;
     }
 
@@ -253,15 +255,15 @@ class TypesettingUploadCommands
     	}
 
     	$file = $_FILES['file'];
-    	$name = $file['name'];
+    	$fileName = $file['name'];
 
     	$finfo = finfo_open(FILEINFO_MIME_TYPE);
     	$fileType = finfo_file($finfo, $tmpFilePath);
     	finfo_close($finfo);
 
-    	$name = FileUtilities::replaceSpecialCharacters($name);
+    	$fileName = FileUtilities::replaceSpecialCharacters($fileName);
 
-    	$fileExt = (false === $pos = strrpos($name, '.')) ? '' : substr($name, $pos);
+    	$fileExt = (false === $pos = strrpos($fileName, '.')) ? '' : substr($fileName, $pos);
 
     	$allowedTypes = array(
     			"application/zip",
@@ -283,7 +285,7 @@ class TypesettingUploadCommands
     		FileUtilities::createAllFolders($folderPath);
 
     		// move uploaded file from tmp location to assets
-    		$filePath =  $folderPath . '/' . $name;
+    		$filePath =  $folderPath . '/' . $fileName;
     		$moveOk = copy($tmpFilePath, $filePath);
     		@unlink($tmpFilePath);
 
@@ -297,19 +299,19 @@ class TypesettingUploadCommands
     			// construct server response
     			if ($moveOk) {
     				$data = new ImportResult();
-    				$data->path = $project->getAssetsPath();
-    				$data->name = $name;
+    				$data->path = '/' . $project->getAssetsPath();
+    				$data->fileName = $fileName;
     				$response->result = true;
     			} else {
     				$data = new ErrorResult();
     				$data->errorType = 'UserMessage';
-    				$data->errorMessage = "$liftFilename could not be saved to the right location. Contact your Site Administrator.";
+    				$data->errorMessage = "$filename could not be saved to the right location. Contact your Site Administrator.";
     				$response->result = false;
     			}
     		} else {
     			$data = new ErrorResult();
     			$data->errorType = 'UserMessage';
-    			$data->errorMessage = "$name could not be saved to the right location. Contact your Site Administrator.";
+    			$data->errorMessage = "$fileName could not be saved to the right location. Contact your Site Administrator.";
     			$response->result = false;
     		}
     	} else {
@@ -317,11 +319,11 @@ class TypesettingUploadCommands
     		$data = new ErrorResult();
     		$data->errorType = 'UserMessage';
     		if (count($allowedExtensions) < 1) {
-    			$data->errorMessage = "$name is not an allowed compressed file. No compressed file formats are currently enabled, contact your Site Administrator.";
+    			$data->errorMessage = "$fileName is not an allowed compressed file. No compressed file formats are currently enabled, contact your Site Administrator.";
     		} elseif (count($allowedExtensions) == 1) {
-    			$data->errorMessage = "$name is not an allowed compressed file. Ensure the file is a $allowedExtensionsStr.";
+    			$data->errorMessage = "$fileName is not an allowed compressed file. Ensure the file is a $allowedExtensionsStr.";
     		} else {
-    			$data->errorMessage = "$name is not an allowed compressed file. Ensure the file is one of the following types: $allowedExtensionsStr.";
+    			$data->errorMessage = "$fileName is not an allowed compressed file. Ensure the file is one of the following types: $allowedExtensionsStr.";
     		}
     		$response->result = false;
     	}
@@ -353,7 +355,7 @@ class TypesettingUploadCommands
     	$pathinfo = pathinfo($basename);
     	$extension_1 = isset($pathinfo['extension']) ? $pathinfo['extension'] : 'NOEXT';
     	// Handle .tar.gz, .tar.bz2, etc. by checking if there's another extension "inside" the first one
-    	$basename_without_ext = $pathinfo['name'];
+    	$basename_without_ext = $pathinfo['filename'];
     	$pathinfo = pathinfo($basename_without_ext);
     	$extension_2 = isset($pathinfo['extension']) ? $pathinfo['extension'] : 'NOEXT';
     	// $extension_2 will be 'tar' if the file was a .tar.gz, .tar.bz2, etc.
@@ -389,32 +391,32 @@ class TypesettingUploadCommands
     	}
     }
 
-    public static function deleteFile($projectId, $name) {
+    public static function deleteFile($projectId, $fileName) {
     	$response = new UploadResponse();
     	$response->result = false;
     	$project = new WebtypesettingProjectModel($projectId);
     	$folderPath = $project->getAssetsFolderPath();
-    	$filePath = $folderPath . '/' . $name;
+    	$filePath = $folderPath . '/' . $fileName;
     	if (file_exists($filePath) and ! is_dir($filePath)) {
     		if (@unlink($filePath)) {
     			$data = new MediaResult();
-    			$data->path = $project->getAssetsPath();
-    			$data->name = $name;
+    			$data->path = '/' . $project->getAssetsPath();
+    			$data->fileName = $fileName;
     			$response->data = $data;
     			$response->result = true;
     		} else {
     			$data = new ErrorResult();
     			$data->errorType = 'UserMessage';
-    			$data->errorMessage = "$name could not be deleted. Contact your Site Administrator.";
+    			$data->errorMessage = "$fileName could not be deleted. Contact your Site Administrator.";
     		}
     		$response->data = $data;
     		return $response;
     	}
     	$data = new ErrorResult();
     	$data->errorType = 'UserMessage';
-    	$data->errorMessage = "$name does not exist in this project. Contact your Site Administrator.";
+    	$data->errorMessage = "$fileName does not exist in this project. Contact your Site Administrator.";
     	$response->data = $data;
     	return $response;
     }
-    
+
 }

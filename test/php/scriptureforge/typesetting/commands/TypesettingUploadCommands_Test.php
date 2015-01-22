@@ -45,36 +45,36 @@ class TestTypesettingUploadCommands extends UnitTestCase
 
         $projectSlug = $project->databaseName();
         $folderPath = $project->getAssetsFolderPath();
-        $filePath = $folderPath . '/_' . $response->data->fileName;
-        
+        $filePath = $folderPath . '/' . $response->data->fileName;
+
         $this->assertTrue($response->result, 'Import should succeed');
         $this->assertPattern("/$fileName/", $response->data->fileName, 'Imported PNG fileName should contain the original fileName');
         $this->assertTrue(file_exists($filePath), 'Imported PNG file should exist');
-        
+
         $otherAsset = new TypesettingAssetModel($project, $assetId);
         $this->assertEqual($assetId, $otherAsset->id->asString());
         $this->assertEqual('TestImage.png', $otherAsset->name);
-        $this->assertEqual('/assets/webtypesetting/sf_testcode1/_TestImage.png', $otherAsset->path);
+        $this->assertEqual('/assets/webtypesetting/sf_testcode1', $otherAsset->path);
         $this->assertEqual('png', $otherAsset->type);
         $this->assertEqual(true, $otherAsset->uploaded);
 
 
 /*		TODO: Uncomment after we can reupload a file of the same name. Currently this is unsupported. - Justin Southworth 1/2015
- * 
+ *
         $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
-        
+
         $this->assertTrue($response->result, 'Reimport should replace existing file');
         $this->assertPattern("/$fileName/", $response->data->fileName, 'Reimported PNG fileName should contain the original fileName');
         $this->assertTrue(file_exists($filePath), 'Imported PNG file should exist');
-*/        
-        
+*/
+
     }
 
     public function testUploadPngFile_JpgFile_UploadDisallowed()
     {
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
-        $fileName = 'TestImage.png';        
+        $fileName = 'TestImage.png';
         $tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", 'NotAJpg.jpg');
 
         $response = TypesettingUploadCommands::uploadFile($projectId, '', 'png', $tmpFilePath);
@@ -114,31 +114,31 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $this->assertEqual($fileName, $response->data->fileName, 'Uploaded zip fileName should have the original fileName');
         $this->assertTrue(file_exists($filePath), 'Uploaded zip file should exist');
         $this->assertTrue(file_exists($usfmPath), 'USFM file should exist');
-        
+
         $otherAsset = new TypesettingAssetModel($project, $assetId);
         $this->assertEqual($assetId, $otherAsset->id->asString());
         $this->assertEqual('TestTypesettingProject.zip', $otherAsset->name);
-        $this->assertEqual('assets/webtypesetting/sf_testcode1', $otherAsset->path);
+        $this->assertEqual('/assets/webtypesetting/sf_testcode1', $otherAsset->path);
         $this->assertEqual('usfm-zip', $otherAsset->type);
         $this->assertEqual(true, $otherAsset->uploaded);
     }
-    
+
     public function testImportProjectZip_JpgFile_UploadDisallowed()
     {
     	$project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
     	$projectId = $project->id->asString();
     	$tmpFilePath = $this->environ->uploadFile(TestPath . 'common/TestImage.jpg', 'TestTypesettingProject.zip');
-    
+
     	$response = TypesettingUploadCommands::uploadFile($projectId, '', 'usfm-zip', $tmpFilePath);
-    
+
     	$this->assertFalse($response->result, 'Import should fail');
     	$this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
     	$this->assertPattern('/not an allowed compressed file/', $response->data->errorMessage, 'Error message should match the error');
-    
+
     	$tmpFilePath = $this->environ->uploadFile(TestPath . 'scriptureforge/typesetting/commands/TestTypesettingProject.zip', 'TestImage.jpg');
-    
+
     	$response = TypesettingUploadCommands::uploadFile($projectId, '', 'usfm-zip', $tmpFilePath);
-    
+
     	$this->assertFalse($response->result, 'Import should fail');
     	$this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
     	$this->assertPattern('/not an allowed compressed file/', $response->data->errorMessage, 'Error message should match the error');
@@ -149,16 +149,16 @@ class TestTypesettingUploadCommands extends UnitTestCase
     	$project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
     	$projectId = $project->id->asString();
     	$fileName = 'TestImage.png';
-    	$filePath = $project->getAssetsFolderPath() . '/_' . $fileName;
+    	$filePath = $project->getAssetsFolderPath() . '/' . $fileName;
     	$tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
 
     	$response = TypesettingUploadCommands::uploadFile($projectId, '', 'png', $tmpFilePath);
-    
+
     	$this->assertTrue($response->result, 'Upload should succeed');
     	$this->assertTrue(file_exists($filePath), 'Uploaded file should exist');
-    	
-    	$response = TypesettingUploadCommands::deleteFile($projectId, '_' . $fileName);
-    
+
+    	$response = TypesettingUploadCommands::deleteFile($projectId, $fileName);
+
     	$this->assertTrue($response->result, 'Delete should succeed');
     	$this->assertFalse(file_exists($filePath), 'Uploaded file should be deleted');
     }
@@ -173,12 +173,12 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $tmpFilePath = $this->environ->uploadFile(TestPath . "scriptureforge/typesetting/commands/$fileName", $fileName);
 
         $response = TypesettingUploadCommands::uploadFile($projectId, '', 'usfm-zip', $tmpFilePath);
-    
+
     	$this->assertTrue($response->result, 'Upload should succeed');
     	$this->assertTrue(file_exists($filePath), 'Uploaded file should exist');
-    	 
+
     	$response = TypesettingUploadCommands::deleteFile($projectId, $fileName);
-    
+
     	$this->assertTrue($response->result, 'Delete should succeed');
     	$this->assertFalse(file_exists($filePath), 'Uploaded file should be deleted');
     }

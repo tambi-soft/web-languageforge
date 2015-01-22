@@ -49,7 +49,7 @@ TODO: This should be removed from production code! IJH 2014-11
 			<ul class="list-group">
 				<li class="list-group-item text-left" data-ng-repeat="asset in section.assets">
 					<!-- TODO: Move styling to css -->
-         			<img data-ng-if="section.fileType == 'png'" data-ng-src="{{asset.path}}" style="width:50px;" />
+         			<img data-ng-if="section.fileType == 'png'" data-ng-src="{{asset.path + '/' + asset.name}}" style="width:50px;" />
 					<span>{{ asset.name }}</span>
 <!-- 					<span class="btn badge" ng-click="deleteFile(section.assets,$index)">X</span> -->
 				</li>

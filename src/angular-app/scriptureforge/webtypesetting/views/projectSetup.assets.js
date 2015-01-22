@@ -75,7 +75,12 @@ angular.module('webtypesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 
 						$scope.progress = 100.0;
 						$scope.uploadResult = 'File uploaded successfully.';
 						notice.push(notice.SUCCESS, $scope.uploadResult);
-						section.assets.push(data.data);
+						var asset = data.data;
+						asset.name = asset.fileName;
+						asset.type = section.fileType;
+						asset.uploaded = true;
+						delete(asset.fileName);
+						section.assets.push(asset);
 					} else {
 						$scope.progress = 0;
 						notice.push(notice.ERROR, data.data.errorMessage);
