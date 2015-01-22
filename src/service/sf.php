@@ -53,6 +53,7 @@ use models\scriptureforge\webtypesetting\commands\TypesettingSettingCommands;
 use models\shared\commands\MediaResult;
 use models\shared\commands\UploadResponse;
 use models\scriptureforge\webtypesetting\commands\TypesettingTemplateCommands;
+use models\scriptureforge\webtypesetting\dto\TypesettingAssetDto;
 
 require_once APPPATH . 'vendor/autoload.php';
 require_once APPPATH . 'config/sf_config.php';
@@ -690,6 +691,10 @@ class sf
 		return WebtypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $bookId, $illustrationModel);
 	}
 	
+	public function typesetting_readAssetsDto() {
+		return TypesettingAssetDto::encode($this->_projectId);
+	}
+	
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------
@@ -701,7 +706,7 @@ class sf
     
     public function typesetting_uploadFile($mediaType, $tmpFilePath)
     {
-    	$response = TypesettingUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
+    	$response = TypesettingUploadCommands::uploadFile($this->_projectId, '', $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
     }
     

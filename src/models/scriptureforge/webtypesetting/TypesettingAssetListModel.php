@@ -9,7 +9,7 @@ class TypesettingAssetListModel extends \models\mapper\MapperListModel
                 parent::__construct(
                                 TypesettingAssetModelMongoMapper::connect($projectModel->databaseName()),
                                 array('name' => array('$regex' => '')),
-                                array('name')
+                                array('name', 'type', 'path', 'uploaded')
                 );
         }
 

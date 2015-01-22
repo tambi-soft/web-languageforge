@@ -145,6 +145,14 @@
     "webkitRelativePath": ""
   },
   
+  "testMockTypesettingZipImportFile" : {
+    "lastModified" : 1416986856000,
+    "name" : "TestTypesettingProject.zip",
+    "size" : 34140,
+    "type" : "",
+    "webkitRelativePath": ""
+  },
+  
   "End_of_constants" : ""
 
 }

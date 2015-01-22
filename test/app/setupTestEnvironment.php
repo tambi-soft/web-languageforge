@@ -203,6 +203,16 @@ if ($site == 'scriptureforge') {
         'id' => '',
         'content' => $constants['testText1Question2Answer2Comment']),
         $managerUser);
+    
+    // put mock uploaded zip import (zip file)
+    $fileName = $constants['testMockTypesettingZipImportFile']['name'];
+    $tmpFilePath = sys_get_temp_dir() . '/' . $fileName;
+    copy(dirname(TestPath) . "/php/scriptureforge/typesetting/commands/$fileName", $tmpFilePath);
+    
+    /*$file = array();
+    $file['name'] = $fileName;
+    $_FILES['file'] = $file;*/
+    
 } elseif ($site == 'languageforge') {
     // Set up LanguageForge E2E test envrionment here
     $testProjectModel = new LexiconProjectModel($testProject);

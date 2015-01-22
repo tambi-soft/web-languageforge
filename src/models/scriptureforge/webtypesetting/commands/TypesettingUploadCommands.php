@@ -8,6 +8,7 @@ use models\shared\commands\ImportResult;
 use models\shared\commands\MediaResult;
 use models\shared\commands\UploadResponse;
 use models\ProjectModel;
+use models\scriptureforge\webtypesetting\TypesettingAssetModel;
 
 class TypesettingUploadCommands
 {
@@ -16,12 +17,13 @@ class TypesettingUploadCommands
      * Upload a file
      *
      * @param string $projectId
+     * @param string $assetId
      * @param string $mediaType
      * @param string $tmpFilePath
      * @throws \Exception
      * @return \models\shared\commands\UploadResponse
      */
-    public static function uploadFile($projectId, $mediaType, $tmpFilePath)
+    public static function uploadFile($projectId, $assetId, $mediaType, $tmpFilePath)
     {
         if (! $tmpFilePath) {
             throw new \Exception("Upload controller did not move the uploaded file.");
@@ -29,17 +31,27 @@ class TypesettingUploadCommands
 
     	switch ($mediaType) {
     		case 'usfm':
-    			return self::uploadUsfmFile($projectId, $mediaType, $tmpFilePath);
+    			$response = self::uploadUsfmFile($projectId, $mediaType, $tmpFilePath);
     			break;
     		case 'usfm-zip':
-    			return self::importProjectZip($projectId, $mediaType, $tmpFilePath);
+    			$response = self::importProjectZip($projectId, $mediaType, $tmpFilePath);
     			break;
     		case 'png':
-    			return self::uploadPngFile($projectId, $mediaType, $tmpFilePath);
-                        break;
+    			$response = self::uploadPngFile($projectId, $mediaType, $tmpFilePath);
+                break;
     		default:
     			throw new \Exception('Unknown media type in Typesetting file upload.');
     	}
+	    if ($response->result){
+	    	$project = new ProjectModel($projectId);
+	    	$model = new TypesettingAssetModel($project, $assetId);
+	    	$model->name = $response->data->fileName;
+	    	$model->path = $response->data->path;
+	    	$model->type = $mediaType;
+	    	$model->uploaded = true;
+	    	$model->write();
+	    }
+    	return $response;
     }
 
     /**
@@ -77,7 +89,7 @@ class TypesettingUploadCommands
             // make the folders if they don't exist
             $project = new ProjectModel($projectId);
             $projectSlug = $project->databaseName();
-            $folderPath = '/home/rapuma/Publishing/' . $projectSlug;
+            $folderPath = $project->getAssetsFolderPath();;
             FileUtilities::createAllFolders($folderPath);
 
             // cleanup previous files of any allowed extension
@@ -91,7 +103,7 @@ class TypesettingUploadCommands
             // construct server response
             if ($moveOk && $tmpFilePath) {
             	$data = new MediaResult();
-                $data->path = '';
+                $data->path = $folderPath;
                 $data->fileName = $fileName;
                 $response->result = true;
             } else {
@@ -117,7 +129,7 @@ class TypesettingUploadCommands
         $response->data = $data;
         return $response;
     }
-    
+
     /**
      * Upload a png file
      *
@@ -144,13 +156,12 @@ class TypesettingUploadCommands
             "image/png"
         );
         $allowedExtensions = array(
-            ".png",
-            ".PNG"
+            ".png"
         );
 
         $response = new UploadResponse();
         if (in_array(strtolower($fileType), $allowedTypes) && in_array(strtolower($fileExt), $allowedExtensions)) {
-        	 
+
             // make the folders if they don't exist
             $project = new ProjectModel($projectId);
             $projectSlug = $project->databaseName();
@@ -168,7 +179,7 @@ class TypesettingUploadCommands
             // construct server response
             if ($moveOk && $tmpFilePath) {
             	$data = new MediaResult();
-                $data->path = '/' . $project->getAssetsPath() . '/_' . $fileName; // May be better to create a variable of this
+                $data->path = '/' . $project->getAssetsPath();
                 $data->fileName = $fileName;
                 $response->result = true;
             } else {
@@ -194,7 +205,7 @@ class TypesettingUploadCommands
         $response->data = $data;
         return $response;
     }
-    
+
     /**
      *
      * @param string $folderPath
@@ -204,6 +215,9 @@ class TypesettingUploadCommands
      */
     public static function mediaFilePath($folderPath, $fileNamePrefix, $originalFileName)
     {
+        if (! $fileNamePrefix) {
+            return $folderPath . '/' . $originalFileName;
+        }
         return $folderPath . '/' . $fileNamePrefix . '_' . $originalFileName;
     }
 
@@ -285,13 +299,13 @@ class TypesettingUploadCommands
     			// construct server response
     			if ($moveOk) {
     				$data = new ImportResult();
-    				$data->path = $project->getAssetsPath();
+    				$data->path = '/' . $project->getAssetsPath();
     				$data->fileName = $fileName;
     				$response->result = true;
     			} else {
     				$data = new ErrorResult();
     				$data->errorType = 'UserMessage';
-    				$data->errorMessage = "$liftFilename could not be saved to the right location. Contact your Site Administrator.";
+    				$data->errorMessage = "$filename could not be saved to the right location. Contact your Site Administrator.";
     				$response->result = false;
     			}
     		} else {
@@ -386,7 +400,7 @@ class TypesettingUploadCommands
     	if (file_exists($filePath) and ! is_dir($filePath)) {
     		if (@unlink($filePath)) {
     			$data = new MediaResult();
-    			$data->path = $project->getAssetsPath();
+    			$data->path = '/' . $project->getAssetsPath();
     			$data->fileName = $fileName;
     			$response->data = $data;
     			$response->result = true;
@@ -404,5 +418,5 @@ class TypesettingUploadCommands
     	$response->data = $data;
     	return $response;
     }
-    
+
 }

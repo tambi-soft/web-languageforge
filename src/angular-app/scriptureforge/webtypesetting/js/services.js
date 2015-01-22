@@ -15,15 +15,16 @@ angular.module('webtypesetting.services', ['jsonRpc'])
   .service('webtypesettingSetupService', ['jsonRpc',
   function(jsonRpc) {
     jsonRpc.connect('/api/sf');
-	
+
     this.setupPageDto = function(callback) {
     }; 
     
   }])
-  .service('webtypesettingAssetService', ['jsonRpc',  function(jsonRpc) {
-	  jsonRpc.connect('/api/sf');
-	  	  this.add = function(callback) {
-	  };
+  .service('typesettingAssetService', ['jsonRpc', function(jsonRpc) {
+      jsonRpc.connect('/api/sf');
+      this.readAssets = function readAssets(callback) {
+          jsonRpc.call('typesetting_readAssetsDto', [], callback);
+      };
   }])
   //This factory communicates with the layout controller and sends the jsonRpc call
   .factory('templateSaveService', function($rootScope, jsonRpc) {
