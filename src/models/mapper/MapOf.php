@@ -35,14 +35,23 @@ class MapOf extends \ArrayObject
     public function offsetGet($index)
     {
         CodeGuard::checkTypeAndThrow($index, 'string');
+        // REVIEW: I (CP) added this during the JTerm 2015 project.  It may cause consequential damage. 2015-01
+        if (!parent::offsetExists($index)) {
+        	if ($this->hasGenerator()) {
+        		$newValue = $this->generate();
+        	} else {
+        		$newValue = '';
+        	}
+        	$this->offsetSet($index, $newValue);
+        }
 
         return parent::offsetGet($index);
     }
 
-    public function offsetSet($index, $newval)
+    public function offsetSet($index, $newValue)
     {
         CodeGuard::checkTypeAndThrow($index, 'string');
-        parent::offsetSet($index, $newval);
+        parent::offsetSet($index, $newValue);
     }
 
 }

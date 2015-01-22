@@ -10,7 +10,7 @@ use models\scriptureforge\typesetting\dto\WebtypesettingDiscussionListPageDto;
 use libraries\scriptureforge\sfchecks\Email;
 
 use models\scriptureforge\typesetting\commands\TypesettingUploadCommands;
-use models\scriptureforge\typesetting\commands\WebtypesettingCompositionCommands;
+use models\scriptureforge\typesetting\commands\TypesettingCompositionCommands;
 use models\scriptureforge\typesetting\commands\TypesettingSettingsCommands;
 
 use libraries\scriptureforge\sfchecks\ParatextExport;
@@ -660,36 +660,49 @@ class sf
 	}
 	
 	public function typesetting_composition_getBookHTML($bookId) {
-		return WebtypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
+		return TypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
 	}
 	
 	public function typesetting_composition_getListOfBooks() {
-		return WebtypesettingCompositionCommands::getListOfBooks($this->_projectId);
+		return TypesettingCompositionCommands::getListOfBooks($this->_projectId);
 	}
 	
 	public function typesetting_composition_getParagraphProperties($bookId) {
-		return WebtypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
+		return TypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
 	}
 	
 	public function typesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
-		return WebtypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
+		return TypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
 	}
 	
 	public function typesetting_composition_renderBook($bookId) {
-		return WebtypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
+		return TypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
 	}
 	
 	public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
-		return WebtypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
+		return TypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
 
-	public function typesetting_composition_getIllustrationProperties($bookId) {
-		return WebtypesettingCompositionCommands::getIllustrationProperties($this->_projectId, $bookId);
+	public function typesetting_composition_getIllustrationProperties() {
+		return TypesettingCompositionCommands::getIllustrationProperties($this->_projectId);
 	}
 	
-	public function typesetting_composition_setIllustrationProperties($bookId, $illustrationModel) {
-		return WebtypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $bookId, $illustrationModel);
+	public function typesetting_composition_setIllustrationProperties($illustrationModel) {
+		return TypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $illustrationModel);
 	}
+	public function typesetting_composition_getPageDto() {
+		return TypesettingCompositionCommands::getPageDto($this->_projectId);
+	}
+	public function typesetting_composition_getBookDto($bookId) {
+		return TypesettingCompositionCommands::getBookDto($this->_projectId, $bookId);
+	}
+	public function typesetting_composition_getPageStatus($bookId) {
+		return TypesettingCompositionCommands::getPageStatus($this->_projectId, $bookId);
+	}
+	public function typesetting_composition_setPageStatus($bookId, $pages) {
+		return TypesettingCompositionCommands::setPageStatus($this->_projectId, $bookId, $pages);
+	}
+	
 	
 	public function typesetting_readAssetsDto() {
 		return TypesettingAssetDto::encode($this->_projectId);

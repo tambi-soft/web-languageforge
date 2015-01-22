@@ -26,6 +26,14 @@ class SettingModel extends \models\mapper\MapperModel
     {
         $this->id = new Id();
         $this->setReadOnlyProp('author');
+        
+        $this->compositionBookAdjustments = new MapOf(function($data) {
+			return new TypesettingBookModel();
+        });
+        
+        $this->compositionIllustrationAdjustments = new MapOf(function($data) {
+			return new TypesettingIllustrationModel();
+        });
 
         $this->layout = new SettingModelLayout();
         $this->assets = new ArrayOf(function ($data) {
@@ -131,5 +139,14 @@ class SettingModel extends \models\mapper\MapperModel
      */
     public $renderedBy;
     
+    /**
+     * @var MapOf<TypesettingBookModel>
+     */
+    public $compositionBookAdjustments;
+
+    /**
+     * @var MapOf<TypesettingIllustrationModel>
+     */
+    public $compositionIllustrationAdjustments;
 }
 

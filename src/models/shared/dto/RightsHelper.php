@@ -285,7 +285,15 @@ class RightsHelper
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
             case 'typesetting_composition_setIllustrationProperties':
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_composition_getPageStatus':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_setPageStatus':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
             case 'typesetting_composition_getRenderedPageForBook':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getPageDto':
+            	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getBookDto':
             	return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
             	
             	
