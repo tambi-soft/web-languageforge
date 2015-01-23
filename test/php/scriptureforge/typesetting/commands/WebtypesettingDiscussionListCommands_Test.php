@@ -5,7 +5,6 @@ use models\scriptureforge\typesetting\WebtypesettingDiscussionThreadModel;
 use models\scriptureforge\typesetting\TypesettingAssetModel;
 use models\scriptureforge\typesetting\TypesettingDiscussionThreadListModel;
 use models\scriptureforge\typesetting\TypesettingDiscussionPostListModel;
-use models\scriptureforge\webtypesetting\WebtypesettingDiscussionThreadModel;
 use models\languageforge\lexicon\LexCommentReply;
 use models\languageforge\lexicon\AuthorInfo;
 
