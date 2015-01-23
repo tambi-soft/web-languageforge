@@ -73,9 +73,11 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		TypesettingDiscussionListCommands::createThread($projectId, 'my second thread', $assetId);
 		$threadList->read();
-		$thread2Id = $threadList->entries[0]['id'];
+		$threadId = $threadList->entries[0]['id'];
 
-		TypesettingDiscussionListCommands::deleteThread($projectId, $thread2Id);
+		TypesettingDiscussionListCommands::deleteThread($projectId, $threadId);
+
+		$threadList = new TypesettingDiscussionThreadListModel($project);
 		$threadList->read();
 		$this->assertEqual($threadList->count, 1);
 		$this->assertEqual($threadList->entries[0]['title'], 'my first thread');
@@ -289,20 +291,16 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 		$postList->read();
 		$postId = $postList->entries[0]['id'];
 
-
-
-
 		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my first reply");
 		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my second reply");
 		$postList->read();
 		$replyId = $postList->entries[0]['replies'][0]['id'];
+		$this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my first reply');
 
 		TypesettingDiscussionListCommands::deleteReply($projectId, $threadId, $postId, $replyId);
 		$postList->read();
 
-		// we expect the only reply remaining after the delete to be "my first reply" because
-		// reply[0] represents the newest reply
-		$this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my first reply');
+		$this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my second reply');
 	}
 
 	public function testUpdateStatus_OldStatus_NewStatus(){

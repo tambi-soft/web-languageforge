@@ -80,6 +80,7 @@ class TypesettingDiscussionListCommands {
 		$threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
 		$postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
 		$postModel->deleteReply($replyId);
+		return $postModel->write();
 	}
 
 //	NOTE: Customer said that updating replies is not necessary at the moment of release.
