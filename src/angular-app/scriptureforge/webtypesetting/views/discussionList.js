@@ -3,98 +3,47 @@
 
 angular.module('webtypesetting.discussionList', ['ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.discussionServices'])
 
-.controller('discussionListCtrl', ['$scope', '$state', 'webtypesettingDiscussionService', 'sessionService', 'modalService', 'silNoticeService',
-                                       function($scope, $state, discussionApi, sessionService, modal, notice) {
+.controller('discussionListCtrl', ['$scope', '$state', 'webtypesettingDiscussionService', 'sessionService', 'modalService', 'silNoticeService', 
+function($scope, $state, discussionService, sessionService, modal, notice) {
+  $scope.newThread = {
+      'title': '',
+      'associatedItem': ''
+  }
+  $scope.newThreadCollapsed = true;
 
-	
-	$scope.threads = [];
-	
-	// $scope.name = "Chris";
-	
-	$scope.isManager=function(){
-		return true;
-	};
-	
+  discussionService.getPageDto(function(result) {
+    $scope.discussion.threads = result.data.threads;
+  });
 
+  $scope.deleteThread = function(thread, index) {
+    var confirmBool = confirm("Are you sure you would like to delete this thread?");
+    if (confirmBool) {
+      discussionService.deleteThread(thread.id, function(result) {
+        
+        // ensure additional rows can't be deleted while waiting for the server
+        if (result.ok && thread.id === $scope.discussion.threads[index].id) {
+          $scope.discussion.threads.splice(index, 1);
+          notice.push(notice.SUCCESS, "Thread deleted.");
+        }
+      });
+    }
+  };
 
-	// list of threads
-	$scope.threads = [
-	
-	{
-		title: "My first thread",
-		status: "unresolved",
-		lastModified: "Monday, Dec 20th 2015",
-		author: {
-			name: "Chris Hirt", 
-			url: "http://profileUrl"
-		},
-		item: {
-				type: "Scripture Book",
-				iconUrl: "url",
-				url: "url",
-				title: "The Book of Matthew"
-		},
-		id: "12345"
-	},
-	{
-		title: "Why is the book of John Italicized?",
-		status: "unresolved",
-		lastModified: "Wednesday, Oct. 31 2013",
-		author: {
-			name: "Nick VanderKolk", 
-			url: "http://profileUrl"
-		},
-		item: {
-				type: "Scripture Book",
-				iconUrl: "url",
-				url: "url",
-				title: "The Book of John"
-		}, 
-		id: "6789",
-		posts: []
-	}
-	];
-	
-	var onePost = {
-			author: {
-				name: "Benjamin Braker", 
-				url: "http://profileUrl"
-			},
-			content: "My first post!",
-			creationDate: "when",
-			status: "unresolved",
-			tags: [],
-			replies: []
-	};
-	
-	var tag = {name: "important"};
-	
-	var reply = {
-		author: {},
-		creationDate: "",
-		content: "my first reply to the post!"
-			
-	};
-	
-	
-	 $scope.deleteThread = function(thread) {
-		var confirmBool = confirm("Are you sure you would like to delete this thread?");
-		if(confirmBool){
-			discussionApi.deleteThread(thread.id, function(result) {
-				    $scope.getPageDto();
-				    notice.push(notice.SUCCESS, "Thread deleted.");
-			});
-		}
-	  };
-	 $scope.createThread = function(thread) {
-		var title = prompt("Please enter a new thread name.");
-		var itemId = prompt("Please enter the passage, or image this thread is referencing (optional).");
-		discussionApi.createThread(title, itemId, function(result) {
-			    $scope.getPageDto();
-			    notice.push(notice.SUCCESS, "Thread created.");
-		});
-	 };
-	 
-	
+  $scope.createThread = function(thread) {
+    discussionService.createThread($scope.newThread.title, $scope.newThread.associatedItem, function(result) {
+      $scope.newThread.status = 'Open';
+      $scope.newThread.dateModified = new Date();
+      $scope.discussion.threads.unshift($scope.newThread);
+      $scope.newThread = {
+          'title': '',
+          'associatedItem': ''
+      }
+      notice.push(notice.SUCCESS, "Thread created.");
+    });
+  };
+
+  $scope.isManager = function() {
+    return true;
+  };
+
 }]);
-

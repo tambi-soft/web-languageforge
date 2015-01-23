@@ -204,7 +204,9 @@ div#promotion {
 	border-radius: 5px 5px 5px 5px;
 	background: #f4f4f6 url(/images/scriptureforge/default/promotion-hl.png) no-repeat 0 0;
 }
-
+.tableTopMargin {
+	margin-top: 16px !important;
+}
 div#promotionCutout {
 	position: absolute;
 	display: block;

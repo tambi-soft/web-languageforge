@@ -71,6 +71,12 @@ angular.module('webtypesetting',
 	}])
 .controller('MainCtrl', ['$scope', function($scope) {
   $scope.selectedBtn = 0;
+  
+  // accessed by discussionListCtrl and discussionThreadCtrl
+  $scope.discussion = {
+    'currentThreadIndex': -1,
+    'threads': []  
+  };
 
   $scope.settingsButton = {
     isopen: false

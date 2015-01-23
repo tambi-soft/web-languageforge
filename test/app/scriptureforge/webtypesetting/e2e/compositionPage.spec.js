@@ -64,6 +64,7 @@ describe('the composition page', function(){
 		/*
 		 * most testing is going to have to wait for actual functionality to exist, eg test that images are correct and change as selected page changes.
 		 */
+/*
 		it('can render image', function(){
 			compositionPage.navigation.renderButton.click();
 			expect(compositionPage.right.rightPage.isPresent()).toBe(true);
@@ -80,7 +81,7 @@ describe('the composition page', function(){
 		 */
 		//it('has slider navigation', function(){});
 		//it('has paragraph selection', function(){});
-		
+/*		
 
 
 	});

@@ -573,112 +573,104 @@ class sf
         return JsonEncoder::encode($response);
     }
 
-
     public function typesetting_discussionList_getPageDto() {
+
     	return WebtypesettingDiscussionListPageDto::encode($this->_projectId);
     }
-    
+
     public function typesetting_discussionList_createThread($title, $itemId) {
     	return WebtypesettingDiscussionListCommands::createThread($this->_projectId, $title, $itemId);
     }
-    
+
 	public function typesetting_discussionList_deleteThread($threadId) {
     	return WebtypesettingDiscussionListCommands::deleteThread($this->_projectId, $threadId);
     }
-    
+
 	public function typesetting_discussionList_updateThread($threadId, $title) {
     	return WebtypesettingDiscussionListCommands::updateThread($this->_projectId, $threadId, $title);
     }
-    
+
 	public function typesetting_discussionList_createPost($threadId, $content) {
     	return WebtypesettingDiscussionListCommands::createPost($this->_projectId, $threadId, $content);
     }
-    
+
 	public function typesetting_discussionList_deletePost($threadId, $postId) {
     	return WebtypesettingDiscussionListCommands::deletePost($this->_projectId, $threadId, $postId);
     }
-    
+
 	public function typesetting_discussionList_updatePost($threadId, $postId, $content) {
     	return WebtypesettingDiscussionListCommands::updatePost($this->_projectId, $threadId, $postId, $content);
     }
-    
+
 	public function typesetting_discussionList_createReply($threadId, $postId, $content) {
     	return WebtypesettingDiscussionListCommands::createReply($this->_projectId, $threadId, $postId, $content);
     }
-    
+
 	public function typesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
     	return WebtypesettingDiscussionListCommands::deleteReply($this->_projectId, $threadId, $postId, $replyId);
     }
-    
+
 	public function typesetting_discussionList_updateReply($threadId, $postId, $replyId, $content) {
     	return WebtypesettingDiscussionListCommands::updateReply($this->_projectId, $threadId, $postId, $replyId, $content);
     }
-    
+
 	public function typesetting_discussionList_updateStatus($threadId, $status) {
     	return WebtypesettingDiscussionListCommands::updateStatus($this->_projectId, $threadId, $status);
     }
-    
-    
-    
+
     public function typesetting_discussionList_getThread($threadId) {
     	return WebtypesettingDiscussionListCommands::getThread($this->_projectId, $threadId);
     }
-    
-    public function typesetting_discussionList_getThreadList() {
-    	return WebtypesettingDiscussionListCommands::getThreadList($this->_projectId);
-    }
-	
-    
-    
+
     public function typesetting_rapuma_render(){
     	return array('pdfUrl' => "assets/ngTraining.pdf");
     }
-    
+
     public function typesetting_renderPage_dto() {
     	return TypesettingRenderPageDto::encode($this->_projectId);
     }
     public function typesetting_render_doRender() {
     	TypesettingRenderCommands::doRender($this->_projectId, $this->_userId);
-    	
+
     }
 
-    
+
 	public function typesetting_settings_list() {
 		return TypesettingSettingsCommands::readSettings($this->_projectId);
 	}
-	
+
     public function typesetting_settings_readCurrent() {
 		return TypesettingSettingsCommands::readSettingsCurrent($this->_projectId);
 	}
-	
+
     public function typesetting_settings_read($id) {
 		return TypesettingSettingsCommands::readSettings($this->_projectId, $id);
 	}
-	
+
 	public function typesetting_settings_update($settings) {
 		return TypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
 	}
-	
+
 	public function typesetting_composition_getBookHTML($bookId) {
 		return TypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
 	}
-	
+
 	public function typesetting_composition_getListOfBooks() {
 		return TypesettingCompositionCommands::getListOfBooks($this->_projectId);
 	}
-	
+
 	public function typesetting_composition_getParagraphProperties($bookId) {
 		return TypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
 	}
-	
+
 	public function typesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
 		return TypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
 	}
-	
+
 	public function typesetting_composition_renderBook($bookId) {
 		return TypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
 	}
-	
+
 	public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
 		return TypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
 	}
@@ -686,7 +678,7 @@ class sf
 	public function typesetting_composition_getIllustrationProperties() {
 		return TypesettingCompositionCommands::getIllustrationProperties($this->_projectId);
 	}
-	
+
 	public function typesetting_composition_setIllustrationProperties($illustrationModel) {
 		return TypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $illustrationModel);
 	}
@@ -703,11 +695,11 @@ class sf
 		return TypesettingCompositionCommands::setPageStatus($this->_projectId, $bookId, $pages);
 	}
 	
-	
+
 	public function typesetting_readAssetsDto() {
 		return TypesettingAssetDto::encode($this->_projectId);
 	}
-	
+
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------
@@ -716,23 +708,23 @@ class sf
     	$response = TypesettingUploadCommands::importProjectZip($this->_projectId, $mediaType, $tmpFilePath);
     	return JsonEncoder::encode($response);
     }
-    
+
     public function typesetting_uploadFile($mediaType, $tmpFilePath)
     {
     	$response = TypesettingUploadCommands::uploadFile($this->_projectId, '', $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
     }
-    
+
     public function typesetting_deleteFile($fileName)
     {
     	$response = TypesettingUploadCommands::deleteFile($this->_projectId, $fileName);
     	return JsonEncoder::encode($response);
     }
-    
+
     // ---------------------------------------------------------------
     // TypesettingSettingCommands API
     // ---------------------------------------------------------------
-    
+
     public function typesetting_layoutSettings_update($model)
     {
 	    // update should only ever update the "latest" setting
@@ -755,7 +747,7 @@ class sf
     {
         return TypesettingSettingCommands::listTypesettingSetting($this->_projectId);
     }
-    
+
     // ---------------------------------------------------------------
     // TypesettingTemplateCommands API
     // ---------------------------------------------------------------
@@ -764,7 +756,7 @@ class sf
     {
     	return TypesettingTemplateCommands::updateTemplate($data["templateName"], $data["vm"]["conf"]);
     }
-    
+
     public function template_load($data)
     {
     	return TypesettingTemplateCommands::getTemplate($data);
