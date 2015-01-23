@@ -1,18 +1,18 @@
 <?php
 
-use models\scriptureforge\typesetting\commands\WebtypesettingDiscussionListCommands;
-use models\scriptureforge\typesetting\WebtypesettingDiscussionThreadModel;
+use models\scriptureforge\typesetting\commands\TypesettingDiscussionListCommands;
 use models\scriptureforge\typesetting\TypesettingAssetModel;
-use models\scriptureforge\typesetting\TypesettingDiscussionThreadListModel;
 use models\scriptureforge\typesetting\TypesettingDiscussionPostListModel;
-use models\languageforge\lexicon\LexCommentReply;
+use models\scriptureforge\typesetting\TypesettingDiscussionThreadListModel;
+use models\scriptureforge\typesetting\TypesettingDiscussionThreadModel;
 use models\languageforge\lexicon\AuthorInfo;
+use models\languageforge\lexicon\LexCommentReply;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
-class TestWebtypesettingDiscussionListCommands extends UnitTestCase
+class TestTypesettingDiscussionListCommands extends UnitTestCase
 {
 	public function testCreateThread_NoExistingThreads_OneThreadExists() {
 		$e = new MongoTestEnvironment();
@@ -28,7 +28,7 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
 		$threadList->read();
 		$this->assertEqual($threadList->count, 1);
 		$this->assertEqual($threadList->entries[0]['title'], 'my thread');
@@ -48,9 +48,9 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
 		$threadList->read();
-		WebtypesettingDiscussionListCommands::updateThread($projectId, $threadList->entries[0]['id'], 'my updated thread');
+		TypesettingDiscussionListCommands::updateThread($projectId, $threadList->entries[0]['id'], 'my updated thread');
 		$threadList->read();
 		$this->assertEqual($threadList->entries[0]['title'], 'my updated thread');
 	}
@@ -69,13 +69,13 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my first thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my first thread', $assetId);
 		$threadList->read();
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my second thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my second thread', $assetId);
 		$threadList->read();
 		$thread2Id = $threadList->entries[0]['id'];
 
-		WebtypesettingDiscussionListCommands::deleteThread($projectId, $thread2Id);
+		TypesettingDiscussionListCommands::deleteThread($projectId, $thread2Id);
 		$threadList->read();
 		$this->assertEqual($threadList->count, 1);
 		$this->assertEqual($threadList->entries[0]['title'], 'my first thread');
@@ -94,9 +94,9 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList = new TypesettingDiscussionThreadListModel($project);
 		$threadList->read();
 
-		$threadId1 = WebtypesettingDiscussionListCommands::createThread($projectId, 'thread 1', $assetId);
-		$threadModel1 = new WebtypesettingDiscussionThreadModel($project, $threadId1);
-		$threadModel2 = WebtypesettingDiscussionListCommands::getThread($projectId, $threadId1);
+		$threadId1 = TypesettingDiscussionListCommands::createThread($projectId, 'thread 1', $assetId);
+		$threadModel1 = new TypesettingDiscussionThreadModel($project, $threadId1);
+		$threadModel2 = TypesettingDiscussionListCommands::getThread($projectId, $threadId1);
 
 		$this->assertIdentical($threadModel1, $threadModel2);
 	}
@@ -115,14 +115,14 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
 		$threadList->read();
 		$threadId = $threadList->entries[0]['id'];
 
 		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
 		$postList->read();
 
-		WebtypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
 		$postList->read();
 		$this->assertEqual($postList->count, 1);
 		$this->assertEqual($postList->entries[0]['content'], 'my post');
@@ -142,20 +142,20 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
 		$threadList->read();
 		$threadId = $threadList->entries[0]['id'];
 
 		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
 		$postList->read();
 
-		WebtypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
 		$postList->read();
 		$postId = $postList->entries[0]['id'];
 		$this->assertEqual($postList->count, 1);
 		$this->assertEqual($postList->entries[0]['content'], 'my post');
 
-		WebtypesettingDiscussionListCommands::updatePost($projectId, $threadId, $postId, 'my updated post');
+		TypesettingDiscussionListCommands::updatePost($projectId, $threadId, $postId, 'my updated post');
 		$postList->read();
 		$this->assertEqual($postList->count, 1);
 		$this->assertEqual($postList->entries[0]['content'], 'my updated post');
@@ -175,20 +175,20 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
 		$threadList->read();
 		$threadId = $threadList->entries[0]['id'];
 
 		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
 		$postList->read();
 
-		WebtypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my first post');
+		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my first post');
 		$postList->read();
-	    WebtypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my second post');
+	    TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my second post');
 		$postList->read();
 		$post2Id = $postList->entries[1]['id'];
 
-		WebtypesettingDiscussionListCommands::deletePost($projectId, $threadId, $post2Id);
+		TypesettingDiscussionListCommands::deletePost($projectId, $threadId, $post2Id);
 		$postList->read();
 		$this->assertEqual($postList->count, 1);
 		$this->assertEqual($postList->entries[0]['content'], 'my first post');
@@ -209,18 +209,18 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
 		$threadList->read();
 		$threadId = $threadList->entries[0]['id'];
 
 		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
 		$postList->read();
 
-		WebtypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
 		$postList->read();
 		$postId = $postList->entries[0]['id'];
 
-		WebtypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
+		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
 		$postList->read();
 
 		$this->assertEqual($postList->entries[0]['replies'][0]['content'], "my reply");
@@ -241,23 +241,23 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
 		$threadList->read();
 		$threadId = $threadList->entries[0]['id'];
 
 		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
 		$postList->read();
 
-		WebtypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
 		$postList->read();
 		$postId = $postList->entries[0]['id'];
 
-		WebtypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
+		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
 		$postList->read();
 
 		$replyId = $postList->entries[0]['replies'][0]['id'];
 
-		WebtypesettingDiscussionListCommands::updateReply($projectId, $threadId, $postId, $replyId, "my updated reply");
+		TypesettingDiscussionListCommands::updateReply($projectId, $threadId, $postId, $replyId, "my updated reply");
 		$postList->read();
 		$this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my updated reply');
 
@@ -278,26 +278,26 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
 		$threadList->read();
 		$threadId = $threadList->entries[0]['id'];
 
 		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
 		$postList->read();
 
-		WebtypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
 		$postList->read();
 		$postId = $postList->entries[0]['id'];
 
 
 
 
-		WebtypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my first reply");
-		WebtypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my second reply");
+		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my first reply");
+		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my second reply");
 		$postList->read();
 		$replyId = $postList->entries[0]['replies'][0]['id'];
 
-		WebtypesettingDiscussionListCommands::deleteReply($projectId, $threadId, $postId, $replyId);
+		TypesettingDiscussionListCommands::deleteReply($projectId, $threadId, $postId, $replyId);
 		$postList->read();
 
 		// we expect the only reply remaining after the delete to be "my first reply" because
@@ -319,11 +319,11 @@ class TestWebtypesettingDiscussionListCommands extends UnitTestCase
 		$threadList->read();
 		$this->assertEqual($threadList->count, 0);
 
-		WebtypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
 		$threadList->read();
 		$threadId = $threadList->entries[0]['id'];
 
-		WebtypesettingDiscussionListCommands::updateStatus($projectId, $threadId, "Closed");
+		TypesettingDiscussionListCommands::updateStatus($projectId, $threadId, "Closed");
 		$threadList->read();
 		$this->assertEqual($threadList->entries[0]['status'], "Closed");
 	}

@@ -1,23 +1,20 @@
 <?php
 
+use models\scriptureforge\typesetting\commands\TypesettingDiscussionListCommands;
+use models\scriptureforge\typesetting\dto\TypesettingDiscussionListDto;
 use models\scriptureforge\typesetting\TypesettingDiscussionPostModel;
-use models\scriptureforge\typesetting\dto\WebtypesettingDiscussionListPageDto;
-use models\scriptureforge\typesetting\WebtypesettingDiscussionThreadModel;
-
+use models\scriptureforge\typesetting\TypesettingDiscussionThreadModel;
 use models\languageforge\lexicon\LexCommentReply;
 use models\languageforge\lexicon\AuthorInfo;
-
 use models\mapper\ArrayOf;
 use models\mapper\Id;
 use models\mapper\IdReference;
-
-use models\scriptureforge\typesetting\commands\WebtypesettingDiscussionListCommands;
 
 require_once dirname(__FILE__) . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
-class TestWebtypesettingDiscussionListPageDto extends UnitTestCase
+class TestTypesettingDiscussionListDto extends UnitTestCase
 {
     public function testEncode_TwoThreads_DtoAsExpected()
     {
@@ -30,12 +27,12 @@ class TestWebtypesettingDiscussionListPageDto extends UnitTestCase
 
         // tests the creation and reading of threads, posts, and replies
         // add two discussion threads
-        $threadModel1 = new WebtypesettingDiscussionThreadModel($project);
+        $threadModel1 = new TypesettingDiscussionThreadModel($project);
         $threadModel1->title = "My first thread";
         $threadModel1->associatedItem = "MAT";
         $threadModel1->write();
 
-        $threadModel2 = new WebtypesettingDiscussionThreadModel($project);
+        $threadModel2 = new TypesettingDiscussionThreadModel($project);
         $threadModel2->title = "My second thread";
         $threadModel2->associatedItem = "MRK";
         $threadModel2->write();
@@ -60,7 +57,7 @@ class TestWebtypesettingDiscussionListPageDto extends UnitTestCase
         $postModel2->replies->append($reply2);
         $postModel2->write();
 
-    	$result = WebtypesettingDiscussionListPageDto::encode($projectId);
+    	$result = TypesettingDiscussionListDto::encode($projectId);
 
     	$this->assertEqual($result['threads'][1]['title'], 'My first thread');
     	$this->assertEqual($result['threads'][0]['title'], 'My second thread');
@@ -86,7 +83,7 @@ class TestWebtypesettingDiscussionListPageDto extends UnitTestCase
     	$postModel2->write();
 
     	// tests that the titles have changed and that the posts are still associated with their threads
-    	$result = WebtypesettingDiscussionListPageDto::encode($projectId);
+    	$result = TypesettingDiscussionListDto::encode($projectId);
 
     	$this->assertEqual($result['threads'][1]['title'], 'My updated first thread');
     	$this->assertEqual($result['threads'][0]['title'], 'My updated second thread');

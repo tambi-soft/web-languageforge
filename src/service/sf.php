@@ -1,18 +1,5 @@
 <?php
-use models\scriptureforge\typesetting\commands\TypesettingRenderCommands;
-
-use models\scriptureforge\typesetting\dto\TypesettingRenderPageDto;
-
-use models\scriptureforge\typesetting\dto\TypesettingLayoutPageDto;
-
-use models\scriptureforge\typesetting\commands\WebtypesettingDiscussionListCommands;
-use models\scriptureforge\typesetting\dto\WebtypesettingDiscussionListPageDto;
 use libraries\scriptureforge\sfchecks\Email;
-
-use models\scriptureforge\typesetting\commands\TypesettingUploadCommands;
-use models\scriptureforge\typesetting\commands\TypesettingCompositionCommands;
-use models\scriptureforge\typesetting\commands\TypesettingSettingsCommands;
-
 use libraries\scriptureforge\sfchecks\ParatextExport;
 use libraries\shared\palaso\exceptions\UserNotAuthenticatedException;
 use libraries\shared\palaso\exceptions\UserUnauthorizedException;
@@ -25,9 +12,20 @@ use models\languageforge\lexicon\commands\LexUploadCommands;
 use models\languageforge\lexicon\dto\LexBaseViewDto;
 use models\languageforge\lexicon\dto\LexDbeDto;
 use models\languageforge\lexicon\dto\LexProjectDto;
+use models\scriptureforge\dto\ProjectSettingsDto;
 use models\scriptureforge\sfchecks\commands\SfchecksProjectCommands;
 use models\scriptureforge\sfchecks\commands\SfchecksUploadCommands;
-use models\scriptureforge\dto\ProjectSettingsDto;
+use models\scriptureforge\typesetting\commands\TypesettingCompositionCommands;
+use models\scriptureforge\typesetting\commands\TypesettingDiscussionListCommands;
+use models\scriptureforge\typesetting\commands\TypesettingSettingsCommands;
+use models\scriptureforge\typesetting\commands\TypesettingSettingCommands;
+use models\scriptureforge\typesetting\commands\TypesettingTemplateCommands;
+use models\scriptureforge\typesetting\commands\TypesettingRenderCommands;
+use models\scriptureforge\typesetting\commands\TypesettingUploadCommands;
+use models\scriptureforge\typesetting\dto\TypesettingAssetDto;
+use models\scriptureforge\typesetting\dto\TypesettingDiscussionListDto;
+use models\scriptureforge\typesetting\dto\TypesettingLayoutPageDto;
+use models\scriptureforge\typesetting\dto\TypesettingRenderPageDto;
 use models\shared\dto\ActivityListDto;
 use models\shared\dto\ProjectListDto;
 use models\shared\dto\RightsHelper;
@@ -47,13 +45,6 @@ use models\ProjectModel;
 use models\QuestionModel;
 use models\UserModel;
 use models\UserProfileModel;
-use models\scriptureforge\typesetting\commands\TypesettingSettingCommands;
-
-// TODO: Remove after sftypesetting_upload mock is removed - Justin Southworth
-use models\shared\commands\MediaResult;
-use models\shared\commands\UploadResponse;
-use models\scriptureforge\typesetting\commands\TypesettingTemplateCommands;
-use models\scriptureforge\typesetting\dto\TypesettingAssetDto;
 
 require_once APPPATH . 'vendor/autoload.php';
 require_once APPPATH . 'config/sf_config.php';
@@ -574,52 +565,51 @@ class sf
     }
 
     public function typesetting_discussionList_getPageDto() {
-
-    	return WebtypesettingDiscussionListPageDto::encode($this->_projectId);
+    	return TypesettingDiscussionListDto::encode($this->_projectId);
     }
 
     public function typesetting_discussionList_createThread($title, $itemId) {
-    	return WebtypesettingDiscussionListCommands::createThread($this->_projectId, $title, $itemId);
+    	return TypesettingDiscussionListCommands::createThread($this->_projectId, $title, $itemId);
     }
 
 	public function typesetting_discussionList_deleteThread($threadId) {
-    	return WebtypesettingDiscussionListCommands::deleteThread($this->_projectId, $threadId);
+    	return TypesettingDiscussionListCommands::deleteThread($this->_projectId, $threadId);
     }
 
 	public function typesetting_discussionList_updateThread($threadId, $title) {
-    	return WebtypesettingDiscussionListCommands::updateThread($this->_projectId, $threadId, $title);
+    	return TypesettingDiscussionListCommands::updateThread($this->_projectId, $threadId, $title);
     }
 
 	public function typesetting_discussionList_createPost($threadId, $content) {
-    	return WebtypesettingDiscussionListCommands::createPost($this->_projectId, $threadId, $content);
+    	return TypesettingDiscussionListCommands::createPost($this->_projectId, $threadId, $content);
     }
 
 	public function typesetting_discussionList_deletePost($threadId, $postId) {
-    	return WebtypesettingDiscussionListCommands::deletePost($this->_projectId, $threadId, $postId);
+    	return TypesettingDiscussionListCommands::deletePost($this->_projectId, $threadId, $postId);
     }
 
 	public function typesetting_discussionList_updatePost($threadId, $postId, $content) {
-    	return WebtypesettingDiscussionListCommands::updatePost($this->_projectId, $threadId, $postId, $content);
+    	return TypesettingDiscussionListCommands::updatePost($this->_projectId, $threadId, $postId, $content);
     }
 
 	public function typesetting_discussionList_createReply($threadId, $postId, $content) {
-    	return WebtypesettingDiscussionListCommands::createReply($this->_projectId, $threadId, $postId, $content);
+    	return TypesettingDiscussionListCommands::createReply($this->_projectId, $threadId, $postId, $content);
     }
 
 	public function typesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
-    	return WebtypesettingDiscussionListCommands::deleteReply($this->_projectId, $threadId, $postId, $replyId);
+    	return TypesettingDiscussionListCommands::deleteReply($this->_projectId, $threadId, $postId, $replyId);
     }
 
 	public function typesetting_discussionList_updateReply($threadId, $postId, $replyId, $content) {
-    	return WebtypesettingDiscussionListCommands::updateReply($this->_projectId, $threadId, $postId, $replyId, $content);
+    	return TypesettingDiscussionListCommands::updateReply($this->_projectId, $threadId, $postId, $replyId, $content);
     }
 
 	public function typesetting_discussionList_updateStatus($threadId, $status) {
-    	return WebtypesettingDiscussionListCommands::updateStatus($this->_projectId, $threadId, $status);
+    	return TypesettingDiscussionListCommands::updateStatus($this->_projectId, $threadId, $status);
     }
 
     public function typesetting_discussionList_getThread($threadId) {
-    	return WebtypesettingDiscussionListCommands::getThread($this->_projectId, $threadId);
+    	return TypesettingDiscussionListCommands::getThread($this->_projectId, $threadId);
     }
 
     public function typesetting_rapuma_render(){
@@ -631,7 +621,6 @@ class sf
     }
     public function typesetting_render_doRender() {
     	TypesettingRenderCommands::doRender($this->_projectId, $this->_userId);
-
     }
 
 
@@ -694,7 +683,6 @@ class sf
 	public function typesetting_composition_setPageStatus($bookId, $pages) {
 		return TypesettingCompositionCommands::setPageStatus($this->_projectId, $bookId, $pages);
 	}
-	
 
 	public function typesetting_readAssetsDto() {
 		return TypesettingAssetDto::encode($this->_projectId);

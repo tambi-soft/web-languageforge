@@ -11,7 +11,7 @@ use models\ProjectModel;
  * 
  *
  */
-class WebtypesettingDiscussionThreadModel extends \models\mapper\MapperModel
+class TypesettingDiscussionThreadModel extends \models\mapper\MapperModel
 {
     public static function mapper($databaseName)
     {
