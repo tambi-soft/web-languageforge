@@ -1,5 +1,4 @@
 <?php
-
 use models\scriptureforge\typesetting\commands\TypesettingDiscussionListCommands;
 use models\scriptureforge\typesetting\TypesettingAssetModel;
 use models\scriptureforge\typesetting\TypesettingDiscussionPostListModel;
@@ -14,315 +13,325 @@ require_once TestPath . 'common/MongoTestEnvironment.php';
 
 class TestTypesettingDiscussionListCommands extends UnitTestCase
 {
-	public function testCreateThread_NoExistingThreads_OneThreadExists() {
-		$e = new MongoTestEnvironment();
-		$e->clean();
 
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
+    public function testCreateThread_NoExistingThreads_OneThreadExists()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
 
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
 
-		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 1);
-		$this->assertEqual($threadList->entries[0]['title'], 'my thread');
-	}
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
 
-	public function testUpdateThread_OneThread_OneThreadUpdated(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
+        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 1);
+        $this->assertEqual($threadList->entries[0]['title'], 'my thread');
+    }
+
+    public function testUpdateThread_OneThread_OneThreadUpdated()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
+
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
+
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
 
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
 
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
+        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        $threadList->read();
+        TypesettingDiscussionListCommands::updateThread($projectId, $threadList->entries[0]['id'], 'my updated thread');
+        $threadList->read();
+        $this->assertEqual($threadList->entries[0]['title'], 'my updated thread');
+    }
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
+    public function testDeleteThread_TwoThreads_OneDeletedThread()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
 
-		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
-		$threadList->read();
-		TypesettingDiscussionListCommands::updateThread($projectId, $threadList->entries[0]['id'], 'my updated thread');
-		$threadList->read();
-		$this->assertEqual($threadList->entries[0]['title'], 'my updated thread');
-	}
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
 
-	public function testDeleteThread_TwoThreads_OneDeletedThread(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
+
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
+
+        TypesettingDiscussionListCommands::createThread($projectId, 'my first thread', $assetId);
+        $threadList->read();
+        TypesettingDiscussionListCommands::createThread($projectId, 'my second thread', $assetId);
+        $threadList->read();
+        $threadId = $threadList->entries[0]['id'];
 
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
+        TypesettingDiscussionListCommands::deleteThread($projectId, $threadId);
+
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 1);
+        $this->assertEqual($threadList->entries[0]['title'], 'my first thread');
+    }
 
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
+    public function testGetThread_OneThreadExists_OneThreadReturned()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
+
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
+
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+
+        $threadId1 = TypesettingDiscussionListCommands::createThread($projectId, 'thread 1', $assetId);
+        $threadModel1 = new TypesettingDiscussionThreadModel($project, $threadId1);
+        $threadModel2 = TypesettingDiscussionListCommands::getThread($projectId, $threadId1);
+
+        $this->assertIdentical($threadModel1, $threadModel2);
+    }
+
+    public function testCreatePost_NoPostExists_OnePostExists()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
+
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
+
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
+
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
+
+        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        $threadList->read();
+        $threadId = $threadList->entries[0]['id'];
 
-		TypesettingDiscussionListCommands::createThread($projectId, 'my first thread', $assetId);
-		$threadList->read();
-		TypesettingDiscussionListCommands::createThread($projectId, 'my second thread', $assetId);
-		$threadList->read();
-		$threadId = $threadList->entries[0]['id'];
+        $postList = new TypesettingDiscussionPostListModel($project, $threadId);
+        $postList->read();
+
+        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        $postList->read();
+        $this->assertEqual($postList->count, 1);
+        $this->assertEqual($postList->entries[0]['content'], 'my post');
+    }
+
+    public function testUpdatePost_OnePost_OneUpdatedPost()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
+
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
+
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
 
-		TypesettingDiscussionListCommands::deleteThread($projectId, $threadId);
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 1);
-		$this->assertEqual($threadList->entries[0]['title'], 'my first thread');
-	}
+        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        $threadList->read();
+        $threadId = $threadList->entries[0]['id'];
 
-	public function testGetThread_OneThreadExists_OneThreadReturned(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
+        $postList = new TypesettingDiscussionPostListModel($project, $threadId);
+        $postList->read();
 
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
+        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        $postList->read();
+        $postId = $postList->entries[0]['id'];
+        $this->assertEqual($postList->count, 1);
+        $this->assertEqual($postList->entries[0]['content'], 'my post');
 
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
+        TypesettingDiscussionListCommands::updatePost($projectId, $threadId, $postId, 'my updated post');
+        $postList->read();
+        $this->assertEqual($postList->count, 1);
+        $this->assertEqual($postList->entries[0]['content'], 'my updated post');
+    }
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
+    public function testDeletePost_TwoPosts_OneDeletedPost()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
 
-		$threadId1 = TypesettingDiscussionListCommands::createThread($projectId, 'thread 1', $assetId);
-		$threadModel1 = new TypesettingDiscussionThreadModel($project, $threadId1);
-		$threadModel2 = TypesettingDiscussionListCommands::getThread($projectId, $threadId1);
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
 
-		$this->assertIdentical($threadModel1, $threadModel2);
-	}
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
 
-	public function testCreatePost_NoPostExists_OnePostExists(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
 
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
+        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        $threadList->read();
+        $threadId = $threadList->entries[0]['id'];
 
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
+        $postList = new TypesettingDiscussionPostListModel($project, $threadId);
+        $postList->read();
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
+        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my first post');
+        $postList->read();
+        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my second post');
+        $postList->read();
+        $post2Id = $postList->entries[1]['id'];
 
-		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
-		$threadList->read();
-		$threadId = $threadList->entries[0]['id'];
+        TypesettingDiscussionListCommands::deletePost($projectId, $threadId, $post2Id);
+        $postList->read();
+        $this->assertEqual($postList->count, 1);
+        $this->assertEqual($postList->entries[0]['content'], 'my first post');
+    }
 
-		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
-		$postList->read();
+    public function testCreateReply_NoReplyExists_OneReplyExists()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
 
-		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
-		$postList->read();
-		$this->assertEqual($postList->count, 1);
-		$this->assertEqual($postList->entries[0]['content'], 'my post');
-	}
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
 
-	public function testUpdatePost_OnePost_OneUpdatedPost(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
 
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
 
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
+        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        $threadList->read();
+        $threadId = $threadList->entries[0]['id'];
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
+        $postList = new TypesettingDiscussionPostListModel($project, $threadId);
+        $postList->read();
 
-		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
-		$threadList->read();
-		$threadId = $threadList->entries[0]['id'];
+        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        $postList->read();
+        $postId = $postList->entries[0]['id'];
 
-		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
-		$postList->read();
+        TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
+        $postList->read();
 
-		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
-		$postList->read();
-		$postId = $postList->entries[0]['id'];
-		$this->assertEqual($postList->count, 1);
-		$this->assertEqual($postList->entries[0]['content'], 'my post');
+        $this->assertEqual($postList->entries[0]['replies'][0]['content'], "my reply");
+    }
 
-		TypesettingDiscussionListCommands::updatePost($projectId, $threadId, $postId, 'my updated post');
-		$postList->read();
-		$this->assertEqual($postList->count, 1);
-		$this->assertEqual($postList->entries[0]['content'], 'my updated post');
-	}
+    /* updating replies is a feature that is not supported in the first release
+    public function testUpdateReply_OneReply_OneUpdatedReply()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
 
-	public function testDeletePost_TwoPosts_OneDeletedPost(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
 
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
 
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
+        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        $threadList->read();
+        $threadId = $threadList->entries[0]['id'];
 
-		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
-		$threadList->read();
-		$threadId = $threadList->entries[0]['id'];
+        $postList = new TypesettingDiscussionPostListModel($project, $threadId);
+        $postList->read();
 
-		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
-		$postList->read();
+        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        $postList->read();
+        $postId = $postList->entries[0]['id'];
 
-		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my first post');
-		$postList->read();
-	    TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my second post');
-		$postList->read();
-		$post2Id = $postList->entries[1]['id'];
+        TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
+        $postList->read();
 
-		TypesettingDiscussionListCommands::deletePost($projectId, $threadId, $post2Id);
-		$postList->read();
-		$this->assertEqual($postList->count, 1);
-		$this->assertEqual($postList->entries[0]['content'], 'my first post');
+        $replyId = $postList->entries[0]['replies'][0]['id'];
 
-	}
+        TypesettingDiscussionListCommands::updateReply($projectId, $threadId, $postId, $replyId, "my updated reply");
+        $postList->read();
+        $this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my updated reply');
+    }
+*/
 
-	public function testCreateReply_NoReplyExists_OneReplyExists(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
+    public function testDeleteReply_TwoReplies_OneDeletedReply()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
 
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
 
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
 
-		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
-		$threadList->read();
-		$threadId = $threadList->entries[0]['id'];
+        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        $threadList->read();
+        $threadId = $threadList->entries[0]['id'];
 
-		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
-		$postList->read();
+        $postList = new TypesettingDiscussionPostListModel($project, $threadId);
+        $postList->read();
 
-		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
-		$postList->read();
-		$postId = $postList->entries[0]['id'];
+        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        $postList->read();
+        $postId = $postList->entries[0]['id'];
 
-		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
-		$postList->read();
+        TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my first reply");
+        TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my second reply");
+        $postList->read();
+        $replyId = $postList->entries[0]['replies'][0]['id'];
+        $this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my first reply');
 
-		$this->assertEqual($postList->entries[0]['replies'][0]['content'], "my reply");
-	}
+        TypesettingDiscussionListCommands::deleteReply($projectId, $threadId, $postId, $replyId);
+        $postList->read();
 
-	/* updating replies is a feature that is not supported in the first release
-	public function testUpdateReply_OneReply_OneUpdatedReply(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
+        $this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my second reply');
+    }
 
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
+    public function testUpdateStatus_OldStatus_NewStatus()
+    {
+        $e = new MongoTestEnvironment();
+        $e->clean();
 
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
+        $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
 
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
+        $asset = new TypesettingAssetModel($project);
+        $assetId = $asset->write();
 
-		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
-		$threadList->read();
-		$threadId = $threadList->entries[0]['id'];
+        $threadList = new TypesettingDiscussionThreadListModel($project);
+        $threadList->read();
+        $this->assertEqual($threadList->count, 0);
 
-		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
-		$postList->read();
+        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        $threadList->read();
+        $threadId = $threadList->entries[0]['id'];
 
-		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
-		$postList->read();
-		$postId = $postList->entries[0]['id'];
-
-		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
-		$postList->read();
-
-		$replyId = $postList->entries[0]['replies'][0]['id'];
-
-		TypesettingDiscussionListCommands::updateReply($projectId, $threadId, $postId, $replyId, "my updated reply");
-		$postList->read();
-		$this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my updated reply');
-
-	}
-	*/
-
-	public function testDeleteReply_TwoReplies_OneDeletedReply(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
-
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
-
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
-
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
-
-		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
-		$threadList->read();
-		$threadId = $threadList->entries[0]['id'];
-
-		$postList = new TypesettingDiscussionPostListModel($project, $threadId);
-		$postList->read();
-
-		TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
-		$postList->read();
-		$postId = $postList->entries[0]['id'];
-
-		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my first reply");
-		TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my second reply");
-		$postList->read();
-		$replyId = $postList->entries[0]['replies'][0]['id'];
-		$this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my first reply');
-
-		TypesettingDiscussionListCommands::deleteReply($projectId, $threadId, $postId, $replyId);
-		$postList->read();
-
-		$this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my second reply');
-	}
-
-	public function testUpdateStatus_OldStatus_NewStatus(){
-		$e = new MongoTestEnvironment();
-		$e->clean();
-
-		$project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-		$projectId = $project->id->asString();
-
-		$asset = new TypesettingAssetModel($project);
-		$assetId = $asset->write();
-
-		$threadList = new TypesettingDiscussionThreadListModel($project);
-		$threadList->read();
-		$this->assertEqual($threadList->count, 0);
-
-		TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
-		$threadList->read();
-		$threadId = $threadList->entries[0]['id'];
-
-		TypesettingDiscussionListCommands::updateStatus($projectId, $threadId, "Closed");
-		$threadList->read();
-		$this->assertEqual($threadList->entries[0]['status'], "Closed");
-	}
+        TypesettingDiscussionListCommands::updateStatus($projectId, $threadId, "Closed");
+        $threadList->read();
+        $this->assertEqual($threadList->entries[0]['status'], "Closed");
+    }
 }

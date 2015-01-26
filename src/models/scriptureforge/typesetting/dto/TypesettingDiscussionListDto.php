@@ -1,5 +1,4 @@
 <?php
-
 namespace models\scriptureforge\typesetting\dto;
 
 use models\scriptureforge\typesetting\commands\TypesettingDiscussionListCommands;
@@ -11,28 +10,29 @@ use models\ProjectModel;
 
 class TypesettingDiscussionListDto
 {
+
     /**
      *
      * @param string $projectId
-     * @returns array - the DTO array
+     * @return s array - the DTO array
      */
     public static function encode($projectId)
     {
-    	$data = array();
-    	$projectModel = new ProjectModel($projectId);
+        $data = array();
+        $projectModel = new ProjectModel($projectId);
 
-    	$threadListModel = new TypesettingDiscussionThreadListModel($projectModel);
-    	$threadListModel->read();
+        $threadListModel = new TypesettingDiscussionThreadListModel($projectModel);
+        $threadListModel->read();
 
-    	$data['threads'] = $threadListModel->entries;
+        $data['threads'] = $threadListModel->entries;
 
-    	foreach ($data['threads'] as $key => $thread) {
-    		$postListModel = new TypesettingDiscussionPostListModel($projectModel, $thread['id']);
-    		$postListModel->read();
-    		$data['threads'][$key]['posts'] = $postListModel->entries;
-    		$threadModel = new TypesettingDiscussionThreadModel($projectModel, $thread['id']);
-    		$data['threads'][$key]['dateModified'] = $threadModel->dateModified->format(\DateTime::RFC2822);
-    	}
+        foreach ($data['threads'] as $key => $thread) {
+            $postListModel = new TypesettingDiscussionPostListModel($projectModel, $thread['id']);
+            $postListModel->read();
+            $data['threads'][$key]['posts'] = $postListModel->entries;
+            $threadModel = new TypesettingDiscussionThreadModel($projectModel, $thread['id']);
+            $data['threads'][$key]['dateModified'] = $threadModel->dateModified->format(\DateTime::RFC2822);
+        }
 
         return $data;
     }
