@@ -7,6 +7,7 @@ use models\scriptureforge\typesetting\TypesettingDiscussionThreadListModel;
 use models\scriptureforge\typesetting\TypesettingDiscussionThreadModel;
 use models\shared\dto\RightsHelper;
 use models\ProjectModel;
+use models\UserModel;
 
 class TypesettingDiscussionListDto
 {
@@ -26,12 +27,17 @@ class TypesettingDiscussionListDto
 
         $data['threads'] = $threadListModel->entries;
 
-        foreach ($data['threads'] as $key => $thread) {
-            $postListModel = new TypesettingDiscussionPostListModel($projectModel, $thread['id']);
+        foreach ($data['threads'] as $index => $threadList) {
+            $postListModel = new TypesettingDiscussionPostListModel($projectModel, $threadList['id']);
             $postListModel->read();
-            $data['threads'][$key]['posts'] = $postListModel->entries;
-            $threadModel = new TypesettingDiscussionThreadModel($projectModel, $thread['id']);
-            $data['threads'][$key]['dateModified'] = $threadModel->dateModified->format(\DateTime::RFC2822);
+            $data['threads'][$index]['posts'] = $postListModel->entries;
+            $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadList['id']);
+            $data['threads'][$index]['dateModified'] = $threadModel->dateModified->format(\DateTime::RFC2822);
+            $createdByUser = new UserModel($threadModel->authorInfo->createdByUserRef->id);
+            $data['threads'][$index]['author'] = array();
+            $data['threads'][$index]['author']['name'] = $createdByUser->name;
+            unset($data['threads'][$index]['authorInfo']);
+
         }
 
         return $data;

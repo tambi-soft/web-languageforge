@@ -30,14 +30,15 @@ function($scope, $state, discussionService, sessionService, modal, notice) {
   };
 
   $scope.createThread = function(thread) {
+    $scope.newThread.status = 'Open';
+    $scope.newThread.dateModified = new Date();
+    $scope.newThread.author = {'name': 'me'};
+    $scope.discussion.threads.unshift($scope.newThread);
     discussionService.createThread($scope.newThread.title, $scope.newThread.associatedItem, function(result) {
-      $scope.newThread.status = 'Open';
-      $scope.newThread.dateModified = new Date();
-      $scope.discussion.threads.unshift($scope.newThread);
       $scope.newThread = {
           'title': '',
           'associatedItem': ''
-      }
+      };
       notice.push(notice.SUCCESS, "Thread created.");
     });
   };

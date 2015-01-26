@@ -23,13 +23,12 @@ class TestTypesettingDiscussionListDto extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         // tests the creation and reading of threads, posts, and replies
         // add two discussion threads
-        $threadModel1 = new TypesettingDiscussionThreadModel($project);
-        $threadModel1->title = "My first thread";
-        $threadModel1->associatedItem = "MAT";
-        $threadModel1->write();
+        $threadModelId1 = TypesettingDiscussionListCommands::createThread($projectId, $userId, 'My first thread', 'MAT');
+        $threadModel1 = new TypesettingDiscussionThreadModel($project, $threadModelId1);
 
         $threadModel2 = new TypesettingDiscussionThreadModel($project);
         $threadModel2->title = "My second thread";
@@ -59,6 +58,7 @@ class TestTypesettingDiscussionListDto extends UnitTestCase
         $result = TypesettingDiscussionListDto::encode($projectId);
 
         $this->assertEqual($result['threads'][1]['title'], 'My first thread');
+        $this->assertEqual($result['threads'][1]['author']['name'], 'joe');
         $this->assertEqual($result['threads'][0]['title'], 'My second thread');
         $this->assertEqual($result['threads'][0]['posts'][0]['content'], 'My first post');
         $this->assertEqual($result['threads'][0]['posts'][1]['content'], 'My second post');

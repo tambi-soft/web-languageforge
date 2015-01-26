@@ -569,7 +569,7 @@ class sf
     }
 
     public function typesetting_discussionList_createThread($title, $itemId) {
-    	return TypesettingDiscussionListCommands::createThread($this->_projectId, $title, $itemId);
+    	return TypesettingDiscussionListCommands::createThread($this->_projectId, $this->_userId, $title, $itemId);
     }
 
 	public function typesetting_discussionList_deleteThread($threadId) {

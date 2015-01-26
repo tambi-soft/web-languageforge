@@ -21,6 +21,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -29,7 +30,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
         $threadList->read();
         $this->assertEqual($threadList->count, 1);
         $this->assertEqual($threadList->entries[0]['title'], 'my thread');
@@ -42,6 +43,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -50,7 +52,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
         $threadList->read();
         TypesettingDiscussionListCommands::updateThread($projectId, $threadList->entries[0]['id'], 'my updated thread');
         $threadList->read();
@@ -64,6 +66,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -72,9 +75,9 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my first thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my first thread', $assetId);
         $threadList->read();
-        TypesettingDiscussionListCommands::createThread($projectId, 'my second thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my second thread', $assetId);
         $threadList->read();
         $threadId = $threadList->entries[0]['id'];
 
@@ -93,6 +96,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -100,7 +104,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList = new TypesettingDiscussionThreadListModel($project);
         $threadList->read();
 
-        $threadId1 = TypesettingDiscussionListCommands::createThread($projectId, 'thread 1', $assetId);
+        $threadId1 = TypesettingDiscussionListCommands::createThread($projectId, $userId, 'thread 1', $assetId);
         $threadModel1 = new TypesettingDiscussionThreadModel($project, $threadId1);
         $threadModel2 = TypesettingDiscussionListCommands::getThread($projectId, $threadId1);
 
@@ -114,6 +118,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -122,7 +127,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
         $threadList->read();
         $threadId = $threadList->entries[0]['id'];
 
@@ -142,6 +147,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -150,7 +156,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
         $threadList->read();
         $threadId = $threadList->entries[0]['id'];
 
@@ -176,6 +182,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -184,7 +191,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
         $threadList->read();
         $threadId = $threadList->entries[0]['id'];
 
@@ -210,6 +217,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -218,7 +226,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
         $threadList->read();
         $threadId = $threadList->entries[0]['id'];
 
@@ -243,6 +251,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -251,7 +260,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
         $threadList->read();
         $threadId = $threadList->entries[0]['id'];
 
@@ -280,6 +289,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -288,7 +298,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
         $threadList->read();
         $threadId = $threadList->entries[0]['id'];
 
@@ -318,6 +328,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
+        $userId = $e->createUser('joe', 'joe', 'joe');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -326,7 +337,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
         $threadList->read();
         $threadId = $threadList->entries[0]['id'];
 

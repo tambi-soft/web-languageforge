@@ -10,101 +10,105 @@ use models\ProjectModel;
 class TypesettingDiscussionListCommands
 {
 
-    public static function createThread($projectId, $title, $itemId)
+    public static function createThread($projectId, $userId, $title, $itemId)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel);
-        $threadModel->title = $title;
-        $threadModel->associatedItem = $itemId;
-        return $threadModel->write();
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project);
+        $thread->title = $title;
+        $thread->associatedItem = $itemId;
+        $thread->authorInfo->createdByUserRef->id = $userId;
+        $thread->authorInfo->createdDate = new \DateTime();
+        $thread->authorInfo->modifiedByUserRef->id = $userId;
+        $thread->authorInfo->modifiedDate = new \DateTime();
+        return $thread->write();
     }
 
     public static function deleteThread($projectId, $threadId)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        $threadModel->isDeleted = true;
-        $threadModel->write();
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $thread->isDeleted = true;
+        $thread->write();
     }
 
     public static function updateThread($projectId, $threadId, $title)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        $threadModel->title = $title;
-        $threadModel->write();
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $thread->title = $title;
+        $thread->write();
     }
 
     public static function getThread($projectId, $threadId)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        return $threadModel;
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        return $thread;
     }
 
     public static function createPost($projectId, $threadId, $content)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        $postModel = new TypesettingDiscussionPostModel($projectModel, $threadId);
-        $postModel->threadRef->id = $threadId;
-        $postModel->content = $content;
-        return $postModel->write();
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $post = new TypesettingDiscussionPostModel($project, $threadId);
+        $post->threadRef->id = $threadId;
+        $post->content = $content;
+        return $post->write();
     }
 
     public static function deletePost($projectId, $threadId, $postId)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        $postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
-        $postModel->isDeleted = true;
-        $postModel->write();
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $post = new TypesettingDiscussionPostModel($project, $threadId, $postId);
+        $post->isDeleted = true;
+        $post->write();
     }
 
     public static function updatePost($projectId, $threadId, $postId, $content)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        $postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
-        $postModel->content = $content;
-        $postModel->write();
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $post = new TypesettingDiscussionPostModel($project, $threadId, $postId);
+        $post->content = $content;
+        $post->write();
     }
 
     public static function createReply($projectId, $threadId, $postId, $content)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        $postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
-        $replyModel = new LexCommentReply();
-        $replyModel->content = $content;
-        $postModel->setReply($replyModel->id, $replyModel);
-        return $postModel->write();
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $post = new TypesettingDiscussionPostModel($project, $threadId, $postId);
+        $reply = new LexCommentReply();
+        $reply->content = $content;
+        $post->setReply($reply->id, $reply);
+        return $post->write();
     }
 
     public static function deleteReply($projectId, $threadId, $postId, $replyId)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        $postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
-        $postModel->deleteReply($replyId);
-        return $postModel->write();
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $post = new TypesettingDiscussionPostModel($project, $threadId, $postId);
+        $post->deleteReply($replyId);
+        return $post->write();
     }
 
     /* NOTE: Customer said that updating replies is not necessary at the moment of release.
     public static function updateReply($projectId, $threadId, $postId, $replyId, $content)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        $postModel = new TypesettingDiscussionPostModel($projectModel, $threadId, $postId);
-        $replyModel = new LexCommentReply($replyId);
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $post = new TypesettingDiscussionPostModel($project, $threadId, $postId);
+        $reply = new LexCommentReply($replyId);
     }
 */
 
     public static function updateStatus($projectId, $threadId, $status)
     {
-        $projectModel = new ProjectModel($projectId);
-        $threadModel = new TypesettingDiscussionThreadModel($projectModel, $threadId);
-        $threadModel->status = $status;
-        $threadModel->write();
+        $project = new ProjectModel($projectId);
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $thread->status = $status;
+        $thread->write();
     }
 }
