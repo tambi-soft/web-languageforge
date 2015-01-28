@@ -40,7 +40,7 @@ class TypesettingUploadCommands
     			$response = self::uploadPngFile($projectId, $mediaType, $tmpFilePath);
                 break;
     		default:
-    			throw new \Exception('Unknown media type in Typesetting file upload.');
+    			throw new \Exception('Unknown media type "' . $mediaType . '" in Typesetting file upload.');
     	}
 	    if ($response->result){
 	    	$project = new ProjectModel($projectId);
@@ -91,9 +91,6 @@ class TypesettingUploadCommands
             $projectSlug = $project->databaseName();
             $folderPath = $project->getAssetsFolderPath();;
             FileUtilities::createAllFolders($folderPath);
-
-            // cleanup previous files of any allowed extension
-            self::cleanupFiles($folderPath, '', $allowedExtensions);
 
             // move uploaded file from tmp location to assets
             $filePath = self::mediaFilePath($folderPath, '', $fileName);
@@ -167,9 +164,6 @@ class TypesettingUploadCommands
             $projectSlug = $project->databaseName();
             $folderPath = $project->getAssetsFolderPath();
             FileUtilities::createAllFolders($folderPath);
-
-            // cleanup previous files of any allowed extension
-            self::cleanupFiles($folderPath, '', $allowedExtensions);
 
             // move uploaded file from tmp location to assets
             $filePath = self::mediaFilePath($folderPath, '', $fileName);
@@ -291,7 +285,7 @@ class TypesettingUploadCommands
 
     		// import zip
     		if ($moveOk) {
-    			self::extractZip($filePath, $folderPath);
+    			$output = self::extractZip($filePath, $folderPath);
 
     			// TODO: import extracted USFM files into RaPuMa project
 
@@ -336,10 +330,11 @@ class TypesettingUploadCommands
      * TODO: This is duplicated from models\languageforge\lexicon\LiftImport; move both into Palaso\Utilities\FileUtilities. IJH 2015-01
      *
      * @param string $zipFilePath
-     * @param string $destDir
+     * @param string $extractFolderPath
      * @throws \Exception
+     * @return array<string>
      */
-    public static function extractZip($zipFilePath, $destDir) {
+    public static function extractZip($zipFilePath, $extractFolderPath) {
     	// Use absolute path for archive file
     	$realpathResult = realpath($zipFilePath);
     	if ($realpathResult) {
@@ -361,34 +356,35 @@ class TypesettingUploadCommands
     	// $extension_2 will be 'tar' if the file was a .tar.gz, .tar.bz2, etc.
     	if ($extension_2 == "tar") {
     		// We don't handle tarball formats... yet.
-    		throw new \Exception("Sorry, the ." . $extension_2 . "." . $extension_1 . " format isn't allowed");
+    		throw new \Exception("Sorry, the ." . $extension_2 . "." . $extension_1 . " format isn't supported");
     	}
     	switch ($extension_1) {
     		case "zip":
-    			$cmd = 'unzip -o ' . escapeshellarg($zipFilePath) . " -d " . escapeshellarg($destDir);
+    			$command = 'unzip -o ' . escapeshellarg($zipFilePath) . " -d " . escapeshellarg($extractFolderPath);
     			break;
     		case "zipx":
     		case "7z":
-    			$cmd = '7z x -y ' . escapeshellarg($zipFilePath) . " -o" . escapeshellarg($destDir);
+    			$command = '7z x -y ' . escapeshellarg($zipFilePath) . " -o" . escapeshellarg($extractFolderPath);
     			break;
     		default:
     			throw new \Exception("Sorry, the ." . $extension_1 . " format isn't allowed");
     			break;
     	}
 
-    	FileUtilities::createAllFolders($destDir);
-    	$destFilesBeforeUnpacking = scandir($destDir);
+    	FileUtilities::createAllFolders($extractFolderPath);
 
     	// ensure non-roman filesnames are returned
-    	$cmd = 'LANG="en_US.UTF-8" ' . $cmd;
+    	$command = 'LANG="en_US.UTF-8" ' . $command;
     	$output = array();
     	$retcode = 0;
-    	exec($cmd, $output, $retcode);
-    	if ($retcode) {
-    		if (($retcode != 1) || ($retcode == 1 && strstr(end($output), 'failed setting times/attribs') == false)) {
+    	exec($command, $output, $returnCode);
+    	if ($returnCode) {
+    		if (($returnCode != 1) || ($returnCode == 1 && strstr(end($output), 'failed setting times/attribs') == false)) {
     			throw new \Exception("Uncompressing archive file failed: " . print_r($output, true));
     		}
     	}
+
+    	return $output;
     }
 
     public static function deleteFile($projectId, $fileName) {
