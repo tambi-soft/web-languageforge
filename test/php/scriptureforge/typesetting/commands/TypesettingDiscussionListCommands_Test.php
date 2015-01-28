@@ -31,9 +31,12 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $this->assertEqual($threadList->count, 0);
 
         TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
+
         $threadList->read();
+        $thread = new TypesettingDiscussionThreadModel($project, $threadList->entries[0]['id']);
         $this->assertEqual($threadList->count, 1);
         $this->assertEqual($threadList->entries[0]['title'], 'my thread');
+        $this->assertEqual($userId, $thread->authorInfo->createdByUserRef->asString());
     }
 
     public function testUpdateThread_OneThread_OneThreadUpdated()
@@ -43,7 +46,8 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
-        $userId = $e->createUser('joe', 'joe', 'joe');
+        $createUserId = $e->createUser('joe', 'joe', 'joe');
+        $modifyUserId = $e->createUser('bob', 'bob', 'bob');
 
         $asset = new TypesettingAssetModel($project);
         $assetId = $asset->write();
@@ -52,11 +56,19 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $threadList->read();
         $this->assertEqual($threadList->count, 0);
 
-        TypesettingDiscussionListCommands::createThread($projectId, $userId, 'my thread', $assetId);
+        TypesettingDiscussionListCommands::createThread($projectId, $createUserId, 'my thread', $assetId);
+
         $threadList->read();
-        TypesettingDiscussionListCommands::updateThread($projectId, $threadList->entries[0]['id'], 'my updated thread');
+        $threadId = $threadList->entries[0]['id'];
+        $thread = new TypesettingDiscussionThreadModel($project, $threadId);
+        $this->assertEqual($createUserId, $thread->authorInfo->modifiedByUserRef->asString());
+
+        TypesettingDiscussionListCommands::updateThread($projectId, $modifyUserId, $threadList->entries[0]['id'], 'my updated thread');
+
         $threadList->read();
+        $thread->read($threadId);
         $this->assertEqual($threadList->entries[0]['title'], 'my updated thread');
+        $this->assertEqual($modifyUserId, $thread->authorInfo->modifiedByUserRef->asString());
     }
 
     public function testDeleteThread_TwoThreads_OneDeletedThread()

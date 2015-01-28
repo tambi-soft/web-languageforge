@@ -577,7 +577,7 @@ class sf
     }
 
 	public function typesetting_discussionList_updateThread($threadId, $title) {
-    	return TypesettingDiscussionListCommands::updateThread($this->_projectId, $threadId, $title);
+    	return TypesettingDiscussionListCommands::updateThread($this->_projectId, $this->_userId, $threadId, $title);
     }
 
 	public function typesetting_discussionList_createPost($threadId, $content) {

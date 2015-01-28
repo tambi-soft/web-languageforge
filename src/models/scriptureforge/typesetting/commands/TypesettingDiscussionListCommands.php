@@ -31,11 +31,13 @@ class TypesettingDiscussionListCommands
         $thread->write();
     }
 
-    public static function updateThread($projectId, $threadId, $title)
+    public static function updateThread($projectId, $userId, $threadId, $title)
     {
         $project = new ProjectModel($projectId);
         $thread = new TypesettingDiscussionThreadModel($project, $threadId);
         $thread->title = $title;
+        $thread->authorInfo->modifiedByUserRef->id = $userId;
+        $thread->authorInfo->modifiedDate = new \DateTime();
         $thread->write();
     }
 
