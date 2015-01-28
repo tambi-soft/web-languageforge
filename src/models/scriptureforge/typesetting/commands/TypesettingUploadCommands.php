@@ -2,7 +2,7 @@
 namespace models\scriptureforge\typesetting\commands;
 
 use Palaso\Utilities\FileUtilities;
-use models\scriptureforge\WebtypesettingProjectModel;
+use models\scriptureforge\TypesettingProjectModel;
 use models\shared\commands\ErrorResult;
 use models\shared\commands\ImportResult;
 use models\shared\commands\MediaResult;
@@ -280,7 +280,7 @@ class TypesettingUploadCommands
     	if (in_array(strtolower($fileType), $allowedTypes) && in_array(strtolower($fileExt), $allowedExtensions)) {
 
     		// make the folders if they don't exist
-    		$project = new WebtypesettingProjectModel($projectId);
+    		$project = new TypesettingProjectModel($projectId);
     		$folderPath = $project->getAssetsFolderPath();
     		FileUtilities::createAllFolders($folderPath);
 
@@ -394,7 +394,7 @@ class TypesettingUploadCommands
     public static function deleteFile($projectId, $fileName) {
     	$response = new UploadResponse();
     	$response->result = false;
-    	$project = new WebtypesettingProjectModel($projectId);
+    	$project = new TypesettingProjectModel($projectId);
     	$folderPath = $project->getAssetsFolderPath();
     	$filePath = $folderPath . '/' . $fileName;
     	if (file_exists($filePath) and ! is_dir($filePath)) {

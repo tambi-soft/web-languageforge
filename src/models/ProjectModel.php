@@ -3,7 +3,7 @@
 namespace models;
 
 use libraries\shared\Website;
-use models\scriptureforge\WebtypesettingProjectModel;
+use models\scriptureforge\TypesettingProjectModel;
 
 use models\languageforge\lexicon\LexiconProjectModel;
 
@@ -213,7 +213,7 @@ class ProjectModel extends \models\mapper\MapperModel
             case 'sfchecks':
                 return new SfchecksProjectModel($projectId);
             case 'webtypesetting':
-                return new WebtypesettingProjectModel($projectId);
+                return new TypesettingProjectModel($projectId);
             case 'lexicon':
                 return new LexiconProjectModel($projectId);
             default:

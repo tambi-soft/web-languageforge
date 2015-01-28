@@ -4,7 +4,7 @@ use libraries\shared\Website;
 use models\shared\rights\ProjectRoles;
 use models\shared\rights\SystemRoles;
 use models\languageforge\lexicon\LexiconProjectModel;
-use models\scriptureforge\WebtypesettingProjectModel;
+use models\scriptureforge\TypesettingProjectModel;
 use models\ProjectModel;
 use models\UserModel;
 
@@ -306,13 +306,13 @@ class TypesettingMongoTestEnvironment extends MongoTestEnvironment
 
     /**
      *
-     * @var WebtypesettingProjectModel
+     * @var TypesettingProjectModel
      */
     public $project;
 
     public function createProject($name, $code)
     {
-        $projectModel = new WebtypesettingProjectModel();
+        $projectModel = new TypesettingProjectModel();
         $projectModel->projectName = $name;
         $projectModel->projectCode = $code;
         $projectModel->siteName = $this->website->domain;
