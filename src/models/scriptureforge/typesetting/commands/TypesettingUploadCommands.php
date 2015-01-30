@@ -29,29 +29,29 @@ class TypesettingUploadCommands
             throw new \Exception("Upload controller did not move the uploaded file.");
         }
 
-    	switch ($mediaType) {
-    		case 'usfm':
-    			$response = self::uploadUsfmFile($projectId, $mediaType, $tmpFilePath);
-    			break;
-    		case 'usfm-zip':
-    			$response = self::importProjectZip($projectId, $mediaType, $tmpFilePath);
-    			break;
-    		case 'png':
-    			$response = self::uploadPngFile($projectId, $mediaType, $tmpFilePath);
+        switch ($mediaType) {
+            case 'usfm':
+                $response = self::uploadUsfmFile($projectId, $mediaType, $tmpFilePath);
                 break;
-    		default:
-    			throw new \Exception('Unknown media type "' . $mediaType . '" in Typesetting file upload.');
-    	}
-	    if ($response->result){
-	    	$project = new ProjectModel($projectId);
-	    	$model = new TypesettingAssetModel($project, $assetId);
-	    	$model->name = $response->data->fileName;
-	    	$model->path = $response->data->path;
-	    	$model->type = $mediaType;
-	    	$model->uploaded = true;
-	    	$model->write();
-	    }
-    	return $response;
+            case 'usfm-zip':
+                $response = self::importProjectZip($projectId, $mediaType, $tmpFilePath);
+                break;
+            case 'png':
+                $response = self::uploadPngFile($projectId, $mediaType, $tmpFilePath);
+                break;
+            default:
+                throw new \Exception('Unknown media type "' . $mediaType . '" in Typesetting file upload.');
+        }
+        if ($response->result) {
+            $project = new ProjectModel($projectId);
+            $model = new TypesettingAssetModel($project, $assetId);
+            $model->name = $response->data->fileName;
+            $model->path = $response->data->path;
+            $model->type = $mediaType;
+            $model->uploaded = true;
+            $model->write();
+        }
+        return $response;
     }
 
     /**
@@ -65,7 +65,7 @@ class TypesettingUploadCommands
      */
     public static function uploadUsfmFile($projectId, $mediaType, $tmpFilePath)
     {
-    	$file = $_FILES['file'];
+        $file = $_FILES['file'];
         $fileName = $file['name'];
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -89,7 +89,8 @@ class TypesettingUploadCommands
             // make the folders if they don't exist
             $project = new ProjectModel($projectId);
             $projectSlug = $project->databaseName();
-            $folderPath = $project->getAssetsFolderPath();;
+            $folderPath = $project->getAssetsFolderPath();
+            ;
             FileUtilities::createAllFolders($folderPath);
 
             // move uploaded file from tmp location to assets
@@ -99,7 +100,7 @@ class TypesettingUploadCommands
 
             // construct server response
             if ($moveOk && $tmpFilePath) {
-            	$data = new MediaResult();
+                $data = new MediaResult();
                 $data->path = $folderPath;
                 $data->fileName = $fileName;
                 $response->result = true;
@@ -138,7 +139,7 @@ class TypesettingUploadCommands
      */
     public static function uploadPngFile($projectId, $mediaType, $tmpFilePath)
     {
-    	$file = $_FILES['file'];
+        $file = $_FILES['file'];
         $fileName = $file['name'];
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -172,7 +173,7 @@ class TypesettingUploadCommands
 
             // construct server response
             if ($moveOk && $tmpFilePath) {
-            	$data = new MediaResult();
+                $data = new MediaResult();
                 $data->path = '/' . $project->getAssetsPath();
                 $data->fileName = $fileName;
                 $response->result = true;
@@ -241,178 +242,179 @@ class TypesettingUploadCommands
      */
     public static function importProjectZip($projectId, $mediaType, $tmpFilePath)
     {
-    	if ($mediaType != 'usfm-zip') {
-    		throw new \Exception("Unsupported upload type.");
-    	}
-    	if (! $tmpFilePath) {
-    		throw new \Exception("Upload controller did not move the uploaded file.");
-    	}
+        if ($mediaType != 'usfm-zip') {
+            throw new \Exception("Unsupported upload type.");
+        }
+        if (! $tmpFilePath) {
+            throw new \Exception("Upload controller did not move the uploaded file.");
+        }
 
-    	$file = $_FILES['file'];
-    	$fileName = $file['name'];
+        $file = $_FILES['file'];
+        $fileName = $file['name'];
 
-    	$finfo = finfo_open(FILEINFO_MIME_TYPE);
-    	$fileType = finfo_file($finfo, $tmpFilePath);
-    	finfo_close($finfo);
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $fileType = finfo_file($finfo, $tmpFilePath);
+        finfo_close($finfo);
 
-    	$fileName = FileUtilities::replaceSpecialCharacters($fileName);
+        $fileName = FileUtilities::replaceSpecialCharacters($fileName);
 
-    	$fileExt = (false === $pos = strrpos($fileName, '.')) ? '' : substr($fileName, $pos);
+        $fileExt = (false === $pos = strrpos($fileName, '.')) ? '' : substr($fileName, $pos);
 
-    	$allowedTypes = array(
-    			"application/zip",
-    			"application/octet-stream",
-    			"application/x-7z-compressed"
-    	);
-    	$allowedExtensions = array(
-    			".zip",
-    			".zipx",
-    			".7z"
-    	);
+        $allowedTypes = array(
+            "application/zip",
+            "application/octet-stream",
+            "application/x-7z-compressed"
+        );
+        $allowedExtensions = array(
+            ".zip",
+            ".zipx",
+            ".7z"
+        );
 
-    	$response = new UploadResponse();
-    	if (in_array(strtolower($fileType), $allowedTypes) && in_array(strtolower($fileExt), $allowedExtensions)) {
+        $response = new UploadResponse();
+        if (in_array(strtolower($fileType), $allowedTypes) && in_array(strtolower($fileExt), $allowedExtensions)) {
 
-    		// make the folders if they don't exist
-    		$project = new TypesettingProjectModel($projectId);
-    		$folderPath = $project->getAssetsFolderPath();
-    		FileUtilities::createAllFolders($folderPath);
+            // make the folders if they don't exist
+            $project = new TypesettingProjectModel($projectId);
+            $folderPath = $project->getAssetsFolderPath();
+            FileUtilities::createAllFolders($folderPath);
 
-    		// move uploaded file from tmp location to assets
-    		$filePath =  $folderPath . '/' . $fileName;
-    		$moveOk = copy($tmpFilePath, $filePath);
-    		@unlink($tmpFilePath);
+            // move uploaded file from tmp location to assets
+            $filePath = $folderPath . '/' . $fileName;
+            $moveOk = copy($tmpFilePath, $filePath);
+            @unlink($tmpFilePath);
 
-    		// import zip
-    		if ($moveOk) {
-    			$output = self::extractZip($filePath, $folderPath);
+            // import zip
+            if ($moveOk) {
+                $output = self::extractZip($filePath, $folderPath);
 
-    			// TODO: import extracted USFM files into RaPuMa project
+                // TODO: import extracted USFM files into RaPuMa project
 
+                // construct server response
+                if ($moveOk) {
+                    $data = new ImportResult();
+                    $data->path = '/' . $project->getAssetsPath();
+                    $data->fileName = $fileName;
+                    $response->result = true;
+                } else {
+                    $data = new ErrorResult();
+                    $data->errorType = 'UserMessage';
+                    $data->errorMessage = "$filename could not be saved to the right location. Contact your Site Administrator.";
+                    $response->result = false;
+                }
+            } else {
+                $data = new ErrorResult();
+                $data->errorType = 'UserMessage';
+                $data->errorMessage = "$fileName could not be saved to the right location. Contact your Site Administrator.";
+                $response->result = false;
+            }
+        } else {
+            $allowedExtensionsStr = implode(", ", $allowedExtensions);
+            $data = new ErrorResult();
+            $data->errorType = 'UserMessage';
+            if (count($allowedExtensions) < 1) {
+                $data->errorMessage = "$fileName is not an allowed compressed file. No compressed file formats are currently enabled, contact your Site Administrator.";
+            } elseif (count($allowedExtensions) == 1) {
+                $data->errorMessage = "$fileName is not an allowed compressed file. Ensure the file is a $allowedExtensionsStr.";
+            } else {
+                $data->errorMessage = "$fileName is not an allowed compressed file. Ensure the file is one of the following types: $allowedExtensionsStr.";
+            }
+            $response->result = false;
+        }
 
-    			// construct server response
-    			if ($moveOk) {
-    				$data = new ImportResult();
-    				$data->path = '/' . $project->getAssetsPath();
-    				$data->fileName = $fileName;
-    				$response->result = true;
-    			} else {
-    				$data = new ErrorResult();
-    				$data->errorType = 'UserMessage';
-    				$data->errorMessage = "$filename could not be saved to the right location. Contact your Site Administrator.";
-    				$response->result = false;
-    			}
-    		} else {
-    			$data = new ErrorResult();
-    			$data->errorType = 'UserMessage';
-    			$data->errorMessage = "$fileName could not be saved to the right location. Contact your Site Administrator.";
-    			$response->result = false;
-    		}
-    	} else {
-    		$allowedExtensionsStr = implode(", ", $allowedExtensions);
-    		$data = new ErrorResult();
-    		$data->errorType = 'UserMessage';
-    		if (count($allowedExtensions) < 1) {
-    			$data->errorMessage = "$fileName is not an allowed compressed file. No compressed file formats are currently enabled, contact your Site Administrator.";
-    		} elseif (count($allowedExtensions) == 1) {
-    			$data->errorMessage = "$fileName is not an allowed compressed file. Ensure the file is a $allowedExtensionsStr.";
-    		} else {
-    			$data->errorMessage = "$fileName is not an allowed compressed file. Ensure the file is one of the following types: $allowedExtensionsStr.";
-    		}
-    		$response->result = false;
-    	}
-
-    	$response->data = $data;
-    	return $response;
+        $response->data = $data;
+        return $response;
     }
 
     /**
-     * TODO: This is duplicated from models\languageforge\lexicon\LiftImport; move both into Palaso\Utilities\FileUtilities. IJH 2015-01
+     * TODO: This is duplicated from models\languageforge\lexicon\LiftImport; move both into Palaso\Utilities\FileUtilities.
+     * IJH 2015-01
      *
      * @param string $zipFilePath
      * @param string $extractFolderPath
      * @throws \Exception
      * @return array<string>
      */
-    public static function extractZip($zipFilePath, $extractFolderPath) {
-    	// Use absolute path for archive file
-    	$realpathResult = realpath($zipFilePath);
-    	if ($realpathResult) {
-    		$zipFilePath = $realpathResult;
-    	} else {
-    		throw new \Exception("Error receiving uploaded file");
-    	}
-    	if (!file_exists($realpathResult)) {
-    		throw new \Exception("Error file '$zipFilePath' does not exist.");
-    	}
+    public static function extractZip($zipFilePath, $extractFolderPath)
+    {
+        // Use absolute path for archive file
+        $realpathResult = realpath($zipFilePath);
+        if ($realpathResult) {
+            $zipFilePath = $realpathResult;
+        } else {
+            throw new \Exception("Error receiving uploaded file");
+        }
+        if (! file_exists($realpathResult)) {
+            throw new \Exception("Error file '$zipFilePath' does not exist.");
+        }
 
-    	$basename = basename($zipFilePath);
-    	$pathinfo = pathinfo($basename);
-    	$extension_1 = isset($pathinfo['extension']) ? $pathinfo['extension'] : 'NOEXT';
-    	// Handle .tar.gz, .tar.bz2, etc. by checking if there's another extension "inside" the first one
-    	$basename_without_ext = $pathinfo['filename'];
-    	$pathinfo = pathinfo($basename_without_ext);
-    	$extension_2 = isset($pathinfo['extension']) ? $pathinfo['extension'] : 'NOEXT';
-    	// $extension_2 will be 'tar' if the file was a .tar.gz, .tar.bz2, etc.
-    	if ($extension_2 == "tar") {
-    		// We don't handle tarball formats... yet.
-    		throw new \Exception("Sorry, the ." . $extension_2 . "." . $extension_1 . " format isn't supported");
-    	}
-    	switch ($extension_1) {
-    		case "zip":
-    			$command = 'unzip -o ' . escapeshellarg($zipFilePath) . " -d " . escapeshellarg($extractFolderPath);
-    			break;
-    		case "zipx":
-    		case "7z":
-    			$command = '7z x -y ' . escapeshellarg($zipFilePath) . " -o" . escapeshellarg($extractFolderPath);
-    			break;
-    		default:
-    			throw new \Exception("Sorry, the ." . $extension_1 . " format isn't allowed");
-    			break;
-    	}
+        $basename = basename($zipFilePath);
+        $pathinfo = pathinfo($basename);
+        $extension_1 = isset($pathinfo['extension']) ? $pathinfo['extension'] : 'NOEXT';
+        // Handle .tar.gz, .tar.bz2, etc. by checking if there's another extension "inside" the first one
+        $basename_without_ext = $pathinfo['filename'];
+        $pathinfo = pathinfo($basename_without_ext);
+        $extension_2 = isset($pathinfo['extension']) ? $pathinfo['extension'] : 'NOEXT';
+        // $extension_2 will be 'tar' if the file was a .tar.gz, .tar.bz2, etc.
+        if ($extension_2 == "tar") {
+            // We don't handle tarball formats... yet.
+            throw new \Exception("Sorry, the ." . $extension_2 . "." . $extension_1 . " format isn't supported");
+        }
+        switch ($extension_1) {
+            case "zip":
+                $command = 'unzip -o ' . escapeshellarg($zipFilePath) . " -d " . escapeshellarg($extractFolderPath);
+                break;
+            case "zipx":
+            case "7z":
+                $command = '7z x -y ' . escapeshellarg($zipFilePath) . " -o" . escapeshellarg($extractFolderPath);
+                break;
+            default:
+                throw new \Exception("Sorry, the ." . $extension_1 . " format isn't allowed");
+                break;
+        }
 
-    	FileUtilities::createAllFolders($extractFolderPath);
+        FileUtilities::createAllFolders($extractFolderPath);
 
-    	// ensure non-roman filesnames are returned
-    	$command = 'LANG="en_US.UTF-8" ' . $command;
-    	$output = array();
-    	$retcode = 0;
-    	exec($command, $output, $returnCode);
-    	if ($returnCode) {
-    		if (($returnCode != 1) || ($returnCode == 1 && strstr(end($output), 'failed setting times/attribs') == false)) {
-    			throw new \Exception("Uncompressing archive file failed: " . print_r($output, true));
-    		}
-    	}
+        // ensure non-roman filesnames are returned
+        $command = 'LANG="en_US.UTF-8" ' . $command;
+        $output = array();
+        $retcode = 0;
+        exec($command, $output, $returnCode);
+        if ($returnCode) {
+            if (($returnCode != 1) || ($returnCode == 1 && strstr(end($output), 'failed setting times/attribs') == false)) {
+                throw new \Exception("Uncompressing archive file failed: " . print_r($output, true));
+            }
+        }
 
-    	return $output;
+        return $output;
     }
 
-    public static function deleteFile($projectId, $fileName) {
-    	$response = new UploadResponse();
-    	$response->result = false;
-    	$project = new TypesettingProjectModel($projectId);
-    	$folderPath = $project->getAssetsFolderPath();
-    	$filePath = $folderPath . '/' . $fileName;
-    	if (file_exists($filePath) and ! is_dir($filePath)) {
-    		if (@unlink($filePath)) {
-    			$data = new MediaResult();
-    			$data->path = '/' . $project->getAssetsPath();
-    			$data->fileName = $fileName;
-    			$response->data = $data;
-    			$response->result = true;
-    		} else {
-    			$data = new ErrorResult();
-    			$data->errorType = 'UserMessage';
-    			$data->errorMessage = "$fileName could not be deleted. Contact your Site Administrator.";
-    		}
-    		$response->data = $data;
-    		return $response;
-    	}
-    	$data = new ErrorResult();
-    	$data->errorType = 'UserMessage';
-    	$data->errorMessage = "$fileName does not exist in this project. Contact your Site Administrator.";
-    	$response->data = $data;
-    	return $response;
+    public static function deleteFile($projectId, $fileName)
+    {
+        $response = new UploadResponse();
+        $response->result = false;
+        $project = new TypesettingProjectModel($projectId);
+        $folderPath = $project->getAssetsFolderPath();
+        $filePath = $folderPath . '/' . $fileName;
+        if (file_exists($filePath) and ! is_dir($filePath)) {
+            if (@unlink($filePath)) {
+                $data = new MediaResult();
+                $data->path = '/' . $project->getAssetsPath();
+                $data->fileName = $fileName;
+                $response->data = $data;
+                $response->result = true;
+            } else {
+                $data = new ErrorResult();
+                $data->errorType = 'UserMessage';
+                $data->errorMessage = "$fileName could not be deleted. Contact your Site Administrator.";
+            }
+            $response->data = $data;
+            return $response;
+        }
+        $data = new ErrorResult();
+        $data->errorType = 'UserMessage';
+        $data->errorMessage = "$fileName does not exist in this project. Contact your Site Administrator.";
+        $response->data = $data;
+        return $response;
     }
-
 }
