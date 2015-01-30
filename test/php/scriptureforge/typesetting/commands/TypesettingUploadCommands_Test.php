@@ -32,21 +32,47 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $this->environ->cleanupTestFiles($this->environ->project->getAssetsFolderPath());
     }
 
-    public function testExtract_zipFile_fileListOk()
+    public function testInstalledPackages_UnzipAnd7zip_Installed() {
+        $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $command = 'which unzip';
+        $output = array();
+        $returnCode = 0;
+
+        exec($command, $output, $returnCode);
+
+        $this->assertEqual(0, $returnCode, 'exec return code non-zero');
+        $this->assertPattern('/unzip/', $output[0], 'run apt-get install unzip');
+
+        $command = 'which 7z';
+        $output = array();
+        $returnCode = 0;
+
+        exec($command, $output, $returnCode);
+
+        $this->assertEqual(0, $returnCode, 'exec return code non-zero');
+        $this->assertPattern('/7z/', $output[0], 'run apt-get install p7zip-full');
+    }
+
+    public function testExtractZip_ZipFile_FileListOk()
     {
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-        $projectId = $project->id->asString();
-        $fileName = 'TestTypesettingProject.zip';
-        $usfmFileName = '44JHNKJVT.SFM';
-        $zipFilePath = TestPath . "scriptureforge/typesetting/commands/$fileName";
+        $zipFilePath = TestPath . 'scriptureforge/typesetting/commands/TestTypesettingProject.zip';
         $extractFolderPath = $project->getAssetsFolderPath();
 
-        $output = TypesettingUploadCommands::extractZip($zipFilePath, $extractFolderPath);
+        $extractedFilePaths = TypesettingUploadCommands::extractZip($zipFilePath, $extractFolderPath);
 
-        $this->assertPattern("/Archive:/", $output[0], 'Extracted from expected fileName');
-        $this->assertPattern("/$fileName/", $output[0], 'Extracted from expected fileName');
-        $this->assertPattern("/inflating:/", $output[1], 'Extracted expected usfm fileName');
-        $this->assertPattern("/$usfmFileName/", $output[1], 'Extracted expected usfm fileName');
+        $this->assertEqual('/' . $project->getAssetsPath() . '/44JHNKJVT.SFM', $extractedFilePaths[0]);
+    }
+
+    public function testExtractZip_7zipFile_FileListOk()
+    {
+        $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $zipFilePath = TestPath . 'scriptureforge/typesetting/commands/TestTypesettingProject.7z';
+        $extractFolderPath = $project->getAssetsFolderPath();
+
+        $extractedFilePaths = TypesettingUploadCommands::extractZip($zipFilePath, $extractFolderPath);
+
+        $this->assertEqual('/' . $project->getAssetsPath() . '/44JHNKJVT.SFM', $extractedFilePaths[0]);
     }
 
     public function testUploadPngFile_PngFile_UploadAllowed()

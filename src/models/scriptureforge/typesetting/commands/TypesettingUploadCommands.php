@@ -327,13 +327,12 @@ class TypesettingUploadCommands
     }
 
     /**
-     * TODO: This is duplicated from models\languageforge\lexicon\LiftImport; move both into Palaso\Utilities\FileUtilities.
-     * IJH 2015-01
+     * TODO: This is duplicated from models\languageforge\lexicon\LiftImport; move both into Palaso\Utilities\FileUtilities. IJH 2015-01
      *
      * @param string $zipFilePath
      * @param string $extractFolderPath
      * @throws \Exception
-     * @return array<string>
+     * @return array<string> of extracted file paths
      */
     public static function extractZip($zipFilePath, $extractFolderPath)
     {
@@ -378,7 +377,7 @@ class TypesettingUploadCommands
         // ensure non-roman filesnames are returned
         $command = 'LANG="en_US.UTF-8" ' . $command;
         $output = array();
-        $retcode = 0;
+        $returnCode = 0;
         exec($command, $output, $returnCode);
         if ($returnCode) {
             if (($returnCode != 1) || ($returnCode == 1 && strstr(end($output), 'failed setting times/attribs') == false)) {
@@ -386,7 +385,29 @@ class TypesettingUploadCommands
             }
         }
 
-        return $output;
+        $extractedFilePaths = array();
+        foreach ($output as $outputLine) {
+            switch ($extension_1) {
+                case "zip":
+                    if (substr($outputLine, 0, 13) === "  inflating: ") {
+                        // remove comment above and the beginning of the path; leave beginning '/'
+                        $relativeFilePath = substr($outputLine, 13 + strlen(APPPATH) - 1);
+                        $extractedFilePaths[] = $relativeFilePath;
+                    }
+                    break;
+                case "zipx":
+                case "7z":
+                    if (substr($outputLine, 0, 12) === "Extracting  ") {
+                        // remove comment above; add relative path
+                        $relativeFilePath = substr($extractFolderPath . '/' . substr($outputLine, 12), strlen(APPPATH) - 1);
+                        $extractedFilePaths[] = $relativeFilePath;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $extractedFilePaths;
     }
 
     public static function deleteFile($projectId, $fileName)
