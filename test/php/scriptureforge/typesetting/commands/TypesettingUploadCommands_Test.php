@@ -79,12 +79,10 @@ class TestTypesettingUploadCommands extends UnitTestCase
     {
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
-        $asset = new TypesettingAssetModel($project);
-        $assetId = $asset->write();
         $fileName = 'TestImage.png';
         $tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, $assetId, 'png', $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
 
         $projectSlug = $project->databaseName();
         $folderPath = $project->getAssetsFolderPath();
@@ -94,12 +92,12 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $this->assertPattern("/$fileName/", $response->data->fileName, 'Imported PNG fileName should contain the original fileName');
         $this->assertTrue(file_exists($filePath), 'Imported PNG file should exist');
 
-        $otherAsset = new TypesettingAssetModel($project, $assetId);
-        $this->assertEqual($assetId, $otherAsset->id->asString());
-        $this->assertEqual('TestImage.png', $otherAsset->name);
-        $this->assertEqual('/assets/webtypesetting/sf_testcode1', $otherAsset->path);
-        $this->assertEqual('png', $otherAsset->type);
-        $this->assertEqual(true, $otherAsset->uploaded);
+        $assetId = $response->data->assetId;
+        $pngAsset = new TypesettingAssetModel($project, $assetId);
+        $this->assertEqual($fileName, $pngAsset->name);
+        $this->assertEqual('/' . $project->getAssetsPath(), $pngAsset->path);
+        $this->assertEqual('png', $pngAsset->type);
+        $this->assertEqual(true, $pngAsset->uploaded);
 
         /*
          * TODO: Uncomment after we can reupload a file of the same name. Currently this is unsupported. - Justin Southworth 1/2015
@@ -119,7 +117,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $fileName = 'TestImage.png';
         $tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", 'NotAJpg.jpg');
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, '', 'png', $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
 
         $this->assertFalse($response->result, 'Import should fail');
         $this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
@@ -127,7 +125,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
 
         $tmpFilePath = $this->environ->uploadFile(TestPath . 'common/TestImage.jpg', 'TestImage.png');
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, '', 'png', $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
 
         $this->assertFalse($response->result, 'Import should fail');
         $this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
@@ -138,13 +136,11 @@ class TestTypesettingUploadCommands extends UnitTestCase
     {
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
-        $asset = new TypesettingAssetModel($project);
-        $assetId = $asset->write();
         $fileName = 'TestTypesettingProject.zip';
         $usfmFileName = '44JHNKJVT.SFM';
         $tmpFilePath = $this->environ->uploadFile(TestPath . "scriptureforge/typesetting/commands/$fileName", $fileName);
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, $assetId, 'usfm-zip', $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'usfm-zip', $tmpFilePath);
 
         $folderPath = $project->getAssetsFolderPath();
         $filePath = $folderPath . '/' . $response->data->fileName;
@@ -157,12 +153,19 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $this->assertTrue(file_exists($filePath), 'Uploaded zip file should exist');
         $this->assertTrue(file_exists($usfmPath), 'USFM file should exist');
 
-        $otherAsset = new TypesettingAssetModel($project, $assetId);
-        $this->assertEqual($assetId, $otherAsset->id->asString());
-        $this->assertEqual('TestTypesettingProject.zip', $otherAsset->name);
-        $this->assertEqual('/assets/webtypesetting/sf_testcode1', $otherAsset->path);
-        $this->assertEqual('usfm-zip', $otherAsset->type);
-        $this->assertEqual(true, $otherAsset->uploaded);
+        $zipAssetId = $response->data->assetId;
+        $zipAsset = new TypesettingAssetModel($project, $zipAssetId);
+        $this->assertEqual($fileName, $zipAsset->name);
+        $this->assertEqual('/' . $project->getAssetsPath(), $zipAsset->path);
+        $this->assertEqual('usfm-zip', $zipAsset->type);
+        $this->assertEqual(true, $zipAsset->uploaded);
+
+        $usfmAssetId = $response->data->extractedAssetIds[0];
+        $usfmAsset = new TypesettingAssetModel($project, $usfmAssetId);
+        $this->assertEqual($usfmFileName, $usfmAsset->name);
+        $this->assertEqual('/' . $project->getAssetsPath(), $usfmAsset->path);
+        $this->assertEqual('usfm', $usfmAsset->type);
+        $this->assertEqual(true, $usfmAsset->uploaded);
     }
 
     public function testImportProjectZip_JpgFile_UploadDisallowed()
@@ -171,7 +174,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $projectId = $project->id->asString();
         $tmpFilePath = $this->environ->uploadFile(TestPath . 'common/TestImage.jpg', 'TestTypesettingProject.zip');
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, '', 'usfm-zip', $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'usfm-zip', $tmpFilePath);
 
         $this->assertFalse($response->result, 'Import should fail');
         $this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
@@ -179,7 +182,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
 
         $tmpFilePath = $this->environ->uploadFile(TestPath . 'scriptureforge/typesetting/commands/TestTypesettingProject.zip', 'TestImage.jpg');
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, '', 'usfm-zip', $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'usfm-zip', $tmpFilePath);
 
         $this->assertFalse($response->result, 'Import should fail');
         $this->assertEqual('UserMessage', $response->data->errorType, 'Error response should be a user message');
@@ -194,7 +197,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $filePath = $project->getAssetsFolderPath() . '/' . $fileName;
         $tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, '', 'png', $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
 
         $this->assertTrue($response->result, 'Upload should succeed');
         $this->assertTrue(file_exists($filePath), 'Uploaded file should exist');
@@ -214,7 +217,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $filePath = $project->getAssetsFolderPath() . '/' . $fileName;
         $tmpFilePath = $this->environ->uploadFile(TestPath . "scriptureforge/typesetting/commands/$fileName", $fileName);
 
-        $response = TypesettingUploadCommands::uploadFile($projectId, '', 'usfm-zip', $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'usfm-zip', $tmpFilePath);
 
         $this->assertTrue($response->result, 'Upload should succeed');
         $this->assertTrue(file_exists($filePath), 'Uploaded file should exist');

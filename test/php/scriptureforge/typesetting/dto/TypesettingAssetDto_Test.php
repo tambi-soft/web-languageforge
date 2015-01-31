@@ -37,7 +37,7 @@ class TestTypesettingAssetDto extends UnitTestCase
     {
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
-        
+
         // Two questions, with different numbers of answers and different create dates
         $asset1 = new TypesettingAssetModel($project);
         $asset1->name = 'asset-name-1';
@@ -57,14 +57,14 @@ class TestTypesettingAssetDto extends UnitTestCase
 
         // Now check that it all looks right
         $this->assertIsa($dto['entries'], 'array');
-        
+
         //Checking all the zip file attributes
         $this->assertEqual($dto['entries'][0]['id'], $asset1Id);
         $this->assertEqual($dto['entries'][0]['name'], $asset1->name);
         $this->assertEqual($dto['entries'][0]['path'], $asset1->path);
         $this->assertEqual($dto['entries'][0]['type'], $asset1->type);
         $this->assertEqual($dto['entries'][0]['uploaded'], $asset1->uploaded);
-        
+
         //Checking all the png file attributes
         $this->assertEqual($dto['entries'][1]['id'], $asset2Id);
         $this->assertEqual($dto['entries'][1]['name'], $asset2->name);
@@ -77,18 +77,18 @@ class TestTypesettingAssetDto extends UnitTestCase
     {
     	$project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
     	$projectId = $project->id->asString();
-    	
+
     	$fileName = 'TestImage.png';
     	$tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
-    	$response = TypesettingUploadCommands::uploadFile($projectId, '', 'png', $tmpFilePath);
-    	
+    	$response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
+
     	$dto = TypesettingAssetDto::encode($projectId);
     	$this->assertEqual($dto['count'], 1);
-    	
+
     	$fileName = 'pngTest.png';
     	$tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
-    	$response = TypesettingUploadCommands::uploadFile($projectId, '', 'png', $tmpFilePath);
-    	
+    	$response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
+
     	$dto = TypesettingAssetDto::encode($projectId);
     	$this->assertEqual($dto['count'], 2);
     }

@@ -2,13 +2,12 @@
 namespace models\scriptureforge\typesetting\commands;
 
 use Palaso\Utilities\FileUtilities;
+use models\scriptureforge\typesetting\TypesettingAssetModel;
 use models\scriptureforge\TypesettingProjectModel;
 use models\shared\commands\ErrorResult;
 use models\shared\commands\ImportResult;
 use models\shared\commands\MediaResult;
 use models\shared\commands\UploadResponse;
-use models\ProjectModel;
-use models\scriptureforge\typesetting\TypesettingAssetModel;
 
 class TypesettingUploadCommands
 {
@@ -17,13 +16,12 @@ class TypesettingUploadCommands
      * Upload a file
      *
      * @param string $projectId
-     * @param string $assetId
      * @param string $mediaType
      * @param string $tmpFilePath
      * @throws \Exception
      * @return \models\shared\commands\UploadResponse
      */
-    public static function uploadFile($projectId, $assetId, $mediaType, $tmpFilePath)
+    public static function uploadFile($projectId, $mediaType, $tmpFilePath)
     {
         if (! $tmpFilePath) {
             throw new \Exception("Upload controller did not move the uploaded file.");
@@ -43,13 +41,14 @@ class TypesettingUploadCommands
                 throw new \Exception('Unknown media type "' . $mediaType . '" in Typesetting file upload.');
         }
         if ($response->result) {
-            $project = new ProjectModel($projectId);
-            $model = new TypesettingAssetModel($project, $assetId);
-            $model->name = $response->data->fileName;
-            $model->path = $response->data->path;
-            $model->type = $mediaType;
-            $model->uploaded = true;
-            $model->write();
+            $project = new TypesettingProjectModel($projectId);
+            $asset = new TypesettingAssetModel($project);
+            $asset->name = $response->data->fileName;
+            $asset->path = $response->data->path;
+            $asset->type = $mediaType;
+            $asset->uploaded = true;
+            $assetId = $asset->write();
+            $response->data->assetId =$assetId;
         }
         return $response;
     }
@@ -87,10 +86,9 @@ class TypesettingUploadCommands
         if (in_array(strtolower($fileType), $allowedTypes) && in_array(strtolower($fileExt), $allowedExtensions)) {
 
             // make the folders if they don't exist
-            $project = new ProjectModel($projectId);
-            $projectSlug = $project->databaseName();
+            $project = new TypesettingProjectModel($projectId);
             $folderPath = $project->getAssetsFolderPath();
-            ;
+
             FileUtilities::createAllFolders($folderPath);
 
             // move uploaded file from tmp location to assets
@@ -161,8 +159,7 @@ class TypesettingUploadCommands
         if (in_array(strtolower($fileType), $allowedTypes) && in_array(strtolower($fileExt), $allowedExtensions)) {
 
             // make the folders if they don't exist
-            $project = new ProjectModel($projectId);
-            $projectSlug = $project->databaseName();
+            $project = new TypesettingProjectModel($projectId);
             $folderPath = $project->getAssetsFolderPath();
             FileUtilities::createAllFolders($folderPath);
 
@@ -286,22 +283,26 @@ class TypesettingUploadCommands
 
             // import zip
             if ($moveOk) {
-                $output = self::extractZip($filePath, $folderPath);
+                $extractedFilePaths = self::extractZip($filePath, $folderPath);
+
+                $response->result = true;
+                $data = new ImportResult();
+                $data->path = '/' . $project->getAssetsPath();
+                $data->fileName = $fileName;
+                $data->extractedAssetIds = array();
+                foreach ($extractedFilePaths as $extractedFilePath) {
+                    $extractedFilePath = substr($extractedFilePath, strlen(APPPATH) - 1);
+                    $asset = new TypesettingAssetModel($project);
+                    $asset->name = basename($extractedFilePath);
+                    $asset->path = dirname($extractedFilePath);
+                    $asset->type = 'usfm';
+                    $asset->uploaded = true;
+                    $assetId = $asset->write();
+                    $data->extractedAssetIds[] =$assetId;
+                }
 
                 // TODO: import extracted USFM files into RaPuMa project
 
-                // construct server response
-                if ($moveOk) {
-                    $data = new ImportResult();
-                    $data->path = '/' . $project->getAssetsPath();
-                    $data->fileName = $fileName;
-                    $response->result = true;
-                } else {
-                    $data = new ErrorResult();
-                    $data->errorType = 'UserMessage';
-                    $data->errorMessage = "$filename could not be saved to the right location. Contact your Site Administrator.";
-                    $response->result = false;
-                }
             } else {
                 $data = new ErrorResult();
                 $data->errorType = 'UserMessage';
