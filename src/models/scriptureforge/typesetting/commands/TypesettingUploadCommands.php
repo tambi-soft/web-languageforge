@@ -390,17 +390,17 @@ class TypesettingUploadCommands
             switch ($extension_1) {
                 case "zip":
                     if (substr($outputLine, 0, 13) === "  inflating: ") {
-                        // remove comment above and the beginning of the path; leave beginning '/'
-                        $relativeFilePath = substr($outputLine, 13 + strlen(APPPATH) - 1);
-                        $extractedFilePaths[] = $relativeFilePath;
+                        // remove comment above
+                        $extractedFilePath = substr($outputLine, 13);
+                        $extractedFilePaths[] = $extractedFilePath;
                     }
                     break;
                 case "zipx":
                 case "7z":
                     if (substr($outputLine, 0, 12) === "Extracting  ") {
-                        // remove comment above; add relative path
-                        $relativeFilePath = substr($extractFolderPath . '/' . substr($outputLine, 12), strlen(APPPATH) - 1);
-                        $extractedFilePaths[] = $relativeFilePath;
+                        // remove comment above; add the rest of the path
+                        $extractedFilePath = $extractFolderPath . '/' . substr($outputLine, 12);
+                        $extractedFilePaths[] = $extractedFilePath;
                     }
                     break;
                 default:

@@ -61,7 +61,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
 
         $extractedFilePaths = TypesettingUploadCommands::extractZip($zipFilePath, $extractFolderPath);
 
-        $this->assertEqual('/' . $project->getAssetsPath() . '/44JHNKJVT.SFM', $extractedFilePaths[0]);
+        $this->assertEqual($extractFolderPath . '/44JHNKJVT.SFM', $extractedFilePaths[0]);
     }
 
     public function testExtractZip_7zipFile_FileListOk()
@@ -72,7 +72,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
 
         $extractedFilePaths = TypesettingUploadCommands::extractZip($zipFilePath, $extractFolderPath);
 
-        $this->assertEqual('/' . $project->getAssetsPath() . '/44JHNKJVT.SFM', $extractedFilePaths[0]);
+        $this->assertEqual($extractFolderPath . '/44JHNKJVT.SFM', $extractedFilePaths[0]);
     }
 
     public function testUploadPngFile_PngFile_UploadAllowed()
