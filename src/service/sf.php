@@ -699,7 +699,7 @@ class sf
 
     public function typesetting_uploadFile($mediaType, $tmpFilePath)
     {
-    	$response = TypesettingUploadCommands::uploadFile($this->_projectId, '', $mediaType, $tmpFilePath);
+    	$response = TypesettingUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
     }
 

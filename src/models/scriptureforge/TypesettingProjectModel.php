@@ -2,7 +2,7 @@
 
 namespace models\scriptureforge;
 
-class WebtypesettingProjectModel extends SfProjectModel
+class TypesettingProjectModel extends SfProjectModel
 {
     public function __construct($id = '')
     {
@@ -13,5 +13,3 @@ class WebtypesettingProjectModel extends SfProjectModel
         parent::__construct($id);
     }
 }
-
-

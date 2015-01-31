@@ -4,7 +4,7 @@ namespace models\scriptureforge\typesetting\dto;
 use libraries\shared\palaso\exceptions\ResourceNotAvailableException;
 use models\shared\dto\RightsHelper;
 use models\shared\rights\ProjectRoles;
-use models\scriptureforge\WebtypesettingProjectModel;
+use models\scriptureforge\TypesettingProjectModel;
 use models\mapper\JsonEncoder;
 use models\scriptureforge\typesetting\TypesettingAssetModel;
 use models\scriptureforge\typesetting\TypesettingAssetListModel;
@@ -21,7 +21,7 @@ class TypesettingAssetDto
      */
     public static function encode($projectId)
     {
-        $project = new WebtypesettingProjectModel($projectId);
+        $project = new TypesettingProjectModel($projectId);
         $assetList = new TypesettingAssetListModel($project);
         $assetList->read();
 
