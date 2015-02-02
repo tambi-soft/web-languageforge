@@ -1,8 +1,7 @@
-// controller for discussionThread
 'use strict';
 
 angular.module('webtypesetting.discussionThread', ['ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.discussionServices'])
-
+// controller for discussionThread
 .controller('discussionThreadCtrl', ['$scope', '$state', 'webtypesettingDiscussionService', '$location', 'sessionService', 'modalService', 'silNoticeService', 
 function($scope, $state, discussionService, $location, sessionService, modal, notice) {
 

@@ -48,13 +48,17 @@ class TypesettingDiscussionListCommands
         return $thread;
     }
 
-    public static function createPost($projectId, $threadId, $content)
+    public static function createPost($projectId, $userId, $threadId, $content)
     {
         $project = new ProjectModel($projectId);
         $thread = new TypesettingDiscussionThreadModel($project, $threadId);
         $post = new TypesettingDiscussionPostModel($project, $threadId);
         $post->threadRef->id = $threadId;
         $post->content = $content;
+        $post->authorInfo->createdByUserRef->id = $userId;
+        $post->authorInfo->createdDate = new \DateTime();
+        $post->authorInfo->modifiedByUserRef->id = $userId;
+        $post->authorInfo->modifiedDate = new \DateTime();
         return $post->write();
     }
 
@@ -67,12 +71,14 @@ class TypesettingDiscussionListCommands
         $post->write();
     }
 
-    public static function updatePost($projectId, $threadId, $postId, $content)
+    public static function updatePost($projectId, $userId, $threadId, $postId, $content)
     {
         $project = new ProjectModel($projectId);
         $thread = new TypesettingDiscussionThreadModel($project, $threadId);
         $post = new TypesettingDiscussionPostModel($project, $threadId, $postId);
         $post->content = $content;
+        $post->authorInfo->modifiedByUserRef->id = $userId;
+        $post->authorInfo->modifiedDate = new \DateTime();
         $post->write();
     }
 

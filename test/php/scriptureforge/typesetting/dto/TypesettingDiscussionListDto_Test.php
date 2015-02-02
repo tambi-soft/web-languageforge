@@ -23,26 +23,21 @@ class TestTypesettingDiscussionListDto extends UnitTestCase
 
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $project->id->asString();
-        $userId = $e->createUser('joe', 'joe', 'joe');
+        $joeUserId = $e->createUser('joe', 'joe', 'joe');
+        $bobUserId = $e->createUser('bob', 'bob', 'bob');
 
         // tests the creation and reading of threads, posts, and replies
         // add two discussion threads
-        $threadModelId1 = TypesettingDiscussionListCommands::createThread($projectId, $userId, 'My first thread', 'MAT');
+        $threadModelId1 = TypesettingDiscussionListCommands::createThread($projectId, $joeUserId, 'My first thread', 'MAT');
         $threadModel1 = new TypesettingDiscussionThreadModel($project, $threadModelId1);
-
-        $threadModel2 = new TypesettingDiscussionThreadModel($project);
-        $threadModel2->title = "My second thread";
-        $threadModel2->associatedItem = "MRK";
-        $threadModel2->write();
+        $threadModelId2 = TypesettingDiscussionListCommands::createThread($projectId, $bobUserId, 'My second thread', 'MRK');
+        $threadModel2 = new TypesettingDiscussionThreadModel($project, $threadModelId2);
 
         // add two posts to the second discussion
-        $postModel1 = new TypesettingDiscussionPostModel($project, $threadModel2->id->asString());
-        $postModel1->content = "My first post";
-        $postModel1->write();
-
-        $postModel2 = new TypesettingDiscussionPostModel($project, $threadModel2->id->asString());
-        $postModel2->content = "My second post";
-        $postModel2->write();
+        $postModelId1 = TypesettingDiscussionListCommands::createPost($projectId, $bobUserId, $threadModelId2, 'My first post');
+        $postModel1 = new TypesettingDiscussionPostModel($project, $threadModelId2, $postModelId1);
+        $postModelId2 = TypesettingDiscussionListCommands::createPost($projectId, $bobUserId, $threadModelId2, 'My second post');
+        $postModel2 = new TypesettingDiscussionPostModel($project, $threadModelId2, $postModelId2);
 
         // add two repies to the second post on the second discussion
         $reply1 = new LexCommentReply();

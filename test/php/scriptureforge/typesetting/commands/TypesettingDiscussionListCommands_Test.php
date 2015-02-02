@@ -146,7 +146,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $postList = new TypesettingDiscussionPostListModel($project, $threadId);
         $postList->read();
 
-        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        TypesettingDiscussionListCommands::createPost($projectId, $userId, $threadId, 'my post');
         $postList->read();
         $this->assertEqual($postList->count, 1);
         $this->assertEqual($postList->entries[0]['content'], 'my post');
@@ -175,13 +175,13 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $postList = new TypesettingDiscussionPostListModel($project, $threadId);
         $postList->read();
 
-        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        TypesettingDiscussionListCommands::createPost($projectId, $userId, $threadId, 'my post');
         $postList->read();
         $postId = $postList->entries[0]['id'];
         $this->assertEqual($postList->count, 1);
         $this->assertEqual($postList->entries[0]['content'], 'my post');
 
-        TypesettingDiscussionListCommands::updatePost($projectId, $threadId, $postId, 'my updated post');
+        TypesettingDiscussionListCommands::updatePost($projectId, $userId, $threadId, $postId, 'my updated post');
         $postList->read();
         $this->assertEqual($postList->count, 1);
         $this->assertEqual($postList->entries[0]['content'], 'my updated post');
@@ -210,9 +210,9 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $postList = new TypesettingDiscussionPostListModel($project, $threadId);
         $postList->read();
 
-        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my first post');
+        TypesettingDiscussionListCommands::createPost($projectId, $userId, $threadId, 'my first post');
         $postList->read();
-        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my second post');
+        TypesettingDiscussionListCommands::createPost($projectId, $userId, $threadId, 'my second post');
         $postList->read();
         $post2Id = $postList->entries[1]['id'];
 
@@ -245,7 +245,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $postList = new TypesettingDiscussionPostListModel($project, $threadId);
         $postList->read();
 
-        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        TypesettingDiscussionListCommands::createPost($projectId, $userId, $threadId, 'my post');
         $postList->read();
         $postId = $postList->entries[0]['id'];
 
@@ -279,7 +279,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $postList = new TypesettingDiscussionPostListModel($project, $threadId);
         $postList->read();
 
-        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        TypesettingDiscussionListCommands::createPost($projectId, $userId, $threadId, 'my post');
         $postList->read();
         $postId = $postList->entries[0]['id'];
 
@@ -317,7 +317,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $postList = new TypesettingDiscussionPostListModel($project, $threadId);
         $postList->read();
 
-        TypesettingDiscussionListCommands::createPost($projectId, $threadId, 'my post');
+        TypesettingDiscussionListCommands::createPost($projectId, $userId, $threadId, 'my post');
         $postList->read();
         $postId = $postList->entries[0]['id'];
 

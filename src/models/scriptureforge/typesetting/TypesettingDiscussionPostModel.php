@@ -3,9 +3,7 @@
 namespace models\scriptureforge\typesetting;
 
 use models\languageforge\lexicon\LexCommentReply;
-
 use models\languageforge\lexicon\AuthorInfo;
-
 use models\mapper\ArrayOf;
 use models\mapper\Id;
 use models\mapper\IdReference;
@@ -63,19 +61,22 @@ class TypesettingDiscussionPostModel extends \models\mapper\MapperModel
      */
     public $threadRef;
 
-
     /**
-     * 
+     *
      * @var ArrayOf
      */
     public $tags;
-    
+
     /**
      *
      * @var ArrayOf<LexCommentReply>
      */
     public $replies;
 
+    /**
+     * @var AuthorInfo
+     */
+    public $authorInfo;
 
     /**
      * @var bool
