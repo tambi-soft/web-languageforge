@@ -1,8 +1,7 @@
-// controller for discussionThread
 'use strict';
 
 angular.module('webtypesetting.discussionThread', ['ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.discussionServices'])
-
+// controller for discussionThread
 .controller('discussionThreadCtrl', ['$scope', '$state', 'webtypesettingDiscussionService', '$location', 'sessionService', 'modalService', 'silNoticeService', 
 function($scope, $state, discussionService, $location, sessionService, modal, notice) {
 
@@ -40,7 +39,7 @@ function($scope, $state, discussionService, $location, sessionService, modal, no
 
   $scope.currentPost = "";
 
-  $scope.changeTitle = function() {
+  $scope.changeTitle = function changeTitle() {
     if ($scope.isManager()) {
       var title = prompt("Please enter a new thread name.", $scope.thread.title);
       if (title != null && title.trim() != "") {
@@ -52,14 +51,14 @@ function($scope, $state, discussionService, $location, sessionService, modal, no
     }
   };
 
-  $scope.saveEdit = function(post) {
+  $scope.saveEdit = function saveEdit(post) {
     discussionService.updatePost($scope.thread.id, post.id, post.content, function(result) {
       getPageDto();
       notice.push(notice.SUCCESS, "Post updated.");
     });
   };
 
-  $scope.deletePost = function(post) {
+  $scope.deletePost = function deletePost(post) {
     var confirmBool = confirm("Are you sure you want to delete this post?");
     if (confirmBool) {
       discussionService.deletePost($scope.thread.id, post.id, function(result) {
@@ -68,7 +67,7 @@ function($scope, $state, discussionService, $location, sessionService, modal, no
       });
     }
   };
-  $scope.deleteReply = function(post, reply) {
+  $scope.deleteReply = function deleteReply(post, reply) {
     var confirmBool = confirm("Are you sure you want to delete this reply?");
     if (confirmBool) {
       discussionService.deleteReply($scope.thread.id, post.id, reply.id, function(result) {
@@ -77,7 +76,7 @@ function($scope, $state, discussionService, $location, sessionService, modal, no
       });
     }
   };
-  $scope.createReply = function(post, newReplyContent) {
+  $scope.createReply = function createReply(post, newReplyContent) {
     discussionService.createReply($scope.thread.id, post.id, newReplyContent, function(result) {
       newReplyContent = "";
       getPageDto();
@@ -85,7 +84,7 @@ function($scope, $state, discussionService, $location, sessionService, modal, no
     });
   };
 
-  $scope.createPost = function() {
+  $scope.createPost = function createPost() {
     discussionService.createPost($scope.thread.id, $scope.newPostContent, function(result) {
       $scope.newPostContent = "";
       getPageDto();
@@ -93,7 +92,7 @@ function($scope, $state, discussionService, $location, sessionService, modal, no
     });
   };
 
-  $scope.changeStatus = function() {
+  $scope.changeStatus = function changeStatus() {
     if ($scope.isManager()) {
       alert("Change Status");
     }

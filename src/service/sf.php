@@ -569,7 +569,7 @@ class sf
     }
 
     public function typesetting_discussionList_createThread($title, $itemId) {
-    	return TypesettingDiscussionListCommands::createThread($this->_projectId, $title, $itemId);
+    	return TypesettingDiscussionListCommands::createThread($this->_projectId, $this->_userId, $title, $itemId);
     }
 
 	public function typesetting_discussionList_deleteThread($threadId) {
@@ -577,11 +577,11 @@ class sf
     }
 
 	public function typesetting_discussionList_updateThread($threadId, $title) {
-    	return TypesettingDiscussionListCommands::updateThread($this->_projectId, $threadId, $title);
+    	return TypesettingDiscussionListCommands::updateThread($this->_projectId, $this->_userId, $threadId, $title);
     }
 
 	public function typesetting_discussionList_createPost($threadId, $content) {
-    	return TypesettingDiscussionListCommands::createPost($this->_projectId, $threadId, $content);
+    	return TypesettingDiscussionListCommands::createPost($this->_projectId, $this->_userId, $threadId, $content);
     }
 
 	public function typesetting_discussionList_deletePost($threadId, $postId) {
@@ -589,11 +589,11 @@ class sf
     }
 
 	public function typesetting_discussionList_updatePost($threadId, $postId, $content) {
-    	return TypesettingDiscussionListCommands::updatePost($this->_projectId, $threadId, $postId, $content);
+    	return TypesettingDiscussionListCommands::updatePost($this->_projectId, $this->_userId, $threadId, $postId, $content);
     }
 
 	public function typesetting_discussionList_createReply($threadId, $postId, $content) {
-    	return TypesettingDiscussionListCommands::createReply($this->_projectId, $threadId, $postId, $content);
+    	return TypesettingDiscussionListCommands::createReply($this->_projectId, $this->_userId, $threadId, $postId, $content);
     }
 
 	public function typesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
@@ -601,7 +601,7 @@ class sf
     }
 
 	public function typesetting_discussionList_updateReply($threadId, $postId, $replyId, $content) {
-    	return TypesettingDiscussionListCommands::updateReply($this->_projectId, $threadId, $postId, $replyId, $content);
+    	return TypesettingDiscussionListCommands::updateReply($this->_projectId, $this->_userId, $threadId, $postId, $replyId, $content);
     }
 
 	public function typesetting_discussionList_updateStatus($threadId, $status) {

@@ -2,21 +2,23 @@
     <h2 id="titleClick" data-ng-click="changeTitle()">{{thread.title}}</h2>
     <div>
         <button class="btn btn-{{thread.status.buttonColor}}"
-            data-ng-click="changeStatus()")>{{thread.status.buttonText}}
+            data-ng-click="changeStatus()">{{thread.status.buttonText}}
         </button>
-        <b class="h4"> <a href="#">{{thread.author.name}}</a>
-        </b> <i class="h4 small"> created this discussion.</i>
+        <i class="h4 small">Discussion created by </i>
+        <b class="h4"><a href="#">{{thread.author.name}}</a></b>
     </div>
     <hr />
     <div data-ng-repeat="post in thread.posts">
-        <img class="img iconImage" src={{post.thumbnail}} align="left"
+        <img class="img iconImage" data-ng-src="{{post.author.avatar}}" align="left"
             style="MARGIN-RIGHT: 15px" />
         <table class="table-bordered">
             <tbody>
                 <tr class="discussionPost">
-                    <td><b class="h4"> <a href="#">{{post.author.name}}</a></b>
-                        <i class="h4 small"> created this post on
-                            {{post.creationDate}}</i></td>
+                    <td>
+                        <i class="h4 small">Post created by </i>
+                        <b class="h4"><a href="#">{{post.author.name}}</a></b>
+                        <i class="h4 small">{{post.dateCreated | relativetime}}</i>
+                    </td>
                     <td>
                         <button class="btn customBtn1"
                             data-ng-show="isManager()"
@@ -46,7 +48,7 @@
                     <td class="replyMargin" colspan="2">
                         <h5 class="tabMargin">
                             <b><a href="#">{{reply.author.name}}</a>
-                                <i class="small"> replied on {{reply.creationDate}} </i></b>
+                                <i class="small"> replied {{reply.author.dateCreated | relativetime}}</i></b>
                             <button class="btn customBtn2"
                                 data-ng-show="isManager()"
                                 data-ng-click="deleteReply(post, reply)">X</button>
@@ -55,8 +57,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"><textarea rows="2"
-                        class="form-control replyBox"
+                    <td colspan="2">
+                        <textarea rows="2" class="form-control replyBox"
                         data-ng-model="newReplyContent"
                         placeholder="Reply here..."></textarea>
                         <button class="btn btn-info btn-sm tabMargin buttonMargin"

@@ -1,18 +1,17 @@
 <?php
-
 namespace models\scriptureforge\typesetting;
 
-use models\mapper\ArrayOf;
 use models\mapper\Id;
-use models\mapper\IdReference;
 use models\ProjectModel;
+use models\languageforge\lexicon\AuthorInfo;
 
-/**
- * 
- *
- */
 class TypesettingDiscussionThreadModel extends \models\mapper\MapperModel
 {
+
+    const STATUS_OPEN = 'Open';
+    const STATUS_RESOLVED = 'Resolved';
+    const STATUS_TODO = 'Todo';
+
     public static function mapper($databaseName)
     {
         static $instance = null;
@@ -24,46 +23,56 @@ class TypesettingDiscussionThreadModel extends \models\mapper\MapperModel
     }
 
     /**
+     *
      * @param ProjectModel $projectModel
-     * @param string       $id
+     * @param string $id
      */
     public function __construct($projectModel, $id = '')
     {
+        $this->setReadOnlyProp('authorInfo');
+        $this->setReadOnlyProp('status');
+        $this->setPrivateProp('isDeleted');
+
         $this->id = new Id();
+        $this->authorInfo = new AuthorInfo();
+        $this->status = self::STATUS_OPEN;
         $this->isDeleted = false;
-        $this->status = "Open";
         $databaseName = $projectModel->databaseName();
         parent::__construct(self::mapper($databaseName), $id);
     }
 
     /**
+     *
      * @var Id
      */
     public $id;
-    
+
     /**
-     * 
+     *
      * @var string
      */
     public $title;
-    
+
     /**
-     * 
-     * @var string
-     */
-    public $status;
-    
-    /**
-     * 
+     *
      * @var string
      */
     public $associatedItem;
-    
+
     /**
-     * 
+     * @var AuthorInfo
+     */
+    public $authorInfo;
+
+    /**
+     *
+     * @var string
+     */
+    public $status;
+
+    /**
+     *
      * @var boolean
      */
     public $isDeleted;
-    
-    
- }
+}
