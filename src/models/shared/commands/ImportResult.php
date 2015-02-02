@@ -1,20 +1,8 @@
 <?php
 namespace models\shared\commands;
 
-class ImportResult
+class ImportResult extends MediaResult
 {
-
-    /**
-     *
-     * @var string
-     */
-    public $path;
-
-    /**
-     *
-     * @var string
-     */
-    public $fileName;
 
     /**
      *

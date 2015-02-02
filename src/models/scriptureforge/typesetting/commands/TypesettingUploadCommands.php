@@ -5,8 +5,6 @@ use Palaso\Utilities\FileUtilities;
 use models\scriptureforge\typesetting\TypesettingAssetModel;
 use models\scriptureforge\TypesettingProjectModel;
 use models\shared\commands\ErrorResult;
-use models\shared\commands\ImportResult;
-use models\shared\commands\MediaResult;
 use models\shared\commands\UploadResponse;
 
 class TypesettingUploadCommands
@@ -48,7 +46,7 @@ class TypesettingUploadCommands
             $asset->type = $mediaType;
             $asset->uploaded = true;
             $assetId = $asset->write();
-            $response->data->assetId =$assetId;
+            $response->data->assetId = $assetId;
         }
         return $response;
     }
@@ -98,7 +96,7 @@ class TypesettingUploadCommands
 
             // construct server response
             if ($moveOk && $tmpFilePath) {
-                $data = new MediaResult();
+                $data = new TypesettingMediaResult();
                 $data->path = $folderPath;
                 $data->fileName = $fileName;
                 $response->result = true;
@@ -170,7 +168,7 @@ class TypesettingUploadCommands
 
             // construct server response
             if ($moveOk && $tmpFilePath) {
-                $data = new MediaResult();
+                $data = new TypesettingMediaResult();
                 $data->path = '/' . $project->getAssetsPath();
                 $data->fileName = $fileName;
                 $response->result = true;
@@ -286,10 +284,9 @@ class TypesettingUploadCommands
                 $extractedFilePaths = self::extractZip($filePath, $folderPath);
 
                 $response->result = true;
-                $data = new ImportResult();
+                $data = new TypesettingImportResult();
                 $data->path = '/' . $project->getAssetsPath();
                 $data->fileName = $fileName;
-                $data->extractedAssetIds = array();
                 foreach ($extractedFilePaths as $extractedFilePath) {
                     $extractedFilePath = substr($extractedFilePath, strlen(APPPATH) - 1);
                     $asset = new TypesettingAssetModel($project);
@@ -298,7 +295,7 @@ class TypesettingUploadCommands
                     $asset->type = 'usfm';
                     $asset->uploaded = true;
                     $assetId = $asset->write();
-                    $data->extractedAssetIds[] =$assetId;
+                    $data->extractedAssetIds[] = $assetId;
                 }
 
                 // TODO: import extracted USFM files into RaPuMa project
@@ -420,7 +417,7 @@ class TypesettingUploadCommands
         $filePath = $folderPath . '/' . $fileName;
         if (file_exists($filePath) and ! is_dir($filePath)) {
             if (@unlink($filePath)) {
-                $data = new MediaResult();
+                $data = new TypesettingMediaResult();
                 $data->path = '/' . $project->getAssetsPath();
                 $data->fileName = $fileName;
                 $response->data = $data;
