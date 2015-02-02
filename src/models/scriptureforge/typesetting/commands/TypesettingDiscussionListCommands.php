@@ -82,13 +82,17 @@ class TypesettingDiscussionListCommands
         $post->write();
     }
 
-    public static function createReply($projectId, $threadId, $postId, $content)
+    public static function createReply($projectId, $userId, $threadId, $postId, $content)
     {
         $project = new ProjectModel($projectId);
         $thread = new TypesettingDiscussionThreadModel($project, $threadId);
         $post = new TypesettingDiscussionPostModel($project, $threadId, $postId);
         $reply = new LexCommentReply();
         $reply->content = $content;
+        $reply->authorInfo->createdByUserRef->id = $userId;
+        $reply->authorInfo->createdDate = new \DateTime();
+        $reply->authorInfo->modifiedByUserRef->id = $userId;
+        $reply->authorInfo->modifiedDate = new \DateTime();
         $post->setReply($reply->id, $reply);
         return $post->write();
     }
@@ -103,12 +107,14 @@ class TypesettingDiscussionListCommands
     }
 
     /* NOTE: Customer said that updating replies is not necessary at the moment of release.
-    public static function updateReply($projectId, $threadId, $postId, $replyId, $content)
+    public static function updateReply($projectId, $userId, $threadId, $postId, $replyId, $content)
     {
         $project = new ProjectModel($projectId);
         $thread = new TypesettingDiscussionThreadModel($project, $threadId);
         $post = new TypesettingDiscussionPostModel($project, $threadId, $postId);
         $reply = new LexCommentReply($replyId);
+        $reply->authorInfo->modifiedByUserRef->id = $userId;
+        $reply->authorInfo->modifiedDate = new \DateTime();
     }
 */
 

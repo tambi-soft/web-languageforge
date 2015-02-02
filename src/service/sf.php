@@ -593,7 +593,7 @@ class sf
     }
 
 	public function typesetting_discussionList_createReply($threadId, $postId, $content) {
-    	return TypesettingDiscussionListCommands::createReply($this->_projectId, $threadId, $postId, $content);
+    	return TypesettingDiscussionListCommands::createReply($this->_projectId, $this->_userId, $threadId, $postId, $content);
     }
 
 	public function typesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
@@ -601,7 +601,7 @@ class sf
     }
 
 	public function typesetting_discussionList_updateReply($threadId, $postId, $replyId, $content) {
-    	return TypesettingDiscussionListCommands::updateReply($this->_projectId, $threadId, $postId, $replyId, $content);
+    	return TypesettingDiscussionListCommands::updateReply($this->_projectId, $this->_userId, $threadId, $postId, $replyId, $content);
     }
 
 	public function typesetting_discussionList_updateStatus($threadId, $status) {

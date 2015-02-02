@@ -48,7 +48,7 @@
                     <td class="replyMargin" colspan="2">
                         <h5 class="tabMargin">
                             <b><a href="#">{{reply.author.name}}</a>
-                                <i class="small"> replied on {{reply.creationDate}} </i></b>
+                                <i class="small"> replied {{reply.author.dateCreated | relativetime}}</i></b>
                             <button class="btn customBtn2"
                                 data-ng-show="isManager()"
                                 data-ng-click="deleteReply(post, reply)">X</button>

@@ -249,7 +249,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $postList->read();
         $postId = $postList->entries[0]['id'];
 
-        TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
+        TypesettingDiscussionListCommands::createReply($projectId, $userId, $threadId, $postId, "my reply");
         $postList->read();
 
         $this->assertEqual($postList->entries[0]['replies'][0]['content'], "my reply");
@@ -283,7 +283,7 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $postList->read();
         $postId = $postList->entries[0]['id'];
 
-        TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my reply");
+        TypesettingDiscussionListCommands::createReply($projectId, $userId, $threadId, $postId, "my reply");
         $postList->read();
 
         $replyId = $postList->entries[0]['replies'][0]['id'];
@@ -321,8 +321,8 @@ class TestTypesettingDiscussionListCommands extends UnitTestCase
         $postList->read();
         $postId = $postList->entries[0]['id'];
 
-        TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my first reply");
-        TypesettingDiscussionListCommands::createReply($projectId, $threadId, $postId, "my second reply");
+        TypesettingDiscussionListCommands::createReply($projectId, $userId, $threadId, $postId, "my first reply");
+        TypesettingDiscussionListCommands::createReply($projectId, $userId, $threadId, $postId, "my second reply");
         $postList->read();
         $replyId = $postList->entries[0]['replies'][0]['id'];
         $this->assertEqual($postList->entries[0]['replies'][0]['content'], 'my first reply');
