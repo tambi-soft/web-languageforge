@@ -1,14 +1,12 @@
 <?php
 use Palaso\Utilities\FileUtilities;
 use libraries\shared\Website;
-use models\shared\rights\ProjectRoles;
-use models\shared\rights\SystemRoles;
 use models\languageforge\lexicon\LexiconProjectModel;
 use models\scriptureforge\TypesettingProjectModel;
+use models\shared\rights\ProjectRoles;
+use models\shared\rights\SystemRoles;
 use models\ProjectModel;
 use models\UserModel;
-
-require_once TestPath . 'common/MockProjectModel.php';
 
 class MongoTestEnvironment
 {

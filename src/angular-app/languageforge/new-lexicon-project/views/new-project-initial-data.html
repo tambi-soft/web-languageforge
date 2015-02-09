@@ -25,8 +25,8 @@
         <br />
         <div data-ng-show="datafile != null">
             <p><strong>{{datafile.name}}</strong> ({{datafile.size | bytes }})</p>
-    <div class="col-md-4" data-ng-class="interfaceConfig.pullNormal">
-                <progressbar data-value="uploadProgress" data-max="100.0">{{uploadProgress}}%</progressbar>
+           <div class="col-md-4" data-ng-class="interfaceConfig.pullNormal">
+                <progressbar data-value="uploadProgress" data-max="100.0">{{uploadProgress | number:0}}%</progressbar>
             </div>
             &nbsp;
         </div>

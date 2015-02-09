@@ -1,4 +1,5 @@
 var constants = require('./testConstants.json');
+constants.siteType = "languageforge"; //TODO: refactor projectsPage.js so this is not necessary
 
 var specs = ['bellows/**/e2e/*.spec.js'];
 specs.push('languageforge/**/e2e/*.spec.js');
@@ -6,7 +7,7 @@ specs.push('languageforge/**/e2e/*.spec.js');
 exports.config = {
   // The address of a running selenium server.
   seleniumAddress: 'http://192.168.56.1:4444/wd/hub',
-  baseUrl: 'https://languageforge.local',
+  baseUrl: 'http://languageforge.local',
   
   // To run tests in a single browser, uncomment the following
   capabilities: {

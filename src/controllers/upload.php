@@ -60,13 +60,6 @@ class Upload extends Secure_base
                             ));
                             $response = $api->typsetting_upload_importProjectZip($mediaType, $tmpFilePath);
                             break;
-/*
-                        case 'png':
-                        	$api->checkPermissions('typesetting_upload_png', array(
-                        		$mediaType,
-                        		$tmpFilePath
-                        	));
-*/
                         default:
 		                	$api->checkPermissions('typesetting_uploadFile', array(
 		                		$mediaType,
