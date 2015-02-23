@@ -19,11 +19,11 @@ class TypesettingLayoutPageDto
      */
     public static function encode($projectId)
     {
-    	$project = new ProjectModel($projectId);
-		$setting = SettingModel::getCurrent($project);
-    	$data = array();
-    	
-    	$data['layout'] = JsonEncoder::encode($setting->layout);
+        $project = new ProjectModel($projectId);
+        $setting = SettingModel::getCurrent($project);
+        $data = array();
+        
+        $data['layout'] = JsonEncoder::encode($setting->layout);
         return $data;
     }
 }

@@ -25,13 +25,13 @@ $constants = json_decode(file_get_contents(TestPath . '/testConstants.json'), tr
 // Fake some $_SERVER variables like HTTP_HOST for the sake of the code that needs it
 $hostname = "languageforge.local";
 if (count($argv) > 1) {
-	// hostname is passed in on command line
-	$hostname = $argv[1];
+    // hostname is passed in on command line
+    $hostname = $argv[1];
 }
 $_SERVER['HTTP_HOST'] = $hostname;
 $website = Website::get($hostname);
 if (is_null($website)) {
-	exit("Error: $hostname is not a registered website hostname!\n\n");
+    exit("Error: $hostname is not a registered website hostname!\n\n");
 }
 $site = $website->base;
 
@@ -45,7 +45,7 @@ $projectArrays = array(
     $constants['otherProjectName'] => $constants['otherProjectCode']);
 
 if ($site == 'scriptureforge') {
-	$projectArrays[$constants['typesettingProjectName']] = $constants['typesettingProjectCode'];
+    $projectArrays[$constants['typesettingProjectName']] = $constants['typesettingProjectCode'];
 }
 
 foreach ($projectArrays as $projectName => $projectCode) {
@@ -130,11 +130,11 @@ $otherProjectModel->write();
 
 
 $typesettingProject = ProjectCommands::createProject(
-		$constants['typesettingProjectName'],
-		$constants['typesettingProjectCode'],
-		SfProjectModel::WEBTYPESETTING_APP,
-		$managerUser,
-		$website
+        $constants['typesettingProjectName'],
+        $constants['typesettingProjectCode'],
+        SfProjectModel::WEBTYPESETTING_APP,
+        $managerUser,
+        $website
 );
 $typesettingProjectModel = new ProjectModel($typesettingProject);
 $typesettingProjectModel->projectCode = $constants['typesettingProjectCode'];

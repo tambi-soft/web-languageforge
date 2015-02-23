@@ -341,17 +341,17 @@ class LiftImport
             foreach (glob($extractFolderPath . '/*', GLOB_ONLYDIR) as $folderPath) {
                 $folderName = basename($folderPath);
                 switch ($folderName) {
-                	case 'pictures':
-                	case 'audio':
-                	case 'others':
-                	case 'WritingSystems':
-                	    $assetsPath = $assetsFolderPath . "/" . $folderName;
-                	    if (file_exists($folderPath) && is_dir($folderPath)) {
+                    case 'pictures':
+                    case 'audio':
+                    case 'others':
+                    case 'WritingSystems':
+                        $assetsPath = $assetsFolderPath . "/" . $folderName;
+                        if (file_exists($folderPath) && is_dir($folderPath)) {
                             FileUtilities::copyDirTree($folderPath, $assetsPath);
                         }
                         break;
-                	default:
-                	    $zipNodeError->addUnhandledSubfolder($folderName);
+                    default:
+                        $zipNodeError->addUnhandledSubfolder($folderName);
                 }
             }
 

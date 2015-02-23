@@ -28,14 +28,14 @@ class SettingModel extends \models\mapper\MapperModel
         $this->setReadOnlyProp('author');
         
         $this->compositionBookAdjustments = new MapOf(function($data) {
-			return new TypesettingBookModel();
+            return new TypesettingBookModel();
         });
         
         $this->compositionIllustrationAdjustments = self::createIllustrationProperty();
 
         $this->layout = new SettingModelLayout();
         $this->assets = new ArrayOf(function ($data) {
-			return new IdReference();
+            return new IdReference();
         });
         $this->author = new AuthorInfo();
         $this->renderedBy = new AuthorInfo();
@@ -61,9 +61,9 @@ class SettingModel extends \models\mapper\MapperModel
 
     public static function createIllustrationProperty()
     {
-    	return new MapOf(function($data) {
-			return new TypesettingIllustrationModel();
-    	});
+        return new MapOf(function($data) {
+            return new TypesettingIllustrationModel();
+        });
     }
         
     /**
@@ -73,27 +73,27 @@ class SettingModel extends \models\mapper\MapperModel
      */
     public static function remove($projectModel, $id)
     {
-    	$databaseName = $projectModel->databaseName();
+        $databaseName = $projectModel->databaseName();
         $mapper = self::mapper($databaseName);
         $mapper->remove($id);
     }
 
     public static function getCurrent($projectModel) {
-    	$settingsList = new SettingListModel($projectModel);
-    	$settingsList->read();
-    	if ($settingsList->count > 0) {
+        $settingsList = new SettingListModel($projectModel);
+        $settingsList->read();
+        if ($settingsList->count > 0) {
 
-    		// get the latest setting by modification time
-	    	$settingId = $settingsList->entries[0]['id'];
-	    	$settingModel = new SettingModel($projectModel, $settingId);
+            // get the latest setting by modification time
+            $settingId = $settingsList->entries[0]['id'];
+            $settingModel = new SettingModel($projectModel, $settingId);
 
-    	}
-    	else {
-    		$settingModel = new SettingModel($projectModel);
-	    	$settingModel->write();
-    	}
+        }
+        else {
+            $settingModel = new SettingModel($projectModel);
+            $settingModel->write();
+        }
 
-    	return $settingModel;
+        return $settingModel;
     }
 
      /**

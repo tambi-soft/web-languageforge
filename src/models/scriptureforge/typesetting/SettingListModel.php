@@ -15,15 +15,15 @@ class SettingListModel extends \models\mapper\MapperListModel
     }
 
     /*
-	protected function __construct($projectModel, $query, $fields)
-	{
-		parent::__construct(
-				self::mapper($projectModel->databaseName()),
-				$query,
-				$fields
-		);
-	}
-	*/
+    protected function __construct($projectModel, $query, $fields)
+    {
+        parent::__construct(
+                self::mapper($projectModel->databaseName()),
+                $query,
+                $fields
+        );
+    }
+    */
 
     /**
      *
@@ -42,23 +42,23 @@ class SettingListModel extends \models\mapper\MapperListModel
 
     /*
 
-	public static function all($projectModel)
-	{
-		return new SettingListModel(
-				$projectModel,
-				$query = array('description' => array('$regex' => '')),
-				array('description')
-		);
-	}
+    public static function all($projectModel)
+    {
+        return new SettingListModel(
+                $projectModel,
+                $query = array('description' => array('$regex' => '')),
+                array('description')
+        );
+    }
 
-	public static function templates($projectModel)
-	{
-		return new SettingListModel(
-			$projectModel,
-			array('templateName' => array('$ne' => "")),
-			array('description')
-		);
-	}
-	*/
+    public static function templates($projectModel)
+    {
+        return new SettingListModel(
+            $projectModel,
+            array('templateName' => array('$ne' => "")),
+            array('description')
+        );
+    }
+    */
 
 }

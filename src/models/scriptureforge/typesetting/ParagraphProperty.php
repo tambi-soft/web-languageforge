@@ -3,13 +3,13 @@
 namespace models\scriptureforge\typesetting;
 
 class ParagraphProperty {
-	
-	/**
-	 * 
-	 * @var int
-	 */
-	public $growthFactor;
-	
+    
+    /**
+     * 
+     * @var int
+     */
+    public $growthFactor;
+    
 }
 
 ?>

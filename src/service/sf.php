@@ -565,148 +565,148 @@ class sf
     }
 
     public function typesetting_discussionList_getPageDto() {
-    	return TypesettingDiscussionListDto::encode($this->_projectId);
+        return TypesettingDiscussionListDto::encode($this->_projectId);
     }
 
     public function typesetting_discussionList_createThread($title, $itemId) {
-    	return TypesettingDiscussionListCommands::createThread($this->_projectId, $this->_userId, $title, $itemId);
+        return TypesettingDiscussionListCommands::createThread($this->_projectId, $this->_userId, $title, $itemId);
     }
 
-	public function typesetting_discussionList_deleteThread($threadId) {
-    	return TypesettingDiscussionListCommands::deleteThread($this->_projectId, $threadId);
+    public function typesetting_discussionList_deleteThread($threadId) {
+        return TypesettingDiscussionListCommands::deleteThread($this->_projectId, $threadId);
     }
 
-	public function typesetting_discussionList_updateThread($threadId, $title) {
-    	return TypesettingDiscussionListCommands::updateThread($this->_projectId, $this->_userId, $threadId, $title);
+    public function typesetting_discussionList_updateThread($threadId, $title) {
+        return TypesettingDiscussionListCommands::updateThread($this->_projectId, $this->_userId, $threadId, $title);
     }
 
-	public function typesetting_discussionList_createPost($threadId, $content) {
-    	return TypesettingDiscussionListCommands::createPost($this->_projectId, $this->_userId, $threadId, $content);
+    public function typesetting_discussionList_createPost($threadId, $content) {
+        return TypesettingDiscussionListCommands::createPost($this->_projectId, $this->_userId, $threadId, $content);
     }
 
-	public function typesetting_discussionList_deletePost($threadId, $postId) {
-    	return TypesettingDiscussionListCommands::deletePost($this->_projectId, $threadId, $postId);
+    public function typesetting_discussionList_deletePost($threadId, $postId) {
+        return TypesettingDiscussionListCommands::deletePost($this->_projectId, $threadId, $postId);
     }
 
-	public function typesetting_discussionList_updatePost($threadId, $postId, $content) {
-    	return TypesettingDiscussionListCommands::updatePost($this->_projectId, $this->_userId, $threadId, $postId, $content);
+    public function typesetting_discussionList_updatePost($threadId, $postId, $content) {
+        return TypesettingDiscussionListCommands::updatePost($this->_projectId, $this->_userId, $threadId, $postId, $content);
     }
 
-	public function typesetting_discussionList_createReply($threadId, $postId, $content) {
-    	return TypesettingDiscussionListCommands::createReply($this->_projectId, $this->_userId, $threadId, $postId, $content);
+    public function typesetting_discussionList_createReply($threadId, $postId, $content) {
+        return TypesettingDiscussionListCommands::createReply($this->_projectId, $this->_userId, $threadId, $postId, $content);
     }
 
-	public function typesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
-    	return TypesettingDiscussionListCommands::deleteReply($this->_projectId, $threadId, $postId, $replyId);
+    public function typesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
+        return TypesettingDiscussionListCommands::deleteReply($this->_projectId, $threadId, $postId, $replyId);
     }
 
-	public function typesetting_discussionList_updateReply($threadId, $postId, $replyId, $content) {
-    	return TypesettingDiscussionListCommands::updateReply($this->_projectId, $this->_userId, $threadId, $postId, $replyId, $content);
+    public function typesetting_discussionList_updateReply($threadId, $postId, $replyId, $content) {
+        return TypesettingDiscussionListCommands::updateReply($this->_projectId, $this->_userId, $threadId, $postId, $replyId, $content);
     }
 
-	public function typesetting_discussionList_updateStatus($threadId, $status) {
-    	return TypesettingDiscussionListCommands::updateStatus($this->_projectId, $threadId, $status);
+    public function typesetting_discussionList_updateStatus($threadId, $status) {
+        return TypesettingDiscussionListCommands::updateStatus($this->_projectId, $threadId, $status);
     }
 
     public function typesetting_discussionList_getThread($threadId) {
-    	return TypesettingDiscussionListCommands::getThread($this->_projectId, $threadId);
+        return TypesettingDiscussionListCommands::getThread($this->_projectId, $threadId);
     }
 
     public function typesetting_rapuma_render(){
-    	return array('pdfUrl' => "assets/ngTraining.pdf");
+        return array('pdfUrl' => "assets/ngTraining.pdf");
     }
 
     public function typesetting_renderPage_dto() {
-    	return TypesettingRenderPageDto::encode($this->_projectId);
+        return TypesettingRenderPageDto::encode($this->_projectId);
     }
     public function typesetting_render_doRender() {
-    	TypesettingRenderCommands::doRender($this->_projectId, $this->_userId);
+        TypesettingRenderCommands::doRender($this->_projectId, $this->_userId);
     }
 
 
-	public function typesetting_settings_list() {
-		return TypesettingSettingsCommands::readSettings($this->_projectId);
-	}
+    public function typesetting_settings_list() {
+        return TypesettingSettingsCommands::readSettings($this->_projectId);
+    }
 
     public function typesetting_settings_readCurrent() {
-		return TypesettingSettingsCommands::readSettingsCurrent($this->_projectId);
-	}
+        return TypesettingSettingsCommands::readSettingsCurrent($this->_projectId);
+    }
 
     public function typesetting_settings_read($id) {
-		return TypesettingSettingsCommands::readSettings($this->_projectId, $id);
-	}
+        return TypesettingSettingsCommands::readSettings($this->_projectId, $id);
+    }
 
-	public function typesetting_settings_update($settings) {
-		return TypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
-	}
+    public function typesetting_settings_update($settings) {
+        return TypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
+    }
 
-	public function typesetting_composition_getBookHTML($bookId) {
-		return TypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
-	}
+    public function typesetting_composition_getBookHTML($bookId) {
+        return TypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
+    }
 
-	public function typesetting_composition_getListOfBooks() {
-		return TypesettingCompositionCommands::getListOfBooks($this->_projectId);
-	}
+    public function typesetting_composition_getListOfBooks() {
+        return TypesettingCompositionCommands::getListOfBooks($this->_projectId);
+    }
 
-	public function typesetting_composition_getParagraphProperties($bookId) {
-		return TypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
-	}
+    public function typesetting_composition_getParagraphProperties($bookId) {
+        return TypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
+    }
 
-	public function typesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
-		return TypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
-	}
+    public function typesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
+        return TypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
+    }
 
-	public function typesetting_composition_renderBook($bookId) {
-		return TypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
-	}
+    public function typesetting_composition_renderBook($bookId) {
+        return TypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
+    }
 
-	public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
-		return TypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
-	}
+    public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
+        return TypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
+    }
 
-	public function typesetting_composition_getIllustrationProperties() {
-		return TypesettingCompositionCommands::getIllustrationProperties($this->_projectId);
-	}
+    public function typesetting_composition_getIllustrationProperties() {
+        return TypesettingCompositionCommands::getIllustrationProperties($this->_projectId);
+    }
 
-	public function typesetting_composition_setIllustrationProperties($illustrationModel) {
-		return TypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $illustrationModel);
-	}
-	public function typesetting_composition_getPageDto() {
-		return TypesettingCompositionCommands::getPageDto($this->_projectId);
-	}
-	public function typesetting_composition_getBookDto($bookId) {
-		return TypesettingCompositionCommands::getBookDto($this->_projectId, $bookId);
-	}
-	public function typesetting_composition_getPageStatus($bookId) {
-		return TypesettingCompositionCommands::getPageStatus($this->_projectId, $bookId);
-	}
-	public function typesetting_composition_setPageStatus($bookId, $pages) {
-		return TypesettingCompositionCommands::setPageStatus($this->_projectId, $bookId, $pages);
-	}
+    public function typesetting_composition_setIllustrationProperties($illustrationModel) {
+        return TypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $illustrationModel);
+    }
+    public function typesetting_composition_getPageDto() {
+        return TypesettingCompositionCommands::getPageDto($this->_projectId);
+    }
+    public function typesetting_composition_getBookDto($bookId) {
+        return TypesettingCompositionCommands::getBookDto($this->_projectId, $bookId);
+    }
+    public function typesetting_composition_getPageStatus($bookId) {
+        return TypesettingCompositionCommands::getPageStatus($this->_projectId, $bookId);
+    }
+    public function typesetting_composition_setPageStatus($bookId, $pages) {
+        return TypesettingCompositionCommands::setPageStatus($this->_projectId, $bookId, $pages);
+    }
 
-	public function typesetting_readAssetsDto() {
-		return TypesettingAssetDto::encode($this->_projectId);
-	}
+    public function typesetting_readAssetsDto() {
+        return TypesettingAssetDto::encode($this->_projectId);
+    }
 
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------
     public function typsetting_upload_importProjectZip($mediaType, $tmpFilePath)
     {
-    	$response = TypesettingUploadCommands::importProjectZip($this->_projectId, $mediaType, $tmpFilePath);
-    	return JsonEncoder::encode($response);
+        $response = TypesettingUploadCommands::importProjectZip($this->_projectId, $mediaType, $tmpFilePath);
+        return JsonEncoder::encode($response);
     }
 
     public function typesetting_uploadFile($mediaType, $tmpFilePath)
     {
-    	$response = TypesettingUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
+        $response = TypesettingUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
     }
 
     public function typesetting_deleteFile($fileName)
     {
-    	$response = TypesettingUploadCommands::deleteFile($this->_projectId, $fileName);
-    	return JsonEncoder::encode($response);
+        $response = TypesettingUploadCommands::deleteFile($this->_projectId, $fileName);
+        return JsonEncoder::encode($response);
     }
 
     // ---------------------------------------------------------------
@@ -715,7 +715,7 @@ class sf
 
     public function typesetting_layoutSettings_update($model)
     {
-	    // update should only ever update the "latest" setting
+        // update should only ever update the "latest" setting
         return TypesettingSettingsCommands::updateLayoutSettings($this->_projectId, $this->_userId, $model);
     }
 
@@ -742,12 +742,12 @@ class sf
 
     public function template_save($data)
     {
-    	return TypesettingTemplateCommands::updateTemplate($data["templateName"], $data["vm"]["conf"]);
+        return TypesettingTemplateCommands::updateTemplate($data["templateName"], $data["vm"]["conf"]);
     }
 
     public function template_load($data)
     {
-    	return TypesettingTemplateCommands::getTemplate($data);
+        return TypesettingTemplateCommands::getTemplate($data);
     }
 
     /*

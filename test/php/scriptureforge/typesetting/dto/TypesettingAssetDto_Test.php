@@ -75,22 +75,22 @@ class TestTypesettingAssetDto extends UnitTestCase
     }
     public function testEncode_UploadedAssetFile_DtoReturnsExpectedData()
     {
-    	$project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-    	$projectId = $project->id->asString();
+        $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $project->id->asString();
 
-    	$fileName = 'TestImage.png';
-    	$tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
-    	$response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
+        $fileName = 'TestImage.png';
+        $tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
 
-    	$dto = TypesettingAssetDto::encode($projectId);
-    	$this->assertEqual($dto['count'], 1);
+        $dto = TypesettingAssetDto::encode($projectId);
+        $this->assertEqual($dto['count'], 1);
 
-    	$fileName = 'pngTest.png';
-    	$tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
-    	$response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
+        $fileName = 'pngTest.png';
+        $tmpFilePath = $this->environ->uploadFile(TestPath . "common/$fileName", $fileName);
+        $response = TypesettingUploadCommands::uploadFile($projectId, 'png', $tmpFilePath);
 
-    	$dto = TypesettingAssetDto::encode($projectId);
-    	$this->assertEqual($dto['count'], 2);
+        $dto = TypesettingAssetDto::encode($projectId);
+        $this->assertEqual($dto['count'], 2);
     }
 /*
     public function testEncode_ArchivedText_ManagerCanViewContributorCannot()

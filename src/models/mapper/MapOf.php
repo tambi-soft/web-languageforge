@@ -37,12 +37,12 @@ class MapOf extends \ArrayObject
         CodeGuard::checkTypeAndThrow($index, 'string');
         // REVIEW: I (CP) added this during the JTerm 2015 project.  It may cause consequential damage. 2015-01
         if (!parent::offsetExists($index)) {
-        	if ($this->hasGenerator()) {
-        		$newValue = $this->generate();
-        	} else {
-        		$newValue = '';
-        	}
-        	$this->offsetSet($index, $newValue);
+            if ($this->hasGenerator()) {
+                $newValue = $this->generate();
+            } else {
+                $newValue = '';
+            }
+            $this->offsetSet($index, $newValue);
         }
 
         return parent::offsetGet($index);

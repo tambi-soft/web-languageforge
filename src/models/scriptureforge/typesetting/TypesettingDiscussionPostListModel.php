@@ -24,7 +24,7 @@ class TypesettingDiscussionPostListModel extends \models\mapper\MapperListModel
      */
     public function __construct($projectModel, $threadId, $newerThanTimestamp = null)
     {
-    	$sortBy = array('dateCreated' => 1);
+        $sortBy = array('dateCreated' => 1);
         if (!is_null($newerThanTimestamp)) {
             $startDate = new \MongoDate($newerThanTimestamp);
             parent::__construct( self::mapper($projectModel->databaseName()), array('threadRef' => MongoMapper::mongoID($threadId),  'dateModified'=> array('$gte' => $startDate), 'isDeleted' => false), array(), $sortBy);

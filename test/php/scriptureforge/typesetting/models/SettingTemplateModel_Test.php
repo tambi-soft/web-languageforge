@@ -110,42 +110,42 @@ class TestSettingTemplateModel extends UnitTestCase
     }
 
     public function testFindTemplateByName_Works(){
-    	$e = new MongoTestEnvironment();
+        $e = new MongoTestEnvironment();
 
-    	// Create template
-    	$name = "Template 1";
-    	$template = new SettingTemplateModel();
-    	$template->templateName = $name;
-    	$template->layout->insideMargin = 1;
-    	$template->layout->outsideMargin = 2;
-    	$template->layout->topMargin = 3;
-    	$template->layout->bottomMargin = 4;
-    	$template->layout->pageWidth = 10;
-    	$template->layout->pageHeight = 10;
-    	$template->layout->introColumnsTwo = false;
-    	$template->layout->titleColumnsTwo = false;
-    	$template->layout->bodyColumnsTwo = false;
-    	$template->layout->headerPosition = 10;
-    	$template->layout->footerPosition = 10;
-    	$id = $template->write();
+        // Create template
+        $name = "Template 1";
+        $template = new SettingTemplateModel();
+        $template->templateName = $name;
+        $template->layout->insideMargin = 1;
+        $template->layout->outsideMargin = 2;
+        $template->layout->topMargin = 3;
+        $template->layout->bottomMargin = 4;
+        $template->layout->pageWidth = 10;
+        $template->layout->pageHeight = 10;
+        $template->layout->introColumnsTwo = false;
+        $template->layout->titleColumnsTwo = false;
+        $template->layout->bodyColumnsTwo = false;
+        $template->layout->headerPosition = 10;
+        $template->layout->footerPosition = 10;
+        $id = $template->write();
 
-    	//get template
-    	$template2 = SettingTemplateModel::findTemplateByName($name);
-    	$this->assertEqual($template, $template2);
+        //get template
+        $template2 = SettingTemplateModel::findTemplateByName($name);
+        $this->assertEqual($template, $template2);
 
-    	//try to get nonexistant template
-    	$template3 = SettingTemplateModel::findTemplateByName("foo");
-    	$this->assertEqual($template3->id->asString(), '');
-    	$this->assertEqual(10, $template3->layout->insideMargin, "default insideMargin expected");
-    	$this->assertEqual(10, $template3->layout->outsideMargin, "default outsideMargin expected");
-    	$this->assertEqual(15, $template3->layout->topMargin, "default value expected");
-    	$this->assertEqual(10, $template3->layout->bottomMargin, "default topMargin expected");
-    	$this->assertEqual(148, $template3->layout->pageWidth, "default pageWidth expected");
-    	$this->assertEqual(210, $template3->layout->pageHeight, "default pageHeight expected");
-    	$this->assertEqual(false, $template3->layout->introColumnsTwo, "default introColumnsTwo expected");
-    	$this->assertEqual(false, $template3->layout->titleColumnsTwo, "default titleColumnsTwo expected");
-    	$this->assertEqual(true, $template3->layout->bodyColumnsTwo, "default bodyColumnsTwo expected");
-    	$this->assertEqual(5, $template3->layout->headerPosition, "default headerPosition expected");
-    	$this->assertEqual(5, $template3->layout->footerPosition, "default footerPosition expected");
+        //try to get nonexistant template
+        $template3 = SettingTemplateModel::findTemplateByName("foo");
+        $this->assertEqual($template3->id->asString(), '');
+        $this->assertEqual(10, $template3->layout->insideMargin, "default insideMargin expected");
+        $this->assertEqual(10, $template3->layout->outsideMargin, "default outsideMargin expected");
+        $this->assertEqual(15, $template3->layout->topMargin, "default value expected");
+        $this->assertEqual(10, $template3->layout->bottomMargin, "default topMargin expected");
+        $this->assertEqual(148, $template3->layout->pageWidth, "default pageWidth expected");
+        $this->assertEqual(210, $template3->layout->pageHeight, "default pageHeight expected");
+        $this->assertEqual(false, $template3->layout->introColumnsTwo, "default introColumnsTwo expected");
+        $this->assertEqual(false, $template3->layout->titleColumnsTwo, "default titleColumnsTwo expected");
+        $this->assertEqual(true, $template3->layout->bodyColumnsTwo, "default bodyColumnsTwo expected");
+        $this->assertEqual(5, $template3->layout->headerPosition, "default headerPosition expected");
+        $this->assertEqual(5, $template3->layout->footerPosition, "default footerPosition expected");
     }
 }

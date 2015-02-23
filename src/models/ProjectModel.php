@@ -226,14 +226,14 @@ class ProjectModel extends \models\mapper\MapperModel
      */
     public function getAssetsRelativePath()
     {
-    	$path = 'assets/' . $this->appName. '/' . $this->databaseName();
-		FileUtilities::createAllFolders($path);
-		return $path;
+        $path = 'assets/' . $this->appName. '/' . $this->databaseName();
+        FileUtilities::createAllFolders($path);
+        return $path;
     }
 
     /**
 
-		return $path;
+        return $path;
      * @return string Full path of the projects assets folder
      */
     public function getAssetsFolderPath()

@@ -104,7 +104,7 @@ class TypesettingDiscussionPostModel extends \models\mapper\MapperModel
 
     public function setReply($id, $model)
     {
-    	$foundReply = false;
+        $foundReply = false;
         foreach ($this->replies as $key => $reply) {
             if ($reply->id == $id) {
                 $this->replies[$key] = $model;
@@ -113,7 +113,7 @@ class TypesettingDiscussionPostModel extends \models\mapper\MapperModel
             }
         }
         if (!$foundReply) {
-        	$this->replies->append($model);
+            $this->replies->append($model);
         }
     }
 

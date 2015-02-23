@@ -19,16 +19,16 @@ class TypesettingBookModel
     }
 
     public static function create($bookId) {
-    	$model = new TypesettingBookModel();
-    	$model->bookId = $bookId;
-    	return $model;
+        $model = new TypesettingBookModel();
+        $model->bookId = $bookId;
+        return $model;
     }
     
     public static function createParagraphProperty()
     {
-    	return new MapOf(function($data) {
-			return new ParagraphProperty();
-    	});
+        return new MapOf(function($data) {
+            return new ParagraphProperty();
+        });
     }
     
     /**

@@ -178,11 +178,11 @@ class LiftDecoder
                     $picture->fileName = (string) $element['href'];
                     foreach ($element as $child) {
                         switch($child->getName()) {
-                        	case 'label':
-                    	        $picture->caption = $this->readMultiText($child, $this->projectModel->config->entry->fields[LexiconConfigObj::SENSES_LIST]->fields[LexiconConfigObj::PICTURES]->inputSystems);
-                        	    break;
-                        	default:
-                        	    $this->currentNodeError()->addUnhandledElement($child->getName());
+                            case 'label':
+                                $picture->caption = $this->readMultiText($child, $this->projectModel->config->entry->fields[LexiconConfigObj::SENSES_LIST]->fields[LexiconConfigObj::PICTURES]->inputSystems);
+                                break;
+                            default:
+                                $this->currentNodeError()->addUnhandledElement($child->getName());
                         }
                     }
                     $sense->pictures[] =  $picture;
@@ -256,14 +256,14 @@ class LiftDecoder
 
         foreach ($sxeNode as $element) {
             switch ($element->getName()) {
-            	case 'form':
+                case 'form':
                     $example->sentence = $this->readMultiText($formsSxeNode, $this->projectModel->config->entry->fields[LexiconConfigObj::SENSES_LIST]->fields[LexiconConfigObj::EXAMPLES_LIST]->fields[LexiconConfigObj::EXAMPLE_SENTENCE]->inputSystems);
-            	    break;
+                    break;
                 case 'translation':
                     $example->translation = $this->readMultiText($element, $this->projectModel->config->entry->fields[LexiconConfigObj::SENSES_LIST]->fields[LexiconConfigObj::EXAMPLES_LIST]->fields[LexiconConfigObj::EXAMPLE_TRANSLATION]->inputSystems);
-            	    break;
-        	    default:
-        	        $this->currentNodeError()->addUnhandledElement($element->getName());
+                    break;
+                default:
+                    $this->currentNodeError()->addUnhandledElement($element->getName());
             }
         }
         array_pop($this->nodeErrors);
@@ -283,19 +283,19 @@ class LiftDecoder
         $this->pushSubnodeError(LiftImportNodeError::MULTITEXT, $sxeNode->getName());
         foreach ($sxeNode as $element) {
             switch ($element->getName()) {
-            	case 'form':
-            	    $inputSystemTag = (string) $element['lang'];
-            	    $multiText->form($inputSystemTag, $this->sanitizeSpans(dom_import_simplexml($element->text)));
+                case 'form':
+                    $inputSystemTag = (string) $element['lang'];
+                    $multiText->form($inputSystemTag, $this->sanitizeSpans(dom_import_simplexml($element->text)));
 
-            	    $this->projectModel->addInputSystem($inputSystemTag);
-            	    // TODO InputSystems should extend ArrayOf (or Map) and become more useful. CP 2014-10
-            	    if (isset($inputSystems)) {
-            	        // i.e. $inputSystems->ensureFieldHasInputSystem($inputSystemTag);
-            	        $inputSystems->value($inputSystemTag);
-            	    }
-            	    break;
-        	    default:
-        	        $this->currentNodeError()->addUnhandledElement($element->getName());
+                    $this->projectModel->addInputSystem($inputSystemTag);
+                    // TODO InputSystems should extend ArrayOf (or Map) and become more useful. CP 2014-10
+                    if (isset($inputSystems)) {
+                        // i.e. $inputSystems->ensureFieldHasInputSystem($inputSystemTag);
+                        $inputSystems->value($inputSystemTag);
+                    }
+                    break;
+                default:
+                    $this->currentNodeError()->addUnhandledElement($element->getName());
             }
         }
         array_pop($this->nodeErrors);

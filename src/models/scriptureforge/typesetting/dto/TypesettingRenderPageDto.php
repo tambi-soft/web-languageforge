@@ -11,32 +11,32 @@ use models\ProjectModel;
 
 class TypesettingRenderPageDtoAuthorEncoder extends JsonEncoder
 {
-	public function encodeIdReference($key, $model)
-	{
-		if ($key == 'createdByUserRef' || $key == 'modifiedByUserRef') {
-			$user = new UserModel();
-			if ($user->exists($model->asString())) {
-				$user->read($model->asString());
+    public function encodeIdReference($key, $model)
+    {
+        if ($key == 'createdByUserRef' || $key == 'modifiedByUserRef') {
+            $user = new UserModel();
+            if ($user->exists($model->asString())) {
+                $user->read($model->asString());
 
-				return array(
-						'id' => $user->id->asString(),
-						'avatar_ref' => $user->avatar_ref,
-						'name' => $user->name,
-						'username' => $user->username);
-			} else {
-				return '';
-			}
-		} else {
-			return $model->asString();
-		}
-	}
+                return array(
+                        'id' => $user->id->asString(),
+                        'avatar_ref' => $user->avatar_ref,
+                        'name' => $user->name,
+                        'username' => $user->username);
+            } else {
+                return '';
+            }
+        } else {
+            return $model->asString();
+        }
+    }
 
-	public static function encode($model)
-	{
-		$e = new TypesettingRenderPageDtoAuthorEncoder();
+    public static function encode($model)
+    {
+        $e = new TypesettingRenderPageDtoAuthorEncoder();
 
-		return $e->_encode($model);
-	}
+        return $e->_encode($model);
+    }
 }
 class TypesettingRenderPageDto
 {
@@ -47,12 +47,12 @@ class TypesettingRenderPageDto
      */
     public static function encode($projectId)
     {
-    	$project = new ProjectModel($projectId);
-    	$settingsList = new SettingListModel($project);
-    	$settingsList->read();
-    	$data = array();
-    	// TODO implement using AuthorEncoder above
-    	//$encodedList = TypesettingRenderPageDtoAuthorEncoder::encode($settingsList);
+        $project = new ProjectModel($projectId);
+        $settingsList = new SettingListModel($project);
+        $settingsList->read();
+        $data = array();
+        // TODO implement using AuthorEncoder above
+        //$encodedList = TypesettingRenderPageDtoAuthorEncoder::encode($settingsList);
         $data['runs'] = $settingsList->entries;
         return $data;
     }

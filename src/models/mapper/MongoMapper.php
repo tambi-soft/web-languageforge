@@ -117,9 +117,9 @@ class MongoMapper
 
         if (count($sortFields)>0) {
             $cursor = $cursor->sort($sortFields);
-		} else {
-			// default sort is to sort by dateCreated in descending order
-			$cursor = $cursor->sort(array('dateCreated' => -1));
+        } else {
+            // default sort is to sort by dateCreated in descending order
+            $cursor = $cursor->sort(array('dateCreated' => -1));
         }
 
         if ($limit>0) {

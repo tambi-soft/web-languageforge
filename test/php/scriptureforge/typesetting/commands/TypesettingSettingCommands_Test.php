@@ -35,14 +35,14 @@ class TypesettingSettingCommands_Test extends UnitTestCase
         $layoutSetting = array();
         $layoutSetting['docInfoText'] = 'my text';
 
-    	$currentSetting = SettingModel::getCurrent($projectModel);
-    	$this->assertEqual($currentSetting->layout->docInfoText, "");
+        $currentSetting = SettingModel::getCurrent($projectModel);
+        $this->assertEqual($currentSetting->layout->docInfoText, "");
         
-    	TypesettingSettingsCommands::updateLayoutSettings($projectId, $userId, $layoutSetting);
-    	
-    	$currentSetting = SettingModel::getCurrent($projectModel);
-    	$this->assertEqual($currentSetting->layout->docInfoText, "my text");
-    	
+        TypesettingSettingsCommands::updateLayoutSettings($projectId, $userId, $layoutSetting);
+        
+        $currentSetting = SettingModel::getCurrent($projectModel);
+        $this->assertEqual($currentSetting->layout->docInfoText, "my text");
+        
     }
     
 

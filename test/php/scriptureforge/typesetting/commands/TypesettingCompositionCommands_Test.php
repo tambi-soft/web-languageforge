@@ -14,7 +14,7 @@ require_once TestPath . 'common/MongoTestEnvironment.php';
 
 class TestTypesettingCompositionCommands extends UnitTestCase
 {
-	
+    
     public function testGetBookHTML_NotEmpty()
     {
         $e = new MongoTestEnvironment();
@@ -53,9 +53,9 @@ class TestTypesettingCompositionCommands extends UnitTestCase
         $result = TypesettingCompositionCommands::getParagraphProperties($projectId, $bookId);
         
         $this->assertEqual(
-        		$bookModel->paragraphProperties['c1v1']->growthFactor,
-        		$result['c1v1']['growthFactor']
-		);
+                $bookModel->paragraphProperties['c1v1']->growthFactor,
+                $result['c1v1']['growthFactor']
+        );
         
     }
     
@@ -87,53 +87,53 @@ class TestTypesettingCompositionCommands extends UnitTestCase
         $result = TypesettingCompositionCommands::getParagraphProperties($projectId, $bookId);
         
         $this->assertEqual(
-        		$bookModel->paragraphProperties['c1v1']->growthFactor,
-        		$result['c1v1']['growthFactor']
-		);
+                $bookModel->paragraphProperties['c1v1']->growthFactor,
+                $result['c1v1']['growthFactor']
+        );
         
     }
     
     public function testGetAndSetIllustrationProperties_works()
     {
-    	$e = new MongoTestEnvironment();
-    	$e->clean();
+        $e = new MongoTestEnvironment();
+        $e->clean();
     
-    	$projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-    	$projectId = $projectModel->id->asString();
+        $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $projectModel->id->asString();
     
-    	$settingModel = new SettingModel($projectModel);
-    	$illustrationModel = TypesettingIllustrationModel::create('lb001');
-    	$illustrationModel->name = 'some name';
-    	$illustrationModel->caption = 'some caption';
-    	$settingModel->compositionIllustrationAdjustments['lb001'] = $illustrationModel;
-    	
-    	$encoded = JsonEncoder::encode($settingModel->compositionIllustrationAdjustments);
-    	
-    	$illustrationId = 'mat';
-    	$result = TypesettingCompositionCommands::setIllustrationProperties($projectId, $encoded);
+        $settingModel = new SettingModel($projectModel);
+        $illustrationModel = TypesettingIllustrationModel::create('lb001');
+        $illustrationModel->name = 'some name';
+        $illustrationModel->caption = 'some caption';
+        $settingModel->compositionIllustrationAdjustments['lb001'] = $illustrationModel;
+        
+        $encoded = JsonEncoder::encode($settingModel->compositionIllustrationAdjustments);
+        
+        $illustrationId = 'mat';
+        $result = TypesettingCompositionCommands::setIllustrationProperties($projectId, $encoded);
     
-    	$result = TypesettingCompositionCommands::getIllustrationProperties($projectId);
+        $result = TypesettingCompositionCommands::getIllustrationProperties($projectId);
     
-    	$this->assertEqual($encoded, $result);
+        $this->assertEqual($encoded, $result);
     }
     
     
     public function testGetPageDto_existingSettings_dtoAsExpected() {
-    	$e = new MongoTestEnvironment();
-    	$e->clean();
-    	$projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-    	$projectId = $projectModel->id->asString();
-    	
-    	$settingModel = new SettingModel($projectModel);
-    	$illustrationModel = TypesettingIllustrationModel::create('lb001');
-    	$illustrationModel->name = 'some name';
-    	$illustrationModel->caption = 'some caption';
-    	$settingModel->compositionIllustrationAdjustments['lb001'] = $illustrationModel;
-    	$settingModel->write();
-    	
-    	$result = TypesettingCompositionCommands::getPageDto($projectId);
-    	$this->assertEqual($result['illustrationProperties']['lb001']['caption'], 'some caption');
-    	// TODO: checkother components of the Dto
-    	
+        $e = new MongoTestEnvironment();
+        $e->clean();
+        $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
+        $projectId = $projectModel->id->asString();
+        
+        $settingModel = new SettingModel($projectModel);
+        $illustrationModel = TypesettingIllustrationModel::create('lb001');
+        $illustrationModel->name = 'some name';
+        $illustrationModel->caption = 'some caption';
+        $settingModel->compositionIllustrationAdjustments['lb001'] = $illustrationModel;
+        $settingModel->write();
+        
+        $result = TypesettingCompositionCommands::getPageDto($projectId);
+        $this->assertEqual($result['illustrationProperties']['lb001']['caption'], 'some caption');
+        // TODO: checkother components of the Dto
+        
     }
 }

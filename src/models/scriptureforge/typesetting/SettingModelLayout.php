@@ -3,114 +3,114 @@ namespace models\scriptureforge\typesetting;
 
 class SettingModelLayout
 {
-	public function __construct() {
-		// margins
-		$this->insideMargin = 10;
-		$this->outsideMargin = 10;
-		$this->topMargin = 15;
-		$this->bottomMargin = 10;
+    public function __construct() {
+        // margins
+        $this->insideMargin = 10;
+        $this->outsideMargin = 10;
+        $this->topMargin = 15;
+        $this->bottomMargin = 10;
 
-		// columns
-		$this->bodyColumnsTwo = true;
-		$this->titleColumnsTwo = false;
-		$this->introColumnsTwo = false;
-		$this->columnGutterRule = false;
-		$this->columnShift = 5;
-		$this->columnGutterRuleSkip = 0;
-		$this->columnGutterFactor = 15;
+        // columns
+        $this->bodyColumnsTwo = true;
+        $this->titleColumnsTwo = false;
+        $this->introColumnsTwo = false;
+        $this->columnGutterRule = false;
+        $this->columnShift = 5;
+        $this->columnGutterRuleSkip = 0;
+        $this->columnGutterFactor = 15;
 
-		// header
-		$this->headerPosition = 5;
-		$this->useRunningHeader = true;
-		$this->useRunningHeaderRule = false;
-		$this->runningHeaderRulePosition = 4;
+        // header
+        $this->headerPosition = 5;
+        $this->useRunningHeader = true;
+        $this->useRunningHeaderRule = false;
+        $this->runningHeaderRulePosition = 4;
 
-		$this->runningHeaderTitleLeft = "empty";
-		$this->runningHeaderTitleCenter = "empty";
-		$this->runningHeaderTitleRight = "empty";
+        $this->runningHeaderTitleLeft = "empty";
+        $this->runningHeaderTitleCenter = "empty";
+        $this->runningHeaderTitleRight = "empty";
 
-		$this->runningHeaderEvenLeft = "firstref";
-		$this->runningHeaderEvenCenter = "pagenumber";
-		$this->runningHeaderEvenRight = "empty";
+        $this->runningHeaderEvenLeft = "firstref";
+        $this->runningHeaderEvenCenter = "pagenumber";
+        $this->runningHeaderEvenRight = "empty";
 
-		$this->runningHeaderOddLeft = "empty";
-		$this->runningHeaderOddCenter = "pagenumber";
-		$this->runningHeaderOddRight = "lastref";
+        $this->runningHeaderOddLeft = "empty";
+        $this->runningHeaderOddCenter = "pagenumber";
+        $this->runningHeaderOddRight = "lastref";
 
-		$this->omitChapterNumberRH = false;
-		$this->showVerseReferences = true;
-		$this->omitBookReference = false;
-
-
-
-		// footer
-		$this->footerPosition = 5;
-		$this->useRunningFooter = false;
-
-		$this->runningFooterEvenLeft = "empty";
-		$this->runningFooterEvenCenter = "empty";
-		$this->runningFooterEvenRight = "empty";
-
-		$this->runningFooterOddLeft = "empty";
-		$this->runningFooterOddCenter = "empty";
-		$this->runningFooterOddRight = "empty";
-
-		$this->runningFooterTitleLeft = "empty";
-		$this->runningFooterTitleCenter = "empty";
-		$this->runningFooterTitleRight = "empty";
+        $this->omitChapterNumberRH = false;
+        $this->showVerseReferences = true;
+        $this->omitBookReference = false;
 
 
-		//footnotes
-		$this->useFootnoteRule = true;
-		$this->pageResetCallersFootnotes = false;
 
-		$this->omitCallerInFootnotes = false;
-		//  omitCallerInFootnotes (string ‘f’)
+        // footer
+        $this->footerPosition = 5;
+        $this->useRunningFooter = false;
 
-		$this->useSpecialCallerFootnotes = false;
-		$this->paragraphedFootnotes = true;
-		$this->useNumericCallersFootnotes = false;
-		$this->specialCallerFootnotes = "\\krn0.2em *\\kern0.4em";
+        $this->runningFooterEvenLeft = "empty";
+        $this->runningFooterEvenCenter = "empty";
+        $this->runningFooterEvenRight = "empty";
 
+        $this->runningFooterOddLeft = "empty";
+        $this->runningFooterOddCenter = "empty";
+        $this->runningFooterOddRight = "empty";
 
-		// cross references
-		$this->useSpecialCallerCrossrefs = false;
-		$this->specialCallerCrossrefs = "\\kern0.2em *\\kern0.4em";
-		$this->useAutoCallerCrossrefs = true;
-		$this->omitCallerInCrossrefs = false;
-		$this->paragraphedCrossrefs = true;
-		$this->useNumericCallersCrossrefs = false;
-
-		//'editing' features
-		$this->useBackground = false;
-		$this->backgroundComponents = "watermark";
-		$this->watermarkText = "DRAFT";
-		$this->useDiagnostic = false;
-		$this->diagnosticComponents = "leading";
-
-		// print options
-		$this->pageSizeCode = "custom"; // this shouldn't be visible
-		$this->pageHeight = 210;
-		$this->pageWidth = 148;
-		$this->printerPageSizeCode = "A4";
-
-		$this->useDocInfo = false;
-		$this->docInfoText = "";
-
-		// body text
-		$this->bodyTextLeading = 12;
-		$this->bodyFontSize = 10;
-		$this->rightToLeft = false;
-		$this->justifyParagraphs = true;
+        $this->runningFooterTitleLeft = "empty";
+        $this->runningFooterTitleCenter = "empty";
+        $this->runningFooterTitleRight = "empty";
 
 
-		//Misc
+        //footnotes
+        $this->useFootnoteRule = true;
+        $this->pageResetCallersFootnotes = false;
 
-		//advanced
-		$this->extraRightMargin = 0;
-		$this->chapterVerseSeperator = ":";
+        $this->omitCallerInFootnotes = false;
+        //  omitCallerInFootnotes (string ‘f’)
 
-	}
+        $this->useSpecialCallerFootnotes = false;
+        $this->paragraphedFootnotes = true;
+        $this->useNumericCallersFootnotes = false;
+        $this->specialCallerFootnotes = "\\krn0.2em *\\kern0.4em";
+
+
+        // cross references
+        $this->useSpecialCallerCrossrefs = false;
+        $this->specialCallerCrossrefs = "\\kern0.2em *\\kern0.4em";
+        $this->useAutoCallerCrossrefs = true;
+        $this->omitCallerInCrossrefs = false;
+        $this->paragraphedCrossrefs = true;
+        $this->useNumericCallersCrossrefs = false;
+
+        //'editing' features
+        $this->useBackground = false;
+        $this->backgroundComponents = "watermark";
+        $this->watermarkText = "DRAFT";
+        $this->useDiagnostic = false;
+        $this->diagnosticComponents = "leading";
+
+        // print options
+        $this->pageSizeCode = "custom"; // this shouldn't be visible
+        $this->pageHeight = 210;
+        $this->pageWidth = 148;
+        $this->printerPageSizeCode = "A4";
+
+        $this->useDocInfo = false;
+        $this->docInfoText = "";
+
+        // body text
+        $this->bodyTextLeading = 12;
+        $this->bodyFontSize = 10;
+        $this->rightToLeft = false;
+        $this->justifyParagraphs = true;
+
+
+        //Misc
+
+        //advanced
+        $this->extraRightMargin = 0;
+        $this->chapterVerseSeperator = ":";
+
+    }
     /**
      * @var integer
      */
