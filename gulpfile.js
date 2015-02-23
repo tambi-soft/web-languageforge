@@ -9,12 +9,12 @@ var lr = require('tiny-lr');
 var server = lr();
 
 var paths = {
-	'src_ng_typesetting': [
-	    'src/angular-app/scriptureforge/webtypesetting/**/*.js',
-	    'src/angular-app/scriptureforge/webtypesetting/**/*.css',	    
-	    'src/angular-app/scriptureforge/webtypesetting/**/*.less',	    
-	    'src/angular-app/scriptureforge/webtypesetting/**/*.html',	    
-	]
+  'src_ng_typesetting': [
+      'src/angular-app/scriptureforge/webtypesetting/**/*.js',
+      'src/angular-app/scriptureforge/webtypesetting/**/*.css',      
+      'src/angular-app/scriptureforge/webtypesetting/**/*.less',      
+      'src/angular-app/scriptureforge/webtypesetting/**/*.html',      
+  ]
 }
 
 var execute = function(command, callback) {

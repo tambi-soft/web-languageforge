@@ -1,32 +1,32 @@
 describe('the assets settings page', function() {
-	var constants 			= require('../../../testConstants.json');
-	var loginPage 			= require('../../../bellows/pages/loginPage.js');
-	var util 				= require('../../../bellows/pages/util.js');
-	var projectListPage 	= require('../../../bellows/pages/projectsPage.js');
-	var assetsPage			= require('../pages/assetSettingsPage.js');
-	
-	describe('admin', function() {
-		
-		it('setup: logout, login as admin, navigate to assets settings page', function() {
-			loginPage.logout();
-			loginPage.loginAsAdmin();
-	    	projectListPage.get();
-	    	projectListPage.clickOnProject(constants.typesettingProjectName);
-	    	assetsPage.get();
-	    	expect(assetsPage.title.getInnerHtml()).toEqual('Assets Settings');
-		});
-		
-		it('can expand dropbox to add a USFM zip', function() {
-		  expect(assetsPage.sections.paraTextTexts.isDisplayed()).toBe(false);
-		  assetsPage.addButtonList.first().click();
-		  expect(assetsPage.sections.paraTextTexts.isDisplayed()).toBe(true);
-		});
+  var constants       = require('../../../testConstants.json');
+  var loginPage       = require('../../../bellows/pages/loginPage.js');
+  var util         = require('../../../bellows/pages/util.js');
+  var projectListPage   = require('../../../bellows/pages/projectsPage.js');
+  var assetsPage      = require('../pages/assetSettingsPage.js');
+  
+  describe('admin', function() {
+    
+    it('setup: logout, login as admin, navigate to assets settings page', function() {
+      loginPage.logout();
+      loginPage.loginAsAdmin();
+        projectListPage.get();
+        projectListPage.clickOnProject(constants.typesettingProjectName);
+        assetsPage.get();
+        expect(assetsPage.title.getInnerHtml()).toEqual('Assets Settings');
+    });
+    
+    it('can expand dropbox to add a USFM zip', function() {
+      expect(assetsPage.sections.paraTextTexts.isDisplayed()).toBe(false);
+      assetsPage.addButtonList.first().click();
+      expect(assetsPage.sections.paraTextTexts.isDisplayed()).toBe(true);
+    });
 
 
         describe('Mock file upload', function() {
           
           it('can upload zip file', function() {
-        	assetsPage.mockUpload.enableButton.click();
+          assetsPage.mockUpload.enableButton.click();
             assetsPage.mockUpload.fileNameInput.sendKeys(constants.testMockTypesettingZipImportFile.name);
             assetsPage.mockUpload.fileSizeInput.sendKeys(constants.testMockTypesettingZipImportFile.size);
             expect(assetsPage.noticeList.count()).toBe(0);
@@ -70,7 +70,7 @@ describe('the assets settings page', function() {
           });*/
         
         });
-		
-	});
-	
+    
+  });
+  
 });

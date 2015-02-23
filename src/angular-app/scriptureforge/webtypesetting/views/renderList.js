@@ -61,17 +61,17 @@ angular.module('webtypesetting.renderList', ['jsonRpc', 'ui.bootstrap', 'bellows
   };
   
   $scope.getPageDto = function getPageDto() {
-	  renderService.getPageDto(function(result) {
-		  $scope.list = result.data.runs;
-		  updateItems();
-	  });
+    renderService.getPageDto(function(result) {
+      $scope.list = result.data.runs;
+      updateItems();
+    });
   };
   
   $scope.doRender = function doRender() {
-	  renderService.doRender(function(result) {
+    renderService.doRender(function(result) {
         notice.push(notice.SUCCESS, 'Render Complete');
         $scope.getPageDto();
-	  });
+    });
   };
   
   $scope.getPageDto();

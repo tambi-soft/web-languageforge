@@ -5,7 +5,7 @@ angular.module('webtypesetting.services', ['jsonRpc'])
   function(jsonRpc) {
     jsonRpc.connect('/api/sf');
     this.render = function render(callback){
-    	jsonRpc.call("webtypesetting_rapuma_render", [], callback);
+      jsonRpc.call("webtypesetting_rapuma_render", [], callback);
     };
     this.editorDto = function(callback) {
     }; 
@@ -32,18 +32,18 @@ angular.module('webtypesetting.services', ['jsonRpc'])
     
     //Other controllers can add their data to the  variable
     templateSaveObject.prepForBroadcast = function(templateName) {
-    	templateSaveObject.templateName = templateName;
-    	templateSaveObject.broadcastItem();
+      templateSaveObject.templateName = templateName;
+      templateSaveObject.broadcastItem();
     };
     
     templateSaveObject.broadcastItem = function() {
-    	$rootScope.$broadcast('handleSaveBroadcast');
-    	//console.log(templateSaveObject);
-    	jsonRpc.connect('/api/sf');
-    	console.log("blobbo");
-    	jsonRpc.call('template_save',[templateSaveObject], function(result) {
+      $rootScope.$broadcast('handleSaveBroadcast');
+      //console.log(templateSaveObject);
+      jsonRpc.connect('/api/sf');
+      console.log("blobbo");
+      jsonRpc.call('template_save',[templateSaveObject], function(result) {
             if (result.ok) {
-            	console.log(result);
+              console.log(result);
                 console.log("saved");
             }
         });
@@ -56,25 +56,25 @@ angular.module('webtypesetting.services', ['jsonRpc'])
     var templateLoadObject = {};
     //The load template name gets passed through here
     templateLoadObject.prepForBroadcast = function(templateName) {
-    	templateLoadObject.templateName = templateName;
-    	jsonRpc.call('template_load', [templateName], function(result){
-    		if(result.ok) {
-    			console.log(result);
-    			console.log("LOADED!");
-    			//Load the collected data into some object that the controller can access.
-    			templateLoadObject.newConf = result.data;
-    			templateLoadObject.broadcastItem();
-    		}
-    		else {
-    			console.log("We could not find your file. It's just a minor mistake.")
-    		}
-    	});
-    	templateLoadObject.broadcastItem();
+      templateLoadObject.templateName = templateName;
+      jsonRpc.call('template_load', [templateName], function(result){
+        if(result.ok) {
+          console.log(result);
+          console.log("LOADED!");
+          //Load the collected data into some object that the controller can access.
+          templateLoadObject.newConf = result.data;
+          templateLoadObject.broadcastItem();
+        }
+        else {
+          console.log("We could not find your file. It's just a minor mistake.")
+        }
+      });
+      templateLoadObject.broadcastItem();
     };
     
     //Broadcasts to the controller to either receive/send template data
     templateLoadObject.broadcastItem = function() {
-    	$rootScope.$broadcast('handleLoadBroadcast');
+      $rootScope.$broadcast('handleLoadBroadcast');
     };
     
     return templateLoadObject;

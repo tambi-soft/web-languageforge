@@ -6,11 +6,11 @@ angular.module('webtypesetting.layoutServices', ['jsonRpc'])
     jsonRpc.connect('/api/sf');
     
     this.getPageDto = function getPageDto(callback) {
-    	jsonRpc.call("typesetting_layoutPage_dto", [], callback);
+      jsonRpc.call("typesetting_layoutPage_dto", [], callback);
     };
     
     this.save = function save(settings, callback) {
-    	jsonRpc.call("typesetting_layoutSettings_update", [settings], callback);
+      jsonRpc.call("typesetting_layoutSettings_update", [settings], callback);
     };
     
   }])

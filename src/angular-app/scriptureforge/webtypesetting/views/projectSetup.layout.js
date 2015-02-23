@@ -5,7 +5,7 @@ angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 
 
 .controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingLayoutService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', 
 function($scope, $state, layoutService, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
-	var vm = $scope;
+  var vm = $scope;
   
   // default settings
   /*
@@ -118,7 +118,7 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
 
   };
   */
-	
+  
   //conf object for the settings that are loaded from the database. Items that are not meant to be in the database should
   // not be put in the conf object.
   vm.conf = {};
@@ -127,43 +127,43 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   // front end and just edit the pageHeight and pageWidth variables sent to the database.
   vm.pageSizeCode = "A5";
   $scope.setPageSize = function setPageSize(pageCode) {
-	  console.log("TEST pageSize:" + pageCode, "end");
-	  
-	  switch (pageCode) {
-		  case 'A5':
-			  vm.conf.pageHeight = 210;
-			  vm.conf.pageWidth = 148;
-			  break;
-		  case 'A4':
-			  vm.conf.pageHeight = 298;
-			  vm.conf.pageWidth = 210;
-			  break;
-		  case 'US Letter':
-			  vm.conf.pageHeight = 279.4;
-			  vm.conf.pageWidth = 215.9;
-			  break;
-		  case 'custom':
-			  break;
-		  
-	  }
+    console.log("TEST pageSize:" + pageCode, "end");
+    
+    switch (pageCode) {
+      case 'A5':
+        vm.conf.pageHeight = 210;
+        vm.conf.pageWidth = 148;
+        break;
+      case 'A4':
+        vm.conf.pageHeight = 298;
+        vm.conf.pageWidth = 210;
+        break;
+      case 'US Letter':
+        vm.conf.pageHeight = 279.4;
+        vm.conf.pageWidth = 215.9;
+        break;
+      case 'custom':
+        break;
+      
+    }
   }
   
   // the diagnosticComponents and backgroundComponents need a special function to set them in the conf object because they 
   // are strings in the conf object but they are checkboxes in the UI. These next two functions turn the checkboxes into a string that is saved to the conf file.
   vm.diagnostics = {
-		  leading: false,
+      leading: false,
   };
   vm.diagnosticsComponentsUpdate = function() {
-	  var diags = [];
-	  var diag;
-	    for (diag in vm.diagnostics) {
-	      if (vm.diagnostics[diag]) {
-	        diags.push(diag);
-	      }
-	    };
-	    vm.conf.diagnosticComponents = diags.join(", ");
+    var diags = [];
+    var diag;
+      for (diag in vm.diagnostics) {
+        if (vm.diagnostics[diag]) {
+          diags.push(diag);
+        }
+      };
+      vm.conf.diagnosticComponents = diags.join(", ");
   };
-	  
+    
   vm.components = {
       watermark: true,
   };
@@ -184,29 +184,29 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   
   // Function to keep two variables mutually Exclusive
   $scope.mutuallyExclusive= function mutuallyExclusive(name){
-	  switch (name){
-	  	case "background":
-	  		if (vm.conf.useBackground == true) {
-	  			vm.conf.useDiagnostic = false;
-	  		};
-	  		break;
-	  	case "diagnostic":
-	  		if (vm.conf.useDiagnostic == true) {
-	  			vm.conf.useBackground = false;
-	  		};
-	  		break;
-	  }
+    switch (name){
+      case "background":
+        if (vm.conf.useBackground == true) {
+          vm.conf.useDiagnostic = false;
+        };
+        break;
+      case "diagnostic":
+        if (vm.conf.useDiagnostic == true) {
+          vm.conf.useBackground = false;
+        };
+        break;
+    }
   };
   
   $scope.saveButtonClick = function saveButtonClick() {
-	  console.log("TEST");
-	  saveLayoutSettings();
+    console.log("TEST");
+    saveLayoutSettings();
   };
   
   var getPageDto = function getPageDto() {
-	  layoutService.getPageDto(function(result) {
-		  vm.conf = result.data.layout;
-	  });
+    layoutService.getPageDto(function(result) {
+      vm.conf = result.data.layout;
+    });
   };
   
   getPageDto();
@@ -276,9 +276,9 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
     console.log('saveLayoutSettings');
     
     layoutService.save(vm.conf, function(result){
-    	saved = true;
-    	$scope.layoutForm.$setPristine();
-    	saving = false;
+      saved = true;
+      $scope.layoutForm.$setPristine();
+      saving = false;
     });
     
     // TODO always clear 'saving' irrespective of successful save. IJH 2015-01
@@ -319,21 +319,21 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
   });
   
   vm.loadData = function(newConf) {
-	  $scope.newConf = newConf;
-	  vm.conf = $scope.newConf;
+    $scope.newConf = newConf;
+    vm.conf = $scope.newConf;
   }
   
   $rootScope.$on('handleLoadBroadcast', function() {
-		$scope.loadTest = templateLoadObject.templateName;
-		vm.loadData(templateLoadObject.newConf);
-		//console.log(testData);
-		console.log(vm);
-		console.log("loaded");
+    $scope.loadTest = templateLoadObject.templateName;
+    vm.loadData(templateLoadObject.newConf);
+    //console.log(testData);
+    console.log(vm);
+    console.log("loaded");
 });
   
   $rootScope.$on('handleSaveBroadcast', function() {
-		//console.log("handledSaveBroadcast");
-		templateSaveObject.vm = vm;
+    //console.log("handledSaveBroadcast");
+    templateSaveObject.vm = vm;
   });
 }])
 .controller('templateCtrl', ['$scope', '$state', 'webtypesettingSetupService',  'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$location',
@@ -364,10 +364,10 @@ function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, 
     };
     
     $scope.handleSaveClick = function() {
-    	templateSaveObject.prepForBroadcast($scope.saveTemplateName);
+      templateSaveObject.prepForBroadcast($scope.saveTemplateName);
     };
     
     $scope.handleLoadClick = function() {
-    	templateLoadObject.prepForBroadcast($scope.loadTemplateName);
+      templateLoadObject.prepForBroadcast($scope.loadTemplateName);
     };
 }]);
