@@ -1,42 +1,42 @@
 .imageBorder{
-	border:1px solid black;
-	width:100%;
+    border:1px solid black;
+    width:100%;
 }
 
 
 .render{
-	float:right;
+    float:right;
 }
 
 .properties{
-	height: 100%;
-	border: 1px solid;
-	padding: 5px;
-	margin-top: 5px;
-	margin-bottom: 10px;
+    height: 100%;
+    border: 1px solid;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 .text{
-	border: 1px solid;
-	overflow:auto;
-	height: 400px;
-	min-width: 200px;
-	padding: 5px 5px 5px 5px;
+    border: 1px solid;
+    overflow:auto;
+    height: 400px;
+    min-width: 200px;
+    padding: 5px 5px 5px 5px;
 }
 
 
 
 .composition-progress-bar {
-	margin-top: 10px;
-	height: 14px;
-	float: right;
-  	position: relative;
-  	width: calc(100% - 70px)
+    margin-top: 10px;
+    height: 14px;
+    float: right;
+      position: relative;
+      width: calc(100% - 70px)
 }
 
 .composition-progress-bar .inner {
   position: absolute;
-	height:100%;
-	transition: all 1s ease-out;
+    height:100%;
+    transition: all 1s ease-out;
 }
 
 
@@ -45,9 +45,9 @@
 }
 
 .composition-progress-bar .sliderRanges {
-	display:inline-block;
-	height:100%;
-	transition: all 1s ease-out;
+    display:inline-block;
+    height:100%;
+    transition: all 1s ease-out;
 }
 
 .progress-bar-slider .inner:after {
@@ -77,37 +77,37 @@
 }
 
 .pageNumber{
-	width:3em;
+    width:3em;
 }
 
 .prev{
-	float:left;
+    float:left;
 }
 
 .next{
-	float:right;
+    float:right;
 }
 
 .page-select{
-	margin-left: 5px;
-	display:inline-block;
-	vertical-align:middle;
+    margin-left: 5px;
+    display:inline-block;
+    vertical-align:middle;
 }
 
 .grey{
-	opacity:0.5;
+    opacity:0.5;
 }
 
 .composition-bottom{
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .books{
-	margin-left: 5px;
-	display: inline-block;
-	width:auto;
+    margin-left: 5px;
+    display: inline-block;
+    width:auto;
 }
 .invisible{
-	opacity:0;
+    opacity:0;
 }
 
