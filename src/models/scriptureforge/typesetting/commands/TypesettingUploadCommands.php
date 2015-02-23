@@ -169,7 +169,7 @@ class TypesettingUploadCommands
             // construct server response
             if ($moveOk && $tmpFilePath) {
                 $data = new TypesettingMediaResult();
-                $data->path = '/' . $project->getAssetsPath();
+                $data->path = '/' . $project->getAssetsRelativePath();
                 $data->fileName = $fileName;
                 $response->result = true;
             } else {
@@ -285,7 +285,7 @@ class TypesettingUploadCommands
 
                 $response->result = true;
                 $data = new TypesettingImportResult();
-                $data->path = '/' . $project->getAssetsPath();
+                $data->path = '/' . $project->getAssetsRelativePath();
                 $data->fileName = $fileName;
                 foreach ($extractedFilePaths as $extractedFilePath) {
                     $extractedFilePath = substr($extractedFilePath, strlen(APPPATH) - 1);
@@ -418,7 +418,7 @@ class TypesettingUploadCommands
         if (file_exists($filePath) and ! is_dir($filePath)) {
             if (@unlink($filePath)) {
                 $data = new TypesettingMediaResult();
-                $data->path = '/' . $project->getAssetsPath();
+                $data->path = '/' . $project->getAssetsRelativePath();
                 $data->fileName = $fileName;
                 $response->data = $data;
                 $response->result = true;

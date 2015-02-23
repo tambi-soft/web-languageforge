@@ -95,7 +95,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $assetId = $response->data->assetId;
         $pngAsset = new TypesettingAssetModel($project, $assetId);
         $this->assertEqual($fileName, $pngAsset->name);
-        $this->assertEqual('/' . $project->getAssetsPath(), $pngAsset->path);
+        $this->assertEqual('/' . $project->getAssetsRelativePath(), $pngAsset->path);
         $this->assertEqual('png', $pngAsset->type);
         $this->assertEqual(true, $pngAsset->uploaded);
 
@@ -156,14 +156,14 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $zipAssetId = $response->data->assetId;
         $zipAsset = new TypesettingAssetModel($project, $zipAssetId);
         $this->assertEqual($fileName, $zipAsset->name);
-        $this->assertEqual('/' . $project->getAssetsPath(), $zipAsset->path);
+        $this->assertEqual('/' . $project->getAssetsRelativePath(), $zipAsset->path);
         $this->assertEqual('usfm-zip', $zipAsset->type);
         $this->assertEqual(true, $zipAsset->uploaded);
 
         $usfmAssetId = $response->data->extractedAssetIds[0];
         $usfmAsset = new TypesettingAssetModel($project, $usfmAssetId);
         $this->assertEqual($usfmFileName, $usfmAsset->name);
-        $this->assertEqual('/' . $project->getAssetsPath(), $usfmAsset->path);
+        $this->assertEqual('/' . $project->getAssetsRelativePath(), $usfmAsset->path);
         $this->assertEqual('usfm', $usfmAsset->type);
         $this->assertEqual(true, $usfmAsset->uploaded);
     }
