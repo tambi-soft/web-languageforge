@@ -10,11 +10,10 @@
         <!-- picklist -->
         <dl class="picklists" style="height: 300px; overflow: auto;">
             <dt translate="Language Names"></dt>
-            <dd><div class="controls">
+            <dd>
                 <div data-ng-click="selectInputSystem(inputSystem.uuid)" data-ng-repeat="inputSystem in inputSystemViewModels | filter:query | orderBy: 'languageName'"
                     data-ng-class="{selected:selectedInputSystemId == inputSystem.uuid}" >
                     <span data-ng-style="{'font-style': (isUnlistedLanguage(inputSystem.language) ? 'italic' : 'normal')}; ">{{inputSystem.languageDisplayName()}}</span>
-                </div>
                 </div>
             </dd>
         </dl>
@@ -48,7 +47,7 @@
 
         <!-- settings -->
         <div class="well" data-ng-show="inputSystemViewModels[selectedInputSystemId]">
-            <div class="{{interfaceConfig.pullToSide}}">
+            <div data-ng-class="interfaceConfig.pullToSide">
                 <br />
                 <label class="control-label">{{inputSystemViewModels[selectedInputSystemId].inputSystem.tag}}</label>
             </div>
@@ -61,74 +60,76 @@
                 data-ng-show="isUnlistedLanguage(inputSystemViewModels[selectedInputSystemId].language)">
             <div class="form-group">
                 <label class="control-label" for="abbrev" translate="Display Abbreviation (limited to 4 lowercase characters)"></label>
-                <div class="controls">
-                    <input type="text" id="abbrev" model-transform-limit="4" data-ng-model="inputSystemViewModels[selectedInputSystemId].inputSystem.abbreviation">
-                </div>
-                <label class="checkbox {{interfaceConfig.pullNormal}}">
-                    <input type="checkbox" data-ng-model="inputSystemViewModels[selectedInputSystemId].inputSystem.isRightToLeft"/>
-                    {{'Right to left language' | translate}} </label>
+                <input class="form-control" type="text" id="abbrev" 
+                    model-transform-limit="4" 
+                    data-ng-model="inputSystemViewModels[selectedInputSystemId].inputSystem.abbreviation">
             </div>
-            <br />
-            <p class="text-warning" data-ng-show="isInputSystemInUse()">
-                <small translate="Some settings are disabled because the Input System may already be in use."></small>
-            </p>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"
+                            data-ng-model="inputSystemViewModels[selectedInputSystemId].inputSystem.isRightToLeft" />
+                        {{'Right to left language' | translate}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="form-control-static text-warning" data-ng-show="isInputSystemInUse()">
+                    <small translate="Some settings are disabled because the Input System may already be in use."></small>
+                </p>
+            </div>
             <div class="form-group">
                 <label class="control-label" for="special" translate="Special"></label>
-                <div class="controls">
-                    <select class="form-control" id="special" 
-                        data-ng-model="inputSystemViewModels[selectedInputSystemId].special"
-                        data-ng-disabled="isInputSystemInUse()"
-                        data-ng-options="selects.special.options[key] for key in selects.special.optionsOrder"></select>
-                </div>
+                <select class="form-control" id="special" 
+                    data-ng-model="inputSystemViewModels[selectedInputSystemId].special"
+                    data-ng-disabled="isInputSystemInUse()"
+                    data-ng-options="selects.special.options[key] for key in selects.special.optionsOrder"></select>
             </div>
 
             <div class="col-md-offset-1">
-            <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[1]">    <!-- IPA transcription -->
-                <label class="control-label" for="purpose" translate="Purpose"></label>
-                <div class="controls">
+            <div data-ng-show="inputSystemViewModels[selectedInputSystemId].special == selects.special.optionsOrder[1]">    <!-- IPA transcription -->
+                <div class="form-group">
+                    <label class="control-label" for="purpose" translate="Purpose"></label>
                     <select class="form-control" id="purpose" 
                         data-ng-model="inputSystemViewModels[selectedInputSystemId].purpose"
                         data-ng-disabled="isInputSystemInUse()"
                         data-ng-options="selects.purpose.options[key] for key in selects.purpose.optionsOrder">
                         <option value="">unspecified</option></select>
                 </div>
-                <label class="control-label" for="ipaVariant" translate="Variant (limited to letters or numbers, no spaces)"></label>
-                <div class="controls">
-                    <input type="text" id="ipaVariant" size="25"
+                <div class="form-group">
+                    <label class="control-label" for="ipaVariant" translate="Variant (limited to letters or numbers, no spaces)"></label>
+                    <input class="form-control" type="text" id="ipaVariant" size="25"
                            model-transform-limit="35" model-transform-no-space data-ng-trim="false"
                            data-ng-model="inputSystemViewModels[selectedInputSystemId].variantString"
                            data-ng-disabled="isInputSystemInUse()">
                 </div>
             </div>
-            <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[2]">    <!-- Voice -->
+            <div class="form-group" data-ng-show="inputSystemViewModels[selectedInputSystemId].special == selects.special.optionsOrder[2]">    <!-- Voice -->
                 <label class="control-label" for="voiceVariant" translate="Variant (limited to letters or numbers, no spaces)"></label>
-                <div class="controls">
-                    <input type="text" id="voiceVariant" size="25"
-                           model-transform-limit="35" model-transform-no-space data-ng-trim="false"
-                           data-ng-model="inputSystemViewModels[selectedInputSystemId].variantString"
-                           data-ng-disabled="isInputSystemInUse()">
-                </div>
+                <input class="form-control" type="text" id="voiceVariant" size="25"
+                       model-transform-limit="35" model-transform-no-space data-ng-trim="false"
+                       data-ng-model="inputSystemViewModels[selectedInputSystemId].variantString"
+                       data-ng-disabled="isInputSystemInUse()">
             </div>
-            <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[3]">    <!-- Script / Region / Variant -->
-                <label class="control-label" for="script" translate="Script"></label>
-                <div class="controls">
+            <div data-ng-show="inputSystemViewModels[selectedInputSystemId].special == selects.special.optionsOrder[3]">    <!-- Script / Region / Variant -->
+                <div class="form-group">
+                    <label class="control-label" for="script" translate="Script"></label>
                     <select class="form-control" id="script" 
                         data-ng-model="inputSystemViewModels[selectedInputSystemId].script"
                         data-ng-disabled="isInputSystemInUse()"
                         data-ng-options="key as option.join(', ') for (key, option) in selects.script.options">
                         <option value="">-- select a script --</option></select>
                 </div>
-                <label class="control-label" for="region" translate="Region"></label>
-                <div class="controls">
+                <div class="form-group">
+                    <label class="control-label" for="region" translate="Region"></label>
                     <select class="form-control" id="region" 
                         data-ng-model="inputSystemViewModels[selectedInputSystemId].region"
                         data-ng-disabled="isInputSystemInUse()"
                         data-ng-options="key as option for (key, option) in selects.region.options">
                         <option value="">-- select a region --</option></select>
                 </div>
-                <label class="control-label" for="variant" translate="Variant (limited to letters or numbers, no spaces)"></label>
-                <div class="controls">
-                    <input type="text" id="variant" size="25"
+                <div class="form-group">
+                    <label class="control-label" for="variant" translate="Variant (limited to letters or numbers, no spaces)"></label>
+                    <input class="form-control" type="text" id="variant" size="25"
                         model-transform-limit="35" model-transform-no-space data-ng-trim="false"
                         data-ng-model="inputSystemViewModels[selectedInputSystemId].variantString"
                         data-ng-disabled="isInputSystemInUse()">
@@ -136,14 +137,14 @@
             </div>
             </div>
 
-            <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[1]">    <!-- IPA transcription -->
+            <div class="form-group" data-ng-show="inputSystemViewModels[selectedInputSystemId].special == selects.special.optionsOrder[1]">    <!-- IPA transcription -->
                 <a href="http://en.wikipedia.org/wiki/International_Phonetic_Alphabet" target="_blank">
                     <i class="icon-globe"></i> {{'Read more about IPA transcriptions' | translate}}</a>
             </div>
-            <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[2]">    <!-- Voice -->
+            <div class="form-group" data-ng-show="inputSystemViewModels[selectedInputSystemId].special == selects.special.optionsOrder[2]">    <!-- Voice -->
                 <small translate="In applications which support this option, fields with this input system will able to play and record voice."></small>
             </div>
-            <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[3]">    <!-- Script / Region / Variant -->
+            <div class="form-group" data-ng-show="inputSystemViewModels[selectedInputSystemId].special == selects.special.optionsOrder[3]">    <!-- Script / Region / Variant -->
                 <a href="http://www.w3.org/International/questions/qa-choosing-language-tags" target="_blank">
                     <i class="icon-globe"></i> {{'Read more about language identifiers' | translate}}</a>
             </div>
