@@ -98,9 +98,9 @@ describe('the project settings page - project manager', function() {
     });
     
     it('can update an existing template', function() {
-        util.findRowByText(page.templatesTab.list, 'sound check').then(function(row) {
-          row.element(by.linkText('sound check')).click();
-        });
+      util.findRowByText(page.templatesTab.list, 'sound check').then(function(row) {
+        row.element(by.linkText('sound check')).click();
+      });
       browser.wait(function() {
         return page.templatesTab.editor.saveButton.isDisplayed();
       });

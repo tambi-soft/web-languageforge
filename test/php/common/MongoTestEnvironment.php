@@ -177,6 +177,22 @@ class MongoTestEnvironment
     }
 
     /**
+     * Index items by given key
+     *
+     * @param unknown $items
+     * @param string $byKey
+     * @return array<unknown>
+     */
+    public static function indexItemsBy($items, $byKey = 'guid')
+    {
+        $indexes = array();
+        foreach ($items as $item) {
+            $indexes[$item[$byKey]] = $item;
+        }
+        return $indexes;
+    }
+
+    /**
      * Returns a string of utf-8 usfm
      *
      * @return string

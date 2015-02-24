@@ -6,7 +6,7 @@
         <div class="form-group">
             <button class="btn btn-success" data-ng-click="openNewLanguageModal(suggestedLanguageCodes)"><i class="icon-plus"></i>{{'New' | translate}} </button>
         </div>
-        
+
         <!-- picklist -->
         <dl class="picklists" style="height: 300px; overflow: auto;">
             <dt translate="Language Names"></dt>
@@ -45,7 +45,7 @@
                 </ul>
             </div>
         </div>
-        
+
         <!-- settings -->
         <div class="well" data-ng-show="inputSystemViewModels[selectedInputSystemId]">
             <div class="{{interfaceConfig.pullToSide}}">
@@ -66,7 +66,7 @@
                 </div>
                 <label class="checkbox {{interfaceConfig.pullNormal}}">
                     <input type="checkbox" data-ng-model="inputSystemViewModels[selectedInputSystemId].inputSystem.isRightToLeft"/>
-                    {{ 'Right to left language' | translate }} </label>
+                    {{'Right to left language' | translate}} </label>
             </div>
             <br />
             <p class="text-warning" data-ng-show="isInputSystemInUse()">
@@ -81,7 +81,7 @@
                         data-ng-options="selects.special.options[key] for key in selects.special.optionsOrder"></select>
                 </div>
             </div>
-            
+
             <div class="col-md-offset-1">
             <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[1]">    <!-- IPA transcription -->
                 <label class="control-label" for="purpose" translate="Purpose"></label>
@@ -135,17 +135,17 @@
                 </div>
             </div>
             </div>
-            
+
             <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[1]">    <!-- IPA transcription -->
                 <a href="http://en.wikipedia.org/wiki/International_Phonetic_Alphabet" target="_blank">
-                    <i class="icon-globe"></i> {{ 'Read more about IPA transcriptions' | translate }}</a>
+                    <i class="icon-globe"></i> {{'Read more about IPA transcriptions' | translate}}</a>
             </div>
             <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[2]">    <!-- Voice -->
                 <small translate="In applications which support this option, fields with this input system will able to play and record voice."></small>
             </div>
             <div class="form-group" data-ng-show="inputSystemViewModels[currentInputSystemTag].special == selects.special.optionsOrder[3]">    <!-- Script / Region / Variant -->
                 <a href="http://www.w3.org/International/questions/qa-choosing-language-tags" target="_blank">
-                    <i class="icon-globe"></i>     {{ 'Read more about language identifiers' | translate }}</a>
+                    <i class="icon-globe"></i> {{'Read more about language identifiers' | translate}}</a>
             </div>
         </div>
     </div>
@@ -156,4 +156,3 @@ inputSystemViewModels['{{selectedInputSystemId}}'] {{inputSystemViewModels[selec
 </pre>
  -->
 </div>
-    
