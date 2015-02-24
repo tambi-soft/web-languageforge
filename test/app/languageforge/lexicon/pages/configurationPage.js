@@ -33,7 +33,7 @@ function ConfigurationPage() {
   
   this.inputSystemsTab = {
     newButton:    this.tabDivs.first().element(by.partialButtonText('New')),
-    moreButton:   this.tabDivs.first().element(by.css('.btn-group a.btn')),
+    moreButton:   this.tabDivs.first().element(by.css('.btn-group .btn')),
     moreButtonGroup: {
       addIpa:     this.tabDivs.first().element(by.partialLinkText('Add IPA')),
       addVoice:   this.tabDivs.first().element(by.partialLinkText('Add Voice')),
@@ -41,7 +41,7 @@ function ConfigurationPage() {
       remove:     this.tabDivs.first().element(by.css('i.icon-remove'))
     },
     getLanguageByName: function getLanguageByName(languageName) {
-      return element(by.css('div.tab-pane.active div.span3 dl.picklists')).element(by.cssContainingText('div[data-ng-repeat] span', languageName));
+      return element(by.css('div.tab-pane.active div.col-md-3 dl.picklists')).element(by.cssContainingText('div[data-ng-repeat] span', languageName));
     },
     selectedInputSystem: {
       displayName:    this.tabDivs.first().element(by.id('languageDisplayName')),
@@ -66,7 +66,7 @@ function ConfigurationPage() {
   this.exampleFields = this.activePane.all(by.repeater('fieldName in fieldOrder.examples'));
 
   this.getFieldByName = function getFieldByName(fieldName) {
-    return element(by.css('div.tab-pane.active > div > div > div.span3 dl.picklists')).element(by.cssContainingText('div[data-ng-repeat] span', fieldName));
+    return element(by.css('div.tab-pane.active > div > div > div.col-md-3 dl.picklists')).element(by.cssContainingText('div[data-ng-repeat] span', fieldName));
   };
 
   this.hiddenIfEmpty = this.activePane.element(by.id('hideIfEmpty'));

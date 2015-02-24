@@ -245,11 +245,11 @@ div.sub-promotion img {
     padding: 10px;
 }
 
-.row-padded .span4 {
+.row-padded .col-md-4 {
   width: 290px;
 }
 
-.row-padded .span8 {
+.row-padded .col-md-8 {
   width: 610px;
 }
 

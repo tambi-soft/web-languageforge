@@ -2,7 +2,7 @@
 
 <label translate="Import a compressed (zipped) folder of the whole project"></label>
 <div class="row">
-    <div class="span4">
+    <div class="col-md-4">
         <div class="drop-box" data-ng-file-drop="onFileSelect($files);" 
             data-ng-file-drop-available="dropSupported=true" data-ng-show="dropSupported">
             <h4 translate="Drop a zipped folder here"></h4>
@@ -31,7 +31,7 @@
             &nbsp;
         </div>
     </div>
-    <div class="span4">
+    <div class="col-md-4">
         <a id="flexHelpLink" data-ng-click="show.flexHelp = !show.flexHelp">
             <i class="icon-question-sign text-info"></i>
             {{'How to export a project from FLEx' | translate}}
