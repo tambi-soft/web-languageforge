@@ -202,7 +202,7 @@ div.notices .alert {
 div.notices .animate-repeat {
     line-height: inherit;
 }
-div.notices .alert-success, div.notices .alert-error, div.notices .alert-warn, div.notices .alert-info {
+div.notices .alert-success, div.notices .alert-danger, div.notices .alert-warning, div.notices .alert-info {
     background-position: 6px 4px;
 }
 

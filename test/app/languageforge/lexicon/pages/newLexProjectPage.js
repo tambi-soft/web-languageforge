@@ -28,7 +28,7 @@ function NewLexProjectPage() {
   };
   this.formStatus.expectContainsError = function expectContainsError(partialMsg) {
     if (! partialMsg) partialMsg = '';
-    expect(_this.formStatus.getAttribute('class')).toContain('alert-error');
+    expect(_this.formStatus.getAttribute('class')).toContain('alert-danger');
     expect(_this.formStatus.getText()).toContain(partialMsg);
   };
   

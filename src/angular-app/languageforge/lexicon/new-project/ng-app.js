@@ -125,7 +125,7 @@ angular.module('lexicon-new-project',
       if (! msg) msg = '';
       $scope.formValidated = false;
       $scope.formStatus = msg;
-      $scope.formStatusClass = 'alert alert-error';
+      $scope.formStatusClass = 'alert alert-danger';
       if (! msg) $scope.formStatusClass = 'neutral';
       $scope.forwardBtnClass = '';
       $scope.formValidationDefer.resolve(false);
@@ -142,7 +142,7 @@ angular.module('lexicon-new-project',
         classes.push('icon-check-empty');
       }
       if ($state.current.data.step < step) {
-        classes.push('muted');
+        classes.push('text-muted');
       }
       return classes;
     };

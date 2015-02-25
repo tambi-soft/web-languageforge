@@ -588,12 +588,12 @@ table tbody tr:hover, table tbody tr.altrow:hover {
     font-size: 0.9em;
 }
 
-.alert-error {
+.alert-danger {
     background: url(/images/shared/exclamation.png) no-repeat scroll 8px 8px #ffeeee;
     border: 1px solid #e47b7b;
 }
 
-.alert-warn {
+.alert-warning {
     background: url(/images/shared/error.png) no-repeat scroll 8px 8px #FFFDF1;
     border: 1px solid #FFE578;
 }

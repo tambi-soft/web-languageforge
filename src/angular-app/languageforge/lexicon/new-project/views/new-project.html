@@ -17,7 +17,6 @@
         </ul>
 
         <div class="row" align="center">
-        <div class="col-md-8">
             <a class="btn btn-default" data-ng-class="interfaceConfig.pullNormal" 
                 id="backButton" data-ng-click="prevStep()" data-ng-show="show.backButton">
                 <i class="icon-circle-arrow-left"></i>
@@ -27,13 +26,12 @@
                 {{nextButtonLabel | translate}}&nbsp; 
                 <i class="icon-circle-arrow-right"></i></button>
         </div>
-        </div>
     </div>
 
     <!-- use ng-submit to catch the form submission and use our Angular function -->
     <form class="form-horizontal" id="newLexProjectForm" name="newLexProjectForm" novalidate>
         <div class="row" align="center">
-            <div class="col-md-8" id="form-status" data-ng-class="formStatusClass">{{formStatus | translate}}&nbsp;</div>
+            <div id="form-status" data-ng-class="formStatusClass">{{formStatus | translate}}&nbsp;</div>
         </div>
 
         <!-- our nested state views will be injected here -->

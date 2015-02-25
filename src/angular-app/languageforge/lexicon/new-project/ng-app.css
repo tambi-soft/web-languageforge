@@ -62,12 +62,6 @@ a#flexHelpLink {
     text-decoration: none;
 }
 
-/* new project name page */
-#newLexProjectForm .uneditable-input {
-    width: 170px;
-    background-color: inherit;
-}
-
 .validator {
      position: absolute;
      padding-left: 5px;
