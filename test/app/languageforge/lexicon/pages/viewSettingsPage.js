@@ -15,7 +15,7 @@ function ViewSettingsPage() {
   this.applyBtn = element(by.buttonText('Apply'));
 
   this.getTabByName = function getTabByName(tabName) {
-    return $('div.tabbable ul.nav-tabs').element(by.cssContainingText('a', tabName));
+    return $('ul.nav.nav-tabs').element(by.cssContainingText('a', tabName));
   };
   this.clickTabByName = function clickTabByName(tabName) {
     return _this.getTabByName(tabName).then(function(elem) { elem.click(); });
@@ -52,9 +52,9 @@ function ViewSettingsPage() {
 
   this.activePane = $('div.tab-pane.active');
 
-  this.accordionDiv = this.activePane.$('div.accordion');
-  this.accordionEnabledFields = this.accordionDiv.element(by.elemMatches('div.accordion-heading a', '^Enabled Fields for'));
-  this.accordionEnabledTasks = this.accordionDiv.element(by.elemMatches('div.accordion-heading a', '^Enabled Tasks'));
+  this.accordionDiv = this.activePane.$('accordion');
+  this.accordionEnabledFields = this.accordionDiv.element(by.elemMatches('div.panel-heading a', '^Enabled Fields for'));
+  this.accordionEnabledTasks = this.accordionDiv.element(by.elemMatches('div.panel-heading a', '^Enabled Tasks'));
 
   this.entryFields = this.activePane.all(by.repeater('fieldName in fieldOrder.entry'));
   this.senseFields = this.activePane.all(by.repeater('fieldName in fieldOrder.senses'));
@@ -73,8 +73,8 @@ function ViewSettingsPage() {
     return this.getFieldByName(fieldName, treatAsRegex).then(function(elem) { elem.click(); });
   };
 
-  this.showField = this.activePane.element(by.cssContainingText('label.checkbox', 'Show field')).$('input[type="checkbox"]');
-  this.overrideInputSystems = this.activePane.element(by.cssContainingText('label.checkbox', 'Override Input Systems')).$('input[type="checkbox"]');
+  this.showField = this.activePane.element(by.cssContainingText('div.checkbox > label', 'Show field')).$('input[type="checkbox"]');
+  this.overrideInputSystems = this.activePane.element(by.cssContainingText('div.checkbox > label', 'Override Input Systems')).$('input[type="checkbox"]');
 
   this.usersWithViewSettings = this.activePane.$('#userSelectList');
   this.addViewSettingsForMember = function addViewSettingsForMember(memberName) {
@@ -83,7 +83,7 @@ function ViewSettingsPage() {
     this.activePane.element(by.buttonText('Add Member Specific Settings')).click();
   };
   this.pickMemberWithViewSettings = function pickMemberWithViewSettings(memberName) {
-    this.usersWithViewSettings.element(by.elemMatches('div.picklists > ul.unstyled > li', memberName)).click();
+    this.usersWithViewSettings.element(by.elemMatches('div.picklists > ul.list-unstyled > li', memberName)).click();
   };
   this.selectMemberBtn = this.activePane.element(by.buttonText('Select Member'));
   this.removeMemberViewSettingsBtn = this.activePane.element(by.buttonText('Remove Member Specific Settings'));

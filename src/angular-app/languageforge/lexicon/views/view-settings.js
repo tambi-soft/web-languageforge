@@ -60,6 +60,9 @@ angular.module('lexicon.view.settings', ['ui.bootstrap', 'bellows.services', 'pa
         this._swapTagIndices(idx, idx+1);
       }
     };
+    
+    $scope.oneAtATime = true;
+    $scope.isFirstOpen = true;
 
     $scope.selectUser = function selectUser(userId) {
       $scope.currentUserId = userId;
@@ -93,8 +96,8 @@ angular.module('lexicon.view.settings', ['ui.bootstrap', 'bellows.services', 'pa
 
     $scope.addUser = function addUser() {
       if ($scope.typeahead.user) {
-        var user = $scope.typeahead.user,
-            userView = angular.copy($scope.configDirty.roleViews[user.role]);
+        var user = $scope.typeahead.user;
+        var userView = angular.copy($scope.configDirty.roleViews[user.role]);
         $scope.forWhom = user.name + ' (' + user.username + ')';
         deleteFromArray(user, 'id', $scope.usersWithoutSettings);
         $scope.usersWithSettings[user.id] = user;
@@ -316,4 +319,3 @@ angular.module('lexicon.view.settings', ['ui.bootstrap', 'bellows.services', 'pa
 
   }])
   ;
-
