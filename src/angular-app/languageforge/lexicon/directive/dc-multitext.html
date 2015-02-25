@@ -1,8 +1,7 @@
 <form class="form-horizontal dc-multitext">
     <div data-ng-repeat="tag in config.inputSystems" class="form-group">
-        <label data-ng-show="$first && config.type != 'pictures'"
-            class="control-label">{{config.label}}</label>
-        <div class="controls">
+        <label class="col-sm-3 control-label">{{displayLabel($first)}}</label>
+        <div class="col-sm-7">
             <div class="input-group" data-ng-click="selectInputSystem(tag)"
                 data-ng-class="{selectableInputSystemFieldForComment: control.state == 'comment' && control.rights.canComment()}">
                 <span class="input-group-addon wsid"
@@ -18,18 +17,18 @@
                     data-pui-show-overflow
                     data-ng-bind-html="model[tag].value"></div>
                      -->
-                <dc-formattedtext class="dc-formattedtext" 
+                <dc-formattedtext class="form-control dc-formattedtext" 
                     data-ng-if="config.displayMultiline && control.state == 'edit' && control.rights.canEditEntry()"
                     fte-disabled="! (control.state == 'edit' && control.rights.canEditEntry()) || modelContainsSpan(tag)"
                     fte-model="model[tag].value"
                     fte-dir="inputSystemDirection(tag)"></dc-formattedtext>
-                <input
+                <input class="form-control"
                     data-ng-show="!config.displayMultiline && !modelContainsSpan(tag) && control.state == 'edit' && control.rights.canEditEntry()"
                     dir="{{inputSystemDirection(tag)}}" width="{{config.width}}"
                     data-pui-show-overflow
                     placeholder="{{(config.type == 'pictures' ? 'caption' : '')}}"
                     type="text" data-ng-model="model[tag].value" />
-                <div class="uneditable-input"
+                <div class="form-control uneditable-input"
                     data-ng-show="(!config.displayMultiline && modelContainsSpan(tag) && control.state == 'edit' && control.rights.canEditEntry())
                         || !(control.state == 'edit' && control.rights.canEditEntry())"
                     dir="{{inputSystemDirection(tag)}}"

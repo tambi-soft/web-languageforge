@@ -28,6 +28,13 @@ angular.module('palaso.ui.dc.multitext', ['bellows.services', 'palaso.ui.showOve
           inputSystem: tag
         });
       };
+      
+      $scope.displayLabel = function displayLabel($first) {
+        if ($first && $scope.config.type != 'pictures') {
+          return $scope.config.label;
+        }
+        return '';
+      };
 
       $scope.modelContainsSpan = function modelContainsSpan(tag) {
         if (angular.isUndefined($scope.model) || ! (tag in $scope.model)) {
