@@ -1,7 +1,7 @@
 'use strict';
 
 var SfAssetSettingsPage = function() {
-  var mockUpload = require('../../../bellows/pages/mockUploadElement.js');
+  var MockUpload = require('../../../bellows/pages/mockUploadDirective.js');
   
   this.noticeList = element.all(by.repeater('notice in notices()'));
   
@@ -13,20 +13,18 @@ var SfAssetSettingsPage = function() {
   };
 
   this.title = element(by.tagName('h2'));
+  
   this.addButtonList = element.all(by.partialButtonText('Add'));
+  this.dropBoxList = element.all(by.css('.drop-box'));
+  this.mockUploadList = element.all(by.css('pui-mock-upload'));
+  this.assetFilenameList = element.all(by.binding('asset.name'));
   
-  this.sectionList = element.all(by.css('.drop-box'));
-  this.sections = {
-    paraTextTexts: this.sectionList.first()
+  this.paraTextTexts = {
+    'dropBox': this.dropBoxList.first(),
+    'addButton': this.addButtonList.first(),
+    'mockUpload': new MockUpload(this.mockUploadList.first()),
+    'assetFilename': this.assetFilenameList.first()
   };
-  this.mockUpload = mockUpload;
-  
-  /*this.paraTextAssetList = element.all(by.repeater('section in sections')).first().all(by.repeater('asset in section.assets').column('asset.name'));
-  //this.asset = element.all(by.repeater('asset in section.assets')).first().element(by.css(".ng-binding")).getText();
-  this.assets = {
-    paraTextTexts: this.paraTextAssetList.first()
-  };*/
-  
   
 };
 
