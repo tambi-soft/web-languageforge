@@ -45,11 +45,6 @@ describe('Browse and edit page (DBE) Editor', function() {
     ]);
   });
 
-  it('one picture and caption is present', function() {
-    expect(dbePage.edit.pictures.getFileName(0)).toContain('_' + constants.testEntry1.senses[0].pictures[0].fileName);
-    expect(dbePage.edit.pictures.getCaption(0)).toEqual({'en': constants.testEntry1.senses[0].pictures[0].caption.en.value});
-  });
-  
   it('dictionary citation reflects lexeme form', function() {
     expect(dbePage.edit.renderedDiv.getText()).toContain(constants.testEntry1.lexeme.th.value);
     expect(dbePage.edit.renderedDiv.getText()).toContain(constants.testEntry1.lexeme['th-fonipa'].value);
@@ -79,11 +74,16 @@ describe('Browse and edit page (DBE) Editor', function() {
     expect(dbePage.edit.renderedDiv.getText()).not.toContain(constants.testEntry1.lexeme.th.value);
     expect(dbePage.edit.renderedDiv.getText()).toContain(constants.testEntry1.lexeme['th-fonipa'].value);
     dbePage.edit.getMultiTextInputs('Citation Form').first().clear();
+    expect(dbePage.edit.renderedDiv.getText()).not.toContain('citation form');
     expect(dbePage.edit.renderedDiv.getText()).toContain(constants.testEntry1.lexeme.th.value);
     expect(dbePage.edit.renderedDiv.getText()).toContain(constants.testEntry1.lexeme['th-fonipa'].value);
-    dbePage.edit.saveBtn.click();
   });
 
+  it('one picture and caption is present', function() {
+    expect(dbePage.edit.pictures.getFileName(0)).toContain('_' + constants.testEntry1.senses[0].pictures[0].fileName);
+    expect(dbePage.edit.pictures.getCaption(0)).toEqual({'en': constants.testEntry1.senses[0].pictures[0].caption.en.value});
+  });
+  
   it('file upload drop box is displayed when Add Picture is clicked', function() {
     expect(dbePage.edit.pictures.addPictureLink.isPresent()).toBe(true);
     expect(dbePage.edit.pictures.addDropBox.isDisplayed()).toBe(false);
@@ -268,4 +268,3 @@ describe('Browse and edit page (DBE) Editor', function() {
   });
 
 });
-
