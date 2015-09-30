@@ -1,1 +1,13 @@
 /* webtypesetting css */
+
+#typesetting-hmenu {
+    overflow: visible;
+}
+
+#typesetting-hmenu .topNav {
+    padding-left: 0;
+}
+
+.btnBar {
+    margin-left: 100px;
+}

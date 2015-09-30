@@ -3,13 +3,14 @@
 namespace models;
 
 use libraries\shared\Website;
-use models\scriptureforge\WebtypesettingProjectModel;
+use models\scriptureforge\TypesettingProjectModel;
 
 use models\languageforge\lexicon\LexiconProjectModel;
 
 use models\scriptureforge\SfchecksProjectModel;
 
 use Palaso\Utilities\CodeGuard;
+use Palaso\Utilities\FileUtilities;
 
 use models\shared\rights\ProjectRoleModel;
 use models\mapper\MapOf;
@@ -116,7 +117,9 @@ class ProjectModel extends \models\mapper\MapperModel
      */
     public function removeUser($userId)
     {
-        unset($this->users[$userId]);
+        if (array_key_exists($userId, $this->users)) {
+            unset($this->users[$userId]);
+        }
     }
 
     /**
@@ -212,7 +215,7 @@ class ProjectModel extends \models\mapper\MapperModel
             case 'sfchecks':
                 return new SfchecksProjectModel($projectId);
             case 'webtypesetting':
-                return new WebtypesettingProjectModel($projectId);
+                return new TypesettingProjectModel($projectId);
             case 'lexicon':
                 return new LexiconProjectModel($projectId);
             default:
@@ -223,23 +226,20 @@ class ProjectModel extends \models\mapper\MapperModel
     /**
      * @return string Relative path of the projects assets folder
      */
-    public function getAssetsPath()
+    public function getAssetsRelativePath()
     {
-    	$path = 'assets/' . $this->appName. '/' . $this->databaseName();
-	if (!file_exists($path)) {
-		mkdir($path);
-	}
+        $path = 'assets/' . $this->appName. '/' . $this->databaseName();
         return $path;
     }
 
     /**
 
-		return $path;
+        return $path;
      * @return string Full path of the projects assets folder
      */
     public function getAssetsFolderPath()
     {
-        return APPPATH . $this->getAssetsPath();
+        return APPPATH . $this->getAssetsRelativePath();
     }
 
     /**

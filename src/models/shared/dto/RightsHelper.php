@@ -8,6 +8,7 @@ use models\shared\rights\SiteRoles;
 use models\shared\rights\SystemRoles;
 use models\ProjectModel;
 use models\UserModel;
+use models\LayoutTemplateModel;
 
 class RightsHelper
 {
@@ -227,8 +228,13 @@ class RightsHelper
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::VIEW);
 
             case 'project_create':
+            case 'project_create_switchSession':
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
             case 'projectcode_exists':
+                return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
+
+            case 'template_save':
+            case 'template_load':
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
 
             case 'questionTemplate_update':
@@ -260,10 +266,76 @@ class RightsHelper
                 // Are there any circumstances where this should be denied? Should this just be "return true;"?
                 return $this->userHasSiteRight(Domain::USERS + Operation::VIEW_OWN);
 
+            // ScriptureForge (webtypesetting)
+            case 'typesetting_readAssetsDto':
+            case 'typesetting_uploadFile':
+                return $this->userHasSiteRight(Domain::USERS + Operation::EDIT_OWN);
+
+            case 'typesetting_composition_renderBook':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getBookHTML':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getListOfBooks':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getParagraphProperties':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_setParagraphProperties':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_composition_getIllustrationProperties':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_setIllustrationProperties':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_composition_getPageStatus':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_setPageStatus':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_composition_getRenderedPageForBook':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getPageDto':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_composition_getBookDto':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+
+
+            case 'typesetting_layoutSettings_update':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_layoutPage_dto':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+
+                //  TODO: check that these permissions are what we want - cjh 2015-01
+            case 'typesetting_render_doRender':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_renderPage_dto':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+
+
+            case 'typesetting_discussionList_getPageDto':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::VIEW);
+            case 'typesetting_discussionList_createThread':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);
+            case 'typesetting_discussionList_deleteThread':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::DELETE_OWN);
+            case 'typesetting_discussionList_updateThread':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);
+            case 'typesetting_discussionList_createPost':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);
+            case 'typesetting_discussionList_deletePost':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::DELETE_OWN);
+            case 'typesetting_discussionList_updatePost':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);
+            case 'typesetting_discussionList_createReply':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::CREATE);
+            case 'typesetting_discussionList_deleteReply':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::DELETE_OWN);
+            case 'typesetting_discussionList_updateReply':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);
+            case 'typesetting_discussionList_updateStatus':
+                return $this->userHasProjectRight(Domain::QUESTIONS + Operation::EDIT_OWN);
+
             // LanguageForge (lexicon)
             case 'lex_configuration_update':
             case 'lex_upload_importLift':
-            case 'lex_uploadProjectZip':
+            case 'lex_upload_importProjectZip':
                 return $this->userHasProjectRight(Domain::PROJECTS + Operation::EDIT);
 
             case 'lex_baseViewDto':

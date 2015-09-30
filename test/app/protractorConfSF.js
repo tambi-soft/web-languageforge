@@ -1,6 +1,8 @@
 var constants = require('./testConstants.json');
+constants.siteType = "scriptureforge"; //TODO: refactor projectsPage.js so this is not necessary
 
-var specs = ['scriptureforge/**/e2e/*.spec.js'];
+var specs = ['bellows/**/e2e/*.spec.js'];
+specs.push('scriptureforge/**/e2e/*.spec.js');
 
 exports.config = {
   // The address of a running selenium server.

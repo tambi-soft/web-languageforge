@@ -1,13 +1,12 @@
 <?php
+use Palaso\Utilities\FileUtilities;
 use libraries\shared\Website;
-use models\ProjectModel;
-use models\UserModel;
 use models\languageforge\lexicon\LexiconProjectModel;
+use models\scriptureforge\TypesettingProjectModel;
 use models\shared\rights\ProjectRoles;
 use models\shared\rights\SystemRoles;
-use Palaso\Utilities\FileUtilities;
-
-require_once TestPath . 'common/MockProjectModel.php';
+use models\ProjectModel;
+use models\UserModel;
 
 class MongoTestEnvironment
 {
@@ -178,6 +177,50 @@ class MongoTestEnvironment
     }
 
     /**
+     * Index items by given key
+     *
+     * @param unknown $items
+     * @param string $byKey
+     * @return array<unknown>
+     */
+    public static function indexItemsBy($items, $byKey = 'guid')
+    {
+        $indexes = array();
+        foreach ($items as $item) {
+            $indexes[$item[$byKey]] = $item;
+        }
+        return $indexes;
+    }
+
+    /**
+     * Returns a string of utf-8 usfm
+     *
+     * @return string
+     */
+    public static function usfmSample()
+    {
+        global $rootPath;
+        $testFilePath = $rootPath . 'docs/usfm/KJV/44JHNKJVT.SFM';
+        $usfm = file_get_contents($testFilePath);
+
+        return $usfm;
+    }
+
+    /**
+     * Returns a string of utf-8 usfm
+     *
+     * @return string
+     */
+    public static function usfmSampleWithPoetryMarkers()
+    {
+        global $rootPath;
+        $testFilePath = $rootPath . 'docs/usfm/KJV/19PSAKJVT.SFM';
+        $usfm = file_get_contents($testFilePath);
+
+        return $usfm;
+    }
+
+    /**
      * Simulate the upload of a Text audio file
      *
      * @param string $filePathToCopy
@@ -268,12 +311,45 @@ class MongoTestEnvironment
     }
 }
 
+class TypesettingMongoTestEnvironment extends MongoTestEnvironment
+{
+    public function __construct()
+    {
+        parent::__construct('scriptureforge.org');
+    }
+
+    /**
+     *
+     * @var TypesettingProjectModel
+     */
+    public $project;
+
+    public function createProject($name, $code)
+    {
+        $projectModel = new TypesettingProjectModel();
+        $projectModel->projectName = $name;
+        $projectModel->projectCode = $code;
+        $projectModel->siteName = $this->website->domain;
+        $this->cleanProjectEnvironment($projectModel);
+        $projectModel->write();
+        $this->project = $projectModel;
+
+        return $projectModel;
+    }
+}
+
 class LexiconMongoTestEnvironment extends MongoTestEnvironment
 {
     public function __construct()
     {
         parent::__construct('languageforge.org');
     }
+
+    /**
+     *
+     * @var LexiconProjectModel
+     */
+    public $project;
 
     public function createProject($name, $code)
     {
@@ -283,6 +359,7 @@ class LexiconMongoTestEnvironment extends MongoTestEnvironment
         $projectModel->siteName = $this->website->domain;
         $this->cleanProjectEnvironment($projectModel);
         $projectModel->write();
+        $this->project = $projectModel;
 
         return $projectModel;
     }

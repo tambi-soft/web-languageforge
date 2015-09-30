@@ -25,13 +25,13 @@ $constants = json_decode(file_get_contents(TestPath . '/testConstants.json'), tr
 // Fake some $_SERVER variables like HTTP_HOST for the sake of the code that needs it
 $hostname = "languageforge.local";
 if (count($argv) > 1) {
-	// hostname is passed in on command line
-	$hostname = $argv[1];
+    // hostname is passed in on command line
+    $hostname = $argv[1];
 }
 $_SERVER['HTTP_HOST'] = $hostname;
 $website = Website::get($hostname);
 if (is_null($website)) {
-	exit("Error: $hostname is not a registered website hostname!\n\n");
+    exit("Error: $hostname is not a registered website hostname!\n\n");
 }
 $site = $website->base;
 
@@ -43,6 +43,10 @@ foreach ($db->listCollections() as $collection) { $collection->drop(); }
 $projectArrays = array(
     $constants['testProjectName']  => $constants['testProjectCode'],
     $constants['otherProjectName'] => $constants['otherProjectCode']);
+
+if ($site == 'scriptureforge') {
+    $projectArrays[$constants['typesettingProjectName']] = $constants['typesettingProjectCode'];
+}
 
 foreach ($projectArrays as $projectName => $projectCode) {
     $projectModel = new ProjectModel();
@@ -56,6 +60,12 @@ foreach ($projectArrays as $projectName => $projectCode) {
 $projectModel = new ProjectModel();
 $projectModel->projectName = $constants['thirdProjectName'];
 $projectModel->projectCode = $constants['thirdProjectCode'];
+$db = \models\mapper\MongoStore::dropDB($projectModel->databaseName());
+
+// drop the and 'new' database because it is used in a 'create new project' test
+$projectModel = new ProjectModel();
+$projectModel->projectName = $constants['newProjectName'];
+$projectModel->projectCode = $constants['newProjectCode'];
 $db = \models\mapper\MongoStore::dropDB($projectModel->databaseName());
 
 $adminUser = UserCommands::createUser(array(
@@ -118,9 +128,24 @@ $otherProjectModel->projectCode = $constants['otherProjectCode'];
 $otherProjectModel->allowInviteAFriend = $constants['otherProjectAllowInvites'];
 $otherProjectModel->write();
 
+
+$typesettingProject = ProjectCommands::createProject(
+        $constants['typesettingProjectName'],
+        $constants['typesettingProjectCode'],
+        SfProjectModel::WEBTYPESETTING_APP,
+        $managerUser,
+        $website
+);
+$typesettingProjectModel = new ProjectModel($typesettingProject);
+$typesettingProjectModel->projectCode = $constants['typesettingProjectCode'];
+$typesettingProjectModel->write();
+
 ProjectCommands::updateUserRole($testProject, $managerUser, ProjectRoles::MANAGER);
 ProjectCommands::updateUserRole($testProject, $memberUser, ProjectRoles::CONTRIBUTOR);
 ProjectCommands::updateUserRole($otherProject, $adminUser, ProjectRoles::MANAGER);
+ProjectCommands::updateUserRole($typesettingProject, $adminUser, ProjectRoles::MANAGER);
+// ProjectCommands::updateUserRole($typesettingProject, $managerUser, ProjectRoles::MANAGER);
+// ProjectCommands::updateUserRole($typesettingProject, $memberUser, ProjectRoles::CONTRIBUTOR);
 
 if ($site == 'scriptureforge') {
     $text1 = TextCommands::updateText($testProject, array(
@@ -178,10 +203,20 @@ if ($site == 'scriptureforge') {
         'id' => '',
         'content' => $constants['testText1Question2Answer2Comment']),
         $managerUser);
+    
+    // put mock uploaded zip import (zip file)
+    $fileName = $constants['testMockTypesettingZipImportFile']['name'];
+    $tmpFilePath = sys_get_temp_dir() . '/' . $fileName;
+    copy(dirname(TestPath) . "/php/scriptureforge/typesetting/commands/$fileName", $tmpFilePath);
+    
+    /*$file = array();
+    $file['name'] = $fileName;
+    $_FILES['file'] = $file;*/
+    
 } elseif ($site == 'languageforge') {
     // Set up LanguageForge E2E test envrionment here
     $testProjectModel = new LexiconProjectModel($testProject);
-    $testProjectModel->addInputSystem("th-fonipa", "thipa", "Thai IPA");
+    $testProjectModel->addInputSystem("th-fonipa", "tipa", "Thai");
     $testProjectModel->config->entry->fields[LexiconConfigObj::LEXEME]->inputSystems[] = 'th-fonipa';
     $testProjectId = $testProjectModel->write();
 
@@ -223,4 +258,14 @@ if ($site == 'scriptureforge') {
             'lexeme' => $constants['testMultipleMeaningEntry1']['lexeme'],
             'senses' => $constants['testMultipleMeaningEntry1']['senses']
         ), $managerUser);
+
+    // put mock uploaded zip import (jpg file)
+    $fileName = $constants['testMockJpgImportFile']['name'];
+    $tmpFilePath = sys_get_temp_dir() . '/' . $fileName;
+    copy(dirname(TestPath) . "/php/common/$fileName", $tmpFilePath);
+
+    // put mock uploaded zip import (zip file)
+    $fileName = $constants['testMockZipImportFile']['name'];
+    $tmpFilePath = sys_get_temp_dir() . '/' . $fileName;
+    copy(dirname(TestPath) . "/php/common/$fileName", $tmpFilePath);
 }

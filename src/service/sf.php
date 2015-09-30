@@ -1,7 +1,5 @@
 <?php
 use libraries\scriptureforge\sfchecks\Email;
-use models\scriptureforge\webtypesetting\WebtypesettingSettingsCommands;
-
 use libraries\scriptureforge\sfchecks\ParatextExport;
 use libraries\shared\palaso\exceptions\UserNotAuthenticatedException;
 use libraries\shared\palaso\exceptions\UserUnauthorizedException;
@@ -14,9 +12,20 @@ use models\languageforge\lexicon\commands\LexUploadCommands;
 use models\languageforge\lexicon\dto\LexBaseViewDto;
 use models\languageforge\lexicon\dto\LexDbeDto;
 use models\languageforge\lexicon\dto\LexProjectDto;
+use models\scriptureforge\dto\ProjectSettingsDto;
 use models\scriptureforge\sfchecks\commands\SfchecksProjectCommands;
 use models\scriptureforge\sfchecks\commands\SfchecksUploadCommands;
-use models\scriptureforge\dto\ProjectSettingsDto;
+use models\scriptureforge\typesetting\commands\TypesettingCompositionCommands;
+use models\scriptureforge\typesetting\commands\TypesettingDiscussionListCommands;
+use models\scriptureforge\typesetting\commands\TypesettingSettingsCommands;
+use models\scriptureforge\typesetting\commands\TypesettingSettingCommands;
+use models\scriptureforge\typesetting\commands\TypesettingTemplateCommands;
+use models\scriptureforge\typesetting\commands\TypesettingRenderCommands;
+use models\scriptureforge\typesetting\commands\TypesettingUploadCommands;
+use models\scriptureforge\typesetting\dto\TypesettingAssetDto;
+use models\scriptureforge\typesetting\dto\TypesettingDiscussionListDto;
+use models\scriptureforge\typesetting\dto\TypesettingLayoutPageDto;
+use models\scriptureforge\typesetting\dto\TypesettingRenderPageDto;
 use models\shared\dto\ActivityListDto;
 use models\shared\dto\ProjectListDto;
 use models\shared\dto\RightsHelper;
@@ -31,6 +40,7 @@ use models\commands\TextCommands;
 use models\commands\UserCommands;
 use models\mapper\Id;
 use models\mapper\JsonEncoder;
+use models\mapper\JsonDecoder;
 use models\ProjectModel;
 use models\QuestionModel;
 use models\UserModel;
@@ -100,7 +110,6 @@ class sf
     {
         return UserCommands::readUser($id);
     }
-
     /**
      * Read the user profile from $id
      *
@@ -248,11 +257,26 @@ class sf
      * @param string $projectName
      * @param string $projectCode
      * @param string $appName
-     * @return string - projectId
+     * @return string | boolean - $projectId on success, false if project code is not unique
      */
     public function project_create($projectName, $projectCode, $appName)
     {
         return ProjectCommands::createProject($projectName, $projectCode, $appName, $this->_userId, $this->_website);
+    }
+
+    /**
+     * Creates project and switches the session to the new project
+     *
+     * @param string $projectName
+     * @param string $projectCode
+     * @param string $appName
+     * @return string | boolean - $projectId on success, false if project code is not unique
+     */
+    public function project_create_switchSession($projectName, $projectCode, $appName)
+    {
+        $projectId = $this->project_create($projectName, $projectCode, $appName);
+        $this->_controller->session->set_userdata('projectId', $projectId);
+        return $projectId;
     }
 
     /**
@@ -325,7 +349,7 @@ class sf
     }
 
     /*
-     * --------------------------------------------------------------- SCRIPTUREFORGE ---------------------------------------------------------------
+     * --------------------------------------------------------------- SCRIPTUREFORGE - WEBCHECKS ---------------------------------------------------------------
      */
 
     // ---------------------------------------------------------------
@@ -529,19 +553,6 @@ class sf
     {
         return QuestionTemplateCommands::listTemplates($this->_projectId);
     }
-	
-	
-	//---------------------------------------------------------------
-	// WEBTYPESETTING API
-	//---------------------------------------------------------------
-	
-	public function webtypesetting_settings_read($projectId) {
-		return WebtypesettingSettingsCommands::readSettings($projectId);
-	}
-	
-	public function webtypesetting_settings_update($projectId, $settings) {
-		return WebtypesettingSettingsCommands::updateSettings($projectId, $settings);
-	}
 
 
     // ---------------------------------------------------------------
@@ -551,6 +562,192 @@ class sf
     {
         $response = SfchecksUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
+    }
+
+    public function typesetting_discussionList_getPageDto() {
+        return TypesettingDiscussionListDto::encode($this->_projectId);
+    }
+
+    public function typesetting_discussionList_createThread($title, $itemId) {
+        return TypesettingDiscussionListCommands::createThread($this->_projectId, $this->_userId, $title, $itemId);
+    }
+
+    public function typesetting_discussionList_deleteThread($threadId) {
+        return TypesettingDiscussionListCommands::deleteThread($this->_projectId, $threadId);
+    }
+
+    public function typesetting_discussionList_updateThread($threadId, $title) {
+        return TypesettingDiscussionListCommands::updateThread($this->_projectId, $this->_userId, $threadId, $title);
+    }
+
+    public function typesetting_discussionList_createPost($threadId, $content) {
+        return TypesettingDiscussionListCommands::createPost($this->_projectId, $this->_userId, $threadId, $content);
+    }
+
+    public function typesetting_discussionList_deletePost($threadId, $postId) {
+        return TypesettingDiscussionListCommands::deletePost($this->_projectId, $threadId, $postId);
+    }
+
+    public function typesetting_discussionList_updatePost($threadId, $postId, $content) {
+        return TypesettingDiscussionListCommands::updatePost($this->_projectId, $this->_userId, $threadId, $postId, $content);
+    }
+
+    public function typesetting_discussionList_createReply($threadId, $postId, $content) {
+        return TypesettingDiscussionListCommands::createReply($this->_projectId, $this->_userId, $threadId, $postId, $content);
+    }
+
+    public function typesetting_discussionList_deleteReply($threadId, $postId, $replyId) {
+        return TypesettingDiscussionListCommands::deleteReply($this->_projectId, $threadId, $postId, $replyId);
+    }
+
+    public function typesetting_discussionList_updateReply($threadId, $postId, $replyId, $content) {
+        return TypesettingDiscussionListCommands::updateReply($this->_projectId, $this->_userId, $threadId, $postId, $replyId, $content);
+    }
+
+    public function typesetting_discussionList_updateStatus($threadId, $status) {
+        return TypesettingDiscussionListCommands::updateStatus($this->_projectId, $threadId, $status);
+    }
+
+    public function typesetting_discussionList_getThread($threadId) {
+        return TypesettingDiscussionListCommands::getThread($this->_projectId, $threadId);
+    }
+
+    public function typesetting_rapuma_render(){
+        return array('pdfUrl' => "assets/ngTraining.pdf");
+    }
+
+    public function typesetting_renderPage_dto() {
+        return TypesettingRenderPageDto::encode($this->_projectId);
+    }
+    public function typesetting_render_doRender() {
+        TypesettingRenderCommands::doRender($this->_projectId, $this->_userId);
+    }
+
+
+    public function typesetting_settings_list() {
+        return TypesettingSettingsCommands::readSettings($this->_projectId);
+    }
+
+    public function typesetting_settings_readCurrent() {
+        return TypesettingSettingsCommands::readSettingsCurrent($this->_projectId);
+    }
+
+    public function typesetting_settings_read($id) {
+        return TypesettingSettingsCommands::readSettings($this->_projectId, $id);
+    }
+
+    public function typesetting_settings_update($settings) {
+        return TypesettingSettingsCommands::updateSettings($this->_projectId, $settings);
+    }
+
+    public function typesetting_composition_getBookHTML($bookId) {
+        return TypesettingCompositionCommands::getBookHTML($this->_projectId, $bookId);
+    }
+
+    public function typesetting_composition_getListOfBooks() {
+        return TypesettingCompositionCommands::getListOfBooks($this->_projectId);
+    }
+
+    public function typesetting_composition_getParagraphProperties($bookId) {
+        return TypesettingCompositionCommands::getParagraphProperties($this->_projectId, $bookId);
+    }
+
+    public function typesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
+        return TypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
+    }
+
+    public function typesetting_composition_renderBook($bookId) {
+        return TypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
+    }
+
+    public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
+        return TypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
+    }
+
+    public function typesetting_composition_getIllustrationProperties() {
+        return TypesettingCompositionCommands::getIllustrationProperties($this->_projectId);
+    }
+
+    public function typesetting_composition_setIllustrationProperties($illustrationModel) {
+        return TypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $illustrationModel);
+    }
+    public function typesetting_composition_getPageDto() {
+        return TypesettingCompositionCommands::getPageDto($this->_projectId);
+    }
+    public function typesetting_composition_getBookDto($bookId) {
+        return TypesettingCompositionCommands::getBookDto($this->_projectId, $bookId);
+    }
+    public function typesetting_composition_getPageStatus($bookId) {
+        return TypesettingCompositionCommands::getPageStatus($this->_projectId, $bookId);
+    }
+    public function typesetting_composition_setPageStatus($bookId, $pages) {
+        return TypesettingCompositionCommands::setPageStatus($this->_projectId, $bookId, $pages);
+    }
+
+    public function typesetting_readAssetsDto() {
+        return TypesettingAssetDto::encode($this->_projectId);
+    }
+
+    // ---------------------------------------------------------------
+    // Upload API
+    // ---------------------------------------------------------------
+    public function typsetting_upload_importProjectZip($mediaType, $tmpFilePath)
+    {
+        $response = TypesettingUploadCommands::importProjectZip($this->_projectId, $mediaType, $tmpFilePath);
+        return JsonEncoder::encode($response);
+    }
+
+    public function typesetting_uploadFile($mediaType, $tmpFilePath)
+    {
+        $response = TypesettingUploadCommands::uploadFile($this->_projectId, $mediaType, $tmpFilePath);
+        return JsonEncoder::encode($response);
+    }
+
+    public function typesetting_deleteFile($fileName)
+    {
+        $response = TypesettingUploadCommands::deleteFile($this->_projectId, $fileName);
+        return JsonEncoder::encode($response);
+    }
+
+    // ---------------------------------------------------------------
+    // TypesettingSettingCommands API
+    // ---------------------------------------------------------------
+
+    public function typesetting_layoutSettings_update($model)
+    {
+        // update should only ever update the "latest" setting
+        return TypesettingSettingsCommands::updateLayoutSettings($this->_projectId, $this->_userId, $model);
+    }
+
+    public function typesetting_layoutPage_dto()
+    {
+        return TypesettingLayoutPageDto::encode($this->_projectId);
+    }
+
+    /* we don't actually want to delete a setting. ever. - cjh 2015-01
+    public function typesettingSettingCommand_delete($id)
+    {
+        return TypesettingSettingCommands::deleteTypesettingSetting($this->_projectId, $id);
+    }
+    */
+
+    public function typesettingSettingCommand_list()
+    {
+        return TypesettingSettingCommands::listTypesettingSetting($this->_projectId);
+    }
+
+    // ---------------------------------------------------------------
+    // TypesettingTemplateCommands API
+    // ---------------------------------------------------------------
+
+    public function template_save($data)
+    {
+        return TypesettingTemplateCommands::updateTemplate($data["templateName"], $data["vm"]["conf"]);
+    }
+
+    public function template_load($data)
+    {
+        return TypesettingTemplateCommands::getTemplate($data);
     }
 
     /*
@@ -663,19 +860,9 @@ class sf
         return LexOptionListCommands::updateList($this->_projectId, $params);
     }
 
-    public function lex_uploadProjectZip($mediaType, $tmpFilePath, $projectId = '')
+    public function lex_upload_importProjectZip($mediaType, $tmpFilePath)
     {
-        // Sometimes we need to upload to a newly-created project ID, which is not yet in the session cookie.
-        // In those cases, the optional $projectId parameter will be set to a non-empty value.
-        if (empty($projectId)) { $projectId = $this->_projectId; }
-        $response = LexUploadCommands::uploadProjectZip($projectId, $mediaType, $tmpFilePath);
-        return JsonEncoder::encode($response);
-    }
-    public function lex_mockUploadProjectZip($mediaType, $tmpFilePath, $projectId = '')
-    {
-        // Used for testing zip upload UI without actually importing data
-        if (empty($projectId)) { $projectId = $this->_projectId; }
-        $response = LexUploadCommands::mockUploadProjectZip($projectId, $mediaType, $tmpFilePath);
+        $response = LexUploadCommands::importProjectZip($this->_projectId, $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
     }
 

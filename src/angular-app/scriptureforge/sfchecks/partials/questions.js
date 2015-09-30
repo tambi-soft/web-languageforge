@@ -3,7 +3,7 @@
 angular.module('sfchecks.questions', ['bellows.services', 'sfchecks.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap', 'sgw.ui.breadcrumb', 'palaso.ui.notice', 'angularFileUpload', 'ngSanitize', 'ngRoute'])
   .controller('QuestionsCtrl', ['$scope', 'questionService', 'questionTemplateService', '$routeParams', 'sessionService', 'sfchecksLinkService', 'breadcrumbService', 'silNoticeService', 'modalService', '$rootScope',
   function($scope, questionService, qts, $routeParams, ss, sfchecksLinkService, breadcrumbService, notice, modalService, $rootScope) {
-    var Q_TITLE_LIMIT = 50;
+    var Q_TITLE_LIMIT = 70;
     var textId = $routeParams.textId;
     $scope.textId = textId;
     
@@ -348,14 +348,15 @@ angular.module('sfchecks.questions', ['bellows.services', 'sfchecks.services', '
       // take the first file only
       var file = $files[0];
       $scope.file = file;
-      if (file['size'] <= ss.fileSizeMax()) {
+      if (file.size <= ss.fileSizeMax()) {
         $upload.upload({
           
           // upload.php script
           url: '/upload/sf-checks/audio',
           // headers: {'myHeaderKey': 'myHeaderVal'},
           data: {
-            textId: textId,
+            'filename': file.name,
+            'textId': textId
           },
           file: file
         }).progress(function(evt) {

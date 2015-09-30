@@ -1,4 +1,31 @@
 <div class="content container" data-ng-cloak data-ng-controller="MainCtrl">
-	<div data-sil-notices></div>
-	<div data-ui-view></div>
+
+    <div id="typesetting-hmenu" class="hdrnav">
+        <div class="btn-group pull-right" data-dropdown data-is-open="settingsButton.isopen"
+            data-tooltip="{{(settingsButton.isopen) ? '' : 'Project Settings'}}" data-tooltip-placement="bottom">
+            <a role="button" class="btn btn-default dropdown-toggle" data-dropdown-toggle>
+                <i class="icon-cog icon-large"></i><span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a data-ui-sref="projectSetupAssets">Assets</a></li>
+                <li><a data-ui-sref="projectSetupLayout">Layout</a></li>
+            </ul>
+        </div>
+        <ul class="topNav">
+            <li><a href="/app/projects">My Projects</a></li>
+            <li><a href="/app/activity">Activity</a></li>
+            <li data-ng-class="{ here: $state.includes('composition') }"><a data-ui-sref="composition">Composition</a></li>
+            <li data-ng-class="{ here: $state.includes('discussion') }"><a data-ui-sref="discussion">Discussion</a></li>
+            <li data-ng-class="{ here: $state.includes('render') }"><a data-ui-sref="render">Render</a></li>
+        </ul>
+        <ul id="top" class="topCrumbs" breadcrumbs></ul>
+    </div>
+
+    <div style="padding-top:10px">
+    <sil-notices></sil-notices>
+    <!-- <div data-wc-overlay="" data-wc-overlay-delay="6000">
+    <img src="/images/shared/loading.gif" />&nbsp; Loading...
+    </div>-->
+    <div data-ui-view></div>
+    </div>
 </div>
+
