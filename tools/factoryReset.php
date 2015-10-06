@@ -5,23 +5,11 @@ require_once('toolsConfig.php');
 
 
 // use commands go here (after the e2eTestConfig)
-use models\commands\ProjectCommands;
-use models\commands\UserCommands;
-use models\commands\TextCommands;
-use models\commands\QuestionCommands;
-use models\commands\QuestionTemplateCommands;
-use models\shared\rights\ProjectRoles;
-use models\shared\rights\SiteRoles;
-use models\shared\rights\SystemRoles;
-use models\scriptureforge\SfProjectModel;
-use models\languageforge\LfProjectModel;
-use models\ProjectModel;
-use models\languageforge\lexicon\LexiconProjectModel;
-use models\languageforge\lexicon\commands\LexEntryCommands;
-use models\languageforge\lexicon\commands\LexUploadCommands;
-use models\languageforge\lexicon\config\LexiconConfigObj;
-use libraries\shared\Website;
-use models\ProjectListModel;
+use Api\Model\Command\UserCommands;
+use Api\Model\Shared\Rights\SystemRoles;
+use Api\Model\ProjectModel;
+use Api\Library\Shared\Website;
+use Api\Model\ProjectListModel;
 
 if (php_sapi_name() != 'cli') { die('this script must be run on the command-line'); }
 
@@ -56,8 +44,14 @@ foreach ($projectList->entries as $p) {
 // start with a fresh database
 print "\nDropping main database...\n";
 if ($runForReal) {
-    $db = \models\mapper\MongoStore::connect(SF_DATABASE);
+    $db = \Api\Model\Mapper\MongoStore::connect(SF_DATABASE);
     foreach ($db->listCollections() as $collection) { $collection->drop(); }
+}
+
+print "\nDropping other dbs on the server (like test dbs)\n";
+if ($runForReal) {
+    $cmd = "mongo --quiet --eval 'db.getMongo().getDBNames().forEach(function(i){  if (i.indexOf(\"sf_\") == 0 || i.indexOf(\"scriptureforge\") == 0) { print(\"Dropping \" + i); db.getSiblingDB(i).dropDatabase()}})'";
+    system($cmd);
 }
 
 

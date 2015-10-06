@@ -70,7 +70,7 @@
 
             <!-- settings -->
             <div class="well">
-                <h3>{{fieldConfig[currentField.name].label}} {{'Field Setup' | translate}}</h3>
+                <h3 id="fieldSetupLabel">{{fieldConfig[currentField.name].label}} {{'Field Setup' | translate}}</h3>
                 <div class="form-group"
                     data-ng-show="isCustomField(currentField.name)">
                     <label class="control-label" for="displayName">{{'Display Name' | translate}}</label>
@@ -135,10 +135,12 @@
                             <a href="" data-ng-click="editInputSystems.collapsed = false">{{'Edit input systems' | translate}}</a>
                         </div>
                         <div class="btn-group-vertical" role="group">
-                            <button type="button" class="btn btn-default" data-ng-click="moveUp(currentField.inputSystems.tag)"
+                            <button type="button" class="btn btn-default" id="upButton"
+                                data-ng-click="moveUp(currentField.inputSystems.tag)"
                                 data-ng-disabled="currentField.inputSystems.fieldOrder[0] == currentField.inputSystems.tag || !currentField.inputSystems.tag">
                                 &nbsp;&nbsp;<i class="icon-arrow-up"></i></button>
-                            <button type="button" class="btn btn-default" data-ng-click="moveDown(currentField.inputSystems.tag)" 
+                            <button type="button" class="btn btn-default" id="downButton" 
+                                data-ng-click="moveDown(currentField.inputSystems.tag)" 
                                 data-ng-disabled="currentField.inputSystems.fieldOrder[currentField.inputSystems.fieldOrder.length - 1] == currentField.inputSystems.tag || !currentField.inputSystems.tag">
                                 &nbsp;&nbsp;<i class="icon-arrow-down"></i></button>
                         </div>
@@ -329,9 +331,9 @@ configDirty.tasks['{{currentTaskName}}'] = {{configDirty.tasks[currentTaskName] 
             <dl class="picklists">
                 <dt translate="Select a list" id="editListValuesFieldset"></dt>
                 <dd>
-                    <div data-ng-click="selectList('pos')"
-                        data-ng-class="{selected:currentListId == 'pos'}"
-                        translate="Part of Speech">
+                    <div data-ng-repeat="optionList in optionlistDirty" 
+                        data-ng-class="{selected:currentListIndex == $index}" data-ng-click="selectList($index)">
+                        {{optionList.name}}
                     </div>
                 </dd>
                 <!-- future lists go here -->
@@ -341,8 +343,9 @@ configDirty.tasks['{{currentTaskName}}'] = {{configDirty.tasks[currentTaskName] 
         <!-- Right column: task setup -->
         <div class="col-md-9">
             <div class="well" id="picklistEditorFieldset">
-                <h3 class="control-label" translate="{{optionLists[currentListId].name}}"></h3>
-                <picklist-editor items="optionlistDirty[0].items" default-key="optionLists[currentListId].defaultKey"></picklist-editor>
+                <h3 class="control-label">{{optionlistDirty[currentListIndex].name}}</h3>
+                <picklist-editor items="optionlistDirty[currentListIndex].items" 
+                    pristine-items="optionlistPristine[currentListIndex].items"></picklist-editor>
             </div>
 
         </div>

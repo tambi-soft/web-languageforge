@@ -18,6 +18,7 @@ var LfDbePage = function() {
   this.get = function(projectId) {
     var extra = projectId ? ("/" + projectId) : "";
     browser.get(browser.baseUrl + page.url + extra);
+    browser.waitForAngular();
   };
 
   this.browseDiv = element(by.css('#lexAppListView'));
@@ -52,7 +53,7 @@ var LfDbePage = function() {
     },
 
     // Entries list (main body of view)
-    entriesList: page.browseDiv.all(by.repeater('entry in show.entries')),
+    entriesList: page.browseDiv.all(by.repeater('entry in visibleEntries')),
     findEntryByLexeme: function(lexeme) {
       return this.entriesList.filter(function(row) {
         return row.element(by.binding('entry.word')).getText().then(function(word) {
@@ -106,7 +107,7 @@ var LfDbePage = function() {
         return parseInt(s, 10);
       });
     },
-    entriesList: page.editDiv.all(by.repeater('entry in show.entries')),
+    entriesList: page.editDiv.all(by.repeater('entry in visibleEntries')),
     findEntryByLexeme: function(lexeme) {
       var div = page.editDiv.element(by.css('#compactEntryListContainer'));
       return div.element(by.cssContainingText('[ng-bind-html="getWordForDisplay(entry)"', lexeme));
@@ -302,13 +303,13 @@ var LfDbePage = function() {
       // avatar:
       // div.element(by.binding('model.authorInfo.createdByUserRef.avatar_ref')),
       avatar: div.element(by.css('.commentLeftSide img')),
-      author: div.element(by.binding('model.authorInfo.createdByUserRef.name')),
-      date: div.element(by.binding('model.authorInfo.createdDate | relativetime')),
-      score: div.element(by.binding('model.score')),
+      author: div.element(by.binding('comment.authorInfo.createdByUserRef.name')),
+      date: div.element(by.binding('comment.authorInfo.createdDate | relativetime')),
+      score: div.element(by.binding('comment.score')),
       plusOne: div.element(by.css('.commentLeftSide i.icon-thumbs-up-alt:not(.ng-hide)')),
 
       // Right side content
-      content: div.element(by.binding('model.content')),
+      content: div.element(by.binding('comment.content')),
       edit: {
         textarea: div.element(by.model('editingCommentContent')),
         updateBtn: div.element(by.buttonText('Update')),
@@ -317,11 +318,11 @@ var LfDbePage = function() {
       regarding: {
         // NOTE: Any or all of these may be absent in a given comment. Use
         // isPresent() before calling expect().
-        word: div.element(by.binding('model.regarding.word')),
-        meaning: div.element(by.binding('model.regarding.meaning')),
-        fieldLabel: div.element(by.binding('model.regarding.fieldNameForDisplay')),
-        fieldWsid: div.element(by.binding('model.regarding.inputSystem')),
-        fieldValue: div.element(by.binding('model.regarding.fieldValue')),
+        word: div.element(by.binding('comment.regarding.word')),
+        meaning: div.element(by.binding('comment.regarding.meaning')),
+        fieldLabel: div.element(by.binding('comment.regarding.fieldNameForDisplay')),
+        fieldWsid: div.element(by.binding('comment.regarding.inputSystem')),
+        fieldValue: div.element(by.css('.regardingFieldValue'))
       },
 
       // Replies (below content but above bottom controls)
@@ -335,7 +336,7 @@ var LfDbePage = function() {
       markResolvedLink: div.element(by.css('.commentBottomBar i.icon-ok')),
       markTodoLink: div.element(by.css('.commentBottomBar i.icon-edit')),
       editBtn: div.element(by.buttonText('Edit')),
-      replyBtn: div.element(by.buttonText('Reply')),
+      replyBtn: div.element(by.buttonText('Reply'))
     };
   };
 

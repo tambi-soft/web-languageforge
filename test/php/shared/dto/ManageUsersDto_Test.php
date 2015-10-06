@@ -1,12 +1,12 @@
 <?php
 
-use models\shared\rights\SystemRoles;
+use Api\Model\Shared\Rights\SystemRoles;
 
-use models\shared\dto\ManageUsersDto;
-use models\UserModel;
-use models\shared\rights\ProjectRoles;
+use Api\Model\Shared\Dto\ManageUsersDto;
+use Api\Model\UserModel;
+use Api\Model\Shared\Rights\ProjectRoles;
 
-require_once dirname(__FILE__) . '/../../TestConfig.php';
+require_once __DIR__ . '/../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
@@ -36,8 +36,6 @@ class TestManageUsersDto extends UnitTestCase
         $this->assertEqual($dto['users'][0]['id'], $userId);
         $this->assertEqual($dto['users'][0]['name'], 'Name');
         $this->assertEqual($dto['users'][0]['role'], ProjectRoles::CONTRIBUTOR);
-        $this->assertFalse(isset($dto['rights']));
-        $this->assertFalse(isset($dto['project']));
     }
 
 }

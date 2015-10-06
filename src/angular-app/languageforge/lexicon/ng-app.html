@@ -1,4 +1,5 @@
-<div class="content container" 
+{% verbatim %}
+<div class="content container"
     data-ng-cloak data-ng-controller="MainCtrl" dir="{{interfaceConfig.direction}}">
     <div class="hdrnav">
         <div class="btn-group" data-ng-class="interfaceConfig.pullToSide" 
@@ -15,7 +16,7 @@
                 <li class="divider"></li>
                 <li><a href="#/importExport" translate="Import/Export"></a></li>
                 <li><a href="#/settings" translate="Project Settings"></a></li>
-                <li><a href="#/users" translate="User Management"></a></li>
+                <li><a ng-href="/app/usermanagement/{{project.id}}" translate="User Management"></a></li>
             </ul>
         </div>
         <div>
@@ -34,3 +35,4 @@
     <div data-sil-notices></div>
     <div data-ng-view></div>
 </div>
+{% endverbatim %}

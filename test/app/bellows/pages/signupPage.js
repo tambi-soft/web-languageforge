@@ -3,8 +3,9 @@
 var SignupPage = function() {
   this.get = function() {
     browser.get('/signup');
+    browser.waitForAngular();
   };
-  
+
   this.signupForm = element('form#signupForm');
   this.usernameExists = element(by.id('usernameExists'));
   this.usernameOk = element(by.id('usernameOk'));
@@ -15,8 +16,9 @@ var SignupPage = function() {
   this.passwordInput = element(by.id('password'));
   this.confirmPasswordInput = element(by.model('confirmPassword'));
   this.showPassword = element(by.model('showPassword'));
-  this.captchaInput = element(by.model('record.captcha'));
-  this.captchaImage = element(by.id('captcha'));
+  this.expectedItemName = element(by.id('expectedItemName'));
+  this.captcha1Button = element(by.id('captcha0'));
+  this.captcha2Button = element(by.id('captcha1'));
   this.nextButton = element(by.id('identify'));
   this.signupButton = element(by.id('submit'));
   this.backButton = element(by.id('back'));

@@ -14,6 +14,7 @@ var SfUserProfilePage = function() {
   // Navigate to the MyProfile page (defaults to My Account tab)
   this.get = function() {
     browser.get(browser.baseUrl + this.userProfileURL);
+    browser.waitForAngular();
   };
   
   // Navigate to the MyProfile -> My Account page
@@ -32,8 +33,8 @@ var SfUserProfilePage = function() {
     this.tabs.aboutMe.click();
   };
 
-  this.blueElephantAvatarURL  = browser.baseUrl + '/images/shared/avatar/DodgerBlue-elephant-128x128.png';
-  this.goldPigAvatarURL       = browser.baseUrl + '/images/shared/avatar/gold-pig-128x128.png';
+  this.blueElephantAvatarURL  = browser.baseUrl + '/Site/views/shared/image/avatar/DodgerBlue-elephant-128x128.png';
+  this.goldPigAvatarURL       = browser.baseUrl + '/Site/views/shared/image/avatar/gold-pig-128x128.png';
   
   this.myAccountTab = {
     avatarColor:      element(by.model('user.avatar_color')),

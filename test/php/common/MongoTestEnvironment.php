@@ -1,19 +1,26 @@
 <?php
+use Api\Library\Shared\Website;
+use Api\Model\Mapper\Id;
 use Palaso\Utilities\FileUtilities;
-use libraries\shared\Website;
-use models\languageforge\lexicon\LexiconProjectModel;
+use Api\Model\Languageforge\Lexicon\LexiconProjectModel;
+use Api\Model\Shared\Rights\ProjectRoles;
 use models\scriptureforge\TypesettingProjectModel;
-use models\shared\rights\ProjectRoles;
-use models\shared\rights\SystemRoles;
-use models\ProjectModel;
-use models\UserModel;
+use Api\Model\Shared\Rights\SystemRoles;
+use Api\Model\ProjectModel;
+use Api\Model\UserModel;
+use Api\Library\Languageforge\Semdomtrans\SemDomXMLImporter;
+use Api\Model\Languageforge\SemDomTransProjectModel;
+use Api\Model\Languageforge\Semdomtrans\Command\SemDomTransProjectCommands;
+use Api\Model\Mapper\ArrayOf;
+use Api\Model\Languageforge\LfProjectModel;
+use Api\Model\Command\ProjectCommands;
 
 class MongoTestEnvironment
 {
 
     public function __construct($domain = 'scriptureforge.org')
     {
-        $this->db = \models\mapper\MongoStore::connect(SF_DATABASE);
+        $this->db = \Api\Model\Mapper\MongoStore::connect(SF_DATABASE);
         $this->website = Website::get($domain);
         if (! isset($this->uploadFilePaths)) {
             $this->uploadFilePaths = array();
@@ -76,12 +83,13 @@ class MongoTestEnvironment
      */
     public function createUser($username, $name, $email, $role = SystemRoles::USER)
     {
-        $userModel = new models\UserModel();
+        $userModel = new Api\Model\UserModel();
         $userModel->username = $username;
         $userModel->name = $name;
         $userModel->email = $email;
         $userModel->avatar_ref = $username . ".png";
         $userModel->role = $role;
+        $userModel->active = true;
         $userModel->siteRole[$this->website->domain] = $this->website->userDefaultSiteRole;
 
         return $userModel->write();
@@ -94,14 +102,16 @@ class MongoTestEnvironment
      * @param string $code
      * @return ProjectModel
      */
-    public function createProject($name, $code)
+    public function createProject($name, $code, $appName = '')
     {
         $projectModel = new ProjectModel();
         $projectModel->projectName = $name;
         $projectModel->projectCode = $code;
         $projectModel->isArchived = false;
         $projectModel->siteName = $this->website->domain;
-        if ($this->website->base == Website::SCRIPTUREFORGE) {
+        if ($appName != '') {
+            $projectModel->appName = $appName;
+        }  else if ($this->website->base == Website::SCRIPTUREFORGE) {
             $projectModel->appName = 'sfchecks';
         } elseif ($this->website->base == Website::LANGUAGEFORGE) {
             $projectModel->appName = 'lexicon';
@@ -116,7 +126,7 @@ class MongoTestEnvironment
 
     public function createProjectSettings($code)
     {
-        $projectModel = new models\ProjectSettingsModel();
+        $projectModel = new Api\Model\ProjectSettingsModel();
         $projectModel->projectCode = $code;
         $projectModel->siteName = $this->website->domain;
         $this->cleanProjectEnvironment($projectModel);
@@ -128,7 +138,7 @@ class MongoTestEnvironment
     protected function cleanProjectEnvironment($projectModel)
     {
         // clean out old db if it is present
-        $projectDb = \models\mapper\MongoStore::connect($projectModel->databaseName());
+        $projectDb = \Api\Model\Mapper\MongoStore::connect($projectModel->databaseName());
         foreach ($projectDb->listCollections() as $collection) {
             $collection->drop();
         }
@@ -351,7 +361,13 @@ class LexiconMongoTestEnvironment extends MongoTestEnvironment
      */
     public $project;
 
-    public function createProject($name, $code)
+    /**
+     * @param string $name
+     * @param string $code
+     * @param string $appName - included only to make the signature the same as the parent
+     * @return LexiconProjectModel
+     */
+    public function createProject($name, $code , $appName = '')
     {
         $projectModel = new LexiconProjectModel();
         $projectModel->projectName = $name;
@@ -417,4 +433,91 @@ class LexiconMongoTestEnvironment extends MongoTestEnvironment
 
         return $liftFilePath;
     }
+}
+
+
+class SemDomMongoTestEnvironment extends MongoTestEnvironment
+{
+    public function __construct()
+    {
+        $this->semdomVersion = self::TESTVERSION;
+        parent::__construct('languageforge.org');
+    }
+
+    const TESTVERSION = 1000;
+
+     /**
+     * @var UserModel
+     */
+    public $userId;
+
+    public $semdomVersion;
+
+    /**
+     *
+     * @var SemDomProjectModel
+     */
+    public static $englishProject;
+
+    /**
+     *
+     * @var SemDomProjectModel
+     */
+    public $targetProject;
+
+    private static function _englishProjectExists() {
+        if (self::$englishProject) {
+            $englishProject = new SemDomTransProjectModel();
+            $englishProject->readByCode('en', self::TESTVERSION);
+            if ($englishProject->id->asString() != '') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getEnglishProjectAndCreateIfNecessary() {
+        if (!self::_englishProjectExists()) {
+            $lang = 'en';
+            $this->cleanPreviousProject($lang);
+            $projectCode = SemDomTransProjectModel::projectCode($lang, self::TESTVERSION);
+            $project = $this->createProject("English ($lang) Semantic Domain Base Project", $projectCode, LfProjectModel::SEMDOMTRANS_APP);
+            $projectModel = new SemDomTransProjectModel($project->id->asString());
+            $projectModel->languageIsoCode = $lang;
+            $projectModel->isSourceLanguage = true;
+            $projectModel->semdomVersion = self::TESTVERSION;
+
+            $englishXmlFilePath = TestPath . "languageforge/semdomtrans/testFiles/SemDom_en_sample.xml";
+            $projectModel->importFromFile($englishXmlFilePath, true);
+            $projectModel->write();
+            self::$englishProject = $projectModel;
+        }
+        return self::$englishProject;
+    }
+
+    public function cleanPreviousProject($languageCode) {
+        $p = new SemDomTransProjectModel();
+        $p->readByCode($languageCode, self::TESTVERSION);
+        if (!Id::isEmpty($p->id)) {
+            $this->cleanProjectEnvironment($p);
+        } else {
+            // create the project and then clean the project environment
+            $p = new SemDomTransProjectModel();
+            $p->projectCode = SemDomTransProjectModel::projectCode($languageCode, self::TESTVERSION);
+            $p->write();
+            $this->cleanProjectEnvironment($p);
+        }
+        $p->remove();
+    }
+
+    public function clean() {
+        self::$englishProject = null;
+        parent::clean();
+    }
+
+    public function createSemDomProject($languageCode, $languageName, $userId) {
+        $projectId = SemDomTransProjectCommands::createProject($languageCode, $languageName, false, $userId, $this->website, self::TESTVERSION);
+        return new SemDomTransProjectModel($projectId);
+    }
+
 }

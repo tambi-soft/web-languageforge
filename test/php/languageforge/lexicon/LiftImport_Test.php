@@ -1,14 +1,14 @@
 <?php
-use models\languageforge\lexicon\config\LexiconConfigObj;
-use models\languageforge\lexicon\config\LexiconOptionListItem;
-use models\languageforge\lexicon\InputSystem;
-use models\languageforge\lexicon\LexEntryListModel;
-use models\languageforge\lexicon\LexOptionListModel;
-use models\languageforge\lexicon\LexOptionListListModel;
-use models\languageforge\lexicon\LiftImport;
-use models\languageforge\lexicon\LiftMergeRule;
+use Api\Model\Languageforge\Lexicon\Config\LexiconConfigObj;
+use Api\Model\Languageforge\Lexicon\Config\LexiconOptionListItem;
+use Api\Model\Languageforge\Lexicon\InputSystem;
+use Api\Model\Languageforge\Lexicon\LexEntryListModel;
+use Api\Model\Languageforge\Lexicon\LexOptionListModel;
+use Api\Model\Languageforge\Lexicon\LexOptionListListModel;
+use Api\Model\Languageforge\Lexicon\LiftImport;
+use Api\Model\Languageforge\Lexicon\LiftMergeRule;
 
-require_once dirname(__FILE__) . '/../../TestConfig.php';
+require_once __DIR__ . '/../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
@@ -154,7 +154,7 @@ class TestLiftImport extends UnitTestCase
 </lift>
 EOD;
 
-    public function testLiftImportMerge_XmlValidAndNoExistingData_NoExceptionAndMergeOk()
+    public function testLiftImportMerge_NoExistingData_NoExceptionAndMergeOk()
     {
         $liftFilePath = $this->environ->createTestLiftFile(self::liftTwoEntriesV0_13, 'TwoEntriesV0_13.lift');
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
@@ -1471,7 +1471,7 @@ EOD;
 </lift>
 EOD;
 
-    public function testLiftImportMerge_NoExistingDataNoImportEntries_DefaultInputSystemsUnchanged()
+    public function testLiftImportMerge_NoExistingDataNoImportEntries_DefaultInputSystemsUnchangedAndConfigFieldInputSystemsCleared()
     {
         $liftFilePath = $this->environ->createTestLiftFile(self::liftNoEntriesV0_13, 'LiftNoEntriesV0_13.lift');
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
@@ -1490,6 +1490,11 @@ EOD;
         $this->assertEqual($project->inputSystems->count(), 2);
         $this->assertTrue(array_key_exists('en', $project->inputSystems));
         $this->assertTrue(array_key_exists('th', $project->inputSystems));
+
+        $this->assertEqual($project->config->entry->fields[LexiconConfigObj::LEXEME]->inputSystems->count(), 0);
+        $this->assertEqual($project->config->entry->fields[LexiconConfigObj::CITATIONFORM]->inputSystems->count(), 0);
+        $this->assertEqual($project->config->entry->fields[LexiconConfigObj::SENSES_LIST]->fields[LexiconConfigObj::DEFINITION]->inputSystems->count(), 0);
+        $this->assertEqual($project->config->entry->fields[LexiconConfigObj::SENSES_LIST]->fields[LexiconConfigObj::EXAMPLES_LIST]->fields[LexiconConfigObj::EXAMPLE_SENTENCE]->inputSystems->count(), 0);
     }
 
     // has correct th-fonipa form in entry and mod date changed
@@ -1543,75 +1548,9 @@ EOD;
         $entry0 = $entryList->entries[0];
 
         $this->assertEqual($entryList->count, 1);
-        $this->assertTrue(array_key_exists('customField_entry_Cust_MultiPara', $entry0), 'custom field MultiPara exists');
-        $this->assertEqual($entry0['customField_entry_Cust_MultiPara']['en']['value'],
+        $this->assertTrue(array_key_exists('customField_entry_Cust_MultiPara', $entry0['customFields']), 'custom field MultiPara exists');
+        $this->assertEqual($entry0['customFields']['customField_entry_Cust_MultiPara']['en']['value'],
             '<p>First paragraph with <span lang="th">ไทย</span></p><p>Second Paragraph</p>',
             'custom field MultiPara has paragraph separator character U+2029 replaced by paragraph markup and native language spans removed');
     }
-
-    // 2x Validation tests, removed until validation is working IJH 2014-03
-/*
-    const liftOneEntryV0_12 = <<<EOD
-<?xml version="1.0" encoding="utf-8"?>
-<lift
-    version="0.12"
-    producer="WeSay 1.0.0.0">
-    <entry
-        id="chùuchìi mǔu rɔ̂ɔp_dd15cbc4-9085-4d66-af3d-8428f078a7da"
-        dateCreated="2008-11-03T06:17:24Z"
-        dateModified="2011-10-26T01:41:19Z"
-        guid="dd15cbc4-9085-4d66-af3d-8428f078a7da">
-        <lexical-unit>
-            <form
-                lang="th-fonipa">
-                <text>chùuchìi mǔu krɔ̂ɔp</text>
-            </form>
-        </lexical-unit>
-    </entry>
-</lift>
-EOD;
-
-    function testLiftImportMerge_XmlOldVer_Exception()
-    {
-        $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-        $liftXml = self::liftOneEntryV0_12;
-
-        $this->environ->inhibitErrorDisplay();
-        $this->expectException();
-        LiftImport::get()->merge($liftXml, $project);
-        $this->environ->restoreErrorDisplay();
-    }
-
-    const liftInvalidAttribute = <<<EOD
-<?xml version="1.0" encoding="utf-8"?>
-<lift
-    version="0.13"
-    producer="WeSay 1.0.0.0">
-    <entry
-        xXxXx = "invalidAttribute"
-        id="chùuchìi mǔu rɔ̂ɔp_dd15cbc4-9085-4d66-af3d-8428f078a7da"
-        dateCreated="2008-11-03T06:17:24Z"
-        dateModified="2011-10-26T01:41:19Z"
-        guid="dd15cbc4-9085-4d66-af3d-8428f078a7da">
-        <lexical-unit>
-            <form
-                lang="th-fonipa">
-                <text>chùuchìi mǔu krɔ̂ɔp</text>
-            </form>
-        </lexical-unit>
-    </entry>
-</lift>
-EOD;
-
-    function testLiftImportMerge_XmlInvalidAttribute_Exception()
-    {
-        $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-        $liftXml = self::liftInvalidAttribute;
-
-        $this->environ->inhibitErrorDisplay();
-        $this->expectException();
-        LiftImport::get()->merge($liftXml, $project);
-        $this->environ->restoreErrorDisplay();
-    }
-*/
 }

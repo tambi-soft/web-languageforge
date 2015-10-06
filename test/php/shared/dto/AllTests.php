@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../TestConfig.php';
+require_once __DIR__ . '/../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 
 class AllSharedDtoTests extends TestSuite
@@ -12,6 +12,7 @@ class AllSharedDtoTests extends TestSuite
         $this->addFile(TestPath . 'shared/dto/ProjectListDto_Test.php');
         $this->addFile(TestPath . 'shared/dto/RightsHelper_Test.php');
         $this->addFile(TestPath . 'shared/dto/UserProfileDto_Test.php');
+        $this->addFile(TestPath . 'shared/dto/ProjectManagementDto_Test.php');
     }
 
 }
