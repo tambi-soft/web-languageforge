@@ -1,32 +1,14 @@
 <?php
 
-use models\scriptureforge\typesetting\SettingListModel;
+use Api\Model\Scriptureforge\Typesetting\Dto\TypesettingLayoutPageDto;
+use Api\Model\Scriptureforge\Typesetting\SettingModel;
 
-use models\scriptureforge\typesetting\dto\TypesettingLayoutPageDto;
-
-use models\scriptureforge\typesetting\SettingModel;
-
-use models\ProjectModel;
-
-use models\scriptureforge\typesetting\RapumaAssetListModel;
-use models\scriptureforge\typesetting\RapumaAssetModel;
-
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
-
 require_once TestPath . 'common/MongoTestEnvironment.php';
-
-require_once SourcePath . "models/ProjectModel.php";
-// require_once SourcePath . "models/RapumaAssetModel.php";
 
 class TestTypesettingLayoutPageDto extends UnitTestCase
 {
-    public function __construct()
-    {
-        $e = new MongoTestEnvironment();
-        $e->clean();
-    }
-
     public function testEncode_oneExistingSetting_dtoReturnsExistingSetting()
     {
         $e = new MongoTestEnvironment();
@@ -67,6 +49,5 @@ class TestTypesettingLayoutPageDto extends UnitTestCase
         
         $this->assertEqual($result['layout']['outsideMargin'], 3);
         $this->assertEqual($result['layout']['insideMargin'], 40);
-
     }
 }

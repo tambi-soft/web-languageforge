@@ -13,7 +13,7 @@ angular.module(
     // Breadcrumb
     breadcrumbService.set('top',
         [
-         {href: '/app/webtypesetting#/projects', label: 'My Projects'},
+         {href: '/app/typesetting#/projects', label: 'My Projects'},
         ]
     );
 

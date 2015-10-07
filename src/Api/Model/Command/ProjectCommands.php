@@ -5,20 +5,15 @@ namespace Api\Model\Command;
 use Palaso\Utilities\CodeGuard;
 use Api\Library\Shared\Palaso\Exception\UserUnauthorizedException;
 use Api\Library\Shared\Website;
-// use models\LayoutTemplateModel;
 use Api\Model\Shared\Dto\ManageUsersDto;
 use Api\Model\Shared\Rights\ProjectRoles;
 use Api\Model\Mapper\Id;
 use Api\Model\Mapper\JsonDecoder;
 use Api\Model\Mapper\JsonEncoder;
-use Api\Model\JoinRequests_ProjectModel;
 use Api\Model\ProjectModel;
 use Api\Model\ProjectSettingsModel;
-// use models\scriptureforge\typesetting;
+use Api\Model\Scriptureforge\Typesetting;
 use Api\Model\UserModel;
-
-// use models\shared\rights\ProjectRoles;
-// use models\sms\SmsSettings;
 
 class ProjectCommands
 {

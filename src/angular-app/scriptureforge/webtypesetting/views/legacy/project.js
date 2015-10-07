@@ -19,8 +19,8 @@ angular.module(
     // Breadcrumb
     breadcrumbService.set('top',
         [
-         {href: '/app/webtypesetting#/projects', label: 'My Projects'},
-         {href: '/app/webtypesetting#/project/' + $routeParams.projectId, label: 'unknown'},
+         {href: '/app/typesetting#/projects', label: 'My Projects'},
+         {href: '/app/typesetting#/project/' + $routeParams.projectId, label: 'unknown'},
         ]
     );
 

@@ -1,15 +1,11 @@
 <?php
-use models\scriptureforge\typesetting\commands\TypesettingDiscussionListCommands;
-use models\scriptureforge\typesetting\dto\TypesettingDiscussionListDto;
-use models\scriptureforge\typesetting\TypesettingDiscussionPostModel;
-use models\scriptureforge\typesetting\TypesettingDiscussionThreadModel;
-use models\languageforge\lexicon\LexCommentReply;
-use models\languageforge\lexicon\AuthorInfo;
-use models\mapper\ArrayOf;
-use models\mapper\Id;
-use models\mapper\IdReference;
 
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingDiscussionListCommands;
+use Api\Model\Scriptureforge\Typesetting\Dto\TypesettingDiscussionListDto;
+use Api\Model\Scriptureforge\Typesetting\TypesettingDiscussionPostModel;
+use Api\Model\Scriptureforge\Typesetting\TypesettingDiscussionThreadModel;
+
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 

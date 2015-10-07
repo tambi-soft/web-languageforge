@@ -66,7 +66,7 @@ angular.module('bellows.services')
     this.data = {};
     this.data.projectTypeNames = {
       'sfchecks': 'Community Scripture Checking',
-      'webtypesetting': 'Typesetting',
+      'typesetting': 'Typesetting',
       'semdomtrans': 'Semantic Domain Translation',
       'lexicon': 'Dictionary'
     };

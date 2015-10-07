@@ -1,14 +1,14 @@
 <?php
-use models\scriptureforge\typesetting\commands\TypesettingUploadCommands;
-use models\scriptureforge\typesetting\TypesettingAssetModel;
 
-require_once (dirname(__FILE__) . '/../../../TestConfig.php');
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingUploadCommands;
+use Api\Model\Scriptureforge\Typesetting\TypesettingAssetModel;
+
+require_once (__DIR__ . '/../../../TestConfig.php');
 require_once (SimpleTestPath . 'autorun.php');
 require_once (TestPath . 'common/MongoTestEnvironment.php');
 
 class TestTypesettingUploadCommands extends UnitTestCase
 {
-
     public function __construct()
     {
         $this->environ = new TypesettingMongoTestEnvironment();
@@ -148,7 +148,7 @@ class TestTypesettingUploadCommands extends UnitTestCase
         $projectSlug = $project->databaseName();
 
         $this->assertTrue($response->result, 'Import should succeed');
-        $this->assertPattern("/typesetting\/$projectSlug/", $response->data->path, 'Uploaded zip file path should be in the right location');
+        $this->assertPattern("/typesetting\/$projectSlug/", $response->data->path); //, 'Uploaded zip file path should be in the right location');
         $this->assertEqual($fileName, $response->data->fileName, 'Uploaded zip fileName should have the original fileName');
         $this->assertTrue(file_exists($filePath), 'Uploaded zip file should exist');
         $this->assertTrue(file_exists($usfmPath), 'USFM file should exist');

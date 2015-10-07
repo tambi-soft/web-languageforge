@@ -166,7 +166,7 @@ $otherProjectModel->write();
 $typesettingProject = ProjectCommands::createProject(
         $constants['typesettingProjectName'],
         $constants['typesettingProjectCode'],
-        SfProjectModel::WEBTYPESETTING_APP,
+        SfProjectModel::TYPESETTING_APP,
         $managerUser,
         $website
 );

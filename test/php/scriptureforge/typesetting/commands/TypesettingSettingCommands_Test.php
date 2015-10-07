@@ -1,32 +1,22 @@
 <?php
-use models\scriptureforge\typesetting\SettingModel;
 
-use models\scriptureforge\typesetting\SettingModelLayout;
+use Api\Model\Scriptureforge\Typesetting\SettingModel;
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingSettingsCommands;
+use Api\Model\Scriptureforge\Typesetting\RapumaSettingModel;
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingSettingCommands;
+use Api\Model\Mapper\JsonDecoder;
+use Api\Model\Mapper\JsonEncoder;
 
-use models\scriptureforge\typesetting\commands\TypesettingSettingsCommands;
-
-use models\ProjectModel;
-
-use models\scriptureforge\typesetting\RapumaSettingListModel;
-use models\scriptureforge\typesetting\RapumaSettingModel;
-use models\scriptureforge\typesetting\commands\TypesettingSettingCommands;
-use models\mapper\JsonDecoder;
-use models\mapper\JsonEncoder;
-
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
-
 require_once TestPath . 'common/MongoTestEnvironment.php';
-
-require_once SourcePath . "models/ProjectModel.php";
-// require_once SourcePath . "models/RapumaSettingModel.php";
 
 class TypesettingSettingCommands_Test extends UnitTestCase
 {
     public function testUpdateLayoutSetting_currentSetting_layoutUpdated() {
         $e = new MongoTestEnvironment();
         $e->clean();
-        
+
         $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
         $projectId = $projectModel->id->asString();
         
@@ -42,9 +32,7 @@ class TypesettingSettingCommands_Test extends UnitTestCase
         
         $currentSetting = SettingModel::getCurrent($projectModel);
         $this->assertEqual($currentSetting->layout->docInfoText, "my text");
-        
     }
-    
 
     /* cjh disabled since it's using the wrong models (should use SettingsModel)
     public function testCRUD_Works() {

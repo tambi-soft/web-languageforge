@@ -1,19 +1,17 @@
 <?php
-use models\scriptureforge\typesetting\commands\TypesettingDiscussionListCommands;
-use models\scriptureforge\typesetting\TypesettingAssetModel;
-use models\scriptureforge\typesetting\TypesettingDiscussionPostListModel;
-use models\scriptureforge\typesetting\TypesettingDiscussionThreadListModel;
-use models\scriptureforge\typesetting\TypesettingDiscussionThreadModel;
-use models\languageforge\lexicon\AuthorInfo;
-use models\languageforge\lexicon\LexCommentReply;
 
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingDiscussionListCommands;
+use Api\Model\Scriptureforge\Typesetting\TypesettingAssetModel;
+use Api\Model\Scriptureforge\Typesetting\TypesettingDiscussionPostListModel;
+use Api\Model\Scriptureforge\Typesetting\TypesettingDiscussionThreadListModel;
+use Api\Model\Scriptureforge\Typesetting\TypesettingDiscussionThreadModel;
+
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
 class TestTypesettingDiscussionListCommands extends UnitTestCase
 {
-
     public function testCreateThread_NoExistingThreads_OneThreadExists()
     {
         $e = new MongoTestEnvironment();

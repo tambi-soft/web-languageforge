@@ -7,7 +7,6 @@ use Api\Model\Shared\Rights\Domain;
 use Api\Model\Shared\Rights\Operation;
 use Api\Model\Shared\Rights\SiteRoles;
 use Api\Model\Shared\Rights\SystemRoles;
-// use models\LayoutTemplateModel;
 use Api\Model\ProjectModel;
 use Api\Model\UserModel;
 
@@ -295,7 +294,7 @@ class RightsHelper
                 // Are there any circumstances where this should be denied? Should this just be "return true;"?
                 return $this->userHasSiteRight(Domain::USERS + Operation::VIEW_OWN);
 
-            // ScriptureForge (webtypesetting)
+            // ScriptureForge (Typesetting)
             case 'typesetting_readAssetsDto':
             case 'typesetting_uploadFile':
                 return $this->userHasSiteRight(Domain::USERS + Operation::EDIT_OWN);

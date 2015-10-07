@@ -2,7 +2,6 @@
 
 namespace Api\Model;
 
-// use models\scriptureforge\TypesettingProjectModel;
 use Palaso\Utilities\CodeGuard;
 use Palaso\Utilities\FileUtilities;
 use Api\Library\Shared\Website;
@@ -14,7 +13,7 @@ use Api\Model\Mapper\MapOf;
 use Api\Model\Mapper\MapperUtils;
 use Api\Model\Languageforge\SemDomTransProjectModel;
 use Api\Model\Languageforge\Lexicon\LexiconProjectModel;
-use Api\Model\Scriptureforge\RapumaProjectModel;
+use Api\Model\Scriptureforge\TypesettingProjectModel;
 use Api\Model\Scriptureforge\SfchecksProjectModel;
 use Api\Model\Shared\Rights\ProjectRoleModel;
 use Api\Model\Sms\SmsSettings;
@@ -272,7 +271,7 @@ class ProjectModel extends Mapper\MapperModel
         switch ($m->appName) {
             case 'sfchecks':
                 return new SfchecksProjectModel($projectId);
-            case 'webtypesetting':
+            case 'typesetting':
                 return new TypesettingProjectModel($projectId);
             case 'lexicon':
                 return new LexiconProjectModel($projectId);

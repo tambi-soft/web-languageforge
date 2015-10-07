@@ -1,37 +1,19 @@
 <?php
 
+use Api\Model\Scriptureforge\Typesetting\TypesettingAssetListModel;
+use Api\Model\Scriptureforge\Typesetting\TypesettingAssetModel;
+use Api\Model\Scriptureforge\Typesetting\TypesettingAssetFont;
 
-
-use models\ProjectModel;
-
-use models\scriptureforge\typesetting\TypesettingAssetListModel;
-use models\scriptureforge\typesetting\TypesettingAssetModel;
-use models\scriptureforge\typesetting\TypesettingAssetFile;
-use models\scriptureforge\typesetting\TypesettingAssetChild;
-use models\scriptureforge\typesetting\TypesettingAssetGroupList;
-use models\scriptureforge\typesetting\TypesettingAssetFont;
-
-
-
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
-
 require_once TestPath . 'common/MongoTestEnvironment.php';
-
-require_once SourcePath . "models/ProjectModel.php";
-require_once SourcePath . "models/scriptureforge/typesetting/TypesettingAssetModel.php";
 
 class TestTypesettingAssetModel extends UnitTestCase
 {
-    public function __construct()
+    public function testCRUD_Works()
     {
         $e = new MongoTestEnvironment();
         $e->clean();
-    }
-
-public function testCRUD_Works()
-    {
-        $e = new MongoTestEnvironment();
         $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
         // List
@@ -120,6 +102,5 @@ public function testCRUD_Works()
         // List
         $list->read();
         $this->assertEqual(0, $list->count);
-
     }
 }

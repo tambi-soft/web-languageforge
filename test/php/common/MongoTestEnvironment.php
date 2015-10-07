@@ -1,23 +1,20 @@
 <?php
+
 use Api\Library\Shared\Website;
-use Api\Model\Mapper\Id;
-use Palaso\Utilities\FileUtilities;
 use Api\Model\Languageforge\Lexicon\LexiconProjectModel;
-use Api\Model\Shared\Rights\ProjectRoles;
-use models\scriptureforge\TypesettingProjectModel;
-use Api\Model\Shared\Rights\SystemRoles;
-use Api\Model\ProjectModel;
-use Api\Model\UserModel;
-use Api\Library\Languageforge\Semdomtrans\SemDomXMLImporter;
+use Api\Model\Languageforge\LfProjectModel;
 use Api\Model\Languageforge\SemDomTransProjectModel;
 use Api\Model\Languageforge\Semdomtrans\Command\SemDomTransProjectCommands;
-use Api\Model\Mapper\ArrayOf;
-use Api\Model\Languageforge\LfProjectModel;
-use Api\Model\Command\ProjectCommands;
+use Api\Model\Mapper\Id;
+use Api\Model\ProjectModel;
+use Api\Model\Scriptureforge\TypesettingProjectModel;
+use Api\Model\Shared\Rights\ProjectRoles;
+use Api\Model\Shared\Rights\SystemRoles;
+use Api\Model\UserModel;
+use Palaso\Utilities\FileUtilities;
 
 class MongoTestEnvironment
 {
-
     public function __construct($domain = 'scriptureforge.org')
     {
         $this->db = \Api\Model\Mapper\MongoStore::connect(SF_DATABASE);
@@ -116,7 +113,7 @@ class MongoTestEnvironment
         } elseif ($this->website->base == Website::LANGUAGEFORGE) {
             $projectModel->appName = 'lexicon';
         } else {
-            $projectModel->appName = 'webtypesetting';
+            $projectModel->appName = 'typesetting';
         }
         $this->cleanProjectEnvironment($projectModel);
         $projectModel->write();
@@ -434,7 +431,6 @@ class LexiconMongoTestEnvironment extends MongoTestEnvironment
         return $liftFilePath;
     }
 }
-
 
 class SemDomMongoTestEnvironment extends MongoTestEnvironment
 {

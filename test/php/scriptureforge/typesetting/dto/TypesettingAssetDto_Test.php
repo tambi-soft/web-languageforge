@@ -1,17 +1,15 @@
 <?php
 
-use models\shared\rights\ProjectRoles;
-use models\scriptureforge\typesetting\dto\TypesettingAssetDto;
-use models\scriptureforge\typesetting\TypesettingAssetModel;
-use models\scriptureforge\typesetting\commands\TypesettingUploadCommands;
+use Api\Model\Scriptureforge\Typesetting\Dto\TypesettingAssetDto;
+use Api\Model\Scriptureforge\Typesetting\TypesettingAssetModel;
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingUploadCommands;
 
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
 class TestTypesettingAssetDto extends UnitTestCase
 {
-
     public function __construct() {
         $this->environ = new MongoTestEnvironment();
         $this->environ->clean();
@@ -71,8 +69,8 @@ class TestTypesettingAssetDto extends UnitTestCase
         $this->assertEqual($dto['entries'][1]['path'], $asset2->path);
         $this->assertEqual($dto['entries'][1]['type'], $asset2->type);
         $this->assertEqual($dto['entries'][1]['uploaded'], $asset2->uploaded);
-
     }
+
     public function testEncode_UploadedAssetFile_DtoReturnsExpectedData()
     {
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);

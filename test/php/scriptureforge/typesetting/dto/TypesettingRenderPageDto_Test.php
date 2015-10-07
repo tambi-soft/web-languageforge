@@ -1,36 +1,16 @@
 <?php
 
-use models\scriptureforge\typesetting\dto\TypesettingRenderPageDto;
+use Api\Model\Scriptureforge\Typesetting\Dto\TypesettingRenderPageDto;
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingRenderCommands;
+use Api\Model\Scriptureforge\Typesetting\RapumaAssetListModel;
+use Api\Model\Scriptureforge\Typesetting\RapumaAssetModel;
 
-use models\scriptureforge\typesetting\commands\TypesettingRenderCommands;
-
-use models\scriptureforge\typesetting\SettingListModel;
-
-use models\scriptureforge\typesetting\dto\TypesettingLayoutPageDto;
-
-use models\scriptureforge\typesetting\SettingModel;
-
-use models\ProjectModel;
-
-use models\scriptureforge\typesetting\RapumaAssetListModel;
-use models\scriptureforge\typesetting\RapumaAssetModel;
-
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
-
 require_once TestPath . 'common/MongoTestEnvironment.php';
-
-require_once SourcePath . "models/ProjectModel.php";
-// require_once SourcePath . "models/RapumaAssetModel.php";
 
 class TestTypesettingRenderPageDto extends UnitTestCase
 {
-    public function __construct()
-    {
-        $e = new MongoTestEnvironment();
-        $e->clean();
-    }
-
     public function testEncode_twoExistingRuns_dtoReturnsThreeRuns()
     {
         $e = new MongoTestEnvironment();
@@ -47,5 +27,4 @@ class TestTypesettingRenderPageDto extends UnitTestCase
         
         $this->assertEqual(count($result['runs']), 3);
     }
-
 }

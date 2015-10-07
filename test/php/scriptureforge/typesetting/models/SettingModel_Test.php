@@ -1,26 +1,18 @@
 <?php
-use models\ProjectModel;
-use models\scriptureforge\typesetting\SettingListModel;
-use models\scriptureforge\typesetting\SettingModel;
 
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+use Api\Model\Scriptureforge\Typesetting\SettingListModel;
+use Api\Model\Scriptureforge\Typesetting\SettingModel;
+
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
-
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
-require_once SourcePath . "models/ProjectModel.php";
-//
 class TestSettingModel extends UnitTestCase
 {
-    public function __construct()
-    {
-        $e = new MongoTestEnvironment();
-        $e->clean();
-    }
-
     public function testCRUD_Works()
     {
         $e = new MongoTestEnvironment();
+        $e->clean();
         $projectModel = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
         // List
@@ -41,7 +33,6 @@ class TestSettingModel extends UnitTestCase
         $setting->layout->bodyColumnsTwo = false;
         $setting->layout->headerPosition = 10;
         $setting->layout->footerPosition = 10;
-
 
         $setting->title = "SomeSetting";
         $setting->description = "SomeSetting";
@@ -98,7 +89,6 @@ class TestSettingModel extends UnitTestCase
         $this->assertEqual(50, $otherSetting->layout->headerPosition);
         $this->assertEqual(50, $otherSetting->layout->footerPosition);
 
-
         // List
         $list->read();
         $this->assertEqual(1, $list->count);
@@ -109,6 +99,5 @@ class TestSettingModel extends UnitTestCase
         // List
         $list->read();
         $this->assertEqual(0, $list->count);
-
     }
 }

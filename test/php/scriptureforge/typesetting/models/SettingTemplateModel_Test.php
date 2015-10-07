@@ -1,24 +1,18 @@
 <?php
-use models\scriptureforge\typesetting\SettingTemplateModel;
-use models\scriptureforge\typesetting\SettingTemplateListModel;
-use models\ProjectModel;
 
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+use Api\Model\Scriptureforge\Typesetting\SettingTemplateModel;
+use Api\Model\Scriptureforge\Typesetting\SettingTemplateListModel;
+
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
-require_once SourcePath . "models/ProjectModel.php";
 
 class TestSettingTemplateModel extends UnitTestCase
 {
-    public function __construct()
-    {
-        $e = new MongoTestEnvironment();
-        $e->clean();
-    }
-
     public function testCRUD_Works()
     {
         $e = new MongoTestEnvironment();
+        $e->clean();
 
         // List
         $list = new SettingTemplateListModel();
@@ -111,6 +105,7 @@ class TestSettingTemplateModel extends UnitTestCase
 
     public function testFindTemplateByName_Works(){
         $e = new MongoTestEnvironment();
+        $e->clean();
 
         // Create template
         $name = "Template 1";

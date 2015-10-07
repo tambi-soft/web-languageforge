@@ -9,8 +9,7 @@ var util = require('./util');
 var constants = require('../../testConstants.json');
 
 var SfProjectsPage = function() {
-  var page = this;
-  this.url = "/app/webtypesetting/54bf0c5225f225340a8fc83f/#/layout";
+  this.url = "/app/typesetting/54bf0c5225f225340a8fc83f/#/layout";
   this.get = function() {
     browser.get(browser.baseUrl + this.url);
   };

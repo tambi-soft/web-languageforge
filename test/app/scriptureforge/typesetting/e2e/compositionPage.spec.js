@@ -15,7 +15,7 @@ describe('the composition page', function(){
       loginPage.logout();
       loginPage.loginAsMember();
       //probably replace this with an official page navigation, not an absolute local reference
-       browser.get('https://scriptureforge.local/app/webtypesetting/54adf50c25f225820b21ab74/#/composition');
+       browser.get('https://scriptureforge.local/app/typesetting/54adf50c25f225820b21ab74/#/composition');
        
     });
     

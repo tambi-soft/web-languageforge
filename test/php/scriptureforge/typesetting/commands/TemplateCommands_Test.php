@@ -1,12 +1,10 @@
 <?php
 
-use models\scriptureforge\typesetting\SettingModel;
-use models\scriptureforge\typesetting\commands\TypesettingSettingsCommands;
-use models\mapper\JsonDecoder;
-use models\mapper\JsonEncoder;
-use models\scriptureforge\typesetting\commands\TypesettingTemplateCommands;
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingTemplateCommands;
+use Api\Model\Scriptureforge\Typesetting\SettingModel;
+use Api\Model\Mapper\JsonEncoder;
 
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
@@ -76,6 +74,4 @@ class TestTypesettingTemplateCommands extends UnitTestCase
         $this->assertEqual(count($templates), 1);
         
     }
-    
-    
 }

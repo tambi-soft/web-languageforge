@@ -2,8 +2,8 @@
 
 use Api\Model\Command\SessionCommands;
 use Api\Model\Command\ProjectCommands;
-//use models\AnswerModel;
-//use models\CommentModel;
+//use Api\Model\AnswerModel;
+//use Api\Model\CommentModel;
 use Api\Model\QuestionModel;
 
 require_once __DIR__ . '/../../TestConfig.php';

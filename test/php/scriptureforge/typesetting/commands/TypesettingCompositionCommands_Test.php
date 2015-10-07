@@ -1,20 +1,17 @@
 <?php
 
-use models\scriptureforge\typesetting\commands\TypesettingCompositionCommands;
-use models\scriptureforge\typesetting\SettingModel;
-use models\mapper\JsonEncoder;
-use models\scriptureforge\typesetting\TypesettingBookModel;
-use models\scriptureforge\typesetting\TypesettingIllustrationModel;
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingCompositionCommands;
+use Api\Model\Scriptureforge\Typesetting\SettingModel;
+use Api\Model\Mapper\JsonEncoder;
+use Api\Model\Scriptureforge\Typesetting\TypesettingBookModel;
+use Api\Model\Scriptureforge\Typesetting\TypesettingIllustrationModel;
 
-require_once dirname(__FILE__) . '/../../../TestConfig.php';
+require_once __DIR__ . '/../../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
 require_once TestPath . 'common/MongoTestEnvironment.php';
 
-//require_once dirname(__FILE__) . '/../../../../../src/models/scriptureforge/webtypesetting/commands/TypesettingCompositionCommands.php';
-
 class TestTypesettingCompositionCommands extends UnitTestCase
 {
-    
     public function testGetBookHTML_NotEmpty()
     {
         $e = new MongoTestEnvironment();
