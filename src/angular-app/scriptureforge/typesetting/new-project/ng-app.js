@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('sfchecks-new-project', ['ui.router', 'pascalprecht.translate', 'bellows.services', 'palaso.ui.listview', 'ui.bootstrap', 'palaso.ui.notice', 'palaso.ui.utils', 'wc.Directives'])
+angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate', 'bellows.services', 'palaso.ui.listview', 'ui.bootstrap', 'palaso.ui.notice', 'palaso.ui.utils', 'wc.Directives'])
   .config(['$stateProvider', '$urlRouterProvider', '$translateProvider',
     function($stateProvider, $urlRouterProvider, $translateProvider) {
 
       // configure interface language filepath
       /*
       $translateProvider.useStaticFilesLoader({
-        prefix: '/angular-app/scriptureforge/sfchecks/new-project/lang/',
+        prefix: '/angular-app/scriptureforge/typesetting/new-project/lang/',
         suffix: '.json'
       });
       $translateProvider.preferredLanguage('en');
@@ -19,35 +19,15 @@ angular.module('sfchecks-new-project', ['ui.router', 'pascalprecht.translate', '
 
           // Need quotes around Javascript keywords like 'abstract' so YUI compressor won't complain
           'abstract': true,
-          templateUrl: '/angular-app/scriptureforge/sfchecks/new-project/views/new-project.html',
-          controller: 'NewSfchecksProjectCtrl',
+          templateUrl: '/angular-app/scriptureforge/typesetting/new-project/views/new-project.html',
+          controller: 'NewTypesettingProjectCtrl',
         })
         .state('newProject.name', {
-          templateUrl: '/angular-app/scriptureforge/sfchecks/new-project/views/new-project-name.html',
+          templateUrl: '/angular-app/scriptureforge/typesetting/new-project/views/new-project-name.html',
           data: {
             step: 1,
           },
         })
-        /*
-         .state('newProject.initialData', {
-         templateUrl: '/angular-app/languageforge/lexicon/new-project/views/new-project-initial-data.html',
-         data: {
-         step: 2,
-         },
-         })
-         .state('newProject.verifyData', {
-         templateUrl: '/angular-app/languageforge/lexicon/new-project/views/new-project-verify-data.html',
-         data: {
-         step: 3,
-         },
-         })
-         .state('newProject.selectPrimaryLanguage', {
-         templateUrl: '/angular-app/languageforge/lexicon/new-project/views/new-project-select-primary-language.html',
-         data: {
-         step: 3, // This is not a typo. There are two possible step 3 templates.
-         }
-         })
-         */
       ;
 
       $urlRouterProvider
@@ -57,7 +37,7 @@ angular.module('sfchecks-new-project', ['ui.router', 'pascalprecht.translate', '
           }
         },]);
     },])
-  .controller('NewSfchecksProjectCtrl', ['$scope', 'projectService', 'sessionService', 'silNoticeService', '$window', 'sfchecksLinkService',
+  .controller('NewTypesettingProjectCtrl', ['$scope', 'projectService', 'sessionService', 'silNoticeService', '$window', 'sfchecksLinkService',
     function($scope, projectService, ss, notice, $window, linkService) {
       $scope.newProject = {};
 
@@ -65,13 +45,13 @@ angular.module('sfchecks-new-project', ['ui.router', 'pascalprecht.translate', '
       $scope.addProject = function() {
         if ($scope.projectCodeState == 'ok') {
           $scope.isSubmitting = true;
-          projectService.create($scope.newProject.projectName, $scope.newProject.projectCode, 'sfchecks', function(result) {
+          projectService.create($scope.newProject.projectName, $scope.newProject.projectCode, 'typesetting', function(result) {
             //$scope.isSubmitting = false;
             if (result.ok) {
               notice.push(notice.SUCCESS, 'The ' + $scope.newProject.projectName + ' project was created successfully');
 
               // redirect to new project settings page
-              $window.location.href = linkService.project(result.data);
+              $window.location.href = linkService.project(result.data, 'typesetting');
             } else {
               $scope.isSubmitting = false;
             }
@@ -83,7 +63,7 @@ angular.module('sfchecks-new-project', ['ui.router', 'pascalprecht.translate', '
 
       $scope._projectNameToCode = function(name) {
         if (angular.isUndefined(name)) return undefined;
-        return 'sfchecks-' + name.toLowerCase().replace(/ /g, '_');
+        return 'typesetting-' + name.toLowerCase().replace(/ /g, '_');
       };
 
       $scope._isValidProjectCode = function(code) {
@@ -124,26 +104,25 @@ angular.module('sfchecks-new-project', ['ui.router', 'pascalprecht.translate', '
 
       // Check projectCode is unique and valid
       $scope.checkProjectCode = function() {
-          if ($scope._isValidProjectCode($scope.newProject.projectCode)) {
-            $scope.projectCodeState = 'loading';
-            projectService.projectCodeExists($scope.newProject.projectCode, function(result) {
-              if (!$scope.isSubmitting) {
-                if (result.ok) {
-                  if (result.data) {
-                    $scope.projectCodeState = 'exists';
-                  } else {
-                    $scope.projectCodeState = 'ok';
-                  }
+        if ($scope._isValidProjectCode($scope.newProject.projectCode)) {
+          $scope.projectCodeState = 'loading';
+          projectService.projectCodeExists($scope.newProject.projectCode, function(result) {
+            if (!$scope.isSubmitting) {
+              if (result.ok) {
+                if (result.data) {
+                  $scope.projectCodeState = 'exists';
+                } else {
+                  $scope.projectCodeState = 'ok';
                 }
               }
-            });
-          } else if ($scope.newProject.projectCode == '') {
-            $scope.projectCodeState = 'empty';
-          } else {
-            $scope.projectCodeState = 'invalid';
-          }
-        };
-
+            }
+          });
+        } else if ($scope.newProject.projectCode == '') {
+          $scope.projectCodeState = 'empty';
+        } else {
+          $scope.projectCodeState = 'invalid';
+        }
+      };
     },])
 
 ;

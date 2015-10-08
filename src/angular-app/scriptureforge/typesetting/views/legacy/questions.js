@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module(
-    'webtypesetting.questions',
+    'typesetting.questions',
     [ 'sf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap' ]
   )
   .controller('QuestionsCtrl', ['$scope', 'questionsService', '$routeParams', 'sessionService', 'linkService', 'breadcrumbService',

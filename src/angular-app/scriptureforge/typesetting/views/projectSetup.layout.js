@@ -1,9 +1,9 @@
 // controller for setupProjectLayout
 'use strict';
 
-angular.module('webtypesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.layoutServices'])
+angular.module('typesetting.projectSetupLayout', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'typesetting.layoutServices'])
 
-.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'webtypesettingLayoutService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', 
+.controller('projectSetupLayoutCtrl', ['$scope', '$state', 'typesettingLayoutService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope',
 function($scope, $state, layoutService, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
   var vm = $scope;
   
@@ -336,8 +336,8 @@ function($scope, $state, layoutService, sessionService, modal, notice, templateS
     templateSaveObject.vm = vm;
   });
 }])
-.controller('templateCtrl', ['$scope', '$state', 'webtypesettingSetupService',  'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$location',
-function($scope, $state, webtypesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject, $location) {
+.controller('templateCtrl', ['$scope', '$state', 'typesettingSetupService',  'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$location',
+function($scope, $state, typesettingSetupApi, sessionService, modal, notice, templateSaveObject, templateLoadObject, $location) {
     $scope.loadTemplateCollapsed = true;
     $scope.saveTemplateCollapsed = true;
     $scope.disableAddButton = true;

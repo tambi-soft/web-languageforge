@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('webtypesetting.discussionList', ['ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.discussionServices'])
+angular.module('typesetting.discussionList', ['ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'typesetting.discussionServices'])
 // controller for discussionList
-.controller('discussionListCtrl', ['$scope', '$state', 'webtypesettingDiscussionService', 'sessionService', 'modalService', 'silNoticeService', 
+.controller('discussionListCtrl', ['$scope', '$state', 'typesettingDiscussionService', 'sessionService', 'modalService', 'silNoticeService',
 function($scope, $state, discussionService, sessionService, modal, notice) {
   $scope.newThread = {
       'title': '',

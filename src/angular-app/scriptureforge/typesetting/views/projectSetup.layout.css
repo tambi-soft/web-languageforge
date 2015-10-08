@@ -25,3 +25,11 @@
 .save-notice {
     margin-top: 11px;
 }
+
+#loadTemplateDiv{
+    width: 300px;
+}
+
+#saveTemplateDiv{
+    width: 300px
+}

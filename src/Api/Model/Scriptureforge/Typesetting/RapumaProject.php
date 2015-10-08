@@ -20,7 +20,7 @@ class RapumaProject
     
     public function createRapumaProject()
     {
-        if (!$this->webtypesettingProjectExists()) {
+        if (!$this->typesettingProjectExists()) {
             $job = new RapumaJob($this->_projectModel);
             $projectCode = $this->_projectModel->id->asString();
             $cmd = "rapuma project $projectCode project add --media_type book --target_path " . $this->_projectModel->getAssetsFolderPath();
@@ -33,7 +33,7 @@ class RapumaProject
     
     public function addComponent($group, $component, $sourceFilePath)
     {
-        if ($this->webtypesettingProjectExists()) {
+        if ($this->typesettingProjectExists()) {
             $job = new RapumaJob($this->_projectModel);
             $projectCode = $this->_projectModel->id->asString();
             $cmd = "rapuma group $projectCode $group group add --component_type usfm --cid_list $component --source_id $group --source_path $sourceFilePath";
@@ -46,7 +46,7 @@ class RapumaProject
     
     public function renderGroup($group)
     {
-        if ($this->webtypesettingProjectExists()) {
+        if ($this->typesettingProjectExists()) {
             if ($this->groupExists($group)) {
                 $job = new RapumaJob($this->_projectModel);
                 $outputFolderPath = $this->_projectModel->getAssetsFolderPath() . "/Downloads"; 
@@ -73,7 +73,7 @@ class RapumaProject
     /**
      * @return boolean
      */
-    public function webtypesettingProjectExists()
+    public function typesettingProjectExists()
     {
         $configFile = $this->_projectModel->getAssetsFolderPath() . "/Config/project.json";
 

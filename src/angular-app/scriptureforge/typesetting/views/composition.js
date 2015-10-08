@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('webtypesetting.composition',
+angular.module('typesetting.composition',
         [ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
-            'webtypesetting.compositionServices',
+            'typesetting.compositionServices',
             'composition.selection' ])
 
     .controller(
@@ -10,12 +10,12 @@ angular.module('webtypesetting.composition',
         [
             '$scope',
             '$state',
-            'webtypesettingSetupService',
-            'webtypesettingCompositionService',
+            'typesettingSetupService',
+            'typesettingCompositionService',
             'sessionService',
             'modalService',
             'silNoticeService',
-            function($scope, $state, webtypesettingSetupApi,
+            function($scope, $state, typesettingSetupApi,
                 compositionService, sessionService, modal,
                 notice) {
               var paragraphProperties = {

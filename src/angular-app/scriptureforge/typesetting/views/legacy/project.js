@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module(
-    'webtypesetting.project',
+    'typesetting.project',
     [ 'sf.services', 'palaso.ui.listview', 'palaso.ui.typeahead', 'ui.bootstrap', 'sgw.ui.breadcrumb' ]
   )
   .controller('ProjectCtrl', ['$scope', 'componentService', '$routeParams', 'sessionService', 'breadcrumbService',

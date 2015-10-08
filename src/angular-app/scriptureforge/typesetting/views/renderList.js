@@ -1,9 +1,9 @@
 //controller for renderList
 'use strict';
 
-angular.module('webtypesetting.renderList', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'webtypesetting.renderServices'])
+angular.module('typesetting.renderList', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'typesetting.renderServices'])
 
-.controller('renderListCtrl', ['$scope', '$state', 'webtypesettingRenderService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', function($scope, $state, renderService, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
+.controller('renderListCtrl', ['$scope', '$state', 'typesettingRenderService', 'sessionService', 'modalService', 'silNoticeService', 'templateSaveService', 'templateLoadService', '$interval', '$rootScope', function($scope, $state, renderService, sessionService, modal, notice, templateSaveObject, templateLoadObject, $interval, $rootScope) {
   $scope.search = "";
   $scope.pageSize = 10;
   $scope.pageNumber = 1;
