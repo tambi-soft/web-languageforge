@@ -97,13 +97,13 @@
       changed_when: False
       failed_when: False
     - name: install PECL mongo extension | add mods-available in conf.d
-      file: src=../mods-available/mongo.ini dest=/etc/php5/conf.d/{{php5_confd_n.stdout | int + 1}}0-mongo.ini state=link
+      file: src=../mods-available/mongo.ini dest=/etc/php5/conf.d/20-mongo.ini state=link
       notify: Restart apache
     - name: install PECL mongo extension | add mods-available in conf.d
-      file: src=/etc/php5/mods-available/mongo.ini dest=/etc/php5/cli/conf.d/{{php5_confd_n.stdout | int + 1}}0-mongo.ini state=link
+      file: src=/etc/php5/mods-available/mongo.ini dest=/etc/php5/cli/conf.d/20-mongo.ini state=link
       notify: Restart apache
     - name: install PECL mongo extension | add mods-available in conf.d
-      file: src=/etc/php5/mods-available/mongo.ini dest=/etc/php5/apache2/conf.d/{{php5_confd_n.stdout | int + 1}}0-mongo.ini state=link
+      file: src=/etc/php5/mods-available/mongo.ini dest=/etc/php5/apache2/conf.d/20-mongo.ini state=link
       notify: Restart apache
     - name: update the mongo config file
       lineinfile:
