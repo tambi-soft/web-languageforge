@@ -3,7 +3,7 @@
 
 <div class="content container" data-ng-controller="ResetPasswordCtrl">
     <div class="row outer-flex">
-    <div class="span8 offset2">
+    <div class="col-md-8 col-md-offset-2">
     <div id="form-container">
         <div class="page-header" align="center">
             <h1>Reset Password</h1>
@@ -21,7 +21,7 @@
                 <div class="control-group">
                     <label class="control-label" for="password" translate="New Password"></label>
                     <div class="controls">
-                        <input class="span3" id="password"
+                        <input class="col-md-3" id="password"
                                required type="password" name="_password"
                                title="Passwords must be at least 7 characters"
                                data-ng-model="record.password" />
@@ -33,7 +33,7 @@
                 <div class="control-group">
                     <label class="control-label" for="confirmPassword" translate="Confirm New Password"></label>
                     <div class="controls">
-                        <input class="span3" id="confirmPassword"
+                        <input class="col-md-3" id="confirmPassword"
                                type="password" name="_confirmPassword"
                                title="Passwords must be at least 7 characters"
                                required data-ng-model="confirmPassword" />

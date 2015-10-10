@@ -4,12 +4,11 @@
   },
   "devDependencies": {
     "angularjs-file-upload": "1.6.7",
-    "textAngular": "~1.2.2"
+    "textAngular": "~1.2.2",
     "jquery": "1.9.x",
     "bootstrap": "3.3.x",
     "angular-bootstrap": "0.12.x",
-    "angularjs-file-upload": "1.6.*",
-    "jquery-migrate": "1.2.x"
+    "jquery-migrate": "1.2.x",
     "font-awesome": "4.2.x"
   }
 }
