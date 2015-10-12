@@ -49,11 +49,12 @@ describe('the project settings page - project manager', function() {
       page.membersTab.newMember.button.click();
 
       // wait for new user to load
-      browser.wait(function() {
-        return page.membersTab.list.count().then(function(count) {
-          return count >= memberCount + 1;
-        });
-      });
+      browser.sleep(500);
+      //browser.wait(function() {
+      //  return page.membersTab.list.count().then(function(count) {
+      //    return count >= memberCount + 1;
+      //  });
+      //});
 
       expect(page.membersTab.list.count()).toBe(memberCount + 1);
     });

@@ -48,8 +48,8 @@ class Upload extends Base
                         $tmpFilePath
                     ));
                     $response = $api->sfChecks_uploadFile($mediaType, $tmpFilePath);
-                } elseif ($app == 'sf-typesetting') {
-                    $api = new Sf($this);
+                } elseif ($appType == 'sf-typesetting') {
+                    $api = new Sf($app);
                     switch ($mediaType) {
                         case 'import-zip':
                             $api->checkPermissions('typesetting_upload_importProjectZip', array(
@@ -65,8 +65,8 @@ class Upload extends Base
                             ));
                             $response = $api->typesetting_uploadFile($mediaType, $tmpFilePath);
                     }
-                } elseif ($app == 'lf-lexicon') {
-                    $api = new Sf($this);
+                } elseif ($appType == 'lf-lexicon') {
+                    $api = new Sf($app);
                     switch ($mediaType) {
                         case 'import-zip':
                             $api->checkPermissions('lex_upload_importProjectZip', array(
