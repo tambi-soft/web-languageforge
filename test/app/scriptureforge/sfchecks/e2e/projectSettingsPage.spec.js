@@ -119,8 +119,8 @@ describe('the project settings page - project manager', function() {
       page.templatesTab.editor.title.clear();
       page.templatesTab.editor.title.sendKeys('test12');
       page.templatesTab.editor.saveButton.click();
-      expect(page.templatesTab.editor.saveButton.isDisplayed()).toBe(false);
       expect(page.templatesTab.list.count()).toBe(3);
+      expect(page.templatesTab.editor.saveButton.isDisplayed()).toBe(false);
     });
 
     it('can delete a template', function() {

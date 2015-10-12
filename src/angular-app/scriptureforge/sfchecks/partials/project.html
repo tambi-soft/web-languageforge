@@ -3,14 +3,14 @@
     <div class="notices">
         <alert data-ng-repeat="message in messages" type="info" close="markMessageRead(message.id)"><b>{{message.subject}}</b><br /><span data-ng-bind-html="message.content"></span></alert>
     </div>
-    <div id="settingsDropdownButton" class="btn-group pull-right" data-ng-show="rights.edit">
-        <a class="btn dropdown-toggle"
-           data-toggle="dropdown"
-           data-tooltip-placement="right"
-           data-tooltip="Settings" href="#">
+    <div id="settingsDropdownButton" class="btn-group pull-right" data-dropdown
+         data-tooltip-placement="right"
+         data-tooltip="Settings"
+         data-ng-show="rights.edit">
+        <a class="btn btn-default dropdown-toggle" role="button" data-dropdown-toggle>
             <i class="icon-cog icon-large"></i>
             <span class="caret"></span></a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" role="menu">
             <li><a href="#/settings">Project Settings</a></li>
             <li><a href="/app/projectmanagement/{{project.id}}">Manage Project</a></li>
             <!-- <li><a ng-href="/app/usermanagement/{{project.id}}" translate="User Management"></a></li> -->
