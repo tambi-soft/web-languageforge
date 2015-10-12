@@ -8,10 +8,11 @@
     <div class="new-item" data-collapse="newThreadCollapsed">
         <form class="well" class="form-horizontal" name="newProjectForm">
             <div class="form-group">
-                <input ng-model="newThread.title" type="text"
+                <input data-ng-model="newThread.title" type="text"
                     set-focus="!newThreadCollapsed" maxlength="50" required
-                    placeholder="Thread Title" /> <input
-                    ng-model="newThread.associatedItem" type="text"
+                    placeholder="Thread Title" />
+                <input
+                    data-ng-model="newThread.associatedItem" type="text"
                     set-focus="!newThreadCollapsed" maxlength="50" required
                     placeholder="Item Reference" />
             </div>
@@ -49,8 +50,8 @@
         </tbody>
     </table>
     <div class="paginationblock">
-        <ul class="pagination ng-isolate-scope" boundary-links="true"
-            total-items="discussion.threads.length" page="currentPage"
+        <ul class="pagination data-ng-isolate-scope" boundary-links="true"
+            total-items="discussion.threads.length" data-ng-model="currentPage"
             items-per-page="itemsPerPage" previous-text="�" next-text="�"
             first-text="�" last-text="�">
             <!-- ngIf: boundaryLinks -->
@@ -60,8 +61,8 @@
             <!-- ngIf: boundaryLinks -->
         </ul>
         <div class="right pagination">
-            Items per page: <select ng-model="itemsPerPage"
-                class="ng-valid ng-dirty"><option value="10"
+            Items per page: <select data-ng-model="itemsPerPage"
+                class="ng-valid data-ng-dirty"><option value="10"
                     selected="">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
