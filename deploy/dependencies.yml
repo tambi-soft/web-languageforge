@@ -7,6 +7,8 @@
     - include_vars: "vars_{{ deploy }}.yml"
   roles:
     - fix
+    # locale_install may be needed if locale has been changed away from defaults
+#    - locale_install
     - ssl_config
     - apache_config
   tasks:
@@ -67,7 +69,7 @@
       register: local_dir
       when: inventory_hostname == "localhost"
     - name: Ensure default_local link exists (localhost)
-      file: src="{{local_dir.stdout | dirname | realpath}}" dest="/var/www/virtual/default_local" state=link force=true
+      file: src="{{local_dir.stdout | dirname | dirname | realpath}}" dest="/var/www/virtual/default_local" state=link force=true
       when: inventory_hostname == "localhost"
 
     - name: install PECL mongo extension
@@ -86,25 +88,16 @@
         mode: 0644
     - name: install PECL mongo extension | ensure conf.d exists
       file: path=/etc/php5/conf.d state=directory mode=0755
-    - name: install PECL mongo extension | link exists
-      shell: test -f /etc/php5/conf.d/*0-mongo.ini
-      register: mongo_confd_link
-      changed_when: False
-      failed_when: False
-    - name: install PECL mongo extension | count conf.d
-      shell: ls /etc/php5/conf.d | wc -l
-      register: php5_confd_n
-      changed_when: False
-      failed_when: False
     - name: install PECL mongo extension | add mods-available in conf.d
       file: src=../mods-available/mongo.ini dest=/etc/php5/conf.d/20-mongo.ini state=link
       notify: Restart apache
-    - name: install PECL mongo extension | add mods-available in conf.d
+    - name: install PECL mongo extension | add mods-available in cli/conf.d
       file: src=/etc/php5/mods-available/mongo.ini dest=/etc/php5/cli/conf.d/20-mongo.ini state=link
       notify: Restart apache
-    - name: install PECL mongo extension | add mods-available in conf.d
+    - name: install PECL mongo extension | add mods-available in apache2/conf.d
       file: src=/etc/php5/mods-available/mongo.ini dest=/etc/php5/apache2/conf.d/20-mongo.ini state=link
       notify: Restart apache
+      
     - name: update the mongo config file
       lineinfile:
         dest: /etc/mongodb.conf
@@ -114,7 +107,6 @@
       notify: restart mongodb
     - name: ensure mongodb is running (and enable it at boot)
       service: name=mongodb state=started enabled=yes
-    - meta: flush_handlers
 
     - name: add host aliases
       lineinfile:

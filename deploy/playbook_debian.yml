@@ -1,9 +1,13 @@
 ---
 
-- name: Linux Mint local webserver
+- name: Linux Debian webserver (usually in VM)
   hosts: all
   sudo: yes
   tasks:
+    - name: install packages
+      apt: name="{{item}}" state=present
+      with_items:
+        - gcc
 
 - include: dependencies.yml
   vars:
