@@ -66,13 +66,13 @@ angular.module('bellows.services')
     this.data = {};
     this.data.projectTypeNames = {
       'sfchecks': 'Community Scripture Checking',
-      'webtypesetting': 'Typesetting',
+      'typesetting': 'Typesetting',
       'semdomtrans': 'Semantic Domain Translation',
       'lexicon': 'Dictionary'
     };
     this.data.projectTypesBySite = function() {
       var types = {
-        'scriptureforge': ['sfchecks'],
+        'scriptureforge': ['sfchecks', 'typesetting'],
         'languageforge': ['lexicon', 'semdomtrans']
       };
       return types[ss.baseSite()];

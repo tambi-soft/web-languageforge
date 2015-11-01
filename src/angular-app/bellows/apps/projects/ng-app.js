@@ -30,7 +30,8 @@ angular.module('projects', ['bellows.services', 'palaso.ui.listview', 'ui.bootst
   };
 
   // Listview Data
-  $scope.projects = [];
+
+                               $scope.projects = [];
   $scope.queryProjectsForUser = function() {
     projectService.list(function(result) {
       if (result.ok) {
