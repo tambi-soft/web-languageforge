@@ -22,4 +22,5 @@ class RapumaRoles extends ProjectRoles
     public static function getRightsArray($role) { return self::_getRightsArray(self::$_rights, $role); }
 
 }
+
 RapumaRoles::init();

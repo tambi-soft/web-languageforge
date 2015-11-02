@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+
+.pages {
+    border: 1px solid;
+    margin-top: 27px;
+    margin-bottom: 27px;
+}
+
+.margins {
+    border: 1px solid blue;
+}
+
+#page-left {
+    float: left;
+}
+
+#page-right {
+    float: right;
+}
+
+.checkbox-inline {
+    font-weight: bold;    
+}
+
+.save-notice {
+    margin-top: 11px;
+}
+
+#loadTemplateDiv{
+    width: 300px;
+}
+
+#saveTemplateDiv{
+    width: 300px
+}

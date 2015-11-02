@@ -10,9 +10,9 @@ use Api\Model\Shared\Rights\ProjectRoles;
 use Api\Model\Mapper\Id;
 use Api\Model\Mapper\JsonDecoder;
 use Api\Model\Mapper\JsonEncoder;
-use Api\Model\JoinRequests_ProjectModel;
 use Api\Model\ProjectModel;
 use Api\Model\ProjectSettingsModel;
+use Api\Model\Scriptureforge\Typesetting;
 use Api\Model\UserModel;
 
 class ProjectCommands
@@ -278,5 +278,4 @@ class ProjectCommands
 
         return $project->readByProperties(array('projectCode' => $code));
     }
-
 }

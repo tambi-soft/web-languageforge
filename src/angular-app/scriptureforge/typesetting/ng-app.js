@@ -1,65 +1,70 @@
 'use strict';
 
-// Declare app level module which depends on filters, and services
-angular.module('typesetting', 
+angular.module('typesetting',
     [
-     'ngRoute',
-     'ngSanitize',
-     'typesetting.project',
-     'typesetting.projectSettings',
-     'typesetting.questions',
-     'typesetting.question',
-     'typesetting.filters',
-     'bellows.filters',
-     'palaso.ui.notice',
-     'sf.ui.invitefriend',
-     'wc.Directives'
+          'ui.router',
+          'bellows.filters',
+          'typesetting.composition',
+          'typesetting.discussionList',
+          'typesetting.discussionThread',
+          'typesetting.services',
+          'typesetting.projectSetupLayout',
+          'typesetting.projectSetupAssets',
+          'typesetting.renderList',
     ])
-  .config(['$routeProvider', function($routeProvider) {
-    // the "projects" route is a hack to redirect to the /app/projects URL.  See "otherwise" route below
-      $routeProvider.when('/projects', { template: ' ', controller: function() { window.location.replace('/app/projects'); } }
-      );
-      $routeProvider.when(
-        '/', 
-        {
-          templateUrl: '/angular-app/scriptureforge/typsetting/partials/project.html', 
-          controller: 'ProjectCtrl'
-        }
-      );
-      $routeProvider.when(
-          '/settings', 
-          {
-            templateUrl: '/angular-app/scriptureforge/typesetting/partials/projectSettings.html', 
-            controller: 'ProjectSettingsCtrl'
-          }
-        );
-      $routeProvider.when(
-        '/:textId', 
-        {
-          templateUrl: '/angular-app/scriptureforge/typesetting/partials/questions.html', 
-          controller: 'QuestionsCtrl'
-        }
-      );
-      $routeProvider.when(
-          '/:textId/settings', 
-          {
-            templateUrl: '/angular-app/scriptureforge/typesetting/partials/questions-settings.html', 
-            controller: 'QuestionsSettingsCtrl'
-          }
-        );
-      $routeProvider.when(
-        '/:textId/:questionId',
-        {
-          templateUrl: '/angular-app/scriptureforge/typesetting/partials/question.html', 
-          controller: 'QuestionCtrl'
-      }
-    );
-      $routeProvider.otherwise({redirectTo: '/projects'});
-  }])
-  .controller('MainCtrl', ['$scope', 'silNoticeService', '$route', '$routeParams', '$location',
-                           function($scope, noticeService, $route, $routeParams, $location) {
-    $scope.route = $route;
-    $scope.location = $location;
-    $scope.routeParams = $routeParams;
-  }])
-  ;
+  .run(['$rootScope', '$state', '$stateParams', function($rootScope,   $state,   $stateParams) {
+    // Add $state and $stateParams to the $rootScope so that we can access them from any scope.
+    // <li ng-class="{ active: $state.includes('contacts.list') }"> will set the <li>
+    // to active whenever 'contacts.list' or one of its decendents is active.
+    $rootScope.$state = $state;
+    $rootScope.$stateParams = $stateParams;
+  },])
+  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+
+    $urlRouterProvider.otherwise('/composition');
+
+    $stateProvider
+        .state('home', {
+          url: '/composition',
+          templateUrl: '/angular-app/scriptureforge/typesetting/views/composition.html',
+        })
+        .state('projectSetupAssets', {
+          url: '/assets',
+          templateUrl: '/angular-app/scriptureforge/typesetting/views/projectSetup.assets.html',
+        })
+        .state('projectSetupLayout', {
+          url: '/layout',
+          templateUrl: '/angular-app/scriptureforge/typesetting/views/projectSetup.layout.html',
+        })
+        .state('composition', {
+          url: '/composition',
+          templateUrl: '/angular-app/scriptureforge/typesetting/views/composition.html',
+        })
+        .state('review', {
+          url: '/review',
+          templateUrl: '/angular-app/scriptureforge/typesetting/views/review.html',
+        })
+        .state('render', {
+          url: '/render',
+          templateUrl: '/angular-app/scriptureforge/typesetting/views/renderList.html',
+        })
+        .state('discussionThreadView', {
+          url: '/discussion/:threadId',
+          templateUrl: '/angular-app/scriptureforge/typesetting/views/discussionThread.html',
+        });
+
+  },])
+  .controller('MainCtrl', ['$scope', function($scope) {
+    $scope.selectedBtn = 0;
+
+    // accessed by discussionListCtrl and discussionThreadCtrl
+    $scope.discussion = {
+      currentThreadIndex: -1,
+      threads: [],
+    };
+
+    $scope.settingsButton = {
+      isopen: false,
+    };
+
+  },]);

@@ -2,14 +2,14 @@
 
 namespace Api\Model;
 
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Api\Library\Bcrypt;
 
 class UserModelWithPassword extends UserModelBase
 {
     public function setPassword($newPassword)
     {
-        $bcrypt = new BCryptPasswordEncoder(BCRYPT_COST);
-        $this->password = $bcrypt->encodePassword($newPassword, null);
+        $bcrypt = new Bcrypt();
+        $this->password = $bcrypt->hash($newPassword);
     }
 
     /**

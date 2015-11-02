@@ -2,20 +2,8 @@
 
 namespace Api\Model\Shared\Command;
 
-class ImportResult
+class ImportResult extends MediaResult
 {
-
-    /**
-     *
-     * @var string
-     */
-    public $path;
-
-    /**
-     *
-     * @var string
-     */
-    public $fileName;
 
     /**
      *

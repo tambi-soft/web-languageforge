@@ -20,44 +20,24 @@ angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate'
           // Need quotes around Javascript keywords like 'abstract' so YUI compressor won't complain
           'abstract': true,
           templateUrl: '/angular-app/scriptureforge/typesetting/new-project/views/new-project.html',
-          controller: 'NewtypesettingProjectCtrl'
+          controller: 'NewTypesettingProjectCtrl',
         })
         .state('newProject.name', {
           templateUrl: '/angular-app/scriptureforge/typesetting/new-project/views/new-project-name.html',
           data: {
-            step: 1
-          }
+            step: 1,
+          },
         })
-        /*
-         .state('newProject.initialData', {
-         templateUrl: '/angular-app/languageforge/lexicon/new-project/views/new-project-initial-data.html',
-         data: {
-         step: 2,
-         },
-         })
-         .state('newProject.verifyData', {
-         templateUrl: '/angular-app/languageforge/lexicon/new-project/views/new-project-verify-data.html',
-         data: {
-         step: 3,
-         },
-         })
-         .state('newProject.selectPrimaryLanguage', {
-         templateUrl: '/angular-app/languageforge/lexicon/new-project/views/new-project-select-primary-language.html',
-         data: {
-         step: 3, // This is not a typo. There are two possible step 3 templates.
-         }
-         })
-         */
       ;
 
       $urlRouterProvider
-        .when('', ['$state', function ($state) {
-          if (! $state.$current.navigable) {
+        .when('', ['$state', function($state) {
+          if (!$state.$current.navigable) {
             $state.go('newProject.name');
           }
-        }]);
-    }])
-  .controller('NewtypesettingProjectCtrl', ['$scope', 'projectService', 'sessionService', 'silNoticeService', '$window', 'typesettingLinkService',
+        },]);
+    },])
+  .controller('NewTypesettingProjectCtrl', ['$scope', 'projectService', 'sessionService', 'silNoticeService', '$window', 'sfchecksLinkService',
     function($scope, projectService, ss, notice, $window, linkService) {
       $scope.newProject = {};
 
@@ -68,9 +48,10 @@ angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate'
           projectService.create($scope.newProject.projectName, $scope.newProject.projectCode, 'typesetting', function(result) {
             //$scope.isSubmitting = false;
             if (result.ok) {
-              notice.push(notice.SUCCESS, "The " + $scope.newProject.projectName + " project was created successfully");
+              notice.push(notice.SUCCESS, 'The ' + $scope.newProject.projectName + ' project was created successfully');
+
               // redirect to new project settings page
-              $window.location.href = linkService.project(result.data);
+              $window.location.href = linkService.project(result.data, 'typesetting');
             } else {
               $scope.isSubmitting = false;
             }
@@ -86,11 +67,11 @@ angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate'
       };
 
       $scope._isValidProjectCode = function(code) {
-          if (angular.isUndefined(code)) return false;
+        if (angular.isUndefined(code)) return false;
 
-          // Valid project codes start with a letter and only contain lower-case letters, numbers, dashes and underscores
-          var pattern = /^[a-z][a-z0-9\-_]*$/;
-          return pattern.test(code);
+        // Valid project codes start with a letter and only contain lower-case letters, numbers, dashes and underscores
+        var pattern = /^[a-z][a-z0-9\-_]*$/;
+        return pattern.test(code);
       };
 
       $scope.$watch('newProject.projectName', function(newval) {
@@ -102,7 +83,6 @@ angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate'
           }
         }
       });
-
 
       /*
        // State of the projectCode being validated:
@@ -124,26 +104,25 @@ angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate'
 
       // Check projectCode is unique and valid
       $scope.checkProjectCode = function() {
-          if ($scope._isValidProjectCode($scope.newProject.projectCode)) {
-            $scope.projectCodeState = 'loading';
-            projectService.projectCodeExists($scope.newProject.projectCode, function(result) {
-              if (!$scope.isSubmitting) {
-                if (result.ok) {
-                  if (result.data) {
-                    $scope.projectCodeState = 'exists';
-                  } else {
-                    $scope.projectCodeState = 'ok';
-                  }
+        if ($scope._isValidProjectCode($scope.newProject.projectCode)) {
+          $scope.projectCodeState = 'loading';
+          projectService.projectCodeExists($scope.newProject.projectCode, function(result) {
+            if (!$scope.isSubmitting) {
+              if (result.ok) {
+                if (result.data) {
+                  $scope.projectCodeState = 'exists';
+                } else {
+                  $scope.projectCodeState = 'ok';
                 }
               }
-            });
-          } else if ($scope.newProject.projectCode == '') {
-            $scope.projectCodeState = 'empty';
-          } else {
-            $scope.projectCodeState = 'invalid';
-          }
-        };
+            }
+          });
+        } else if ($scope.newProject.projectCode == '') {
+          $scope.projectCodeState = 'empty';
+        } else {
+          $scope.projectCodeState = 'invalid';
+        }
+      };
+    },])
 
-
-    }])
 ;

@@ -1,23 +1,38 @@
-.no-margin {
-    /* Fix Bootstrap's margins on checkboxes, etc. */
-    margin: 0px !important;
+/* typesetting css */
+
+#typesetting-hmenu {
+    overflow: visible;
 }
 
-span.fk { /* TODO: Find a better place for this (partials/questions.css, perhaps?) */
-    /* Used in footnote popups in text display of question page */
-    font-weight: bold;
+#typesetting-hmenu .topNav {
+    padding-left: 0;
 }
 
-/* TODO: Find a better place for this as well (perhaps in partials/question.css) */
-textarea.newAnswer, textarea.editAnswer {
-    padding: 10px;
-    background: #ffffff;
-    width: 95%;
-    min-height: 100px;
-    max-height: 900px;
-    overflow: auto;
-    outline: none;
-    word-wrap: break-word;
-    -ms-word-wrap: break-word;
-    resize: vertical
+.btnBar {
+    margin-left: 100px;
 }
+ul.projectNav > li {
+    background: #777 none repeat scroll 0% 0%;
+    display: inline-block;
+    margin-top: 2px;
+    margin-right: 7px;
+}
+
+.projectNav {
+    margin-top: 50px;
+}
+ul.projectNav a {
+    color: #FFF;
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+}
+ul.projectNav li:hover {
+    background: #08C none repeat scroll 0% 0%;
+}
+hr {
+    height: 1px;
+    background-color: #DCDCDC;
+    border: 0px none;
+}
+

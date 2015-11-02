@@ -13,7 +13,7 @@ use Api\Model\Mapper\MapOf;
 use Api\Model\Mapper\MapperUtils;
 use Api\Model\Languageforge\SemDomTransProjectModel;
 use Api\Model\Languageforge\Lexicon\LexiconProjectModel;
-use Api\Model\Scriptureforge\RapumaProjectModel;
+use Api\Model\Scriptureforge\TypesettingProjectModel;
 use Api\Model\Scriptureforge\SfchecksProjectModel;
 use Api\Model\Shared\Rights\ProjectRoleModel;
 use Api\Model\Sms\SmsSettings;
@@ -271,8 +271,8 @@ class ProjectModel extends Mapper\MapperModel
         switch ($m->appName) {
             case 'sfchecks':
                 return new SfchecksProjectModel($projectId);
-            case 'rapuma':
-                return new RapumaProjectModel($projectId);
+            case 'typesetting':
+                return new TypesettingProjectModel($projectId);
             case 'lexicon':
                 return new LexiconProjectModel($projectId);
             case 'semdomtrans':
@@ -287,10 +287,13 @@ class ProjectModel extends Mapper\MapperModel
      */
     public function getAssetsRelativePath()
     {
-        return 'assets/' . $this->appName. '/' . $this->databaseName();
+        $path = 'assets/' . $this->appName. '/' . $this->databaseName();
+        return $path;
     }
 
     /**
+
+        return $path;
      * @return string Full path of the projects assets folder
      */
     public function getAssetsFolderPath()

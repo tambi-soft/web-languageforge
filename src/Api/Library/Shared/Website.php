@@ -283,6 +283,23 @@ class Website
         $w->defaultProjectCode = 'jamaican_psalms';
         $sites['jamaicanpsalms.dev.scriptureforge.org'] = $w;
 
+        $jterm = array('jterm', 'taylor-a', 'taylor-b', 'taylor-c', 'calvin-a', 'calvin-b');
+        foreach ($jterm as $team) {
+            $domain = $team . '.dev.scriptureforge.org';
+            $w = new Website($domain, self::SCRIPTUREFORGE);
+            $w->name = 'Scripture Forge';
+            $w->ssl = false;
+            $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
+            $sites[$domain] = $w;
+
+            $domain = 'scriptureforge-' . $team . '.e2etest';
+            $w = new Website($domain, self::SCRIPTUREFORGE);
+            $w->name = 'Scripture Forge';
+            $w->ssl = false;
+            $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
+            $sites[$domain] = $w;
+        }
+        
         // scriptureforge.org
         $w = new Website('scriptureforge.org', self::SCRIPTUREFORGE);
         $w->name = 'Scripture Forge';
