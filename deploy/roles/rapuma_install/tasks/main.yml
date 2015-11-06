@@ -1,0 +1,63 @@
+---
+#Task: Installing Rapuma
+#Filename: main.yml
+#Author: Andrew Krock (Taylor University)
+#Date: 19 January 2015
+#Description: Handles automation of setting up and updating Rapuma
+#Last Modified: 25 January 2015
+#Modified by: Stephen Papierski (Taylor University)
+#-----------------------------------------------------------------------------------
+
+#- name: Updating with apt-get
+#  apt: update_cache=yes upgrade=dist
+
+- name: Updating with apt-get
+  apt: update_cache=yes
+
+- name: Installing prerequisites for rapuma
+  apt: name={{ item }} state=latest
+  with_items:
+      - mercurial
+      - python
+      - python-configobj
+      - python-argparse
+      - python-pypdf
+      - pdftk
+      - librsvg2-bin
+
+- name: Downloading palaso python library
+  hg: repo=http://hg.palaso.org/palaso-python
+      dest=/var/lib/rapuma/palaso-python
+
+- name: Installing palaso python packages
+  shell: ./setup.py --nokmn build
+  args:
+    chdir: /var/lib/rapuma/palaso-python
+  
+  shell: ./setup.py --nokmn install
+  args:
+    chdir: /var/lib/rapuma/palaso-python
+
+- name: Gitting rapuma
+  git: repo=https://github.com/sillsdev/rapuma.git
+       dest=/var/lib/rapuma/rapuma
+
+- name: Installing rapuma
+  shell: ./setup.py build
+  args:
+    chdir: /var/lib/rapuma/rapuma
+  
+  shell: ./setup.py install
+  args:
+    chdir: /var/lib/rapuma/rapuma
+
+- name: Making .config folder
+  shell: mkdir -p '.config'
+  args:
+    chdir: /var/lib/rapuma/
+
+- name: Making Publishing folder
+  shell: mkdir -p /var/lib/rapuma/Publishing
+
+- name: Changing permissions to www-data
+  shell: chown -R www-data /var/lib/rapuma
