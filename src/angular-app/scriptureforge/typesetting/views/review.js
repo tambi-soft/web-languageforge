@@ -232,3 +232,5 @@ angular.module('typesetting.composition',
             getPageDto();
 
         } ]);
+
+
