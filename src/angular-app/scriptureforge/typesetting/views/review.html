@@ -1,6 +1,6 @@
 <div data-ng-cloak data-ng-controller="compositionCtrl" style="text-align: center;">
     <div class="Container" style="display:inline-flex;">
-        <div >
+        <div>
                 <div class="col-lg-6">
                     <div class="prev">
                         <button type="button" class="btn btn-link "
@@ -22,12 +22,12 @@
                               data-ng-style="{width: 100/pages.length + '%', 'background-color':page}"></span>
                     </div>
                 </div>
-                <div class="imagesContainers" style="background-color: #0044cc">
-                    <!--<div class="col-md-4 imageDiv"-->
-                         <!--data-ng-class="{grey:selectedPage%2==1}">-->
-                        <!--<img data-ng-src="{{renderedImageLeft || '//:0'}}"-->
-                             <!--data-ng-class="{imageBorder:renderedImageLeft}" />-->
-                    <!--</div>-->
+                <div class="imagesContainers">
+                    <div class="col-md-4 imageDiv"
+                         data-ng-class="{grey:selectedPage%2==1}">
+                        <img data-ng-src="{{renderedImageLeft || '//:0'}}"
+                             data-ng-class="{imageBorder:renderedImageLeft}" />
+                    </div>
 
                     <div class="col-md-4 imageDiv"
                          data-ng-class="{grey:selectedPage%2==0}">
@@ -37,22 +37,8 @@
                 </div>
 
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="box">
-
-                    <div class="info">
-                        <textarea  ></textarea>
-                        <md-button> Button </md-button>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="info">
-                        <textarea></textarea>
-                        <md-button> Button </md-button>
-                    </div>
-                </div>
-            </div>
+        <div class="col-lg-7" style="margin-left: 10px; margin-top: 26px;">
+            <textarea rows="10" cols="500">Enter text</textarea>
         </div>
     </div>
 </div>

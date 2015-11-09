@@ -41,8 +41,8 @@ angular.module('typesetting',
           templateUrl: '/angular-app/scriptureforge/typesetting/views/composition.html',
         })
         .state('review', {
-          url: '/question',
-          templateUrl: '/angular-app/scriptureforge/typesetting/views/question.html',
+          url: '/review',
+          templateUrl: '/angular-app/scriptureforge/typesetting/views/review.html',
         })
         .state('render', {
           url: '/render',
