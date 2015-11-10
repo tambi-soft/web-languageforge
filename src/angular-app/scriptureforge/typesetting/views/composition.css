@@ -110,3 +110,12 @@
 .invisible{
     opacity:0;
 }
+.spanWorkspace {
+    position:absolute;
+    margin: auto;
+    width: 90%;
+    left:0;
+    right:0;
+
+}
+
