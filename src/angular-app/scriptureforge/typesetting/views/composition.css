@@ -118,11 +118,10 @@
     opacity:0;
 }
 .spanWorkspace {
-    position:absolute;
-    margin: auto;
-    width: 90%;
-    left:0;
-    right:0;
+    width: 180%;
+   margin-left: -40%;
+
+    padding: 20px 0;
 
 }
 
