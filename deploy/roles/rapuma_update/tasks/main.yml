@@ -1,0 +1,45 @@
+---
+#Task: Updating rapuma
+#Filename: main.yml
+#Author: Andrew Krock (Taylor University)
+#Date: 20 January 2015
+#Description: Handles the automation of updating rapuma
+#Last Modified: 25 January 2015
+#Modified by: Stephen Papierski (Taylor University)
+#-----------------------------------------------------------------------------------
+- name: download palaso python library
+  hg: dest=/var/lib/rapuma/palaso-python
+      repo=http://hg.palaso.org/palaso-python
+
+- name: install palaso python packages
+  shell: ./setup.py --nokmn build
+  args:
+    chdir: /var/lib/rapuma/palaso-python
+
+  shell: ./setup.py --nokmn install
+  args:
+    chdir: /var/lib/rapuma/palaso-python
+
+- name: gitting rapuma
+  git: repo=https://github.com/sillsdev/rapuma.git
+       dest=/var/lib/rapuma/rapuma
+
+- name: installing rapuma
+  shell: ./setup.py build
+  args: 
+    chdir: var/lib/rapuma/rapuma
+
+  shell: ./setup.py install
+  args:
+    chdir: /var/lib/rapuma/rapuma
+
+- name: making config folder
+  shell: mkdir -p '.config'
+  args: 
+    chdir: /var/lib/rapuma
+
+- name: making Publishing folder
+  shell: mkdir -p /var/lib/rapuma/Publishing
+
+- name: Changing permissions to www-data
+  shell: chown -R www-data /var/lib/rapuma

@@ -1,0 +1,7 @@
+---
+- name: rapuma_install
+  hosts: rapuma_servers
+  sudo: yes
+  roles:
+      - rapuma_install
+ 
