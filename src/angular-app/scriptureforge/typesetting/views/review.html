@@ -1,52 +1,67 @@
-<div data-ng-cloak data-ng-controller="reviewCtrl" style="text-align: center;">
-    <div class="Container inline-block ">
+<div data-ng-cloak data-ng-controller="reviewCtrl" style="text-align: center;" >
+    <div class="Container">
+        <div class="row">
+            <div class="col-lg-6">
 
-            <div style="width:400px" >
-                <div style="width:400px ">
-                    <div class="prev">
-                        <button type="button" class="btn btn-link "
-                                data-ng-click="decreasePage()">&laquo</button>
-                    </div>
-                    <div class="next">
-                        <button type="button" class="btn btn-link"
-                                data-ng-click="increasePage()">&raquo</button>
-                    </div>
-                    <div
-                            class="progress-bar composition-progress-bar progress-bar-slider"
-                            data-ng-class="{invisible:pages.length==0}">
-                        <input class="progress-slider" type="range" min="0"
-                               max="{{pages.length}}" data-ng-model="selectedPage">
-                        <div class="inner"
-                             data-ng-style="{ width: (selectedPage)/pages.length*100 + '%' || '0%' }"></div>
-                        <span class="sliderRanges"
-                              data-ng-repeat="page in pages track by $index"
-                              data-ng-style="{width: 100/pages.length + '%', 'background-color':page}"></span>
-                    </div>
-                </div>
-                <div class="imagesContainers" style="width:400px ">
-                    <div class=" imageDiv" style="width:400px ">
-                        <img data-ng-src="{{renderedPage}}"
-                             data-ng-class="{imageBorder:renderedPage}" />
-                    </div>
-
-                    <!--<div class="col-md-4 imageDiv"-->
-                         <!--data-ng-class="{grey:selectedPage%2==0}">-->
-                        <!--<img data-ng-src="{{renderedImageRight || '//:0'}}"-->
-                             <!--data-ng-class="{imageBorder:renderedImageRight}" />-->
-                    <!--</div>-->
+                <button type="button" class="btn btn-primary btn-sm"
+                        data-ng-click="save()">Save</button>
+                <div class="page-select">
+                    page: <input data-ng-keyup="$event.keyCode==13 && updatePage()"
+                                 class="pageNumber" data-ng-model="pageInput">
+                    <button type="button" class="btn btn-primary btn-sm"
+                            data-ng-click="updatePage()">GO</button>
                 </div>
             </div>
-            <div class="card">
-                <div>
-                    <textarea rows="10" cols="500">Add a new comment</textarea>
-                    <button >Submit</button>
-                </div>
-                <div data-ng-repeat="comment in comments">
-                    <label >{{comment}}</label>
-                </div>
 
+        </div>
+        <div class="row-fluid">
+            <div class="span14">
+                <div class="row-fluid">
+                    <div class="span7">
+                        <div class="row-fluid">
+                            <div class="span16" style="margin-left: 15px;">
+                                <div class="prev">
+                                    <button type="button" class="btn btn-link "
+                                            data-ng-click="decreasePage()">&laquo</button>
+                                </div>
+                                <div class="next">
+                                    <button type="button" class="btn btn-link"
+                                            data-ng-click="increasePage()">&raquo</button>
+                                </div>
+                                <div
+                                        class="progress-bar composition-progress-bar progress-bar-slider"
+                                        data-ng-class="{invisible:pages.length==0}">
+                                    <input class="progress-slider" type="range" min="0"
+                                           max="{{pages.length}}" data-ng-model="selectedPage">
+                                    <div class="inner"
+                                         data-ng-style="{ width: (selectedPage)/pages.length*100 + '%' || '0%' }"></div>
+                                <span class="sliderRanges"
+                                      data-ng-repeat="page in pages track by $index"
+                                      data-ng-style="{width: 100/pages.length + '%', 'background-color':page}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <img data-ng-src="{{renderedPage || '//:0'}}"
+                                       data-ng-class="{imageBorder:renderedPage}" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="span4 card">
+                        <div>
+                            <textarea rows="10" cols="500" onfocus="">Add a new comment </textarea>
+                            <button >Submit</button>
+                        </div>
+                        <div data-ng-repeat="comment in comments">
+                            <label >{{comment}}</label>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-
+        </div>
     </div>
 
 </div>
