@@ -15,10 +15,11 @@ use Api\Model\Languageforge\Lexicon\Command\LexUploadCommands;
 use Api\Model\Languageforge\Lexicon\Dto\LexBaseViewDto;
 use Api\Model\Languageforge\Lexicon\Dto\LexDbeDto;
 use Api\Model\Languageforge\Lexicon\Dto\LexProjectDto;
+use Api\Model\Scriptureforge\Typesetting\Command;
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingCompositionCommands;
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingRenderedPageCommands;
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingDiscussionListCommands;
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingSettingsCommands;
-use Api\Model\Scriptureforge\Typesetting\Command\TypesettingSettingCommands;
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingTemplateCommands;
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingRenderCommands;
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingUploadCommands;
@@ -697,7 +698,10 @@ class Sf
     public function typesetting_composition_setParagraphProperties($bookId, $propertiesModel) {
         return TypesettingCompositionCommands::setParagraphProperties($this->_projectId, $bookId, $propertiesModel);
     }
-
+    public function typesetting_composition_setPageComment($bookId, $pageNumber)
+    {
+        return TypesettingCompositionCommands::setPageComment($this->_projectId, $bookId, $pageNumber);
+    }
     public function typesetting_composition_renderBook($bookId) {
         return TypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
     }
@@ -706,9 +710,9 @@ class Sf
         return TypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);
     }
 
-    public function typesetting_composition_getIllustrationProperties() {
-        return TypesettingCompositionCommands::getIllustrationProperties($this->_projectId);
-    }
+//    public function typesetting_composition_getIllustrationProperties() {
+//        return TypesettingCompositionCommands::getIllustrationProperties($this->_projectId);
+//    }
 
     public function typesetting_composition_setIllustrationProperties($illustrationModel) {
         return TypesettingCompositionCommands::setIllustrationProperties($this->_projectId, $illustrationModel);
@@ -719,12 +723,20 @@ class Sf
     public function typesetting_composition_getBookDto($bookId) {
         return TypesettingCompositionCommands::getBookDto($this->_projectId, $bookId);
     }
-    public function typesetting_composition_getPageStatus($bookId) {
-        return TypesettingCompositionCommands::getPageStatus($this->_projectId, $bookId);
-    }
+//    public function typesetting_composition_getPageStatus($bookId) {
+//        return TypesettingCompositionCommands::getPageStatus($this->_projectId, $bookId);
+//    }
     public function typesetting_composition_setPageStatus($bookId, $pages) {
         return TypesettingCompositionCommands::setPageStatus($this->_projectId, $bookId, $pages);
     }
+
+
+    //Rendered Page for Book
+    //get
+    public function typesetting_rendered_page_getRenderedPageDto() {
+        return TypesettingRenderedPageCommands::getRenderedPageDto($this->_projectId);
+    }
+
 
     public function typesetting_readAssetsDto() {
         return TypesettingAssetDto::encode($this->_projectId);
@@ -733,7 +745,7 @@ class Sf
     // ---------------------------------------------------------------
     // Upload API
     // ---------------------------------------------------------------
-    public function typsetting_upload_importProjectZip($mediaType, $tmpFilePath)
+    public function typesetting_upload_importProjectZip($mediaType, $tmpFilePath)
     {
         $response = TypesettingUploadCommands::importProjectZip($this->_projectId, $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);

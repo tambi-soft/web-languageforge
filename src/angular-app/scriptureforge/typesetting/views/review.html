@@ -1,7 +1,8 @@
-<div data-ng-cloak data-ng-controller="compositionCtrl" style="text-align: center;">
-    <div class="Container" style="display:inline-flex;">
-        <div>
-                <div class="col-lg-6">
+<div data-ng-cloak data-ng-controller="reviewCtrl" style="text-align: center;">
+    <div class="Container inline-block ">
+
+            <div style="width:400px" >
+                <div style="width:400px ">
                     <div class="prev">
                         <button type="button" class="btn btn-link "
                                 data-ng-click="decreasePage()">&laquo</button>
@@ -22,20 +23,30 @@
                               data-ng-style="{width: 100/pages.length + '%', 'background-color':page}"></span>
                     </div>
                 </div>
-                <div class="imagesContainers">
-                    <!--<div class="col-md-4 imageDiv"-->
-                         <!--data-ng-class="{grey:selectedPage%2==1}">-->
-                        <!--<img data-ng-src="{{renderedImageLeft || '//:0'}}"-->
-                             <!--data-ng-class="{imageBorder:renderedImageLeft}" />-->
-                    <!--</div>-->
-
-                    <div class="col-md-4 imageDiv">
-                        <img data-ng-src="{{renderedImageRight || '//:0'}}"
-                             data-ng-class="{imageBorder:renderedImageRight}" />
+                <div class="imagesContainers" style="width:400px ">
+                    <div class=" imageDiv" style="width:400px ">
+                        <img data-ng-src="{{renderedPage}}"
+                             data-ng-class="{imageBorder:renderedPage}" />
                     </div>
+
+                    <!--<div class="col-md-4 imageDiv"-->
+                         <!--data-ng-class="{grey:selectedPage%2==0}">-->
+                        <!--<img data-ng-src="{{renderedImageRight || '//:0'}}"-->
+                             <!--data-ng-class="{imageBorder:renderedImageRight}" />-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <textarea rows="10" cols="500">Add a new comment</textarea>
+                    <button >Submit</button>
+                </div>
+                <div data-ng-repeat="comment in comments">
+                    <label >{{comment}}</label>
                 </div>
 
-        </div>
+            </div>
 
     </div>
+
 </div>
