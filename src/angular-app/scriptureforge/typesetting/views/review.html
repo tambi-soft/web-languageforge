@@ -3,13 +3,11 @@
         <div class="row">
             <div class="col-lg-6">
 
-                <button type="button" class="btn btn-primary btn-sm"
-                        data-ng-click="save()">Save</button>
+                <button type="button"  data-ng-click="save()">Save</button>
                 <div class="page-select">
                     page: <input data-ng-keyup="$event.keyCode==13 && updatePage()"
                                  class="pageNumber" data-ng-model="pageInput">
-                    <button type="button" class="btn btn-primary btn-sm"
-                            data-ng-click="updatePage()">GO</button>
+                    <button type="button" data-ng-click="updatePage()">GO</button>
                 </div>
             </div>
 
@@ -50,14 +48,19 @@
                         </div>
                     </div>
                     <div class="span4 card">
-                        <div>
+                        <div style="display: block">
+                            <div class="chapterVerse">
+                                <label>Chapter:</label>
+                                <textarea></textarea>
+                                <label>, verse:</label>
+                                <textarea></textarea>
+                            </div>
                             <textarea rows="10" cols="500" onfocus="">Add a new comment </textarea>
                             <button >Submit</button>
                         </div>
                         <div data-ng-repeat="comment in comments">
                             <label >{{comment}}</label>
                         </div>
-
                     </div>
                 </div>
             </div>

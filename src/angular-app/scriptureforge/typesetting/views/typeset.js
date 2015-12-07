@@ -2,7 +2,7 @@
 
 angular.module('typesetting.typeset',
         [ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
-            'typesetting.compositionServices',
+            'typesetting.compositionServices', 'typesetting.renderedPageServices',
             'composition.selection' ])
 
     .controller(
@@ -12,11 +12,12 @@ angular.module('typesetting.typeset',
             '$state',
             'typesettingSetupService',
             'typesettingCompositionService',
+            'typesettingRenderedPageService',
             'sessionService',
             'modalService',
             'silNoticeService',
             function($scope, $state, typesettingSetupApi,
-                compositionService) {
+                compositionService, renderedPageService) {
               var paragraphProperties = {
               // c1v1: {growthFactor:3},
               };
@@ -227,7 +228,16 @@ angular.module('typesetting.typeset',
                   $scope.paragraphGrowthFactor = paragraphProperties[currentVerse].growthFactor;
                 }
               });
-              
+              var getRenderedPageDto = function getRenderedPageDto(){
+                initializeBook();
+                renderedPageService.getRenderedPageDto(function getRenderedPageDto(result){
+                  $scope.pages = result.data.pages;
+                  $scope.renderedPage = result.data.renderedPage;
+                  $scope.selectedPage = 1;
+                  $scope.comments = result.data.comments;
+                });
+              };
+              getRenderedPageDto();
               getPageDto();
               
             } ]);
