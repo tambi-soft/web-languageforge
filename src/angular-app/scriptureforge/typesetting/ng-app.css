@@ -1,6 +1,6 @@
 /* typesetting css */
 #maincontainer{
-background-color: bisque !important;
+    'background-color: bisque !important;
 }
 #typesetting-hmenu {
     overflow: visible;
