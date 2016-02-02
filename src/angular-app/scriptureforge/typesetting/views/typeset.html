@@ -1,17 +1,5 @@
 <div data-ng-cloak data-ng-controller="compositionCtrl" style="text-align: center;">
     <div class="Container spanWorkspace">
-        <div class="row">
-            <div class="col-lg-6">
-
-                
-                <div class="page-select">
-                    page: <input data-ng-keyup="$event.keyCode==13 && updatePage()"
-                        class="pageNumber" data-ng-model="pageInput">
-                    <button data-ng-click="updatePage()">GO</button>
-                </div>
-            </div>
-
-        </div>
         <div class="row-fluid composition-bottom">
             <div class="span12 cont1">
                 <div class="row-fluid" id="sourceProperties">
@@ -89,49 +77,14 @@
 							</div>
 						</div>
 					<div class="row">
-                    <div class="span12">
-                        <div class="prev">
-                            <button type="button" class="btn btn-link "
-                                    data-ng-click="decreasePage()">&laquo</button>
-                        </div>
-                        <div class="next">
-                            <button type="button" class="btn btn-link"
-                                    data-ng-click="increasePage()">&raquo</button>
-                        </div>
-                        <div
-                                class="progress-bar composition-progress-bar progress-bar-slider"
-                                data-ng-class="{invisible:pages.length==0}">
-                            <input class="progress-slider" type="range" min="0"
-                                   max="{{pages.length}}" data-ng-model="selectedPage">
-                            <div class="inner"
-                                 data-ng-style="{ width: (selectedPage)/pages.length*100 + '%' || '0%' }"></div>
-                        <span class="sliderRanges"
-                              data-ng-repeat="page in pages track by $index"
-                              data-ng-style="{width: 100/pages.length + '%', 'background-color':page}"></span>
-                        </div>
-                        <div class="span1"></div>
-                        <div class="span10">
-                       		<iframe id="viewer" src="/web/viewer.html?file=%2F../web/compressed.tracemonkey-pldi-09.pdf"></iframe>
-                        </div><!-- End Viewer -->
-                    
-                 </div>
-                 </div>
-                 
-                 <div class="cardList">
-                       		<label>Comments</label>
-							<div class="card" style="text-align:left;">
-								<div data-ng-repeat="comment in comments">
-									<label>{{comment}}</label>
-									<button class="btn btn-link">reply</button>
-								</div>
-
-								<div data-ng-repeat="comment in comments">
-									<label>{{comment}}</label>
-									<button class="btn btn-link">reply</button>
-								</div>
-							</div>
-						</div>
-            </div>
-        </div>
-    </div>
+                        <div class="span12">
+                            <div class="span1"></div>
+                            <div class="span10">
+                                <iframe data-ng-model="renderedPage" id="viewer"  src="/angular-app/scriptureforge/typesetting/views/web/viewer.html?file=%2F../views/web/compressed.tracemonkey-pldi-09.pdf"></iframe>
+                            </div><!-- End Viewer -->
+                         </div>
+                    </div>
+                </div>
+             </div>
+         </div>
 </div>

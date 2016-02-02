@@ -95,7 +95,7 @@ class TypesettingCompositionCommands
     }
     public static function getRenderedPageForBook($projectId, $bookId, $pageNumber)
     {
-        return "http://digital.library.unt.edu/ark:/67531/metadc13276/m1/56/med_res/";
+        return "/../../../../../../Publishing/KYU-MYMR-KYUMTEST/Deliverable/KYU-MYMR-KYUMTEST_GOSPEL_044-jhn_20160124.pdf";
 
     }
 

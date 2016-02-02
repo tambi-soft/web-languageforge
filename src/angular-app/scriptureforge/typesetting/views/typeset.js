@@ -4,7 +4,6 @@ angular.module('typesetting.typeset',
         [ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
             'typesetting.compositionServices', 'typesetting.renderedPageServices',
             'composition.selection' ])
-
     .controller(
         'compositionCtrl',
         [
@@ -72,10 +71,9 @@ angular.module('typesetting.typeset',
                     function(result) {
                       if (pageNum == 0 || pageNum > $scope.pages.length)
                         result.data = "";
-                      if (pageNum % 2 == 0)
-                        $scope.renderedImageLeft = result.data;
                       else
-                        $scope.renderedImageRight = result.data;
+                        $scope.renderedPage = result.data;
+
                     });
               };
               var getPageStatus = function getPageStatus(){
@@ -133,8 +131,7 @@ angular.module('typesetting.typeset',
                 $scope.verse = "";
                 $scope.chapter = "";
                 $scope.pages = [];
-                $scope.renderedImageLeft = "";
-                $scope.renderedImageRight = "";
+                $scope.renderedPage = "";
                 $scope.selectedPage = 1;
               };
               
@@ -197,22 +194,7 @@ angular.module('typesetting.typeset',
                 paragraphProperties[currentVerse].growthFactor = $scope.paragraphGrowthFactor;
               };
               
-              $scope.$watch('selectedPage', function() {
-                $scope.selectedPage = parseInt($scope.selectedPage);
-                if ($scope.selectedPage <= 0)
-                  $scope.selectedPage = 1;
-                if(!$scope.pages)return;
-                if ($scope.selectedPage > $scope.pages.length)
-                  $scope.selectedPage = $scope.pages.length;
-                $scope.pageInput = $scope.selectedPage;
-                if ($scope.selectedPage % 2 == 0) {
-                  getRenderedPageForBook($scope.selectedPage);
-                  getRenderedPageForBook($scope.selectedPage + 1);
-                } else {
-                  getRenderedPageForBook($scope.selectedPage - 1);
-                  getRenderedPageForBook($scope.selectedPage);
-                }
-              });
+
               $scope.$watch('paragraphNode',function() {
                 if (!$scope.paragraphNode)
                   return;
@@ -231,12 +213,12 @@ angular.module('typesetting.typeset',
               var getRenderedPageDto = function getRenderedPageDto(){
                 initializeBook();
                 renderedPageService.getRenderedPageDto(function getRenderedPageDto(result){
-                  $scope.pages = result.data.pages;
                   $scope.renderedPage = result.data.renderedPage;
-                  $scope.selectedPage = 1;
-                  $scope.comments = result.data.comments;
                 });
               };
+              var app = angular.module('App', ['pdf']);
+
+
               getRenderedPageDto();
               getPageDto();
               
