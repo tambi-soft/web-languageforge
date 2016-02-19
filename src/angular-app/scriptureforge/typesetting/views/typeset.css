@@ -155,6 +155,9 @@
     padding: 20px 0;
 
 }
+.card >div {
+    margin-left: 80px;
+}
 .card >div >label {
     float: left;
     display: inline-block;
