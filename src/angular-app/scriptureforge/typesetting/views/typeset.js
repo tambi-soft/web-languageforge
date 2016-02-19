@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('typesetting.typeset',
         [ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
             'typesetting.compositionServices', 'typesetting.renderedPageServices',
@@ -27,8 +25,8 @@ angular.module('typesetting.typeset',
 //                $scope.pages.push("red");
 //              }
 
-              $scope.path = "/web/viewer.html?file=%2F../web/compressed.tracemonkey-pldi-09.pdf";
-              
+              $scope.path="../../web/viewer.html?file=%2F../../web/compressed.tracemonkey-pldi-09.pdf";
+
               $scope.renderRapuma = function() {
                 compositionService.renderBook($scope.bookID,
                     function(result) {
@@ -215,9 +213,9 @@ angular.module('typesetting.typeset',
                 initializeBook();
                 renderedPageService.getRenderedPageDto(function getRenderedPageDto(result){
                   $scope.renderedPage = result.data.renderedPage;
+                  $scope.comments = result.data.comments;
                 });
               };
-              var app = angular.module('App', ['pdf']);
 
 
               getRenderedPageDto();
