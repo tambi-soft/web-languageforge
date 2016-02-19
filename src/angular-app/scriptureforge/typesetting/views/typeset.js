@@ -27,7 +27,8 @@ angular.module('typesetting.typeset',
 //              for (var i = 0; i < 31; i++) {
 //                $scope.pages.push("red");
 //              }
-              
+
+              $scope.path = "/web/viewer.html?file=%2F../web/compressed.tracemonkey-pldi-09.pdf";
               
               $scope.renderRapuma = function() {
                 compositionService.renderBook($scope.bookID,
