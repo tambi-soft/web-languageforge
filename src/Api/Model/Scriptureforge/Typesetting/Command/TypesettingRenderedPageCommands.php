@@ -42,7 +42,7 @@ class TypesettingRenderedPageCommands
 
     public static function getRenderedPage()
     {
-        return "/../../../../../../Publishing/KYU-MYMR-KYUMTEST/Deliverable/KYU-MYMR-KYUMTEST_GOSPEL_044-jhn_20160124.pdf";
+        return "../../web/viewer.html?file=%2F../../web/Matthew.pdf";
 
     }
 

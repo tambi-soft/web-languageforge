@@ -81,11 +81,9 @@
 
 
                         <div class="span1"></div>
-                        <div class="span10">
-                            <div class="wrapper" ng-controller="DocCtrl">
-                                <ng-pdf template-url="/partials/viewer.html"></ng-pdf>
-                            </div>
-                            <iframe id="viewer" src="../../web/viewer.html?file=%2F../../web/compressed.tracemonkey-pldi-09.pdf"></iframe>
+                        <div class="span10" data-ng-model="path">
+                            <!--<iframe id="viewer" src="../../web/viewer.html?file=%2F../../web/compressed.tracemonkey-pldi-09.pdf"></iframe>-->
+                            <iframe id="viewer" src={{renderedPage}}></iframe>
                         </div><!-- End Viewer -->
                     
                  </div>
