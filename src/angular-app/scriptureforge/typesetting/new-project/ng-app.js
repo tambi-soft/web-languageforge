@@ -1,6 +1,17 @@
 'use strict';
 
-angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate', 'bellows.services', 'palaso.ui.listview', 'ui.bootstrap', 'palaso.ui.notice', 'palaso.ui.utils', 'wc.Directives'])
+angular.module('typesetting-new-project',
+    [
+      'ui.router',
+      'pascalprecht.translate',
+      'bellows.services',
+      'palaso.ui.listview',
+      'ui.bootstrap',
+      'palaso.ui.notice',
+      'palaso.ui.utils',
+      'typesetting.renderServices',
+      'wc.Directives'
+    ])
   .config(['$stateProvider', '$urlRouterProvider', '$translateProvider',
     function($stateProvider, $urlRouterProvider, $translateProvider) {
 
@@ -37,14 +48,15 @@ angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate'
           }
         },]);
     },])
-  .controller('NewTypesettingProjectCtrl', ['$scope', 'projectService', 'sessionService', 'silNoticeService', '$window', 'sfchecksLinkService',
-    function($scope, projectService, ss, notice, $window, linkService) {
+  .controller('NewTypesettingProjectCtrl', ['$scope', 'projectService','typesettingRenderService', 'sessionService', 'silNoticeService', '$window', 'sfchecksLinkService',
+    function($scope, projectService, ss, notice, $window, linkService,renderService) {
       $scope.newProject = {};
 
       // Add new project
       $scope.addProject = function() {
         if ($scope.projectCodeState == 'ok') {
           $scope.isSubmitting = true;
+          renderService.createRapumaProject($scope.newproject.projectName);
           projectService.create($scope.newProject.projectName, $scope.newProject.projectCode, 'typesetting', function(result) {
             //$scope.isSubmitting = false;
             if (result.ok) {

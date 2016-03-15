@@ -7,25 +7,21 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
 
     $scope.sections = [
       {
-        title:'ParaTExt Texts',
+        title:'Source Text',
         fileType:'usfm-zip',
         assets:[],
-        limit:1,
+        limit:1
       },
       {
         title:'Illustrations',
         fileType:'png',
-        assets:[],
+        assets:[]
       },
-      /*{'title':'Cover / Maps',
-       'fileType':'png',
-       'assets':[]},
-       {'title':'Fonts',
-       'fileType':'ttf',
-       'assets':[]},
-       {'title':'Front & Back Matter',
-       'fileType':'pdf',
-       'assets':[]},*/
+      {
+        title:'Fonts',
+        fileType:'zip',
+        assets:[]
+      }
     ];
 
     // Get any existing assets from the database on load
@@ -136,4 +132,4 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
             });
        */
     };
-  },]);
+  }]);
