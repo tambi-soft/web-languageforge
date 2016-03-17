@@ -66,12 +66,11 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
           $upload.upload({
             // upload.php script
             url: '/upload/sf-typesetting/' + section.fileType,
-
-            // headers: {'myHeaderKey': 'myHeaderVal'},
             data: {
               filename: file.name,
+
             },
-            file: file,
+            file:file
           }).progress(function(evt) {
             $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
           }).success(function(data, status, headers, config) {

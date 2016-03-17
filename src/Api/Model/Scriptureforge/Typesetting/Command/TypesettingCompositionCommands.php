@@ -84,13 +84,15 @@ class TypesettingCompositionCommands
 
     }
 
-    public static function renderBook($projectId, $bookId)
+    public static function renderBook($projectName)
     {
+        $cmd = "rapuma publication" . + $projectName . + "project create" ;
+        $error = shell_exec($cmd);
+        return $error;
 
     }
     public static function getComments($projectId, $bookId)
     {
-       // return ['comment' =>'asf','asdf','asdf','asdf'];
        return array("commentOne", "CommentTwo","blah, blah, blah, blah, blah, blah, blah, blah");
     }
     public static function getRenderedPageForBook($projectId, $bookId, $pageNumber)
@@ -99,11 +101,21 @@ class TypesettingCompositionCommands
 
     }
 
+    /**
+     * @param $projectID
+     */
+    public static function  getProjectName($projectID)
+    {
+        $projectModel = new ProjectModel($projectID);
+        $projectName = $projectModel->projectName;
+        return $projectName;
+    }
     public static function getPageDto($projectId)
     {
         $bookID = 'id1';
         return array('books' => TypesettingCompositionCommands::getListOfBooks($projectId),
                     'bookID' => $bookID,
+                    'projectName' => TypesettingCompositionCommands::getProjectName($projectId),
                     'bookHTML' => TypesettingCompositionCommands::getBookHTML($projectId, $bookID),
                     'paragraphProperties' => TypesettingCompositionCommands::getParagraphProperties($projectId, $bookID),
                     'illustrationProperties' => TypesettingCompositionCommands::getIllustrationProperties($projectId),

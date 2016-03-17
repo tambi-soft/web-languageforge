@@ -8,7 +8,7 @@ use Api\Model\Mapper\JsonEncoder;
 use Api\Model\ProjectModel;
 use Api\Model\Scriptureforge\Typesetting\SettingModel;
 
-class TypesettingRenderCommands
+class TypesettingRapumaCommands
 {
     public static function doRender($projectId, $userId)
     {
@@ -26,5 +26,23 @@ class TypesettingRenderCommands
         // TODO: kick off render here
         
         return $newSettingsModel->write();
+    }
+
+    public static function createRapumaProject($ProjectName){
+
+        $cmd = "rapuma publication ";
+        $cmd.= $ProjectName;
+        $cmd.= " project create" ;
+        $error = shell_exec($cmd);
+        return $error;
+
+
+    }
+    public static function renderProject($ProjectName){
+        $cmd = "rapuma process " ;
+        $cmd.= $ProjectName ;
+        $cmd.= " group render --group GOSPEL" ;
+        $error = shell_exec($cmd);
+        return $error;
     }
 }

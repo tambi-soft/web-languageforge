@@ -49,13 +49,5 @@ angular.module('typesetting.compositionServices', ['jsonRpc'])
       jsonRpc.call('typesetting_composition_setPageStatus', [bookId, pages], callback);
     };
 
-  },])
-  .service('typesettingSetupService', ['jsonRpc',
-  function(jsonRpc) {
-    jsonRpc.connect('/api/sf');
-
-    this.setupPageDto = function(callback) {
-    };
-
-  },]);
+  }]);
 

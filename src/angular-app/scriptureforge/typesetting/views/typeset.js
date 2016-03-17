@@ -1,6 +1,6 @@
 angular.module('typesetting.typeset',
         [ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
-            'typesetting.compositionServices', 'typesetting.renderedPageServices',
+            'typesetting.compositionServices', 'typesetting.renderedPageServices','typesetting.renderServices',
             'composition.selection' ])
     .controller(
         'compositionCtrl',
@@ -10,28 +10,19 @@ angular.module('typesetting.typeset',
             'typesettingSetupService',
             'typesettingCompositionService',
             'typesettingRenderedPageService',
+            'typesettingRenderService',
             'sessionService',
             'modalService',
             'silNoticeService',
             function($scope, $state, typesettingSetupApi,
-                compositionService, renderedPageService) {
-              var paragraphProperties = {
-              // c1v1: {growthFactor:3},
-              };
+                compositionService, renderedPageService, renderService) {
+              var paragraphProperties = {};
               var illustrationProperties = {};
               $scope.listOfBooks = [];
               var currentVerse;
-//              for (var i = 0; i < 31; i++) {
-//                $scope.pages.push("red");
-//              }
-
-              $scope.path="../../web/viewer.html?file=%2F../../web/compressed.tracemonkey-pldi-09.pdf";
 
               $scope.renderRapuma = function() {
-                compositionService.renderBook($scope.bookID,
-                    function(result) {
-                      //nothing todo?
-                    });
+               renderService.renderProject($scope.projectName);
               };
               var getBookHTML = function getBookHTML() {
                 compositionService.getBookHTML($scope.bookID,
@@ -90,6 +81,7 @@ angular.module('typesetting.typeset',
                 compositionService.getPageDto(function getPageDto(result){
                   $scope.listOfBooks = result.data.books;
                   $scope.bookID = result.data.bookID;
+                  $scope.projectName = result.data.projectName;
                   $scope.bookHTML = result.data.bookHTML;
                   // TODO Fix this in php side
                   paragraphProperties = result.data.paragraphProperties;
@@ -134,7 +126,6 @@ angular.module('typesetting.typeset',
                 $scope.selectedPage = 1;
               };
               
-              
               $scope.bookChanged = function bookChanged(){
                 setParagraphProperties();
                 setIllustrationProperties();
@@ -176,7 +167,7 @@ angular.module('typesetting.typeset',
                   caption: "",
                   useCaption: false,
                   useIllustration:true
-                }
+                };
                 $scope.location = illustrationProperties[$scope.currentImage].location;
                 $scope.imageWidth = parseInt(illustrationProperties[$scope.currentImage].width);
                 $scope.scale = illustrationProperties[$scope.currentImage].scale;

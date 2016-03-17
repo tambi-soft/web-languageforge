@@ -21,7 +21,7 @@ use Api\Model\Scriptureforge\Typesetting\Command\TypesettingRenderedPageCommands
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingDiscussionListCommands;
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingSettingsCommands;
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingTemplateCommands;
-use Api\Model\Scriptureforge\Typesetting\Command\TypesettingRenderCommands;
+use Api\Model\Scriptureforge\Typesetting\Command\TypesettingRapumaCommands;
 use Api\Model\Scriptureforge\Typesetting\Command\TypesettingUploadCommands;
 use Api\Model\Scriptureforge\Typesetting\Dto\TypesettingAssetDto;
 use Api\Model\Scriptureforge\Typesetting\Dto\TypesettingDiscussionListDto;
@@ -654,7 +654,9 @@ class Sf
     public function typesetting_discussionList_getThread($threadId) {
         return TypesettingDiscussionListCommands::getThread($this->_projectId, $threadId);
     }
-
+    public function typesetting_create_Rapuma_Project($projectName){
+        return TypesettingRapumaCommands::createRapumaProject($projectName);
+    }
     public function typesetting_rapuma_render(){
         return array('pdfUrl' => "assets/ngTraining.pdf");
     }
@@ -663,7 +665,7 @@ class Sf
         return TypesettingRenderPageDto::encode($this->_projectId);
     }
     public function typesetting_render_doRender() {
-        TypesettingRenderCommands::doRender($this->_projectId, $this->_userId);
+        TypesettingRapumaCommands::doRender($this->_projectId, $this->_userId);
     }
 
 
@@ -704,6 +706,9 @@ class Sf
     }
     public function typesetting_composition_renderBook($bookId) {
         return TypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
+    }
+    public function typesetting_render_Project($projectName) {
+        return TypesettingRapumaCommands::renderProject($projectName);
     }
 
     public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {

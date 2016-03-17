@@ -36,34 +36,32 @@ angular.module('typesetting-new-project',
         .state('newProject.name', {
           templateUrl: '/angular-app/scriptureforge/typesetting/new-project/views/new-project-name.html',
           data: {
-            step: 1,
-          },
-        })
-      ;
-
+            step: 1
+          }
+        });
       $urlRouterProvider
         .when('', ['$state', function($state) {
           if (!$state.$current.navigable) {
             $state.go('newProject.name');
           }
-        },]);
-    },])
+        }]);
+    }])
   .controller('NewTypesettingProjectCtrl', ['$scope', 'projectService','typesettingRenderService', 'sessionService', 'silNoticeService', '$window', 'sfchecksLinkService',
-    function($scope, projectService, ss, notice, $window, linkService,renderService) {
+    function($scope, projectService,renderService, ss, notice, $window, linkService) {
       $scope.newProject = {};
 
       // Add new project
       $scope.addProject = function() {
         if ($scope.projectCodeState == 'ok') {
           $scope.isSubmitting = true;
-          renderService.createRapumaProject($scope.newproject.projectName);
+          renderService.createRapumaProject($scope.newProject.projectName);
           projectService.create($scope.newProject.projectName, $scope.newProject.projectCode, 'typesetting', function(result) {
             //$scope.isSubmitting = false;
             if (result.ok) {
               notice.push(notice.SUCCESS, 'The ' + $scope.newProject.projectName + ' project was created successfully');
 
               // redirect to new project settings page
-              $window.location.href = linkService.project(result.data, 'typesetting');
+             // $window.location.href = linkService.project(result.data, 'typesetting');
             } else {
               $scope.isSubmitting = false;
             }
@@ -136,6 +134,4 @@ angular.module('typesetting-new-project',
           $scope.projectCodeState = 'invalid';
         }
       };
-    },])
-
-;
+    }]);

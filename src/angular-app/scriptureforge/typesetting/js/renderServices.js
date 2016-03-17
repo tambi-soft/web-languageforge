@@ -9,8 +9,12 @@ angular.module('typesetting.renderServices', ['jsonRpc'])
       jsonRpc.call('typesetting_renderPage_dto', [], callback);
     };
 
-    this.createRapumaProject = function createRapumaProject(callback) {
-      jsonRpc.call('typesetting_create_Rapuma_Project', [], callback);
+    this.renderProject = function renderProject(projectName,callback) {
+      jsonRpc.call('typesetting_render_Project', [projectName], callback);
+    };
+
+    this.createRapumaProject = function createRapumaProject(projectName,callback) {
+      jsonRpc.call('typesetting_create_Rapuma_Project', [projectName], callback);
     };
 
     this.doRender = function doRender(callback) {
