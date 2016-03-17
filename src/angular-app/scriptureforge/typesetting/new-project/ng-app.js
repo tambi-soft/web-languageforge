@@ -76,6 +76,7 @@ angular.module('typesetting-new-project',
       $scope._projectNameToCode = function(name) {
         if (angular.isUndefined(name)) return undefined;
         return 'typesetting-' + name.toLowerCase().replace(/ /g, '_');
+          //test
       };
 
       $scope._isValidProjectCode = function(code) {
