@@ -7,9 +7,16 @@ use Api\Model\Mapper\JsonDecoder;
 use Api\Model\Mapper\JsonEncoder;
 use Api\Model\ProjectModel;
 use Api\Model\Scriptureforge\Typesetting\SettingModel;
+use Api\Model\Scriptureforge\TypesettingProjectModel;
+use Palaso\Utilities\FileUtilities;
 
 class TypesettingRapumaCommands
 {
+    /**
+     * @param $projectId
+     * @param $userId
+     * @return string
+     */
     public static function doRender($projectId, $userId)
     {
         $projectModel = new ProjectModel($projectId);
@@ -28,21 +35,156 @@ class TypesettingRapumaCommands
         return $newSettingsModel->write();
     }
 
-    public static function createRapumaProject($ProjectName){
+    /**
+     * @param $ProjectName
+     * @return mixed
+     */
+    public static function createProject($ProjectName){
 
-        $cmd = "rapuma publication ";
-        $cmd.= $ProjectName;
-        $cmd.= " project create" ;
+        //Create project
+        $cmd = "rapuma publication " . $ProjectName . " project create";
         $error = shell_exec($cmd);
-        return $error;
 
-
-    }
-    public static function renderProject($ProjectName){
-        $cmd = "rapuma process " ;
-        $cmd.= $ProjectName ;
-        $cmd.= " group render --group GOSPEL" ;
+        //Create group
+        $cmd = "rapuma content " . $ProjectName . " group add --group NT --comp_type usfm";
         $error = shell_exec($cmd);
+
         return $error;
     }
+
+    /**
+     * @param $ProjectName
+     * @param string $groupName
+     * @param string $type
+     * @return mixed
+     */
+    public function createGroup($ProjectName, $groupName = "NT", $type = "usfm"){
+        $cmd = "rapuma content " . $ProjectName . " group add --group " . $groupName . " --comp_type " . $type;
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
+
+
+    /**
+     * @param $projectId
+     * @param $ProjectName
+     * @param string $type
+     * @return mixed
+     */
+    public static function addFont($projectId, $ProjectName, $type= "usfm"){
+        $project = new TypesettingProjectModel($projectId);
+        $path = $project->getAssetsFolderPath();
+
+        $cmd = "rapuma asset " . $ProjectName . " font add --component_type " . $type . " --path " . $path;
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
+    public static function removeFont($projectId, $ProjectName, $type= "usfm"){
+        $project = new TypesettingProjectModel($projectId);
+        $path = $project->getAssetsFolderPath();
+
+        $cmd = "rapuma asset " . $ProjectName . " font update --component_type " . $type . " --path " . $path;
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
+
+    /**
+     * @param $projectId
+     * @param $ProjectName
+     * @param string $type
+     * @return mixed
+     */
+    public static function addMacro($projectId, $ProjectName, $type= "usfm"){
+        $project = new TypesettingProjectModel($projectId);
+        $path = $project->getAssetsFolderPath();
+
+        $cmd = "rapuma asset " . $ProjectName . " macro add --component_type " . $type . " --path " . $path;
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
+
+    /**
+     * @param $projectId
+     * @param $ProjectName
+     * @param string $type
+     * @return mixed
+     */
+    public static function updateMacro($projectId, $ProjectName, $type= "usfm"){
+        $project = new TypesettingProjectModel($projectId);
+        $path = $project->getAssetsFolderPath();
+
+        $cmd = "rapuma asset " . $ProjectName . " macro update --component_type " . $type . " --path " . $path;
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
+
+    /**
+     * @param $projectId
+     * @param $ProjectName
+     * @param string $group
+     * @param string $cidList
+     * @return mixed
+     */
+    public static function addComponent($projectId, $path ,$group= "NT", $cidList = "mat" ){
+        $project = new TypesettingProjectModel($projectId);
+        $projectName = $project->projectName;
+
+        $cmd = "rapuma content " . $projectName . " component add --group " . $group . " --cid_list " . $cidList . " --path  "  . $path;
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
+
+    /**
+     * @param $projectId
+     * @param $ProjectName
+     * @param string $group
+     * @param string $cidList
+     * @return mixed
+     */
+    public static function updateComponent($projectId, $group= "NT", $cidList = "mat", $path ){
+        $project = new TypesettingProjectModel($projectId);
+        $projectName= $project->projectName;
+
+        $cmd = "rapuma content " . $projectName . " component update --group " . $group . " --cid_list " . $cidList . "--path" . $path;
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
+
+    /**
+     * @param $ProjectName
+     * @return mixed
+     */
+    public static function turnOnIllustrations($ProjectName){
+
+        $cmd = "rapuma setting " . $ProjectName . " layout --section DocumentFeatures --key useFigurePlaceHolders --value False";
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
+
+    /**
+     * @param $ProjectName
+     * @param string $group
+     * @return mixed
+     */
+    public static function renderProject($projectId, $projectName, $group= "NT"){
+        $project = new TypesettingProjectModel($projectId);
+        $path = $project->getAssetsFolderPath()."/renders";
+        FileUtilities::createAllFolders($path);
+        $cmd = "rapuma process " . $projectName . " component render --group " . $group . " --cid_list mat --save --background --doc_info --override  ". $path . "/Mathew.pdf "  . "2>&1";
+        $command = shell_exec($cmd);
+        $path = "../../" . $project->getAssetsRelativePath()."/renders/Matthew.pdf";
+        $outputFile = "../../web/viewer.html?file=%2F" . $path;
+       // $cmd = "rapuma process " . $ProjectName . " group render --group " . $group;
+        //shell_exec($cmd);
+        return $outputFile;
+    }
+
 }

@@ -61,7 +61,7 @@ angular.module('typesetting-new-project',
               notice.push(notice.SUCCESS, 'The ' + $scope.newProject.projectName + ' project was created successfully');
 
               // redirect to new project settings page
-             // $window.location.href = linkService.project(result.data, 'typesetting');
+             $window.location.href = linkService.project(result.data, 'typesetting');
             } else {
               $scope.isSubmitting = false;
             }

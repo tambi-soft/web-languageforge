@@ -655,7 +655,7 @@ class Sf
         return TypesettingDiscussionListCommands::getThread($this->_projectId, $threadId);
     }
     public function typesetting_create_Rapuma_Project($projectName){
-        return TypesettingRapumaCommands::createRapumaProject($projectName);
+        return TypesettingRapumaCommands::createProject($projectName);
     }
     public function typesetting_rapuma_render(){
         return array('pdfUrl' => "assets/ngTraining.pdf");
@@ -708,7 +708,7 @@ class Sf
         return TypesettingCompositionCommands::renderBook($this->_projectId, $bookId);
     }
     public function typesetting_render_Project($projectName) {
-        return TypesettingRapumaCommands::renderProject($projectName);
+        return TypesettingRapumaCommands::renderProject($this->_projectId, $projectName);
     }
 
     public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
@@ -738,8 +738,8 @@ class Sf
 
     //Rendered Page for Book
     //get
-    public function typesetting_rendered_page_getRenderedPageDto() {
-        return TypesettingRenderedPageCommands::getRenderedPageDto($this->_projectId);
+    public function typesetting_rendered_page_getRenderedPageDto($projectName) {
+        return TypesettingRenderedPageCommands::getRenderedPageDto($this->_projectId,$projectName);
     }
 
 

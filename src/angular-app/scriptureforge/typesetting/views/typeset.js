@@ -22,7 +22,10 @@ angular.module('typesetting.typeset',
               var currentVerse;
 
               $scope.renderRapuma = function() {
-               renderService.renderProject($scope.projectName);
+               renderService.renderProject($scope.projectName, function (result) {
+                 $scope.renderedPage = result.data.renderedPage;
+               });
+
               };
               var getBookHTML = function getBookHTML() {
                 compositionService.getBookHTML($scope.bookID,
@@ -76,13 +79,17 @@ angular.module('typesetting.typeset',
                   //nothing todo?
                 });
               };
+
+             // $scope.renderedBook = "../../web/viewer.html?file=%2F../../assets/typesetting/sf_typesetting-adfasdfadsffsa/renders/Matthew.pdf";
+             $scope.renderedBook = "../../web/viewer.html?file=%2F";
               var getPageDto = function getPageDto(){
                 initializeBook();
                 compositionService.getPageDto(function getPageDto(result){
-                  $scope.listOfBooks = result.data.books;
                   $scope.bookID = result.data.bookID;
                   $scope.projectName = result.data.projectName;
                   $scope.bookHTML = result.data.bookHTML;
+                 $scope.renderedBook += result.data.renderedBook;
+                //  $scope.renderedBook = "../../web/viewer.html?file=%2F../../src/assets/typesetting/sf_typesetting-adfasdfadsffsa/renders/Matthew.pdf";
                   // TODO Fix this in php side
                   paragraphProperties = result.data.paragraphProperties;
                   if (paragraphProperties.length == 0) {
@@ -93,8 +100,6 @@ angular.module('typesetting.typeset',
                     illustrationProperties = {};
                   }
                   //console.log(paragraphProperties);
-                  $scope.pages = result.data.pages;
-                  $scope.selectedPage = 1;
                 });
               };
               var getBookDto = function getBookDto(){
@@ -200,16 +205,20 @@ angular.module('typesetting.typeset',
                   $scope.paragraphGrowthFactor = paragraphProperties[currentVerse].growthFactor;
                 }
               });
+              function getRenderedPage(){
+                  renderedPageService.getRenderedPageDto($scope.projectName ,function getRenderedPageDto(result){
+                    $scope.renderedPage = result.data.renderedPage;
+
+                  });
+              }
+
               var getRenderedPageDto = function getRenderedPageDto(){
                 initializeBook();
-                renderedPageService.getRenderedPageDto(function getRenderedPageDto(result){
-                  $scope.renderedPage = result.data.renderedPage;
-                  $scope.comments = result.data.comments;
-                });
+                getRenderedPage();
               };
 
+              getPageDto(); // do this one first
+              //getRenderedPageDto();
 
-              getRenderedPageDto();
-              getPageDto();
               
             } ]);

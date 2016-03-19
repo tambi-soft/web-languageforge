@@ -48,6 +48,13 @@ class Upload extends Base
                         $tmpFilePath
                     ));
                     $response = $api->sfChecks_uploadFile($mediaType, $tmpFilePath);
+                }elseif ($appType == 'sf-typesetting'){
+                    $api = new Sf($app);
+                    $api->checkPermissions('typesetting_uploadFile', array(
+                        $mediaType,
+                        $tmpFilePath
+                    ));
+                    $response = $api->typesetting_uploadFile($mediaType, $tmpFilePath);
                 } elseif ($appType == 'lf-lexicon') {
                     $api = new Sf($app);
                     switch ($mediaType) {

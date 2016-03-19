@@ -297,7 +297,7 @@ class TypesettingUploadCommands
                     $assetId = $asset->write();
                     $data->extractedAssetIds[] = $assetId;
                 }
-
+                TypesettingRapumaCommands::addComponent($projectId,str_replace("FRONT-source", "PT-source", dirname($extractedFilePath)) );
                 // TODO: import extracted USFM files into RaPuMa project
 
             } else {

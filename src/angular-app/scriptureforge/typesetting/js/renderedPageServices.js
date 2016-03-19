@@ -5,8 +5,8 @@ angular.module('typesetting.renderedPageServices', ['jsonRpc'])
   function(jsonRpc) {
     jsonRpc.connect('/api/sf');
 
-    this.getRenderedPageDto = function getRenderedPageDto(callback) {
-      jsonRpc.call('typesetting_rendered_page_getRenderedPageDto', [], callback);
+    this.getRenderedPageDto = function getRenderedPageDto(projectName,callback) {
+      jsonRpc.call('typesetting_rendered_page_getRenderedPageDto', [projectName], callback);
     };
 
   },])
@@ -17,5 +17,5 @@ angular.module('typesetting.renderedPageServices', ['jsonRpc'])
     this.setupPageDto = function(callback) {
     };
 
-  },]);
+  }]);
 

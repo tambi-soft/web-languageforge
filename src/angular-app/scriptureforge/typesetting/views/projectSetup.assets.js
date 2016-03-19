@@ -1,16 +1,16 @@
 //controller for setupProjectAssets
 'use strict';
 
-angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'typesetting.services', 'angularFileUpload', 'palaso.ui.mockUpload'])
-  .controller('projectSetupAssetsCtrl', ['$scope', '$state', '$upload', 'typesettingAssetService', 'sessionService', 'modalService', 'silNoticeService',
-  function($scope, $state, $upload, typesettingAssetService, sessionService, modal, notice) {
+angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate', 'palaso.ui.notice', 'typesetting.services','typesetting.renderServices', 'angularFileUpload', 'palaso.ui.mockUpload'])
+  .controller('projectSetupAssetsCtrl', ['$scope', '$state', '$upload', 'typesettingAssetService', 'typesettingRenderService','sessionService', 'modalService', 'silNoticeService',
+  function($scope, $state, $upload, typesettingAssetService,renderService, sessionService, modal, notice) {
 
     $scope.sections = [
       {
         title:'Source Text',
         fileType:'usfm-zip',
         assets:[],
-        limit:1
+        limit:50
       },
       {
         title:'Illustrations',
@@ -104,7 +104,7 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
 
     $scope.deleteFile = function deleteFile(assets, index) {
       assets.splice(index, 1);
-      $scope.uploadResult = 'File deleted sucessfully.';
+      $scope.uploadResult = 'File deleted successfully.';
       notice.push(notice.SUCCESS, $scope.uploadResult);
     };
 
