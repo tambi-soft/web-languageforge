@@ -38,7 +38,7 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
 
     // For the buttons.
     $scope.newTextCollapsed = true;
-
+    $scope.updateAssets = 0;
     $scope.isCollapsed = function isCollapsed(section, collapsed) {
       if (angular.isDefined(section.limit) && section.assets.length >= section.limit) {
         return true;
