@@ -2,17 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d053a51-077a-4826-b49d-5bc9717cb739" name="Default" comment="Working">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/index.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingCompositionCommands.php" afterPath="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingCompositionCommands.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Api/Library/Shared/Website.php" afterPath="$PROJECT_DIR$/Api/Library/Shared/Website.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php" afterPath="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRenderedPageCommands.php" afterPath="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRenderedPageCommands.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingUploadCommands.php" afterPath="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingUploadCommands.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Api/Model/Shared/Dto/RightsHelper.php" afterPath="$PROJECT_DIR$/Api/Model/Shared/Dto/RightsHelper.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Api/Service/Sf.php" afterPath="$PROJECT_DIR$/Api/Service/Sf.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Site/Controller/Upload.php" afterPath="$PROJECT_DIR$/Site/Controller/Upload.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderedPageServices.js" afterPath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderedPageServices.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/ng-app.js" afterPath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/ng-app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderServices.js" afterPath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderServices.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project-name.html" afterPath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project-name.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project.html" afterPath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.html" afterPath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.js" afterPath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.html" afterPath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js" afterPath="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js" />
     </list>
     <list id="d753c83b-97cb-4314-b35e-ccff6b9b1183" name="New changelist" comment="" />
@@ -44,12 +44,12 @@
         <state>
           <splitter split-orientation="horizontal" split-proportion="0.5">
             <split-first>
-              <leaf>
+              <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
                 <file leaf-file-name="TypesettingCompositionCommands.php" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingCompositionCommands.php">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="686">
-                        <caret line="131" column="24" selection-start-line="131" selection-start-column="24" selection-end-line="131" selection-end-column="24" />
+                      <state relative-caret-position="465">
+                        <caret line="121" column="75" selection-start-line="121" selection-start-column="75" selection-end-line="121" selection-end-column="75" />
                         <folding>
                           <element signature="e#64#97#0#PHP" expanded="true" />
                         </folding>
@@ -60,12 +60,12 @@
               </leaf>
             </split-first>
             <split-second>
-              <leaf>
+              <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
                 <file leaf-file-name="TypesettingRapumaCommands.php" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="409">
-                        <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+                      <state relative-caret-position="112">
+                        <caret line="182" column="0" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
                         <folding />
                       </state>
                     </provider>
@@ -74,8 +74,8 @@
                 <file leaf-file-name="JsonRpcServer.php" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/Api/Library/Shared/Palaso/JsonRpcServer.php">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="475">
-                        <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+                      <state relative-caret-position="310">
+                        <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
                         <folding />
                       </state>
                     </provider>
@@ -84,7 +84,7 @@
                 <file leaf-file-name="TypesettingRenderedPageCommands.php" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRenderedPageCommands.php">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="497">
+                      <state relative-caret-position="792">
                         <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
                         <folding />
                       </state>
@@ -110,102 +110,32 @@
     <favorites_list name="src" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TypesettingUploadCommands.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingUploadCommands.php">
+    <leaf>
+      <file leaf-file-name="renderServices.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderServices.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="299" column="0" selection-start-line="299" selection-start-column="0" selection-end-line="299" selection-end-column="0" />
+            <state relative-caret-position="352">
+              <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Sf.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Api/Service/Sf.php">
+      <file leaf-file-name="RightsHelper.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Api/Model/Shared/Dto/RightsHelper.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="651" column="5" selection-start-line="651" selection-start-column="5" selection-end-line="651" selection-end-column="5" />
+            <state relative-caret-position="457">
+              <caret line="306" column="63" selection-start-line="306" selection-start-column="63" selection-end-line="306" selection-end-column="63" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClassLoader.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/composer/ClassLoader.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="303" column="9" selection-start-line="303" selection-start-column="9" selection-end-line="303" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TypesettingAssetModelMongoMapper.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/TypesettingAssetModelMongoMapper.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="typeset.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="typeset.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="657">
-              <caret line="88" column="63" selection-start-line="88" selection-start-column="63" selection-end-line="88" selection-end-column="63" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ng-app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/ng-app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="653">
-              <caret line="54" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projectSetup.assets.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="angular.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/lib/angular_stable_1.2.15/angular.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="10351" column="4" selection-start-line="10351" selection-start-column="4" selection-end-line="10351" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="angular-file-upload.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor_bower/angularjs-file-upload/angular-file-upload.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="190" column="47" selection-start-line="190" selection-start-column="47" selection-end-line="190" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Upload.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Site/Controller/Upload.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="198">
+              <caret line="72" column="81" selection-start-line="72" selection-start-column="81" selection-end-line="72" selection-end-column="81" />
               <folding />
             </state>
           </provider>
@@ -240,8 +170,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.layout.html" />
-        <option value="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingSettingsCommands.php" />
         <option value="/etc/php5/cli/php.ini" />
         <option value="$PROJECT_DIR$/Api/Model/Scriptureforge/Rapuma/RapumaModel.php" />
         <option value="$PROJECT_DIR$/Api/Model/Scriptureforge/Rapuma/RapumaGroupModel.php" />
@@ -258,7 +186,6 @@
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/web/viewer.html" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/web/viewer.js" />
         <option value="$PROJECT_DIR$/web/viewer.css" />
-        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project.html" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/ng-app.html" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.layout.js" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/discussionThread.js" />
@@ -269,15 +196,12 @@
         <option value="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/RenderedPageCommentModel.php" />
         <option value="$PROJECT_DIR$/js/lib/angular_stable_1.2.15/angular.js" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/review.js" />
-        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.html" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/ng-app.html" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/ng-app.js" />
         <option value="chrome-extension://hdokiejnpimakedhajhdlcegeplioahd/onloadwff.js" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/compositionServices.js" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/layoutServices.js" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/review.html" />
-        <option value="$PROJECT_DIR$/Api/Model/Shared/Dto/RightsHelper.php" />
-        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderServices.js" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/services.js" />
         <option value="$PROJECT_DIR$/Site/Controller/Upload.php" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/ng-app.js" />
@@ -285,12 +209,18 @@
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderedPageServices.js" />
         <option value="/AngularJS Fragment (typeset.html:4990).js" />
         <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.html" />
-        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js" />
         <option value="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingCompositionCommands.php" />
-        <option value="$PROJECT_DIR$/Api/Service/Sf.php" />
-        <option value="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php" />
-        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.js" />
         <option value="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingUploadCommands.php" />
+        <option value="$PROJECT_DIR$/Api/Library/Shared/Website.php" />
+        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project-name.html" />
+        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project.html" />
+        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.html" />
+        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.js" />
+        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderServices.js" />
+        <option value="$PROJECT_DIR$/Api/Service/Sf.php" />
+        <option value="$PROJECT_DIR$/Api/Model/Shared/Dto/RightsHelper.php" />
+        <option value="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php" />
+        <option value="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js" />
       </list>
     </option>
   </component>
@@ -313,10 +243,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1920" />
-    <option name="y" value="32" />
-    <option name="width" value="2560" />
-    <option name="height" value="1408" />
+    <option name="x" value="2980" />
+    <option name="y" value="113" />
+    <option name="width" value="1375" />
+    <option name="height" value="1064" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -344,7 +274,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="1" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
@@ -362,6 +292,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane />
+      </pane>
       <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="New changelist" />
@@ -380,246 +313,10 @@
         </subPane>
         <subPane subId="Tests" />
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Api" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Api" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Api" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Scriptureforge" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Api" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Scriptureforge" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Typesetting" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Api" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Scriptureforge" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Typesetting" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Command" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="angular-app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scriptureforge" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="typesetting" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="angular-app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scriptureforge" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="typesetting" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="angular-app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scriptureforge" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="typesetting" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="angular-app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scriptureforge" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="angular-app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
+    <property name="settings.editor.selected.configurable" value="org.codinjutsu.tools.mongo.view.MongoConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
@@ -648,17 +345,17 @@
     <property name="js.eslint.eslintPackage" value="" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/directive" />
-      <recent name="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/web" />
-      <recent name="$PROJECT_DIR$/Api/Model/Scriptureforge" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Api/Service" />
       <recent name="$PROJECT_DIR$/web" />
       <recent name="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views" />
       <recent name="$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting" />
       <recent name="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/directive" />
+      <recent name="$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/web" />
+      <recent name="$PROJECT_DIR$/Api/Model/Scriptureforge" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.javascript debug">
@@ -746,6 +443,8 @@
       <workItem from="1458274095626" duration="620000" />
       <workItem from="1458275029706" duration="21000" />
       <workItem from="1458340181448" duration="28147000" />
+      <workItem from="1458956804735" duration="249000" />
+      <workItem from="1458957175932" duration="5205000" />
     </task>
     <task id="LOCAL-00001" summary="1 load in comments from api.">
       <created>1447652545714</created>
@@ -919,24 +618,23 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33021000" />
+    <option name="totallyTimeSpent" value="38475000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="32" width="2560" height="1408" extended-state="6" />
-    <editor active="false" />
+    <frame x="2980" y="113" width="1375" height="1064" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17370518" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" x="4131" y="134" width="349" height="1306" />
+      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290566" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" x="4131" y="134" width="349" height="1306" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943925" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1584591" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32364494" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15816733" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.100624025" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13860206" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Mongo Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09521912" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Mongo Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21713148" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30557737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4187298" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299532" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -946,6 +644,7 @@
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32969603" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32364494" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1138,27 +837,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php</url>
-          <line>184</line>
+          <line>198</line>
           <option name="timeStamp" value="240" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php</url>
-          <line>179</line>
+          <line>193</line>
           <option name="timeStamp" value="253" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php</url>
-          <line>178</line>
+          <line>191</line>
           <option name="timeStamp" value="254" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php</url>
-          <line>181</line>
+          <line>195</line>
           <option name="timeStamp" value="255" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php</url>
-          <line>183</line>
+          <line>197</line>
           <option name="timeStamp" value="256" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -1168,7 +867,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/Api/Service/Sf.php</url>
-          <line>741</line>
+          <line>744</line>
           <option name="timeStamp" value="258" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -1180,11 +879,6 @@
           <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingUploadCommands.php</url>
           <line>289</line>
           <option name="timeStamp" value="267" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php</url>
-          <line>133</line>
-          <option name="timeStamp" value="272" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/Api/Library/Shared/Palaso/JsonRpcServer.php</url>
@@ -1200,6 +894,16 @@
           <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingUploadCommands.php</url>
           <line>299</line>
           <option name="timeStamp" value="285" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php</url>
+          <line>210</line>
+          <option name="timeStamp" value="286" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php</url>
+          <line>203</line>
+          <option name="timeStamp" value="287" />
         </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/compositionServices.js</url>
@@ -1289,20 +993,30 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js</url>
           <line>25</line>
-          <properties />
           <option name="timeStamp" value="259" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.js</url>
-          <line>67</line>
-          <properties />
+          <line>72</line>
           <option name="timeStamp" value="283" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js</url>
+          <line>90</line>
+          <properties />
+          <option name="timeStamp" value="288" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js</url>
+          <line>75</line>
+          <properties />
+          <option name="timeStamp" value="289" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="286" />
+      <option name="time" value="290" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="index.php">
@@ -1320,63 +1034,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/ParagraphProperty.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/angular-app/bellows/js/bellows.services.project.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="65" column="4" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="2" column="36" selection-start-line="1" selection-start-column="31" selection-end-line="2" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project-name.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="37" column="73" selection-start-line="37" selection-start-column="73" selection-end-line="37" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/ng-app.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/lib/jquery-1.8.3.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="1" column="37866" selection-start-line="1" selection-start-column="37866" selection-end-line="1" selection-end-column="37866" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/layoutServices.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/review.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/discussionServices.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1478,13 +1135,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Api/Model/Shared/Dto/RightsHelper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="300" column="36" selection-start-line="300" selection-start-column="30" selection-end-line="300" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/http-kernel/HttpKernel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1496,7 +1146,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4466">
           <caret line="205" column="42" selection-start-line="205" selection-start-column="42" selection-end-line="205" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1504,7 +1153,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11748">
           <caret line="565" column="0" selection-start-line="565" selection-start-column="0" selection-end-line="565" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1512,7 +1160,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1166">
           <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1560,7 +1207,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="283">
           <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="101" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1568,7 +1214,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1576,7 +1221,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="292">
           <caret line="72" column="37" selection-start-line="72" selection-start-column="37" selection-end-line="72" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1590,33 +1234,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRenderedPageCommands.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
+        <state relative-caret-position="792">
           <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderServices.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingCompositionCommands.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="686">
-          <caret line="131" column="24" selection-start-line="131" selection-start-column="24" selection-end-line="131" selection-end-column="24" />
-          <folding>
-            <element signature="e#64#97#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/lib/angular_stable_1.2.15/angular.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
+        <state relative-caret-position="227722">
           <caret line="10351" column="4" selection-start-line="10351" selection-start-column="4" selection-end-line="10351" selection-end-column="4" />
           <folding />
         </state>
@@ -1624,7 +1250,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor_bower/angularjs-file-upload/angular-file-upload.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
+        <state relative-caret-position="4180">
           <caret line="190" column="47" selection-start-line="190" selection-start-column="47" selection-end-line="190" selection-end-column="47" />
           <folding />
         </state>
@@ -1632,7 +1258,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/ng-app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="653">
+        <state relative-caret-position="1188">
           <caret line="54" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding />
         </state>
@@ -1646,17 +1272,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Api/Library/Shared/Palaso/JsonRpcServer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Site/Controller/Upload.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
+        <state relative-caret-position="704">
           <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding />
         </state>
@@ -1664,48 +1282,146 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/composer/ClassLoader.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
+        <state relative-caret-position="6490">
           <caret line="303" column="9" selection-start-line="303" selection-start-column="9" selection-end-line="303" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Api/Service/Sf.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="651" column="5" selection-start-line="651" selection-start-column="5" selection-end-line="651" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="657">
-          <caret line="88" column="63" selection-start-line="88" selection-start-column="63" selection-end-line="88" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingUploadCommands.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="299" column="0" selection-start-line="299" selection-start-column="0" selection-end-line="299" selection-end-column="0" />
+        <state relative-caret-position="681">
+          <caret line="287" column="53" selection-start-line="287" selection-start-column="53" selection-end-line="287" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Api/Library/Shared/Website.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="275" column="19" selection-start-line="275" selection-start-column="19" selection-end-line="275" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/sfchecks/new-project/ng-app.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/sfchecks/new-project/ng-app.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project-name.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/sfchecks/new-project/views/new-project-name.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/sfchecks/new-project/views/new-project.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/new-project/views/new-project.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1099">
+          <caret line="54" column="59" selection-start-line="54" selection-start-column="59" selection-end-line="54" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/projectSetup.assets.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="34" column="29" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/js/renderServices.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Api/Model/Shared/Dto/RightsHelper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="457">
+          <caret line="306" column="63" selection-start-line="306" selection-start-column="63" selection-end-line="306" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Api/Library/Shared/Palaso/JsonRpcServer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Api/Service/Sf.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="709" column="62" selection-start-line="709" selection-start-column="62" selection-end-line="709" selection-end-column="62" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingRapumaCommands.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+        <state relative-caret-position="112">
+          <caret line="182" column="0" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Api/Model/Scriptureforge/Typesetting/Command/TypesettingCompositionCommands.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="121" column="75" selection-start-line="121" selection-start-column="75" selection-end-line="121" selection-end-column="75" />
+          <folding>
+            <element signature="e#64#97#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular-app/scriptureforge/typesetting/views/typeset.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="72" column="81" selection-start-line="72" selection-start-column="81" selection-end-line="72" selection-end-column="81" />
           <folding />
         </state>
       </provider>

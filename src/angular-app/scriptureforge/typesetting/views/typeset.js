@@ -80,7 +80,7 @@ angular.module('typesetting.typeset',
                 });
               };
 
-             // $scope.renderedBook = "../../web/viewer.html?file=%2F../../assets/typesetting/sf_typesetting-adfasdfadsffsa/renders/Matthew.pdf";
+             //$scope.renderedBook = "../../web/viewer.html?file=%2F../../assets/typesetting/sf_typesetting-adfasdfadsffsa/renders/Mathew.pdf";
              $scope.renderedBook = "../../web/viewer.html?file=%2F";
               var getPageDto = function getPageDto(){
                 initializeBook();
@@ -88,7 +88,7 @@ angular.module('typesetting.typeset',
                   $scope.bookID = result.data.bookID;
                   $scope.projectName = result.data.projectName;
                   $scope.bookHTML = result.data.bookHTML;
-                 $scope.renderedBook += result.data.renderedBook;
+                  $scope.renderedBook += result.data.renderedBook;
                 //  $scope.renderedBook = "../../web/viewer.html?file=%2F../../src/assets/typesetting/sf_typesetting-adfasdfadsffsa/renders/Matthew.pdf";
                   // TODO Fix this in php side
                   paragraphProperties = result.data.paragraphProperties;

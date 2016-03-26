@@ -1,13 +1,13 @@
 <h3 translate="Choose a project name"></h3>
 
 <form data-ng-submit="addProject()">
-    <div class="form-group">
+    <div class="control-group">
         <input type="text" class="form-control" data-ng-model="newProject.projectName"
             set-focus="!newProjectCollapsed" maxlength="50" required placeholder="Project Name"
             data-idle-validate="checkProjectCode()" data-idle-validate-keypress="resetValidateProjectForm()"/>
     </div>
     <br />
-    <div class="form-group">
+    <div class="control-group">
         <label class="control-label text-muted" translate="Project Code"></label>
         <input type="text" class="form-control" data-ng-model="newProject.projectCode" data-ng-show="newProject.editProjectCode"
                data-ng-trim="false" maxlength="50" required

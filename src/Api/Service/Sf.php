@@ -710,6 +710,9 @@ class Sf
     public function typesetting_render_Project($projectName) {
         return TypesettingRapumaCommands::renderProject($this->_projectId, $projectName);
     }
+    public function typesetting_add_Rapuma_Test_Project() {
+        return TypesettingRapumaCommands::addRapumaTestProject($this->_projectId);
+    }
 
     public function typesetting_composition_getRenderedPageForBook($bookId, $pageNumber) {
         return TypesettingCompositionCommands::getRenderedPageForBook($this->_projectId, $bookId, $pageNumber);

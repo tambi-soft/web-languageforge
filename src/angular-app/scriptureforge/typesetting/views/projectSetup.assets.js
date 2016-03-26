@@ -13,6 +13,11 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
         limit:50
       },
       {
+        title:'Macro',
+        fileType:'zip',
+        assets:[]
+      },
+      {
         title:'Illustrations',
         fileType:'png',
         assets:[]
@@ -38,7 +43,7 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
 
     // For the buttons.
     $scope.newTextCollapsed = true;
-    $scope.updateAssets = 0;
+    $scope.updateAssets = renderService.addRapumaTestProject();
     $scope.isCollapsed = function isCollapsed(section, collapsed) {
       if (angular.isDefined(section.limit) && section.assets.length >= section.limit) {
         return true;

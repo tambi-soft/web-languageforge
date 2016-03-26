@@ -269,6 +269,12 @@ class Website
         $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
         $sites['dev.scriptureforge.org'] = $w;
 
+        $w = new Website('sbu.scriptureforge.org', self::SCRIPTUREFORGE);
+        $w->name = 'Scripture Forge';
+        $w->ssl = true;
+        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
+        $sites['sbu.scriptureforge.org'] = $w;
+
         $w = new Website('demo.dev.scriptureforge.org', self::SCRIPTUREFORGE);
         $w->name = 'Scripture Forge';
         $w->ssl = true;

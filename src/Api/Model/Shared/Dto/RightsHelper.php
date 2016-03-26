@@ -304,7 +304,9 @@ class RightsHelper
             case 'typesetting_composition_renderBook':
                 return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
             case 'typesetting_render_Project':
-                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_add_Rapuma_Test_Project':
+                return $this->userHasProjectRight(Domain::TEXTS+ Operation::VIEW);
             case 'typesetting_composition_getBookHTML':
                 return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
             case 'typesetting_composition_getListOfBooks':

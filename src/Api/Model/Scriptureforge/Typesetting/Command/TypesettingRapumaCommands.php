@@ -41,6 +41,7 @@ class TypesettingRapumaCommands
      */
     public static function createProject($ProjectName){
 
+        
         //Create project
         $cmd = "rapuma publication " . $ProjectName . " project create";
         $error = shell_exec($cmd);
@@ -169,6 +170,18 @@ class TypesettingRapumaCommands
         return $error;
     }
 
+    public static function addIllustrations($ProjectName,$path){
+        $group = 'NT';
+
+        $cmd = "rapuma asset " . $ProjectName . " illustration add --group " . $group . " --path " . $path;
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
+
+
+
+
     /**
      * @param $ProjectName
      * @param string $group
@@ -177,8 +190,9 @@ class TypesettingRapumaCommands
     public static function renderProject($projectId, $projectName, $group= "NT"){
         $project = new TypesettingProjectModel($projectId);
         $path = $project->getAssetsFolderPath()."/renders";
+        $projectName = $project ->projectName;
         FileUtilities::createAllFolders($path);
-        $cmd = "rapuma process " . $projectName . " component render --group " . $group . " --cid_list mat --save --background --doc_info --override  ". $path . "/Mathew.pdf "  . "2>&1";
+        $cmd = "rapuma process " . $projectName . " component render --group " . $group . " --cid_list mat --save --background --doc_info --override  ". $path . "/Matthew.pdf "  . "2>&1";
         $command = shell_exec($cmd);
         $path = "../../" . $project->getAssetsRelativePath()."/renders/Matthew.pdf";
         $outputFile = "../../web/viewer.html?file=%2F" . $path;
@@ -187,4 +201,34 @@ class TypesettingRapumaCommands
         return $outputFile;
     }
 
+    public static function addRapumaTestProject($projectId) {
+        $project = new TypesettingProjectModel($projectId);
+        $ProjectName  = $project->projectName;
+        $group = 'NT';
+        $type = 'usfm';
+
+        //Fonts
+        $path = '/home/superman/Publishing/my_source/assets/fonts/Padauk_2.701.zip';
+        $cmd = "rapuma asset " . $ProjectName . " font add --component_type " . $type . " --path " . $path;
+        $error = shell_exec($cmd);
+
+        //Macros
+        $path = '/home/superman/Publishing/my_source/KYUM/updates/usfmTex_20150504.zip';
+        $cmd = "rapuma asset " . $ProjectName . " macro add --component_type " . $type . " --path " . $path;
+        $error = shell_exec($cmd);
+
+        //Components
+        $path = '/home/superman/Publishing/my_source/KYUM/PT-source';
+        $cmd = "rapuma content " . $ProjectName . " component add --group " . $group . " --cid_list mat --path  "  . $path;
+        $error = shell_exec($cmd);
+
+        //Illustrations
+        $path = '/home/superman/Publishing/my_source/assets/illustrations';
+        $cmd = "rapuma setting " . $ProjectName . " layout --section DocumentFeatures --key useFigurePlaceHolders --value False";
+        $error = shell_exec($cmd);
+        $cmd = "rapuma asset " . $ProjectName . " illustration add --group " . $group . " --path " . $path;
+        $error = shell_exec($cmd);
+
+        return $error;
+    }
 }
