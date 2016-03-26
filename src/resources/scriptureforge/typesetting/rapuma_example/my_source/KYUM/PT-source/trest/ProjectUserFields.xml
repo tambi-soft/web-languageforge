@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectUserFields>
+  <User UserName="Dennis Drescher" />
+  <User UserName="Martin Hosken" />
+  <User UserName="Bobby" />
+  <User UserName="John Bryant">
+    <Field Name="CanEditRenderings">True</Field>
+    <Field Name="CanEditSpellings">True</Field>
+  </User>
+  <User UserName="Ryan Conner" />
+</ProjectUserFields>

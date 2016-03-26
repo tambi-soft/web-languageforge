@@ -208,22 +208,25 @@ class TypesettingRapumaCommands
         $type = 'usfm';
 
         //Fonts
-        $path = '/home/superman/Publishing/my_source/assets/fonts/Padauk_2.701.zip';
+        $path = 'resources/scriptureforge/typesetting/rapuma_example/my_source/assets/fonts/Padauk_2.701.zip';
         $cmd = "rapuma asset " . $ProjectName . " font add --component_type " . $type . " --path " . $path;
         $error = shell_exec($cmd);
 
         //Macros
-        $path = '/home/superman/Publishing/my_source/KYUM/updates/usfmTex_20150504.zip';
+        $path = 'resources/scriptureforge/typesetting/rapuma_example/my_source/KYUM/updates/usfmTex_20150504.zip';
         $cmd = "rapuma asset " . $ProjectName . " macro add --component_type " . $type . " --path " . $path;
         $error = shell_exec($cmd);
 
         //Components
-        $path = '/home/superman/Publishing/my_source/KYUM/PT-source';
+        $path = 'resources/scriptureforge/typesetting/rapuma_example/my_source/KYUM/PT-source';
         $cmd = "rapuma content " . $ProjectName . " component add --group " . $group . " --cid_list mat --path  "  . $path;
         $error = shell_exec($cmd);
 
+
+        $test = (shell_exec("ls"));
+        $test = shell_exec("ls ../../");
         //Illustrations
-        $path = '/home/superman/Publishing/my_source/assets/illustrations';
+        $path = 'resources/scriptureforge/typesetting/rapuma_example/my_source/assets/illustrations';
         $cmd = "rapuma setting " . $ProjectName . " layout --section DocumentFeatures --key useFigurePlaceHolders --value False";
         $error = shell_exec($cmd);
         $cmd = "rapuma asset " . $ProjectName . " illustration add --group " . $group . " --path " . $path;

@@ -89,7 +89,6 @@ angular.module('typesetting.typeset',
                   $scope.projectName = result.data.projectName;
                   $scope.bookHTML = result.data.bookHTML;
                   $scope.renderedBook += result.data.renderedBook;
-                //  $scope.renderedBook = "../../web/viewer.html?file=%2F../../src/assets/typesetting/sf_typesetting-adfasdfadsffsa/renders/Matthew.pdf";
                   // TODO Fix this in php side
                   paragraphProperties = result.data.paragraphProperties;
                   if (paragraphProperties.length == 0) {
