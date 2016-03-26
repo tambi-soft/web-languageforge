@@ -21,12 +21,20 @@ angular.module('typesetting.typeset',
               $scope.listOfBooks = [];
               var currentVerse;
 
-              $scope.renderRapuma = function() {
-               renderService.renderProject($scope.projectName, function (result) {
-                 $scope.renderedPage = result.data.renderedPage;
-               });
-
+              $scope.renderRapuma =  function() {
+                 showLoading();
+                 renderService.renderProject($scope.projectName, function (result) {
+                   $scope.renderedBook = result.data;
+                   $scope.LoadingImg = null;
+                   $scope.LoadingText = null;
+                  });
               };
+              var showLoading = function () {
+                $scope.LoadingImg = "../../web/images/loading-icon.gif";
+                $scope.LoadingText = "Loading";
+                $scope.renderedBook = null;
+              };
+
               var getBookHTML = function getBookHTML() {
                 compositionService.getBookHTML($scope.bookID,
                     function(result) {
@@ -81,24 +89,28 @@ angular.module('typesetting.typeset',
               };
 
              //$scope.renderedBook = "../../web/viewer.html?file=%2F../../assets/typesetting/sf_typesetting-adfasdfadsffsa/renders/Mathew.pdf";
-             $scope.renderedBook = "../../web/viewer.html?file=%2F";
+             //$scope.renderedBook = "../../web/viewer.html?file=%2F";
               var getPageDto = function getPageDto(){
                 initializeBook();
                 compositionService.getPageDto(function getPageDto(result){
                   $scope.bookID = result.data.bookID;
                   $scope.projectName = result.data.projectName;
                   $scope.bookHTML = result.data.bookHTML;
-                  $scope.renderedBook += result.data.renderedBook;
+                  $scope.renderedBook = result.data.renderedBook;
                   // TODO Fix this in php side
                   paragraphProperties = result.data.paragraphProperties;
-                  if (paragraphProperties.length == 0) {
+                  if (!$scope.paragraphProperties) {
                     paragraphProperties = {};
                   }
                   illustrationProperties = result.data.illustrationProperties;
-                  if (illustrationProperties.length == 0) {
+                  if (!$scope.illustrationProperties) {
                     illustrationProperties = {};
                   }
-                  //console.log(paragraphProperties);
+                  if(!$scope.bookHTML){
+                    $scope.NoAssets = true;
+                  }
+                  $scope.LoadingProjectImg = null;
+                  $scope.LoadingProjectText = null;
                 });
               };
               var getBookDto = function getBookDto(){
@@ -117,10 +129,13 @@ angular.module('typesetting.typeset',
                   //console.log(paragraphProperties);
                   $scope.pages = result.data.pages;
                   $scope.selectedPage = 1;
+
                 });
               };
               var initializeBook = function(){
                 $scope.bookHTML = "<b>loading</b>";
+                $scope.LoadingProjectImg = "../../web/images/loading-icon.gif";
+                $scope.LoadingProjectText = "Loading";
                 $scope.currentImage = "";
                 currentVerse = "";
                 $scope.verse = "";
@@ -219,5 +234,9 @@ angular.module('typesetting.typeset',
               getPageDto(); // do this one first
               //getRenderedPageDto();
 
-              
+
+
             } ]);
+   
+
+

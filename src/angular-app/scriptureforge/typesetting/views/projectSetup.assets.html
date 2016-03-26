@@ -52,6 +52,10 @@
             </div>
 
     <div>
-        <button class="btn btn-default" data-ng-click="updateAssets" >init project</button>
+        <button class="btn btn-default" data-ng-click="updateAssets()" >init project</button>
+            <div style="display: inline-block;" >
+                <img id="loading-image" src={{LoadingImg}} ng-show="LoadingImg" class="ng-hide" />
+                <i>{{LoadingText}}</i>
+            </div>
     </div>
 </div>

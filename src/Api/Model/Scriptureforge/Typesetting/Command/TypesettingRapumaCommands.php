@@ -73,9 +73,9 @@ class TypesettingRapumaCommands
      * @param string $type
      * @return mixed
      */
-    public static function addFont($projectId, $ProjectName, $type= "usfm"){
+    public static function addFont($projectId, $path, $type= "usfm"){
         $project = new TypesettingProjectModel($projectId);
-        $path = $project->getAssetsFolderPath();
+        $ProjectName= $project->projectName;
 
         $cmd = "rapuma asset " . $ProjectName . " font add --component_type " . $type . " --path " . $path;
         $error = shell_exec($cmd);
@@ -98,9 +98,9 @@ class TypesettingRapumaCommands
      * @param string $type
      * @return mixed
      */
-    public static function addMacro($projectId, $ProjectName, $type= "usfm"){
+    public static function addMacro($projectId, $path, $type= "usfm"){
         $project = new TypesettingProjectModel($projectId);
-        $path = $project->getAssetsFolderPath();
+        $ProjectName= $project->projectName;
 
         $cmd = "rapuma asset " . $ProjectName . " macro add --component_type " . $type . " --path " . $path;
         $error = shell_exec($cmd);
@@ -134,7 +134,7 @@ class TypesettingRapumaCommands
     public static function addComponent($projectId, $path ,$group= "NT", $cidList = "mat" ){
         $project = new TypesettingProjectModel($projectId);
         $projectName = $project->projectName;
-
+        
         $cmd = "rapuma content " . $projectName . " component add --group " . $group . " --cid_list " . $cidList . " --path  "  . $path;
         $error = shell_exec($cmd);
 
@@ -193,12 +193,8 @@ class TypesettingRapumaCommands
         $projectName = $project ->projectName;
         FileUtilities::createAllFolders($path);
         $cmd = "rapuma process " . $projectName . " component render --group " . $group . " --cid_list mat --save --background --doc_info --override  ". $path . "/Matthew.pdf "  . "2>&1";
-        $command = shell_exec($cmd);
-        $path = "../../" . $project->getAssetsRelativePath()."/renders/Matthew.pdf";
-        $outputFile = "../../web/viewer.html?file=%2F" . $path;
-       // $cmd = "rapuma process " . $ProjectName . " group render --group " . $group;
-        //shell_exec($cmd);
-        return $outputFile;
+        shell_exec($cmd);
+        return TypesettingCompositionCommands::getRenderedBook($projectId);
     }
 
     public static function addRapumaTestProject($projectId) {
@@ -219,6 +215,9 @@ class TypesettingRapumaCommands
 
         //Components
         $path = 'resources/scriptureforge/typesetting/rapuma_example/my_source/KYUM/PT-source';
+        $copyTo = str_replace($path,"PT-source","source");
+        //TODO
+        //   copy($project,$copyTo);
         $cmd = "rapuma content " . $ProjectName . " component add --group " . $group . " --cid_list mat --path  "  . $path;
         $error = shell_exec($cmd);
 

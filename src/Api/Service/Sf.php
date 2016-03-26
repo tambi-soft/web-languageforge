@@ -755,7 +755,7 @@ class Sf
     // ---------------------------------------------------------------
     public function typesetting_upload_importProjectZip($mediaType, $tmpFilePath)
     {
-        $response = TypesettingUploadCommands::importProjectZip($this->_projectId, $mediaType, $tmpFilePath);
+        $response = TypesettingUploadCommands::unpackZip($this->_projectId, $mediaType, $tmpFilePath);
         return JsonEncoder::encode($response);
     }
 

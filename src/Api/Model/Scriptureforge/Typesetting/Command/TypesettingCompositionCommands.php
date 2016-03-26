@@ -14,16 +14,16 @@ class TypesettingCompositionCommands
 {
     public static function getBookHTML($projectId, $bookId)
     {
-        // Return a test HTML file
-        //return file_get_contents(__DIR__ . '/../../../../../docs/samples/JohnHTMLSample2.html');
-
-        // Convert the entire book of John from USFM to HTML and return it
-        $workingTextUsfm = file_get_contents(__DIR__ . '/../../../../../../docs/usfm/KJV/44JHNKJVT.SFM');
-
-        $usfmHelper = new UsfmHelper($workingTextUsfm);
-        $workingTextHtml = $usfmHelper->toHtml();
-
-        return $workingTextHtml;
+        $project = new TypesettingProjectModel($projectId);
+        $pathToFile = $project->getAssetsFolderPath() . "/source/41MATKYUM.SFM";
+        if (file_exists($pathToFile)) {
+            $workingTextUsfm = file_get_contents($pathToFile);
+            $usfmHelper = new UsfmHelper($workingTextUsfm);
+            $workingTextHtml = $usfmHelper->toHtml();
+            return $workingTextHtml;
+        } else {
+            return null;
+        }
     }
 
     public static function getListOfBooks($projectId)
@@ -119,7 +119,11 @@ class TypesettingCompositionCommands
     public static function getRenderedBook($projectId)
     {
         $project = new TypesettingProjectModel($projectId);
-        $path = "../../" . $project->getAssetsRelativePath()."/renders/Matthew.pdf";
+        $pathToFile = "../../" . $project->getAssetsRelativePath()."/renders/Matthew.pdf";
+
+        $path = "../../web/viewer.html?file=%2F" . $pathToFile;
+        $pathToFile = $project->getAssetsFolderPath()."/renders/Matthew.pdf";
+        $path = file_exists($pathToFile) ? $path: null;
         return $path;
     }
 

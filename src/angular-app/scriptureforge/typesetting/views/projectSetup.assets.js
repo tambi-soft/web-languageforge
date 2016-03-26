@@ -7,24 +7,24 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
 
     $scope.sections = [
       {
-        title:'Source Text',
-        fileType:'usfm-zip',
+        title:'Source text',
+        fileType:'component',
         assets:[],
         limit:50
       },
       {
         title:'Macro',
-        fileType:'zip',
+        fileType:'macro',
         assets:[]
       },
       {
         title:'Illustrations',
-        fileType:'png',
+        fileType:'illustrations',
         assets:[]
       },
       {
         title:'Fonts',
-        fileType:'zip',
+        fileType:'font',
         assets:[]
       }
     ];
@@ -32,18 +32,25 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
     // Get any existing assets from the database on load
     typesettingAssetService.readAssets(function(result) {
       var assets = result.data.entries;
-      for (var i in assets) {
-        if (assets[i].type == 'usfm-zip') {
-          $scope.sections[0].assets.push(assets[i]);
-        } else if (assets[i].type == 'png') { // WARNING This will cause problems if there are cover/maps (or other assets) used that are pngs will need another form of identification
-          $scope.sections[1].assets.push(assets[i]);
-        }
-      }
+      // for (var i in assets) {
+      //   if (assets[i].type == 'macro') {
+      //     $scope.sections[0].assets.push(assets[i]);
+      //   } else if (assets[i].type == 'png') { // WARNING This will cause problems if there are cover/maps (or other assets) used that are pngs will need another form of identification
+      //     $scope.sections[1].assets.push(assets[i]);
+      //   }
+      // }
     });
 
     // For the buttons.
     $scope.newTextCollapsed = true;
-    $scope.updateAssets = renderService.addRapumaTestProject();
+    $scope.updateAssets = function () {
+      $scope.LoadingImg = "../../web/images/loading-icon.gif";
+      $scope.LoadingText = "Loading";
+      renderService.addRapumaTestProject(function () {
+        $scope.LoadingImg = null;
+        $scope.LoadingText = null;
+      });
+    };
     $scope.isCollapsed = function isCollapsed(section, collapsed) {
       if (angular.isDefined(section.limit) && section.assets.length >= section.limit) {
         return true;
@@ -67,13 +74,12 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
       var file = $files[0];
       if (angular.isDefined(file)) {
         section.tempFile = file; // This is to display the name of the file temporarily during upload
-        if (file.size <= sessionService.fileSizeMax()) {
+        //if (file.size <= sessionService.fileSizeMax()) {
           $upload.upload({
             // upload.php script
             url: '/upload/sf-typesetting/' + section.fileType,
             data: {
-              filename: file.name,
-
+              filename: file.name
             },
             file:file
           }).progress(function(evt) {
@@ -104,7 +110,7 @@ angular.module('typesetting.projectSetupAssets', ['jsonRpc', 'ui.bootstrap', 'be
           section.tempFile = null;
           $scope.uploadResult = file.name + ' is too large.';
         }
-      }
+      //}
     };
 
     $scope.deleteFile = function deleteFile(assets, index) {
