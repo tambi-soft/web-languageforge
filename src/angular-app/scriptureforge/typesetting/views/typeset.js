@@ -31,7 +31,7 @@ angular.module('typesetting.typeset',
               };
               var showLoading = function () {
                 $scope.LoadingImg = "../../web/images/loading-icon.gif";
-                $scope.LoadingText = "Loading";
+                $scope.LoadingText = "Rendering";
                 $scope.renderedBook = null;
               };
 

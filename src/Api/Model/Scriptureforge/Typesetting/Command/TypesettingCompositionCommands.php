@@ -15,7 +15,8 @@ class TypesettingCompositionCommands
     public static function getBookHTML($projectId, $bookId)
     {
         $project = new TypesettingProjectModel($projectId);
-        $pathToFile = $project->getAssetsFolderPath() . "/source/41MATKYUM.SFM";
+        //$pathToFile = "resources/scriptureforge/typesetting/rapuma_example/my_source/KYUM/PT-source/41MATKYUM.SFM";
+          $pathToFile = $project->getAssetsFolderPath() . "/41MATKYUM.SFM";
         if (file_exists($pathToFile)) {
             $workingTextUsfm = file_get_contents($pathToFile);
             $usfmHelper = new UsfmHelper($workingTextUsfm);

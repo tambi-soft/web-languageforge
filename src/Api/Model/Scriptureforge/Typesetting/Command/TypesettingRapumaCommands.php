@@ -215,9 +215,13 @@ class TypesettingRapumaCommands
 
         //Components
         $path = 'resources/scriptureforge/typesetting/rapuma_example/my_source/KYUM/PT-source';
-        $copyTo = str_replace($path,"PT-source","source");
+        $fullPath = APPPATH."resources/scriptureforge/typesetting/rapuma_example/my_source/KYUM/PT-source/41MATKYUM.SFM";
+        $copyTo = $project->getAssetsFolderPath() ."/41MATKYUM.SFM";
+
+        //FileUtilities::copyDirTree($fullPath,$copyTo);
+        //FileUtilities::createAllFolders($copyTo);
         //TODO
-        //   copy($project,$copyTo);
+        copy($fullPath,$copyTo);
         $cmd = "rapuma content " . $ProjectName . " component add --group " . $group . " --cid_list mat --path  "  . $path;
         $error = shell_exec($cmd);
 
