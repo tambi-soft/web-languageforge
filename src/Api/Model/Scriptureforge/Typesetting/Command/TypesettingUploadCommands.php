@@ -28,7 +28,7 @@ class TypesettingUploadCommands
         $file = $_FILES['file'];
         $fileName = $file['name'];
         $fileName = FileUtilities::replaceSpecialCharacters($fileName);
-        list( $filePath, $moveOk) = self::copyFileToAssets($projectId, $tmpFilePath, $fileName);
+        list( $filePath, $moveOk) = self::copyFileToAssets($projectId, $tmpFilePath, $fileName, $mediaType);
         if($moveOk) {
             switch ($mediaType) {
                 case 'component':
@@ -61,8 +61,8 @@ class TypesettingUploadCommands
     }
 
     public static function importComponent($projectId, $filePath ){
-        $response = self::unpackZip($projectId,$filePath);
-        $filePath = str_replace($filePath,".zip","");
+       // $response = self::unpackZip($projectId,$filePath);
+       // $filePath = str_replace($filePath,".zip","");
         TypesettingRapumaCommands::addComponent($projectId,$filePath);
         return "e";
     }
@@ -461,11 +461,15 @@ class TypesettingUploadCommands
      * @param $fileName
      * @return array
      */
-    public static function copyFileToAssets($projectId, $tmpFilePath, $fileName)
+    public static function copyFileToAssets($projectId, $tmpFilePath, $fileName,$mediaType)
     {
 // make the folders if they don't exist
         $project = new TypesettingProjectModel($projectId);
         $folderPath = $project->getAssetsFolderPath();
+        if($mediaType == 'component')
+        {
+            $folderPath .= '/source';
+        }
         FileUtilities::createAllFolders($folderPath);
 
         // move uploaded file from tmp location to assets

@@ -197,7 +197,22 @@ class TypesettingRapumaCommands
         return TypesettingCompositionCommands::getRenderedBook($projectId);
     }
 
+    public static function  debug_to_console($data){
+
+        if (is_array ($data))
+			 $output = "<script> console.log ( 'Debug Objects" . implode ( ' ' , $data ). "'); </script>" ;
+		 else
+			$output = " <script> console.log ( 'debug Objects: " . $data . "'); </script> " ;
+
+		echo  $output ;
+	}
+
     public static function addRapumaTestProject($projectId) {
+
+        //$data = shell_exec("rapuma -h");
+        //self::debug_to_console($data);
+
+
         $project = new TypesettingProjectModel($projectId);
         $ProjectName  = $project->projectName;
         $group = 'NT';
