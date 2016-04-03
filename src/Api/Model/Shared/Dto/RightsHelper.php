@@ -295,12 +295,18 @@ class RightsHelper
                 return $this->userHasSiteRight(Domain::USERS + Operation::VIEW_OWN);
 
             // ScriptureForge (Typesetting)
+            case 'typesetting_create_Rapuma_Project':
+                return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
             case 'typesetting_readAssetsDto':
             case 'typesetting_uploadFile':
                 return $this->userHasSiteRight(Domain::USERS + Operation::EDIT_OWN);
 
             case 'typesetting_composition_renderBook':
                 return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
+            case 'typesetting_render_Project':
+                return $this->userHasProjectRight(Domain::TEXTS + Operation::EDIT);
+            case 'typesetting_add_Rapuma_Test_Project':
+                return $this->userHasProjectRight(Domain::TEXTS+ Operation::VIEW);
             case 'typesetting_composition_getBookHTML':
                 return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
             case 'typesetting_composition_getListOfBooks':

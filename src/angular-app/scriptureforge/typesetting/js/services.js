@@ -11,21 +11,15 @@ angular.module('typesetting.services', ['jsonRpc'])
     this.editorDto = function(callback) {
     };
 
-  },])
-  .service('typesettingSetupService', ['jsonRpc',
-  function(jsonRpc) {
-    jsonRpc.connect('/api/sf');
+  }])
 
-    this.setupPageDto = function(callback) {
-    };
-
-  },])
-  .service('typesettingAssetService', ['jsonRpc', function(jsonRpc) {
+  .service('typesettingAssetService', ['jsonRpc',
+    function(jsonRpc) {
     jsonRpc.connect('/api/sf');
     this.readAssets = function readAssets(callback) {
       jsonRpc.call('typesetting_readAssetsDto', [], callback);
     };
-  },])
+  }])
 
   //This factory communicates with the layout controller and sends the jsonRpc call
   .factory('templateSaveService', function($rootScope, jsonRpc) {
@@ -83,6 +77,4 @@ angular.module('typesetting.services', ['jsonRpc'])
     };
 
     return templateLoadObject;
-  })
-
-  ;
+  });

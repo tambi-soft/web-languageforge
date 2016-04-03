@@ -13,6 +13,4 @@ angular.module('typesetting.layoutServices', ['jsonRpc'])
       jsonRpc.call('typesetting_layoutSettings_update', [settings], callback);
     };
 
-  },])
-
-  ;
+  }]);

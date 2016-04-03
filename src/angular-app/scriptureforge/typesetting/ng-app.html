@@ -2,36 +2,26 @@
 <div class="content container" data-ng-cloak data-ng-controller="MainCtrl" >
 
     <div id="typesetting-hmenu" class="hdrnav">
-        <div class="btn-group pull-right" data-dropdown data-is-open="settingsButton.isopen"
-            data-tooltip="{{(settingsButton.isopen) ? '' : 'Project Settings'}}" data-tooltip-placement="bottom">
-            <a role="button" class="btn btn-default dropdown-toggle" data-dropdown-toggle>
-                <i class="icon-cog icon-large"></i><span class="caret"></span></a>
-
-        </div>
         <ul class="topNav">
-            <li><a href="/app/projects">My Projects</a></li>
+            <li class="here"><a href="/app/projects">My Projects</a></li>
             <li><a href="/app/activity">Activity</a></li>
-
         </ul>
+        <ul id="top" class="topCrumbs" breadcrumbs></ul>
 
     </div>
 
     <sil-notices></sil-notices>
-        <ul class="projectNav">
-            <li data-ng-class="{ here: $state.includes('typeset') }"><a data-ui-sref="typeset">Typeset</a></li>
-            <li data-ng-class="{ here: $state.includes('review') }"><a data-ui-sref="review">Review</a></li>
-            <!--<li data-ng-class="{ here: $state.includes('render') }"><a data-ui-sref="render">History</a></li>-->
-        </ul>
-    <hr></hr>
-    
+
+    <ul class="projectNav">
+        <li data-ng-class="{ here: $state.includes('typeset') }"><a data-ui-sref="typeset">Typeset</a></li>
+        <li data-ng-class="{ here: $state.includes('review') }"><a data-ui-sref="review">Review</a></li>
+        <li data-ng-class="{ here: $state.includes('layout') }"><a data-ui-sref="layout">Layout</a></li>
+        <li data-ng-class="{ here: $state.includes('assets') }"><a data-ui-sref="assets">Assets</a></li>
+
+    </ul>
 
 
-    <!-- <div data-wc-overlay="" data-wc-overlay-delay="6000">
-    <img src="/Site/views/shared/image/loading.gif" />&nbsp; Loading...
-    </div>-->
-    
-    
+    <hr/>
     <div data-ui-view></div>
     </div>
-</div>
 {% endverbatim %}

@@ -1,6 +1,6 @@
 angular.module('typesetting.typeset',
         [ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
-            'typesetting.compositionServices', 'typesetting.renderedPageServices',
+            'typesetting.compositionServices', 'typesetting.renderedPageServices','typesetting.renderServices',
             'composition.selection' ])
     .controller(
         'compositionCtrl',
@@ -10,29 +10,31 @@ angular.module('typesetting.typeset',
             'typesettingSetupService',
             'typesettingCompositionService',
             'typesettingRenderedPageService',
+            'typesettingRenderService',
             'sessionService',
             'modalService',
             'silNoticeService',
             function($scope, $state, typesettingSetupApi,
-                compositionService, renderedPageService) {
-              var paragraphProperties = {
-              // c1v1: {growthFactor:3},
-              };
+                compositionService, renderedPageService, renderService) {
+              var paragraphProperties = {};
               var illustrationProperties = {};
               $scope.listOfBooks = [];
               var currentVerse;
-//              for (var i = 0; i < 31; i++) {
-//                $scope.pages.push("red");
-//              }
 
-              $scope.path="../../web/viewer.html?file=%2F../../web/compressed.tracemonkey-pldi-09.pdf";
-
-              $scope.renderRapuma = function() {
-                compositionService.renderBook($scope.bookID,
-                    function(result) {
-                      //nothing todo?
-                    });
+              $scope.renderRapuma =  function() {
+                 showLoading();
+                 renderService.renderProject($scope.projectName, function (result) {
+                   $scope.renderedBook = result.data;
+                   $scope.LoadingImg = null;
+                   $scope.LoadingText = null;
+                  });
               };
+              var showLoading = function () {
+                $scope.LoadingImg = "../../web/images/loading-icon.gif";
+                $scope.LoadingText = "Rendering";
+                $scope.renderedBook = null;
+              };
+
               var getBookHTML = function getBookHTML() {
                 compositionService.getBookHTML($scope.bookID,
                     function(result) {
@@ -85,24 +87,30 @@ angular.module('typesetting.typeset',
                   //nothing todo?
                 });
               };
+
+             //$scope.renderedBook = "../../web/viewer.html?file=%2F../../assets/typesetting/sf_typesetting-adfasdfadsffsa/renders/Mathew.pdf";
+             //$scope.renderedBook = "../../web/viewer.html?file=%2F";
               var getPageDto = function getPageDto(){
                 initializeBook();
                 compositionService.getPageDto(function getPageDto(result){
-                  $scope.listOfBooks = result.data.books;
                   $scope.bookID = result.data.bookID;
+                  $scope.projectName = result.data.projectName;
                   $scope.bookHTML = result.data.bookHTML;
+                  $scope.renderedBook = result.data.renderedBook;
                   // TODO Fix this in php side
                   paragraphProperties = result.data.paragraphProperties;
-                  if (paragraphProperties.length == 0) {
+                  if (!$scope.paragraphProperties) {
                     paragraphProperties = {};
                   }
                   illustrationProperties = result.data.illustrationProperties;
-                  if (illustrationProperties.length == 0) {
+                  if (!$scope.illustrationProperties) {
                     illustrationProperties = {};
                   }
-                  //console.log(paragraphProperties);
-                  $scope.pages = result.data.pages;
-                  $scope.selectedPage = 1;
+                  if(!$scope.bookHTML){
+                    $scope.NoAssets = true;
+                  }
+                  $scope.LoadingProjectImg = null;
+                  $scope.LoadingProjectText = null;
                 });
               };
               var getBookDto = function getBookDto(){
@@ -121,10 +129,13 @@ angular.module('typesetting.typeset',
                   //console.log(paragraphProperties);
                   $scope.pages = result.data.pages;
                   $scope.selectedPage = 1;
+
                 });
               };
               var initializeBook = function(){
                 $scope.bookHTML = "<b>loading</b>";
+                $scope.LoadingProjectImg = "../../web/images/loading-icon.gif";
+                $scope.LoadingProjectText = "Loading";
                 $scope.currentImage = "";
                 currentVerse = "";
                 $scope.verse = "";
@@ -133,7 +144,6 @@ angular.module('typesetting.typeset',
                 $scope.renderedPage = "";
                 $scope.selectedPage = 1;
               };
-              
               
               $scope.bookChanged = function bookChanged(){
                 setParagraphProperties();
@@ -176,7 +186,7 @@ angular.module('typesetting.typeset',
                   caption: "",
                   useCaption: false,
                   useIllustration:true
-                }
+                };
                 $scope.location = illustrationProperties[$scope.currentImage].location;
                 $scope.imageWidth = parseInt(illustrationProperties[$scope.currentImage].width);
                 $scope.scale = illustrationProperties[$scope.currentImage].scale;
@@ -209,16 +219,24 @@ angular.module('typesetting.typeset',
                   $scope.paragraphGrowthFactor = paragraphProperties[currentVerse].growthFactor;
                 }
               });
+              function getRenderedPage(){
+                  renderedPageService.getRenderedPageDto($scope.projectName ,function getRenderedPageDto(result){
+                    $scope.renderedPage = result.data.renderedPage;
+
+                  });
+              }
+
               var getRenderedPageDto = function getRenderedPageDto(){
                 initializeBook();
-                renderedPageService.getRenderedPageDto(function getRenderedPageDto(result){
-                  $scope.renderedPage = result.data.renderedPage;
-                  $scope.comments = result.data.comments;
-                });
+                getRenderedPage();
               };
 
+              getPageDto(); // do this one first
+              //getRenderedPageDto();
 
-              getRenderedPageDto();
-              getPageDto();
-              
+
+
             } ]);
+   
+
+

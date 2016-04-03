@@ -40,18 +40,18 @@ class TypesettingRenderedPageCommands
         return array("5:10 needs more spacing", "8:5 needs less spacing", "23:2 is missing an illustration");
     }
 
-    public static function getRenderedPage()
+    public static function getRenderedPage($projectId,$projectName)
     {
-        return "../../web/viewer.html?file=%2F../../web/Matthew.pdf";
+        return "../../web/viewer.html?file=%2F../../../assets/typesetting/renders/Matthew.pdf";
 
     }
 
-    public static function getRenderedPageDto($projectId)
+    public static function getRenderedPageDto($projectId, $projectName)
     {
         $bookID = 'id1';
-        return array('bookID' => $bookID,
-            'renderedPage' => TypesettingRenderedPageCommands::getRenderedPage(),
-            'pages' => TypesettingRenderedPageCommands::getPageStatus($projectId, $bookID),
-            'comments' => TypesettingRenderedPageCommands::getRenderedPageComments(($projectId)));
+        return ['bookID' => $bookID,
+            'renderedPage' => TypesettingRenderedPageCommands::getRenderedPage($projectId,$projectName),
+            'pages' => TypesettingRenderedPageCommands::getPageStatus(),
+            'comments' => TypesettingRenderedPageCommands::getRenderedPageComments(($projectId))];
     }
 }

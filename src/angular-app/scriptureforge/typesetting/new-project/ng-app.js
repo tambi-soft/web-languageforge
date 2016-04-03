@@ -1,6 +1,17 @@
 'use strict';
 
-angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate', 'bellows.services', 'palaso.ui.listview', 'ui.bootstrap', 'palaso.ui.notice', 'palaso.ui.utils', 'wc.Directives'])
+angular.module('typesetting-new-project',
+    [
+      'ui.router',
+      'pascalprecht.translate',
+      'bellows.services',
+      'palaso.ui.listview',
+      'ui.bootstrap',
+      'palaso.ui.notice',
+      'palaso.ui.utils',
+      'typesetting.renderServices',
+      'wc.Directives'
+    ])
   .config(['$stateProvider', '$urlRouterProvider', '$translateProvider',
     function($stateProvider, $urlRouterProvider, $translateProvider) {
 
@@ -25,33 +36,32 @@ angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate'
         .state('newProject.name', {
           templateUrl: '/angular-app/scriptureforge/typesetting/new-project/views/new-project-name.html',
           data: {
-            step: 1,
-          },
-        })
-      ;
-
+            step: 1
+          }
+        });
       $urlRouterProvider
         .when('', ['$state', function($state) {
           if (!$state.$current.navigable) {
             $state.go('newProject.name');
           }
-        },]);
-    },])
-  .controller('NewTypesettingProjectCtrl', ['$scope', 'projectService', 'sessionService', 'silNoticeService', '$window', 'sfchecksLinkService',
-    function($scope, projectService, ss, notice, $window, linkService) {
+        }]);
+    }])
+  .controller('NewTypesettingProjectCtrl', ['$scope', 'projectService','typesettingRenderService', 'sessionService', 'silNoticeService', '$window', 'sfchecksLinkService',
+    function($scope, projectService,renderService, ss, notice, $window, linkService) {
       $scope.newProject = {};
 
       // Add new project
       $scope.addProject = function() {
         if ($scope.projectCodeState == 'ok') {
           $scope.isSubmitting = true;
+          renderService.createRapumaProject($scope.newProject.projectName);
           projectService.create($scope.newProject.projectName, $scope.newProject.projectCode, 'typesetting', function(result) {
             //$scope.isSubmitting = false;
             if (result.ok) {
               notice.push(notice.SUCCESS, 'The ' + $scope.newProject.projectName + ' project was created successfully');
 
               // redirect to new project settings page
-              $window.location.href = linkService.project(result.data, 'typesetting');
+             $window.location.href = linkService.project(result.data, 'typesetting');
             } else {
               $scope.isSubmitting = false;
             }
@@ -64,6 +74,7 @@ angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate'
       $scope._projectNameToCode = function(name) {
         if (angular.isUndefined(name)) return undefined;
         return 'typesetting-' + name.toLowerCase().replace(/ /g, '_');
+          //test
       };
 
       $scope._isValidProjectCode = function(code) {
@@ -123,6 +134,4 @@ angular.module('typesetting-new-project', ['ui.router', 'pascalprecht.translate'
           $scope.projectCodeState = 'invalid';
         }
       };
-    },])
-
-;
+    }]);

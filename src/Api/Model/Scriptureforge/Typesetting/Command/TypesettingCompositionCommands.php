@@ -8,21 +8,23 @@ use Api\Model\ProjectModel;
 use Api\Model\Scriptureforge\Dto\UsfmHelper;
 use Api\Model\Scriptureforge\Typesetting\SettingModel;
 use Api\Model\Scriptureforge\Typesetting\TypesettingBookModel;
+use Api\Model\Scriptureforge\TypesettingProjectModel;
 
 class TypesettingCompositionCommands
 {
     public static function getBookHTML($projectId, $bookId)
     {
-        // Return a test HTML file
-        //return file_get_contents(__DIR__ . '/../../../../../docs/samples/JohnHTMLSample2.html');
-
-        // Convert the entire book of John from USFM to HTML and return it
-        $workingTextUsfm = file_get_contents(__DIR__ . '/../../../../../../docs/usfm/KJV/44JHNKJVT.SFM');
-
-        $usfmHelper = new UsfmHelper($workingTextUsfm);
-        $workingTextHtml = $usfmHelper->toHtml();
-
-        return $workingTextHtml;
+        $project = new TypesettingProjectModel($projectId);
+        //$pathToFile = "resources/scriptureforge/typesetting/rapuma_example/my_source/KYUM/PT-source/41MATKYUM.SFM";
+          $pathToFile = $project->getAssetsFolderPath() . "/41MATKYUM.SFM";
+        if (file_exists($pathToFile)) {
+            $workingTextUsfm = file_get_contents($pathToFile);
+            $usfmHelper = new UsfmHelper($workingTextUsfm);
+            $workingTextHtml = $usfmHelper->toHtml();
+            return $workingTextHtml;
+        } else {
+            return null;
+        }
     }
 
     public static function getListOfBooks($projectId)
@@ -84,13 +86,15 @@ class TypesettingCompositionCommands
 
     }
 
-    public static function renderBook($projectId, $bookId)
+    public static function renderBook($projectName)
     {
+        $cmd = "rapuma publication" . + $projectName . + "project create" ;
+        $error = shell_exec($cmd);
+        return $error;
 
     }
     public static function getComments($projectId, $bookId)
     {
-       // return ['comment' =>'asf','asdf','asdf','asdf'];
        return array("commentOne", "CommentTwo","blah, blah, blah, blah, blah, blah, blah, blah");
     }
     public static function getRenderedPageForBook($projectId, $bookId, $pageNumber)
@@ -99,24 +103,58 @@ class TypesettingCompositionCommands
 
     }
 
+    /**
+     * @param $projectID
+     */
+    public static function  getProjectName($projectID)
+    {
+        $projectModel = new ProjectModel($projectID);
+        $projectName = $projectModel->projectName;
+        return $projectName;
+    }
+
+    /**
+     * @param $projectId
+     * @return string
+     */
+    public static function getRenderedBook($projectId)
+    {
+        $project = new TypesettingProjectModel($projectId);
+        $pathToFile = "../../" . $project->getAssetsRelativePath()."/renders/Matthew.pdf";
+
+        $path = "../../web/viewer.html?file=%2F" . $pathToFile;
+        $pathToFile = $project->getAssetsFolderPath()."/renders/Matthew.pdf";
+        $path = file_exists($pathToFile) ? $path: null;
+        return $path;
+    }
+
+    /**
+     * @param $projectId
+     * @return array
+     */
     public static function getPageDto($projectId)
     {
         $bookID = 'id1';
-        return array('books' => TypesettingCompositionCommands::getListOfBooks($projectId),
+        return array('books' => self::getListOfBooks($projectId),
                     'bookID' => $bookID,
-                    'bookHTML' => TypesettingCompositionCommands::getBookHTML($projectId, $bookID),
-                    'paragraphProperties' => TypesettingCompositionCommands::getParagraphProperties($projectId, $bookID),
-                    'illustrationProperties' => TypesettingCompositionCommands::getIllustrationProperties($projectId),
-                    'pages' => TypesettingCompositionCommands::getPageStatus($projectId, $bookID),
-                    'comments' =>  TypesettingCompositionCommands::getComments($projectId, $bookID));
+                    'projectName' => self::getProjectName($projectId),
+                    'bookHTML' => self::getBookHTML($projectId, $bookID),
+                    'paragraphProperties' => self::getParagraphProperties($projectId, $bookID),
+                    'illustrationProperties' => self::getIllustrationProperties($projectId),
+                    'renderedBook' => self::getRenderedBook($projectId));
 
     }
 
+    /**
+     * @param $projectId
+     * @param $bookID
+     * @return array
+     */
     public static function getBookDto($projectId, $bookID)
     {
-        return array('bookHTML' => TypesettingCompositionCommands::getBookHTML($projectId, $bookID),
-                    'paragraphProperties' => TypesettingCompositionCommands::getParagraphProperties($projectId, $bookID),
-                    'illustrationProperties' => TypesettingCompositionCommands::getIllustrationProperties($projectId),
-                    'pages' => TypesettingCompositionCommands::getPageStatus($projectId, $bookID));
+        return array('bookHTML' => self::getBookHTML($projectId, $bookID),
+                    'paragraphProperties' => self::getParagraphProperties($projectId, $bookID),
+                    'illustrationProperties' => self::getIllustrationProperties($projectId),
+                    'pages' => self::getPageStatus($projectId, $bookID));
     }
 }

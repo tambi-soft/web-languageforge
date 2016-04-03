@@ -1,7 +1,20 @@
 <div data-ng-cloak data-ng-controller="compositionCtrl" style="text-align: center;">
+
     <div class="Container spanWorkspace">
         <div class="row-fluid composition-bottom">
-            <div class="span12 cont1">
+            <div class="row">
+                <div  >
+                    <img id="loading-project" src={{LoadingProjectImg}} ng-show="LoadingProjectImg" class="ng-hide" />
+                    <i>{{LoadingProjectText}}</i>
+                </div>
+            </div>
+            <div ng-show="NoAssets" class="row ng-hide">
+                <p>
+                    Before we being, add the necessary assets to the project.
+                </p>
+
+            </div>
+            <div class="span12 cont1 ng-hide" ng-show="bookHTML">
                 <div class="row-fluid" id="sourceProperties">
                     <div class="span2"></div>
                     <div class="text span4" data-ng-bind-html="bookHTML"
@@ -13,7 +26,7 @@
                                 panel <br /> <br /> Click on a paragraph or an illustration
                                 placeholder to edit their properties
                             </span>
-                            <div data-ng-show="currentImage!=''">
+                            <div data-ng-show="currentImage!=''"  >
                                 <table>
                                     <tbody>
                                         <tr>
@@ -23,36 +36,36 @@
                                         <tr>
                                             <td>Location</td>
                                             <td><input class="form-control" data-ng-model="location"
-                                                data-ng-change="illustrationSave()" /></td>
+                                                data-ng-change="illustrationSave()"  title=""/></td>
                                         </tr>
                                         <tr>
                                             <td>Width</td>
                                             <td><input class="form-control" type="number"
-                                                data-ng-model="imageWidth" data-ng-change="illustrationSave()" />
+                                                data-ng-model="imageWidth" data-ng-change="illustrationSave()"  title=""/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Scale</td>
                                             <td><input class="form-control" type="number"
                                                 data-ng-model="scale" step="0.05"
-                                                data-ng-change="illustrationSave()" /></td>
+                                                data-ng-change="illustrationSave()"  title=""/></td>
                                         </tr>
                                         <tr>
                                             <td>Caption</td>
                                             <td><input class="form-control" data-ng-model="caption"
-                                                data-ng-change="illustrationSave()" /></td>
+                                                data-ng-change="illustrationSave()"  title=""/></td>
                                         </tr>
                                         <tr>
                                             <td>Use caption</td>
                                             <td><input class="checkbox" type="checkbox"
-                                                data-ng-model="useCaption" data-ng-change="illustrationSave()" />
+                                                data-ng-model="useCaption" data-ng-change="illustrationSave()"  title=""/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Use illustration</td>
                                             <td><input class="checkbox" type="checkbox"
                                                 data-ng-model="useIllustration"
-                                                data-ng-change="illustrationSave()" /></td>
+                                                data-ng-change="illustrationSave()"  title=""/></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -67,42 +80,28 @@
                                     type="number" data-ng-model="paragraphGrowthFactor" min="-1"
                                     max="2" />
                             </div>
-                        </div><!-- End Properties Container -->                     
-					</div><!-- End Container -->
-				
-						<div class="row"> 
-							<div class="span12"> 
-								<button id="savebtn" data-ng-click="save()">Save</button>
-		                		<button id="renderbtn" data-ng-click="renderRapuma()">Render</button>
-							</div>
-						</div>
-					<div class="row">
-                    <div class="span12">
-
-
-                        <div class="span1"></div>
-                        <div class="span10" data-ng-model="path">
-                            <!--<iframe id="viewer" src="../../web/viewer.html?file=%2F../../web/compressed.tracemonkey-pldi-09.pdf"></iframe>-->
-                            <iframe id="viewer" src={{renderedPage}}></iframe>
-                        </div><!-- End Viewer -->
-                    
+                        </div>
+					</div>
+                    <div class="row">
+                        <div >
+                            <button id="savebtn" data-ng-click="save()"  >Save</button>
+                            <button id="renderbtn" data-ng-click="renderRapuma()">Render</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div  >
+                            <img id="loading-image" src={{LoadingImg}} ng-show="LoadingImg" class="ng-hide" />
+                            <i>{{LoadingText}}</i>
+                        </div>
+                    </div>
+					<div  ng-show="renderedBook" class="row ng-hide">
+                        <div class="span12">
+                            <div class="span1"></div>
+                            <div class="span10"  >
+                                <iframe id="viewer"   src={{renderedBook}}></iframe>
+                            </div>
+                        </div>
                  </div>
-                 </div>
-                 
-                 <!--<div class="cardList">
-                       		<label>Comments</label>
-							<div class="spar 4 card" style="text-align:left;">
-								<div data-ng-repeat="comment in comments">
-									<label>{{comment}}</label>
-									<button class="btn btn-link">reply</button>
-								</div>
-
-								<div data-ng-repeat="comment in comments">
-									<label>{{comment}}</label>
-									<button class="btn btn-link">reply</button>
-								</div>
-							</div>
-						</div>-->
             </div>
         </div>
     </div>

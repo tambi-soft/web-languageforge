@@ -2,6 +2,7 @@
 
 angular.module('typesetting.review',
     [ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
+        'typesetting.compositionServices',
         'typesetting.renderedPageServices',
         'composition.selection' ])
 
@@ -11,11 +12,12 @@ angular.module('typesetting.review',
         '$scope',
         '$state',
         'typesettingSetupService',
+        'typesettingCompositionService',
         'typesettingRenderedPageService',
         'sessionService',
         'modalService',
         'silNoticeService',
-        function($scope, $state, typesettingSetupApi, renderedPageService) {
+        function($scope, $state, typesettingSetupApi,compositionService, renderedPageService) {
 
             $scope.listOfBooks = [];
             var currentVerse;
@@ -23,6 +25,9 @@ angular.module('typesetting.review',
 //                $scope.pages.push("red");
 //              }
             var initializeBook = function(){
+                $scope.LoadingImg = "../../web/images/loading-icon.gif";
+                $scope.LoadingText = "Loading";
+                $scope.currentImage = "";
                 $scope.currentImage = "";
                 currentVerse = "";
                 $scope.pages = [];
@@ -41,11 +46,14 @@ angular.module('typesetting.review',
             };
             var getRenderedPageDto = function getRenderedPageDto(){
                 initializeBook();
-                renderedPageService.getRenderedPageDto(function getRenderedPageDto(result){
-                    $scope.pages = result.data.pages;
-                    $scope.renderedPage = result.data.renderedPage;
-                    $scope.selectedPage = 1;
+                compositionService.getPageDto(function getBookDto(result){
+                   $scope.renderedBook= result.data.renderedBook;
                     $scope.comments = result.data.comments;
+                    $scope.LoadingImg = null;
+                    $scope.LoadingText = null;
+                   if (!$scope.renderedBook ){
+                        $scope.NoRender = true;
+                   }
                 });
             };
 
