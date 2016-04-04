@@ -51,4 +51,4 @@ angular.module('typesetting.discussionServices', ['jsonRpc']).service('typesetti
     jsonRpc.call('typesetting_discussionList_getThread', [threadId], callback);
   };
 
-},]);
+}]);
