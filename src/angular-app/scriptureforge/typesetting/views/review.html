@@ -14,111 +14,176 @@
 
             </div>
 
-            <div class="span14 ng-hide" ng-show="renderedBook"  >
-                <div class="row-fluid">
+            <!--<div class="row ng-hide" ng-show="renderedBook"  >-->
+                <!--<div class="row-fluid">-->
 
-                    <div class="span7">
-                        <div class="row-fluid ">
-                            <div style="height: 600px; margin-bottom: 100px; overflow: hidden; ">
-                                <iframe id="viewer"   src={{renderedBook}}></iframe>
-                            </div>
-                        </div>
+                    <!--<div class="col-sm-8">-->
+                        <!--<div class="row-fluid ">-->
+                            <!--<div style="height: 600px; margin-bottom: 100px; overflow: hidden; ">-->
+                                <!--<iframe id="viewer"   src={{renderedBook}}></iframe>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
-                    </div>
-                    <div class="span4 card">
-                        <div style="display: block">
-                            <div class="chapterVerse">
-                                <label>Chapter:</label>
-                                <textarea></textarea>
-                                <label>, verse:</label>
-                                <textarea></textarea>
-                            </div>
-                            <textarea rows="10" cols="500" onfocus="">Add a new comment </textarea>
-                            <button  >Submit</button>
-                        </div>
-                        <div data-ng-repeat="comment in comments">
-                            <label >{{comment}}</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <!--</div>-->
 
-            <h2 id="titleClick" data-ng-click="changeTitle()">{{thread.title}}</h2>
-            <div>
-                <button class="btn btn-{{thread.status.buttonColor}}"
-                        data-ng-click="changeStatus()">{{thread.status.buttonText}}
-                </button>
-                <i class="h4 small">Discussion created by </i>
-                <b class="h4"><a href="#">{{thread.author.name}}</a></b>
-            </div>
-            <hr />
-            <div data-ng-repeat="post in thread.posts">
-                <img class="img iconImage" data-ng-src="{{post.author.avatar}}" align="left"
-                     style="MARGIN-RIGHT: 15px" />
-                <table class="table-bordered">
-                    <tbody>
-                    <tr class="discussionPost">
-                        <td>
-                            <i class="h4 small">Post created by </i>
-                            <b class="h4"><a href="#">{{post.author.name}}</a></b>
-                            <i class="h4 small">{{post.dateCreated | relativetime}}</i>
-                        </td>
-                        <td>
-                            <button class="btn customBtn1"
-                                    data-ng-show="isManager()"
-                                    data-ng-click="deletePost(post)">Delete</button>
-                            <button class="btn customBtn1"
-                                    data-ng-show="isManager()"
-                                    data-ng-click="post.isEditing = true">Edit</button>
-                        </td>
-                    </tr>
-                    <tr id="whiterow">
-                        <td colspan="2">
-                            <div ng-show="post.isEditing">
-                            <textarea rows="4" cols="" ng-model="post.content"
-                                      class="form-control replyBox"></textarea>
-                            </div>
-                            <div ng-hide="post.isEditing">{{post.content}}</div>
-                            <div ng-show="post.isEditing">
-                                <button class="btn customBtn1"
-                                        data-ng-click="post.isEditing = false">Cancel</button>
-                                <button class="btn customBtn1"
-                                        data-ng-click="saveEdit(post)">Save</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr data-ng-repeat="reply in post.replies"
-                        class="noColumnBorder">
-                        <td class="replyMargin" colspan="2">
-                            <h5 class="tabMargin">
-                                <b><a href="#">{{reply.author.name}}</a>
-                                    <i class="small"> replied {{reply.author.dateCreated | relativetime}}</i></b>
-                                <button class="btn customBtn2"
-                                        data-ng-show="isManager()"
-                                        data-ng-click="deleteReply(post, reply)">X</button>
-                            </h5>
-                            <p class="replyContent">{{reply.content}}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                        <textarea rows="2" class="form-control replyBox"
-                                  data-ng-model="newReplyContent"
-                                  placeholder="Reply here..."></textarea>
-                            <button class="btn btn-info btn-sm tabMargin buttonMargin"
-                                    data-ng-click="createReply(post, newReplyContent)">Post Your Reply</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <br />
-            </div>
-    <textarea rows="4" class="form-control replyBox"
-              data-ng-model="newPostContent" placeholder="Comment here..."></textarea>
-            <button class="btn btn-info btn-sm tabMargin buttonMargin"
-                    data-ng-click="createPost()">Post Your Comment</button>
-            <br />
-            <br />
+                    <!--<div class="col-sm-8">-->
+                            <!--<div class="panel panel-white post panel-shadow" >-->
+                                 <!--<textarea rows="4" class="form-control replyBox"-->
+                                           <!--data-ng-model="newPostContent" placeholder="Comment here..."></textarea>-->
+                                <!--<button class="btn  "-->
+                                        <!--data-ng-click="createPost()">Post Your Comment</button>-->
+                            <!--</div>-->
+
+                            <!--<div  class="comments-list  data-ng-repeat="post in thread.posts">-->
+                                <!--<div class="post-heading">-->
+                                    <!--<div class="pull-left image">-->
+                                        <!--<img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">-->
+                                    <!--</div>-->
+                                <!--&lt;!&ndash;<img class="img iconImage" data-ng-src="{{post.author.avatar}}" align="left"&ndash;&gt;-->
+                                     <!--&lt;!&ndash;style="MARGIN-RIGHT: 15px" />&ndash;&gt;-->
+                                    <!--<div class="pull-left meta">-->
+                                        <!--<div class="title h5">-->
+                                            <!--<div  class="title h5"><a href="#">{{post.author.name}}</a></div>-->
+                                            <!--<h6 class="text-muted time">{{post.dateCreated | relativetime}}</h6>-->
+                                        <!--</div>-->
+                                        <!--<div>-->
+                                            <!--<button data-ng-show="isManager()"-->
+                                                    <!--data-ng-click="post.isEditing = true">Edit</button>-->
+                                            <!--<button data-ng-show="isManager()"-->
+                                                    <!--data-ng-click="deletePost(post)">-->
+                                                <!--<span class="icon-remove"></span></button>-->
+
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div >-->
+                                        <!--<div ng-show="post.isEditing">-->
+                                            <!--<textarea rows="4" cols="" ng-model="post.content"-->
+                                                      <!--class="form-control replyBox"></textarea>-->
+                                        <!--</div>-->
+                                        <!--<div ng-hide="post.isEditing">{{post.content}}</div>-->
+                                        <!--<div ng-show="post.isEditing">-->
+                                            <!--<button class="btn customBtn1"-->
+                                                    <!--data-ng-click="post.isEditing = false">Cancel</button>-->
+                                            <!--<button class="btn customBtn1"-->
+                                                    <!--data-ng-click="saveEdit(post)">Save</button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="post-description" data-ng-repeat="reply in post.replies"-->
+                                        <!--class="noColumnBorder">-->
+                                        <!--<div class="replyMargin" colspan="2">-->
+                                            <!--<h5 class="tabMargin">-->
+                                                <!--<b><a href="#">{{reply.author.name}}</a>-->
+                                                    <!--<i class="small"> replied {{reply.author.dateCreated | relativetime}}</i></b>-->
+                                                <!--<button class="btn customBtn2"-->
+                                                        <!--data-ng-show="isManager()"-->
+                                                        <!--data-ng-click="deleteReply(post, reply)">X</button>-->
+                                            <!--</h5>-->
+                                            <!--<p class="replyContent">{{reply.content}}</p>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div>-->
+                                        <!--<div>-->
+                                             <!--<textarea rows="2" class="form-control replyBox"-->
+                                                        <!--data-ng-model="newReplyContent"-->
+                                                        <!--placeholder="Reply here..."></textarea>-->
+                                            <!--<button class="btn btn-info btn-sm tabMargin buttonMargin"-->
+                                                    <!--data-ng-click="createReply(post, newReplyContent)">Post Your Reply</button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                <!--</div>-->
+            <!--</div>-->
+        <!--<div class="col-sm-8">-->
+            <!--<div class="panel panel-white post panel-shadow">-->
+                <!--<div class="post-heading">-->
+                    <!--<div class="pull-left image">-->
+                        <!--<img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">-->
+                    <!--</div>-->
+                    <!--<div class="pull-left meta">-->
+                        <!--<div class="title h5">-->
+                            <!--<a href="#"><b>Ryan Haywood</b></a>-->
+                            <!--made a post.-->
+                        <!--</div>-->
+                        <!--<h6 class="text-muted time">1 minute ago</h6>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="post-description">-->
+                    <!--<p>Bootdey is a gallery of free snippets resources templates and utilities for bootstrap css hmtl js framework. Codes for developers and web designers</p>-->
+                    <!--<div class="stats">-->
+                        <!--<a href="#" class="btn btn-default stat-item">-->
+                            <!--<i class="fa fa-thumbs-up icon"></i>2-->
+                        <!--</a>-->
+                        <!--<a href="#" class="btn btn-default stat-item">-->
+                            <!--<i class="fa fa-share icon"></i>12-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="post-footer">-->
+                    <!--<div class="input-group">-->
+                        <!--<input class="form-control" placeholder="Add a comment" type="text">-->
+                    <!--<span class="input-group-addon">-->
+                        <!--<a href="#"><i class="fa fa-edit"></i></a>-->
+                    <!--</span>-->
+                    <!--</div>-->
+                    <!--<ul class="comments-list">-->
+                        <!--<li class="comment">-->
+                            <!--<a class="pull-left" href="#">-->
+                                <!--<img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">-->
+                            <!--</a>-->
+                            <!--<div class="comment-body">-->
+                                <!--<div class="comment-heading">-->
+                                    <!--<h4 class="user">Gavino Free</h4>-->
+                                    <!--<h5 class="time">5 minutes ago</h5>-->
+                                <!--</div>-->
+                                <!--<p>Sure, oooooooooooooooohhhhhhhhhhhhhhhh</p>-->
+                            <!--</div>-->
+                            <!--<ul class="comments-list">-->
+                                <!--<li class="comment">-->
+                                    <!--<a class="pull-left" href="#">-->
+                                        <!--<img class="avatar" src="http://bootdey.com/img/Content/user_3.jpg" alt="avatar">-->
+                                    <!--</a>-->
+                                    <!--<div class="comment-body">-->
+                                        <!--<div class="comment-heading">-->
+                                            <!--<h4 class="user">Ryan Haywood</h4>-->
+                                            <!--<h5 class="time">3 minutes ago</h5>-->
+                                        <!--</div>-->
+                                        <!--<p>Relax my friend</p>-->
+                                    <!--</div>-->
+                                <!--</li>-->
+                                <!--<li class="comment">-->
+                                    <!--<a class="pull-left" href="#">-->
+                                        <!--<img class="avatar" src="http://bootdey.com/img/Content/user_2.jpg" alt="avatar">-->
+                                    <!--</a>-->
+                                    <!--<div class="comment-body">-->
+                                        <!--<div class="comment-heading">-->
+                                            <!--<h4 class="user">Gavino Free</h4>-->
+                                            <!--<h5 class="time">3 minutes ago</h5>-->
+                                        <!--</div>-->
+                                        <!--<p>Ok, cool.</p>-->
+                                    <!--</div>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<br/>-->
+            <!--<br/>-->
+            <!--<br/>-->
+            <!--<br/>-->
+            <!--<h2 id="titleClick" data-ng-click="changeTitle()">{{thread.title}}</h2>-->
+            <!--<div>-->
+                <!--<button class="btn btn-{{thread.status.buttonColor}}"-->
+                        <!--data-ng-click="changeStatus()">{{thread.status.buttonText}}-->
+                <!--</button>-->
+                <!--<i class="h4 small">Discussion created by </i>-->
+                <!--<b class="h4"><a href="#">{{thread.author.name}}</a></b>-->
+            <!--</div>-->
+
+
         </div>
     </div>
 </div>
