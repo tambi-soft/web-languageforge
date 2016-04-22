@@ -34,7 +34,9 @@ hr {
     background-color: #DCDCDC;
     border: 0px;
 }
-
+.row {
+    margin-left: 0px !important;
+}
 .inline-block  div {
     display: inline-block;
 }

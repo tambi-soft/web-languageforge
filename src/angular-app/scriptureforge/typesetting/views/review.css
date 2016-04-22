@@ -47,10 +47,12 @@ div.card {
     font-size: 12px;
 }
 
-
-
+.panel {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 .panel-shadow {
-    box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .panel-white {
     border: 1px solid #dddddd;
@@ -66,8 +68,8 @@ div.card {
 }
 
 .post .post-heading {
-    height: 95px;
-    padding: 20px 15px;
+    height: 50px;
+    padding: 20px 15px 10px;
 }
 .post .post-heading .avatar {
     width: 60px;
@@ -85,6 +87,7 @@ div.card {
     color: #aaaaaa;
 }
 .post .post-heading .meta .time {
+    margin-left: -60px;
     margin-top: 8px;
     color: #999;
 }
@@ -96,6 +99,8 @@ div.card {
     padding: 15px;
 }
 .post .post-description p {
+    text-align: left;
+    margin-left:75px;
     font-size: 14px;
 }
 .post .post-description .stats {
@@ -111,6 +116,11 @@ div.card {
 .post .post-footer {
     border-top: 1px solid #ddd;
     padding: 15px;
+}
+.panel .input-group .form-control {
+    margin-top: 10px;
+    text-align: left;
+    margin-left: 4px;
 }
 .post .post-footer .input-group-addon a {
     color: #454545;
@@ -129,22 +139,22 @@ div.card {
     width: 35px;
     height: 35px;
 }
-.post .post-footer .comments-list .comment .comment-heading {
-    display: block;
-    width: 100%;
-}
+/*.post .post-footer .comments-list .comment .comment-heading {*/
+    /*'display: block;*/
+    /*'width: 100%;*/
+/*}*/
 .post .post-footer .comments-list .comment .comment-heading .user {
     font-size: 14px;
     font-weight: bold;
-    display: inline;
-    margin-top: 0;
-    margin-right: 10px;
+    /*display: inline;*/
+    /*margin-top: 0;*/
+    /*margin-right: 10px;*/
 }
 .post .post-footer .comments-list .comment .comment-heading .time {
     font-size: 12px;
     color: #aaa;
-    margin-top: 0;
-    display: inline;
+    /*margin-top: 0;*/
+    /*display: inline;*/
 }
 .post .post-footer .comments-list .comment .comment-body {
     margin-left: 50px;
