@@ -4,7 +4,6 @@ angular.module('typesetting.typeset',
           'typesetting.review',
             'typesetting.renderedPageServices',
             'typesetting.renderServices',
-            'typesetting.discussionServices',
             'composition.selection' ])
     .controller(
         'compositionCtrl',
@@ -14,13 +13,12 @@ angular.module('typesetting.typeset',
             'typesettingSetupService',
             'typesettingCompositionService',
             'typesettingRenderedPageService',
-            'typesettingDiscussionService',
             'typesettingRenderService',
             'sessionService',
             'modalService',
             'silNoticeService',
             function($scope, $state, typesettingSetupApi,
-                compositionService, renderedPageService, renderService, discussionService) {
+                compositionService, renderedPageService, renderService) {
               var paragraphProperties = {};
               var illustrationProperties = {};
               $scope.listOfBooks = [];
