@@ -19,20 +19,26 @@ class TypesettingRapumaCommands
      */
     public static function doRender($projectId, $userId)
     {
+        $project = new TypesettingProjectModel($projectId);
+        $ProjectName= $project->projectName;
         $projectModel = new ProjectModel($projectId);
-
         $currentSettingModel = SettingModel::getCurrent($projectModel);
-        
-        $currentSettingModel->renderedBy->createdByUserRef->id = $userId;
-        $newSettingsModel = new SettingModel($projectModel);
-        
-        // duplicate current settings
-        JsonDecoder::decode($newSettingsModel, JsonEncoder::encode($currentSettingModel));
-        $newSettingsModel->id = new Id();
-        
-        // TODO: kick off render here
-        
-        return $newSettingsModel->write();
+        $array = $currentSettingModel->compositionBookAdjustments['id1'];
+        $data = $array->paragraphProperties;
+        $i = 0;
+        $names = array_keys( (array) ($data));
+        foreach ($data as $value){
+            if(key($value) == "growthFactor"){
+                $name = $names[$i];
+                $growthFactor = current($value);
+                $i++;
+            }
+        }
+        $path = "/var/lib/rapuma/Publishing/" . $ProjectName . "/Config/adjustments.conf";
+        $file = fopen($path , "r") or die("Unable to open file!");
+        echo fread($file,filesize($path));
+        fclose($file);
+        return null;
     }
 
     /**

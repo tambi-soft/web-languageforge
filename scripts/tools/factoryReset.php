@@ -2,7 +2,7 @@
 
 <?php
 
-require_once('../scriptsConfig.php');
+require_once('/home/superman/src/web-scriptureforge/scripts/scriptsConfig.php');
 
 use Api\Model\Command\UserCommands;
 use Api\Model\Shared\Rights\SystemRoles;

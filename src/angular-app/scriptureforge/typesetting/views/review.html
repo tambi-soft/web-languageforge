@@ -11,34 +11,89 @@
                 <p>
                     There isn't any render to review yet.
                 </p>
-
             </div>
-
-            <div class="span14 ng-hide" ng-show="renderedBook"  >
+            <div class="row ng-hide" ng-show="renderedBook"  >
                 <div class="row-fluid">
-
-                    <div class="span7">
-                        <div class="row-fluid ">
-                            <div style="height: 600px; margin-bottom: 100px; overflow: hidden; ">
+                    <div class="col-sm-8">
+                        <div class="row-fluid " style="margin-bottom: -50px;"  >
+                            <div style="height: 900px; margin-bottom: 100px; overflow: hidden; ">
                                 <iframe id="viewer"   src={{renderedBook}}></iframe>
                             </div>
                         </div>
-
                     </div>
-                    <div class="span4 card">
-                        <div style="display: block">
-                            <div class="chapterVerse">
-                                <label>Chapter:</label>
-                                <textarea></textarea>
-                                <label>, verse:</label>
-                                <textarea></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 ng-hide" ng-show="renderedBook">
+            <div class="panel panel-white post panel-shadow" >
+                <div class="input-group">
+                    <textarea class="form-control" rows="5"  style="min-width: 95%" placeholder="Add a comment" data-ng-model="newPostContent" type="text"></textarea>
+                    <div style="text-align: left; margin-left: 16px; margin-bottom: 10px;">
+                        <span class="input-group-addon"  >
+                        <button class="btn" data-ng-click="createPost()">post</button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-8">
+            <div class="panel panel-white post panel-shadow" data-ng-repeat="post in thread.posts | reverse">
+                <div class="post-heading">
+                    <div class="pull-left image" style="min-width: 50px;">
+                        <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                    </div>
+                    <div class="pull-right">
+                        <a data-ng-show="isManager()" data-ng-click="post.isEditing = true">
+                            <span class="icon-edit"></span>
+                        </a>
+                        <a data-ng-show="isManager()" data-ng-click="deletePost(post)">
+                            <span class="icon-remove"></span>
+                        </a>
+                    </div>
+                    <div class="meta" style="text-align: left">
+                        <div class="title h5">
+                            <a>
+                                <b>{{thread.author.name}}</b>
+                            </a>
+                            made a post.
+                        </div>
+                        <h6 class="text-muted time" >{{post.dateCreated | relativetime}}</h6>
+                    </div>
+
+                </div>
+                <div class="post-description">
+                    <div class="text-left block" ng-hide="!post.isEditing" style="margin-left: 72px;">
+                       <textarea ng-model="post.content" >{{post.content}}</textarea>
+                        <a data-ng-click="saveEdit(post)"><i class="fa fa-edit" ></i></a>
+                    </div>
+                    <p ng-hide="post.isEditing">{{post.content}}</p>
+                </div>
+                <div class="post-footer">
+                    <ul class="comments-list"  >
+                        <li class="comment" data-ng-repeat="reply in post.replies">
+                            <div class="pull-left image" >
+                                <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
                             </div>
-                            <textarea rows="10" cols="500" onfocus="">Add a new comment </textarea>
-                            <button  >Submit</button>
-                        </div>
-                        <div data-ng-repeat="comment in comments">
-                            <label >{{comment}}</label>
-                        </div>
+                            <div class="comment-body" >
+                                <div class="comment-heading" style="display:block;text-align: left; vertical-align: top; " >
+                                    <div class="user" style="display: inline-block;">{{reply.author.name}}</div>
+                                    <div class="time" style="display: inline-block">{{reply.author.dateCreated | relativetime}}</div>
+                                </div>
+                                <a class="pull-right" data-ng-show="isManager()"
+                                     data-ng-click="deleteReply(post, reply)">
+                                    <span class="icon-remove"></span>
+                                </a>
+
+                                <label class="text-left" >{{reply.content}}</label>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-left block input-group" style="margin-left: 72px">
+                        <input class="form-control" placeholder="Add a reply" data-ng-model="newReplyContent" type="text">
+                        <span class="input-group-addon">
+                            <a data-ng-click="createReply(post, newReplyContent)"><i class="fa fa-edit" ></i></a>
+                        </span>
                     </div>
                 </div>
             </div>

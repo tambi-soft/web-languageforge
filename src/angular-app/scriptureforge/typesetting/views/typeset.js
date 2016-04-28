@@ -1,6 +1,9 @@
 angular.module('typesetting.typeset',
         [ 'jsonRpc', 'ui.bootstrap', 'bellows.services', 'ngAnimate',
-            'typesetting.compositionServices', 'typesetting.renderedPageServices','typesetting.renderServices',
+            'typesetting.compositionServices',
+          'typesetting.review',
+            'typesetting.renderedPageServices',
+            'typesetting.renderServices',
             'composition.selection' ])
     .controller(
         'compositionCtrl',
@@ -87,9 +90,6 @@ angular.module('typesetting.typeset',
                   //nothing todo?
                 });
               };
-
-             //$scope.renderedBook = "../../web/viewer.html?file=%2F../../assets/typesetting/sf_typesetting-adfasdfadsffsa/renders/Mathew.pdf";
-             //$scope.renderedBook = "../../web/viewer.html?file=%2F";
               var getPageDto = function getPageDto(){
                 initializeBook();
                 compositionService.getPageDto(function getPageDto(result){
@@ -143,6 +143,10 @@ angular.module('typesetting.typeset',
                 $scope.pages = [];
                 $scope.renderedPage = "";
                 $scope.selectedPage = 1;
+                $scope.discussion = [];
+                $scope.thread = [];
+                $scope.threadId = 0;
+                $scope.discussion.currentThreadIndex = 0;
               };
               
               $scope.bookChanged = function bookChanged(){
@@ -230,13 +234,15 @@ angular.module('typesetting.typeset',
                 initializeBook();
                 getRenderedPage();
               };
+              getRenderedPageDto();
+              getPageDto();
 
-              getPageDto(); // do this one first
-              //getRenderedPageDto();
-
-
-
-            } ]);
+            }])
+    .filter('reverse', function() {
+      return function(items) {
+        return items.slice().reverse();
+      };
+    });
    
 
 
