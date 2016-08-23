@@ -2,10 +2,10 @@
 
 namespace Api\Library\Scriptureforge\Sfchecks;
 
-use Api\Model\Scriptureforge\Dto\UsxHelper;
-use Api\Model\Shared\Rights\ProjectRoles;
 use Api\Model\ProjectModel;
 use Api\Model\QuestionAnswersListModel;
+use Api\Model\Scriptureforge\Dto\UsxHelper;
+use Api\Model\Shared\Rights\ProjectRoles;
 use Api\Model\TextListModel;
 use Api\Model\TextModel;
 use Api\Model\UserList_ProjectModel;
@@ -76,13 +76,13 @@ class SfchecksReports {
                                 continue;
                             }
                             $commentCtr++;
-                            if ($comment['userRef'] && $comment['userRef']->{'$id'} == $user['id']) {
+                            if ($comment['userRef'] && strval($comment['userRef']) == $user['id']) {
                                 $user['comments']++;
                                 $user['responses']++;
                                 array_push($user['textIds'], $question['textRef']);
                                 $responses++;
                                 self::_addResponseToList($user['responsesList'], array(
-                                    'timestamp' => $comment['dateEdited']->sec,
+                                    'timestamp' => $comment['dateEdited']->toDateTime(),
                                     'comment' => $comment['content'],
                                     'answer' => strip_tags($answer['content']),
                                     'answerSelectedText' => strip_tags($answer['textHighlight']),
@@ -93,13 +93,13 @@ class SfchecksReports {
                                 ));
                             }
                         }
-                        if ($answer['userRef'] && $answer['userRef']->{'$id'} == $user['id']) {
+                        if ($answer['userRef'] && strval($answer['userRef']) == $user['id']) {
                             $user['answers']++;
                             $user['responses']++;
                             array_push($user['textIds'], $question['textRef']);
                             $responses++;
                             self::_addResponseToList($user['responsesList'], array(
-                                'timestamp' => $comment['dateEdited']->sec,
+                                'timestamp' => $comment['dateEdited']->toDateTime(),
                                 'answer' => strip_tags($answer['content']),
                                 'answerSelectedText' => strip_tags($answer['textHighlight']),
                                 'comment' => '',
@@ -155,7 +155,7 @@ class SfchecksReports {
                 foreach ($text['questions'] as $question) {
                     $output .= "\n\tIn reference to the question '" . $question['content'] . "'\n";
                     foreach ($question['answers'] as $answer) {
-                        $date = new \DateTime('@' . $answer['timestamp']);
+                        $date = $answer['timestamp'];
 
                         if ($answer['selectedText']) {
                             $answer['answer'] = "(reference: '" . $answer['selectedText'] . "') " . $answer['answer'];
@@ -225,7 +225,7 @@ class SfchecksReports {
 
 
     private static function _addResponseOnEpoch(&$responses, $epochTime) {
-        $dateObj = new \DateTime("@$epochTime");
+        $dateObj = $epochTime;
         $dateString = $dateObj->format('M d, Y');
         if (array_key_exists($dateString, $responses)) {
             $responses[$dateString]++;
@@ -240,7 +240,7 @@ class SfchecksReports {
         $output = str_pad('**** Responses Over Time Report ****', 120, " ", STR_PAD_BOTH) . "\n";
         $output .= str_pad(date(DATE_RFC2822), 120, " ", STR_PAD_BOTH) . "\n\n";
         $data = array();
-        $startDate = $project->dateCreated;
+        $startDate = new \DateTime($project->dateCreated->asFormattedString());
         $endDate = new \DateTime();
         $iv = $endDate->diff($startDate);
 
@@ -268,13 +268,13 @@ class SfchecksReports {
                     if ($answer['content']) {
                         $answerCtr++;
                         $responseCtr++;
-                        self::_addResponseOnEpoch($responses, $answer['dateCreated']->sec);
+                        self::_addResponseOnEpoch($responses, $answer['dateCreated']->toDateTime());
                     }
                     foreach ($answer['comments'] as $comment) {
                         if ($comment['content']) {
                             $commentCtr++;
                             $responseCtr++;
-                            self::_addResponseOnEpoch($responses, $answer['dateCreated']->sec);
+                            self::_addResponseOnEpoch($responses, $answer['dateCreated']->toDateTime());
                         }
                     }
                 }
@@ -376,14 +376,14 @@ class SfchecksReports {
                                 continue;
                             }
                             $commentCtr++;
-                            if ($comment['userRef'] && $comment['userRef']->{'$id'} == $user['id']) {
+                            if ($comment['userRef'] && strval($comment['userRef']) == $user['id']) {
                                 $user['comments']++;
                                 $user['responses']++;
                                 array_push($user['textIds'], $question['textRef']);
                                 $responses++;
                             }
                         }
-                        if ($answer['userRef'] && $answer['userRef']->{'$id'} == $user['id']) {
+                        if ($answer['userRef'] && strval($answer['userRef']) == $user['id']) {
                             $user['answers']++;
                             $user['responses']++;
                             array_push($user['textIds'], $question['textRef']);

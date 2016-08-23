@@ -72,30 +72,30 @@ class MapperListModel
 
     public function read()
     {
-        return $this->_mapper->readList($this, $this->_query, $this->_fields, $this->_sortFields, $this->_limit, $this->_skip);
+        $this->_mapper->readList($this, $this->_query, $this->_fields, $this->_sortFields, $this->_limit, $this->_skip);
     }
 
     /**
-     * Note: use of this method assumes that you have redefined $this->entries to be of type MapOf or ArrayOf.
+     * Developer Note: use of this method assumes that you have redefined $this->entries to be of type MapOf or ArrayOf.
      * e.g. $this->entries = new MapOf(function ($data) use ($projectModel) { return new ActivityModel($projectModel); });
      */
     public function readAsModels()
     {
-        return $this->_mapper->readListAsModels($this, $this->_query, $this->_fields, $this->_sortFields, $this->_limit, $this->_skip);
+        $this->_mapper->readListAsModels($this, $this->_query, $this->_fields, $this->_sortFields, $this->_limit, $this->_skip);
     }
 
     public function readCounts() {
-        return $this->_mapper->readCounts($this, $this->_query, $this->_fields, $this->_sortFields, $this->_limit, $this->_skip);
+        $this->_mapper->readCounts($this, $this->_query, $this->_fields, $this->_sortFields, $this->_limit, $this->_skip);
     }
 
     public function deleteAll() {
-       return $this->_mapper->dropCollection();
+       $this->_mapper->dropCollection();
     }
 
     // TODO Would be nice to deprecate this or at least have it protected not public. Derived models can run their own specific query. CP 2013-11
     public function readByQuery($query, $fields = array(), $sortFields = array(), $limit = 0)
     {
-        return $this->_mapper->readList($this,$query, $fields, $sortFields ,$limit);
+        $this->_mapper->readList($this,$query, $fields, $sortFields ,$limit);
     }
 
 }

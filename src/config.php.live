@@ -31,6 +31,10 @@ if (! defined('SF_DATABASE')) {
     define('SF_DATABASE', 'scriptureforge');
 }
 
+if (! defined('MONGODB_CONN')) {
+    define('MONGODB_CONN', 'mongodb://localhost:27017');
+}
+
 if (! defined('USE_MINIFIED_JS')) {
     if (defined('ENVIRONMENT') and ENVIRONMENT === 'development') {
         define('USE_MINIFIED_JS', false);
@@ -39,11 +43,11 @@ if (! defined('USE_MINIFIED_JS')) {
     }
 }
 
-if (! defined('USE_LOCAL_DEPENDENCIES')) {
+if (! defined('USE_CDN')) {
     if (defined('ENVIRONMENT') and ENVIRONMENT === 'development') {
-        define('USE_LOCAL_DEPENDENCIES', true);
+        define('USE_CDN', false);
     } else {
-        define('USE_LOCAL_DEPENDENCIES', false);
+        define('USE_CDN', true);
     }
 }
 

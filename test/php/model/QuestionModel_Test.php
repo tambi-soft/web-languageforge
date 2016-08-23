@@ -5,7 +5,7 @@ use Api\Model\QuestionModel;
 
 require_once __DIR__ . '/../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
-require_once TestPath . 'common/MongoTestEnvironment.php';
+require_once TestPhpPath . 'common/MongoTestEnvironment.php';
 require_once SourcePath . "Api/Model/QuestionModel.php";
 
 class TestQuestionModel extends UnitTestCase
@@ -64,7 +64,7 @@ class TestQuestionModel extends UnitTestCase
         $e = new MongoTestEnvironment();
         $project = $e->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
-        $mockTextRef = (string) new \MongoId();
+        $mockTextRef = (string) \Api\Model\Mapper\MongoMapper::mongoID();
 
         // Test create with null textRef
         $question = new QuestionModel($project);

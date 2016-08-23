@@ -6,7 +6,7 @@ use Api\Model\TextModel;
 
 require_once __DIR__ . '/../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
-require_once TestPath . 'common/MongoTestEnvironment.php';
+require_once TestPhpPath . 'common/MongoTestEnvironment.php';
 require_once SourcePath . "Api/Model/TextModel.php";
 
 class TestTextModel extends UnitTestCase
@@ -68,18 +68,17 @@ class TestTextModel extends UnitTestCase
         $databaseName = $project->databaseName();
 
         $project->remove();
-        $db = MongoStore::connect($databaseName);
-        $this->assertEqual(count($db->listCollections()), 0);
+        $this->assertEqual(MongoStore::countCollections($databaseName), 0);
 
         $text = new TextModel($project);
         $text->title = 'Some Title';
         $text->write();
 
         $this->assertTrue(MongoStore::hasDB($databaseName));
-        $this->assertEqual(count($db->listCollections()), 1);
+        $this->assertEqual(MongoStore::countCollections($databaseName), 1);
 
         $project->remove();
 
-        $this->assertEqual(count($db->listCollections()), 0);
+        $this->assertEqual(MongoStore::countCollections($databaseName), 0);
     }
 }

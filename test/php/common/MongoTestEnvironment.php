@@ -1,18 +1,16 @@
 <?php
+
 use Api\Library\Shared\Website;
-use Api\Model\Mapper\Id;
-use Palaso\Utilities\FileUtilities;
-use Api\Model\Languageforge\Lexicon\LexiconProjectModel;
-use Api\Model\Shared\Rights\ProjectRoles;
-use Api\Model\Shared\Rights\SystemRoles;
-use Api\Model\ProjectModel;
-use Api\Model\UserModel;
-use Api\Library\Languageforge\Semdomtrans\SemDomXMLImporter;
+use Api\Model\Languageforge\Lexicon\LexProjectModel;
+use Api\Model\Languageforge\LfProjectModel;
 use Api\Model\Languageforge\SemDomTransProjectModel;
 use Api\Model\Languageforge\Semdomtrans\Command\SemDomTransProjectCommands;
-use Api\Model\Mapper\ArrayOf;
-use Api\Model\Languageforge\LfProjectModel;
-use Api\Model\Command\ProjectCommands;
+use Api\Model\Mapper\Id;
+use Api\Model\ProjectModel;
+use Api\Model\Shared\Rights\ProjectRoles;
+use Api\Model\Shared\Rights\SystemRoles;
+use Api\Model\UserModel;
+use Palaso\Utilities\FileUtilities;
 
 class MongoTestEnvironment
 {
@@ -33,6 +31,12 @@ class MongoTestEnvironment
     private $db;
 
     /**
+     *
+     * @var string
+     */
+    protected $displayErrors;
+
+    /**
      * Local store of 'uploaded' filepaths
      *
      * @var array
@@ -51,8 +55,11 @@ class MongoTestEnvironment
      */
     public function clean()
     {
-        foreach ($this->db->listCollections() as $collection) {
-            $collection->drop();
+        foreach ($this->db->listCollections() as $collectionInfo) {
+            if ($collectionInfo->getName() != 'system.indexes') {
+                $collection = $this->db->selectCollection($collectionInfo->getName());
+                $collection->drop();
+            }
         }
     }
 
@@ -66,7 +73,7 @@ class MongoTestEnvironment
      */
     public function find($collection, $query, $fields = array())
     {
-        $collection = $this->db->$collection;
+        $collection = $this->db->selectCollection($collection);
 
         return $collection->find($query, $fields);
     }
@@ -99,6 +106,7 @@ class MongoTestEnvironment
      *
      * @param string $name
      * @param string $code
+     * @param string $appName
      * @return ProjectModel
      */
     public function createProject($name, $code, $appName = '')
@@ -134,15 +142,23 @@ class MongoTestEnvironment
         return $projectModel;
     }
 
-    protected function cleanProjectEnvironment($projectModel)
+    /**
+     * @param ProjectModel $project
+     */
+    protected function cleanProjectEnvironment($project)
     {
         // clean out old db if it is present
-        $projectDb = \Api\Model\Mapper\MongoStore::connect($projectModel->databaseName());
-        foreach ($projectDb->listCollections() as $collection) {
-            $collection->drop();
+        $projectDb = \Api\Model\Mapper\MongoStore::connect($project->databaseName());
+
+        foreach ($projectDb->listCollections() as $collectionInfo) {
+            if ($collectionInfo->getName() != 'system.indexes') {
+                $collection = $projectDb->selectCollection($collectionInfo->getName());
+                $collection->drop();
+            }
         }
+        
         // clean up assets folder
-        $folderPath = $projectModel->getAssetsFolderPath();
+        $folderPath = $project->getAssetsFolderPath();
         $cleanupFiles = glob($folderPath . '/*');
         foreach ($cleanupFiles as $cleanupFile) {
             @unlink($cleanupFile);
@@ -157,9 +173,7 @@ class MongoTestEnvironment
      */
     public static function mockId()
     {
-        $id = new MongoId();
-
-        return (string) $id;
+        return strval(new MongoDB\BSON\ObjectID());
     }
 
     /**
@@ -188,7 +202,7 @@ class MongoTestEnvironment
     /**
      * Index items by given key
      *
-     * @param unknown $items
+     * @param mixed $items
      * @param string $byKey
      * @return array<unknown>
      */
@@ -277,13 +291,13 @@ class MongoTestEnvironment
 
     public function inhibitErrorDisplay()
     {
-        $this->_display = ini_get('display_errors');
+        $this->displayErrors = ini_get('display_errors');
         ini_set('display_errors', false);
     }
 
     public function restoreErrorDisplay()
     {
-        ini_set('display_errors', $this->_display);
+        ini_set('display_errors', $this->displayErrors);
     }
 
     public function fixJson($input)
@@ -301,7 +315,7 @@ class LexiconMongoTestEnvironment extends MongoTestEnvironment
 
     /**
      *
-     * @var LexiconProjectModel
+     * @var LexProjectModel
      */
     public $project;
 
@@ -309,11 +323,11 @@ class LexiconMongoTestEnvironment extends MongoTestEnvironment
      * @param string $name
      * @param string $code
      * @param string $appName - included only to make the signature the same as the parent
-     * @return LexiconProjectModel
+     * @return LexProjectModel
      */
     public function createProject($name, $code , $appName = '')
     {
-        $projectModel = new LexiconProjectModel();
+        $projectModel = new LexProjectModel();
         $projectModel->projectName = $name;
         $projectModel->projectCode = $code;
         $projectModel->siteName = $this->website->domain;
@@ -344,9 +358,9 @@ class LexiconMongoTestEnvironment extends MongoTestEnvironment
      *
      * @param string $liftXml
      * @param string $fileName
-     * @param LiftMergeRule $mergeRule
-     * @param string $skipSameModTime
-     * @param string $deleteMatchingEntry
+     * @param string $mergeRule
+     * @param bool $skipSameModTime
+     * @param bool $deleteMatchingEntry
      * @return string $tmpFilePath
      */
     public function uploadLiftFile($liftXml, $fileName, $mergeRule, $skipSameModTime = false, $deleteMatchingEntry = false)
@@ -431,7 +445,7 @@ class SemDomMongoTestEnvironment extends MongoTestEnvironment
             $projectModel->isSourceLanguage = true;
             $projectModel->semdomVersion = self::TESTVERSION;
 
-            $englishXmlFilePath = TestPath . "languageforge/semdomtrans/testFiles/SemDom_en_sample.xml";
+            $englishXmlFilePath = TestPhpPath . "languageforge/semdomtrans/testFiles/SemDom_en_sample.xml";
             $projectModel->importFromFile($englishXmlFilePath, true);
             $projectModel->write();
             self::$englishProject = $projectModel;

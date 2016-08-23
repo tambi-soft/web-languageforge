@@ -2,6 +2,7 @@
 
 namespace Api\Model\Command;
 
+use Api\Library\Shared\HelpContentCommands;
 use Api\Library\Shared\Website;
 use Api\Model\ProjectModel;
 use Api\Model\UserModel;
@@ -12,9 +13,10 @@ class SessionCommands
      * @param string $projectId
      * @param string $userId
      * @param Website $website
+     * @param string $appName - refers to the application being used by the user
      * @return array
      */
-    public static function getSessionData($projectId, $userId, $website)
+    public static function getSessionData($projectId, $userId, $website, $appName = '')
     {
         $sessionData = array();
         $sessionData['userId'] = (string) $userId;
@@ -23,18 +25,28 @@ class SessionCommands
         // Rights
         $user = new UserModel($userId);
         $sessionData['userSiteRights'] = $user->getRightsArray($website);
+        $sessionData['username'] = $user->username;
 
         if ($projectId) {
             $project = ProjectModel::getById($projectId);
             $sessionData['project'] = array();
             $sessionData['project']['id'] = (string) $projectId;
             $sessionData['project']['projectName'] = $project->projectName;
+            if ($project->isArchived) {
+                $sessionData['project']['projectName'] .= " [ARCHIVED]";
+            }
             $sessionData['project']['appName'] = $project->appName;
             $sessionData['project']['appLink'] = "/app/{$project->appName}/$projectId/";
             $sessionData['project']['ownerRef'] = $project->ownerRef->asString();
+            $sessionData['project']['userIsProjectOwner'] = $project->isOwner($userId);
             $sessionData['project']['slug'] = $project->databaseName();
+            $sessionData['project']['isArchived'] = $project->isArchived;
             $sessionData['userProjectRights'] = $project->getRightsArray($userId);
             $sessionData['projectSettings'] = $project->getPublicSettings($userId);
+        }
+
+        if ($appName) {
+            $sessionData['helps'] = HelpContentCommands::getSessionData($appName, $website);
         }
 
         // File Size

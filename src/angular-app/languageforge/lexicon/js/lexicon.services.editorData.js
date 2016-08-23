@@ -3,8 +3,8 @@
 angular.module('lexicon.services')
 
 // Lexicon Entry Service
-.factory('lexEditorDataService', ['$q', 'editorDataService', 'lexEntryApiService', 'sessionService', 'lexiconOfflineCache', 'commentsOfflineCache', 'silNoticeService', 'lexCommentService',
-function($q, editorDataService, api, ss, commentsCache, notice, commentService) {
+.factory('lexEditorDataService', ['$q', 'editorDataService', 'lexEntryApiService',
+function ($q, editorDataService, api) {
 
   editorDataService.registerEntryApi(api);
 
@@ -13,6 +13,8 @@ function($q, editorDataService, api, ss, commentsCache, notice, commentService) 
     refreshEditorData: editorDataService.refreshEditorData,
     removeEntryFromLists: editorDataService.removeEntryFromLists,
     addEntryToEntryList: editorDataService.addEntryToEntryList,
+    getIndexInEntries: editorDataService.getIndexInEntries,
+    getIndexInVisibleEntries: editorDataService.getIndexInVisibleEntries,
     entries: editorDataService.entries,
     visibleEntries: editorDataService.visibleEntries,
     showInitialEntries: editorDataService.showInitialEntries,

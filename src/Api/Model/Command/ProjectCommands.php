@@ -2,18 +2,23 @@
 
 namespace Api\Model\Command;
 
-use Palaso\Utilities\CodeGuard;
+use Api\Library\Shared\Palaso\Exception\ResourceNotAvailableException;
 use Api\Library\Shared\Palaso\Exception\UserUnauthorizedException;
 use Api\Library\Shared\Website;
+use Api\Model\EmailSettings;
+use Api\Model\Languageforge\Lexicon\Command\SendReceiveCommands;
 use Api\Model\Shared\Dto\ManageUsersDto;
 use Api\Model\Shared\Rights\ProjectRoles;
-use Api\Model\Mapper\Id;
 use Api\Model\Mapper\JsonDecoder;
 use Api\Model\Mapper\JsonEncoder;
+use Api\Model\ProjectListModel;
 use Api\Model\ProjectModel;
 use Api\Model\ProjectSettingsModel;
-use Api\Model\Scriptureforge\Typesetting;
+use Api\Model\Shared\Rights\SystemRoles;
+use Api\Model\Scriptureforge\TypesettingProjectModel;
+use Api\Model\Sms\SmsSettings;
 use Api\Model\UserModel;
+use Palaso\Utilities\CodeGuard;
 
 class ProjectCommands
 {
@@ -24,9 +29,10 @@ class ProjectCommands
      * @param string $appName
      * @param string $userId
      * @param Website $website
+     * @param array $srProject send receive project data
      * @return string - projectId
      */
-    public static function createProject($projectName, $projectCode, $appName, $userId, $website)
+    public static function createProject($projectName, $projectCode, $appName, $userId, $website, $srProject = null)
     {
         // Check for unique project code
         if (ProjectCommands::projectCodeExists($projectCode)) {
@@ -40,6 +46,9 @@ class ProjectCommands
         $project->ownerRef->id = $userId;
         $project->addUser($userId, ProjectRoles::MANAGER);
         $projectId = $project->write();
+        if ($srProject) {
+            SendReceiveCommands::updateSRProject($projectId, $srProject);
+        }
         $user = new UserModel($userId);
         $user->addProject($projectId);
         $user->write();
@@ -52,17 +61,18 @@ class ProjectCommands
     }
 
     /**
-     *
      * @param string $id
+     * @return array
      */
     public static function readProject($id)
     {
-        $project = new \Api\Model\ProjectModel($id);
+        $project = new ProjectModel($id);
 
         return JsonEncoder::encode($project);
     }
 
     /**
+     * Delete a list of projects
      * @param array $projectIds
      * @return int Total number of projects removed.
      */
@@ -72,26 +82,37 @@ class ProjectCommands
         $count = 0;
         foreach ($projectIds as $projectId) {
             CodeGuard::checkTypeAndThrow($projectId, 'string');
-            $project = new \Api\Model\ProjectModel($projectId);
+            $project = new ProjectModel($projectId);
+            $project = $project->getById($projectId);
             $project->remove();
             $count++;
         }
-        // TODO BUG: this does not remove users from a project before the project is deleted
-        // STEP 1: enumerate users in the project
-        // STEP 2: remove the user from the project
-        // STEP 3: delete the project
         return $count;
     }
 
     /**
-     * @param $projectId
-     * @return int Total number of projects archived.
+     * @param string $projectId
+     * @param string $userId
+     * @return string projectId of the project archived.
      * @throws UserUnauthorizedException
      */
-    public static function archiveProject($projectId)
+    public static function archiveProject($projectId, $userId)
     {
         CodeGuard::checkTypeAndThrow($projectId, 'string');
-        $project = new \Api\Model\ProjectModel($projectId);
+        CodeGuard::checkTypeAndThrow($userId, 'string');
+
+        $project = new ProjectModel($projectId);
+        $user = new UserModel($userId);
+        if ($userId != $project->ownerRef->asString() && $user->role != SystemRoles::SYSTEM_ADMIN) {
+            throw new UserUnauthorizedException(
+                "This $project->appName project '$project->projectName'\n" .
+                "can only be archived by project owner or\n " .
+                "a system administrator\n");
+        }
+
+        $user->lastUsedProjectId = '';
+        $user->write();
+
         $project->isArchived = true;
         return $project->write();
     }
@@ -121,10 +142,27 @@ class ProjectCommands
      */
     public static function listProjects()
     {
-        $list = new \Api\Model\ProjectListModel();
+        $list = new ProjectListModel();
         $list->read();
 
         return $list;
+    }
+
+    /**
+     * If the project is archived, throws an exception because the project should not be modified
+     * @param ProjectModel $project
+     * @throws ResourceNotAvailableException
+     */
+    public static function checkIfArchivedAndThrow($project) {
+        CodeGuard::checkNullAndThrow($project, 'project');
+        CodeGuard::checkTypeAndThrow($project, '\Api\Model\ProjectModel');
+        if ($project->isArchived) {
+            throw new ResourceNotAvailableException(
+                "This $project->appName project '$project->projectName'\n" .
+                "is archived and cannot be modified. Please\n" .
+                "contact a system administrator to re-publish\n" .
+                "this project if you want to make further updates.");
+        }
     }
 
     /**
@@ -153,13 +191,14 @@ class ProjectCommands
         $list = $projectModel->listRequests();
         return $list;
     }
-    
+
     /**
      * Update the user project role in the project
      * @param string $projectId
      * @param string $userId
      * @param string $projectRole
-     * @return string - userId
+     * @throws \Exception
+     * @return string $userId
      */
     public static function updateUserRole($projectId, $userId, $projectRole = ProjectRoles::CONTRIBUTOR)
     {
@@ -170,14 +209,16 @@ class ProjectCommands
         // Add the user to the project
         $user = new UserModel($userId);
         $project = ProjectModel::getById($projectId);
+        if ($project->userIsMember($userId) && $projectRole == $project->users[$userId]->role) {
+            return $userId;
+        }
 
         if ($userId == $project->ownerRef->asString()) {
             throw new \Exception("Cannot update role for project owner");
         }
 
-        // TODO: Only trigger activity if this is the first time they have been added to project
-        $usersDto = ProjectCommands::usersDto($projectId);
-        if (!$project->users->offsetExists($userId)) {
+        ProjectCommands::usersDto($projectId);
+        if (!$project->userIsMember($userId)) {
             ActivityCommands::addUserToProject($project, $userId);
         }
 
@@ -191,8 +232,10 @@ class ProjectCommands
 
     /**
      * Removes users from the project (two-way unlink)
-     * @param Id $projectId
+     * @param string $projectId
      * @param array $userIds array<string>
+     * @return string $projectId
+     * @throws \Exception
      */
     public static function removeUsers($projectId, $userIds)
     {
@@ -209,18 +252,21 @@ class ProjectCommands
                 throw new \Exception("Cannot remove project owner");
             }
         }
+
+        return $projectId;
     }
     
     /**
      * Removes users from the project (two-way unlink)
-     * @param Id $projectId
-     * @param array $userIds array<string>
+     * @param string $projectId
+     * @param string $joinRequestId
+     * @return string $projectId
      */
     public static function removeJoinRequest($projectId, $joinRequestId)
     {
         $project = new ProjectModel($projectId);
         $project->removeUserJoinRequest($joinRequestId);
-        $project->write();
+        return $project->write();
     }
     
     public static function grantAccessForUserRequest($projectId, $userId, $projectRole) {
@@ -244,11 +290,12 @@ class ProjectCommands
 
     public static function updateProjectSettings($projectId, $smsSettingsArray, $emailSettingsArray)
     {
-        $smsSettings = new \Api\Model\Sms\SmsSettings();
-        $emailSettings = new \Api\Model\EmailSettings();
+        $projectSettings = new ProjectSettingsModel($projectId);
+        ProjectCommands::checkIfArchivedAndThrow($projectSettings);
+        $smsSettings = new SmsSettings();
+        $emailSettings = new EmailSettings();
         JsonDecoder::decode($smsSettings, $smsSettingsArray);
         JsonDecoder::decode($emailSettings, $emailSettingsArray);
-        $projectSettings = new ProjectSettingsModel($projectId);
         $projectSettings->smsSettings = $smsSettings;
         $projectSettings->emailSettings = $emailSettings;
         $result = $projectSettings->write();
@@ -267,8 +314,6 @@ class ProjectCommands
     }
 
     /**
-     *
-     * @param Website $website
      * @param string $code
      * @return bool
      */
@@ -278,4 +323,5 @@ class ProjectCommands
 
         return $project->readByProperties(array('projectCode' => $code));
     }
+
 }

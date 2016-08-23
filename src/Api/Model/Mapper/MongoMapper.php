@@ -1,39 +1,45 @@
 <?php
 
+/*
+ * Note: \MongoDB is the new PHP MongoDB driver (as opposed to the legacy \Mongo) and is essentially two pieces:
+ * 1) the \MongoDB\Driver which is installable through PECL (mongodb v1.6)
+ * 2) the \MongoDB\Client client library which is installable through Composer (mongodb/mongodb : ^1.0.0)
+ *
+ * Useful web references for the \MongoDB class and friends
+ * PHP MongoDB Driver API Reference (php.net)          http://php.net/manual/en/set.mongodb.php
+ * PHP MongoDB Client Library API Generated Docs       http://mongodb.github.io/mongo-php-library/api/
+ * PHP MongoDB Client Library API Reference            http://mongodb.github.io/mongo-php-library/
+ * MongoDB Documentation                               https://docs.mongodb.org/manual/reference/
+ * 
+ */
+
 namespace Api\Model\Mapper;
 
 use Palaso\Utilities\CodeGuard;
 
 class MongoMapper
 {
-
     const ID_IN_KEY = 0;
     const ID_IN_DOC = 1;
 
-    /**
-     * @var MongoDB
-     */
+    /** @var \MongoDB\Database */
     protected $_db;
 
-    /**
-     * @var MongoCollection
-     */
+    /** @var \MongoDB\Collection */
     protected $_collection;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $_idKey;
 
     /**
-     * @param string $database
-     * @param string $collection
+     * @param string $databaseName
+     * @param string $collectionName
      * @param string $idKey defaults to id
      */
-    public function __construct($database, $collection, $idKey = 'id')
+    public function __construct($databaseName, $collectionName, $idKey = 'id')
     {
-        $this->_db = MongoStore::connect($database);
-        $this->_collection = $this->_db->$collection;
+        $this->_db = MongoStore::connect($databaseName);
+        $this->_collection = $this->_db->selectCollection($collectionName);
         $this->_idKey = $idKey;
     }
 
@@ -60,7 +66,8 @@ class MongoMapper
      */
     public static function makeId()
     {
-        $id = new \MongoId();
+        /** @noinspection PhpParamsInspection */
+        $id = new \MongoDB\BSON\ObjectID();
         return (string) $id;
     }
 
@@ -77,28 +84,40 @@ class MongoMapper
     {
         CodeGuard::checkTypeAndThrow($id, 'string');
         if (!empty($id)) {
-            return new \MongoId($id);
+            return new \MongoDB\BSON\ObjectID($id);
         }
-        return new \MongoId();
+        /** @noinspection PhpParamsInspection */
+        return new \MongoDB\BSON\ObjectID();
     }
 
+    /**
+     * @param $model
+     * @param string $query - Mongo selection query
+     * @param array $fields - fields to return (projection)
+     * @param array $sortFields
+     * @param int $limit
+     * @param int $skip
+     * @throws \Exception
+     */
     public function readListAsModels($model, $query, $fields = array(), $sortFields = array(), $limit = 0, $skip = 0)
     {
-        $cursor = $this->_collection->find($query, $fields);
+        $options = array('projection' => $fields);
+
         if (count($sortFields)>0) {
-            $cursor = $cursor->sort($sortFields);
+            $options['sort'] = $sortFields;
         }
         if ($limit>0) {
-            $cursor = $cursor->limit($limit);
+            $options['limit'] = $limit;
         }
         if ($skip > 0) {
-            $cursor = $cursor->skip($skip);
+            $options['skip'] = $skip;
         }
+        $cursor = $this->_collection->find($query, $options);
 
         $data = array();
-        $data['count'] = $cursor->count(true);
-        $data['totalCount'] = $cursor->count();
+        $data['totalCount'] = $this->_collection->count($query);
         $data['entries'] = array();
+        $ctr = 0;
         foreach ($cursor as $item) {
             if (get_class($model->entries) == 'Api\Model\Mapper\ArrayOf') {
                 $item['id'] = (string) $item['_id'];
@@ -106,7 +125,9 @@ class MongoMapper
             } else {
                 $data['entries'][(string) $item['_id']] = $item;
             }
+            $ctr++;
         }
+        $data['count'] = $ctr;
         try {
             MongoDecoder::decode($model, $data);
         } catch (\Exception $ex) {
@@ -117,60 +138,60 @@ class MongoMapper
 
     public function readList($model, $query, $fields = array(), $sortFields = array(), $limit = 0, $skip = 0)
     {
-        $cursor = $this->_collection->find($query, $fields);
+        $projection = array();
+        foreach ($fields as $field) {
+            $projection[$field] = true;
+        }
+        $options = array('projection' => $projection);
 
         if (count($sortFields)>0) {
-            $cursor = $cursor->sort($sortFields);
-        } else {
-            // default sort is to sort by dateCreated in descending order
-            $cursor = $cursor->sort(array('dateCreated' => -1));
+            $options['sort'] = $sortFields;
         }
-
         if ($limit>0) {
-            $cursor = $cursor->limit($limit);
+            $options['limit'] = $limit;
         }
-
         if ($skip > 0) {
-            $cursor = $cursor->skip($skip);
+            $options['skip'] = $skip;
         }
+        $cursor = $this->_collection->find($query, $options);
 
-        $model->count = $cursor->count(true);
-        $model->totalCount = $cursor->count();
+        $model->totalCount = $this->_collection->count($query);
 
         $model->entries = array();
+        $ctr = 0;
         foreach ($cursor as $item) {
             $id = strval($item['_id']);
             $item[$this->_idKey] = $id;
             unset($item['_id']);
             $model->entries[] = $item;
+            $ctr++;
         }
+        $model->count = $ctr;
     }
 
     public function readCounts($model, $query, $fields = array(), $sortFields = array(), $limit = 0, $skip = 0)
     {
-        $cursor = $this->_collection->find($query, $fields);
+        $options = array('projection' => $fields);
 
         if (count($sortFields)>0) {
-            $cursor = $cursor->sort($sortFields);
+            $options['sort'] = $sortFields;
         }
-
         if ($limit>0) {
-            $cursor = $cursor->limit($limit);
+            $options['limit'] = $limit;
         }
-
         if ($skip > 0) {
-            $cursor = $cursor->skip($skip);
+            $options['skip'] = $skip;
         }
 
-        $model->count = $cursor->count(true);
-        $model->totalCount = $cursor->count();
-
+        $model->totalCount = $this->_collection->count($query);
+        $model->count = $this->_collection->count($query, $options);
         $model->entries = array();
     }
 
     public function findOneByQuery($model, $query, $fields = array())
     {
-        $data = $this->_collection->findOne($query, $fields);
+        $options = array('projection' => $fields);
+        $data = $this->_collection->findOne($query, $options);
         if ($data === NULL) {
             return;
         }
@@ -182,8 +203,8 @@ class MongoMapper
     }
 
     /**
-     *
      * @param string $id
+     * @return bool
      */
     public function exists($id)
     {
@@ -198,8 +219,9 @@ class MongoMapper
     }
 
     /**
-     * @param Object $model
+     * @param mixed $model
      * @param string $id
+     * @throws \Exception
      */
     public function read($model, $id)
     {
@@ -217,8 +239,7 @@ class MongoMapper
     }
 
     /**
-     *
-     * @param Object $model
+     * @param mixed $model
      * @param string $property
      * @param string $value
      * @return bool true on document found, false otherwise
@@ -238,9 +259,9 @@ class MongoMapper
     }
 
     /**
-     *
-     * @param Object $model
+     * @param mixed $model
      * @param array  $properties
+     * @return bool
      */
     public function readByProperties($model, $properties)
     {
@@ -257,7 +278,7 @@ class MongoMapper
     {
         CodeGuard::checkTypeAndThrow($rootId, 'string');
         CodeGuard::checkTypeAndThrow($id, 'string');
-        $data = $this->_collection->findOne(array("_id" => self::mongoID($rootId)), array($property . '.' . $id));
+        $data = $this->_collection->findOne(array("_id" => self::mongoID($rootId)), array('projection' => $property . '.' . $id));
         if ($data === NULL) {
             throw new \Exception("Could not find $property=$id in $rootId");
         }
@@ -275,6 +296,7 @@ class MongoMapper
      * @see ID_IN_KEY
      * @see ID_IN_DOC
      * @return string
+     * @throws \Exception
      */
     public function write($model, $id, $keyStyle = MongoMapper::ID_IN_KEY, $rootId = '', $property = '')
     {
@@ -292,7 +314,8 @@ class MongoMapper
             } else {
                 if (empty($id)) {
                     // TODO would be nice if the encode above gave us the id it generated so we could return it to be consistent. CP 2013-08
-                    $this->appendSubDocument($data, $rootId, $property);
+                    throw new \Exception("Method appendSubDocument() is not implemented");
+                    //$this->appendSubDocument($data, $rootId, $property);
                 } else {
                     $id = $this->update($data, $id, self::ID_IN_DOC, $rootId, $property);
                 }
@@ -304,11 +327,8 @@ class MongoMapper
     public function remove($id)
     {
         CodeGuard::checkTypeAndThrow($id, 'string');
-        $result = $this->_collection->remove(
-            array('_id' => self::mongoID($id)),
-            array('safe' => true)
-        );
-        return $result['n'];
+        $result = $this->_collection->deleteOne(array('_id' => self::mongoID($id)));
+        return $result->getDeletedCount();
     }
 
     public function dropCollection() {
@@ -319,25 +339,19 @@ class MongoMapper
     {
         CodeGuard::checkTypeAndThrow($rootId, 'string');
         CodeGuard::checkTypeAndThrow($id, 'string');
-        $result = $this->_collection->update(
-                array('_id' => self::mongoId($rootId)),
-                array('$unset' => array($property . '.' . $id => '')),
-                array('multiple' => false, 'safe' => true)
-        );
-        // TODO Have a closer look at $result and throw if things go wrong CP 2013-07
-
-        return $result['ok'] ? $result['n'] : 0;
+        $filter = array('_id' => self::mongoID($rootId));
+        $updateCommand = array('$unset' => array($property . '.' . $id => ''));
+        $result = $this->_collection->updateOne($filter, $updateCommand);
+        return $result->getModifiedCount();
     }
 
     public function removeProperty($property)
     {
         CodeGuard::checkTypeAndThrow($property, 'string');
-        $result = $this->_collection->update(
-            array($property => array('$exists' => true)),
-            array('$unset' => array($property => true)),
-            array('multiple' => true)
-        );
-        return $result['ok'] ? $result['n'] : 0;
+        $filter = array($property => array('$exists' => true));
+        $updateCommand = array('$unset' => array($property => true));
+        $result = $this->_collection->updateMany($filter, $updateCommand);
+        return $result->getModifiedCount();
     }
 
     /**
@@ -354,31 +368,25 @@ class MongoMapper
         CodeGuard::checkTypeAndThrow($id, 'string');
         if ($keyType == self::ID_IN_KEY) {
             if (empty($rootId)) {
-                $mongoid = self::mongoId($id);
-                $result = $this->_collection->update(
-                    array('_id' => $mongoid),
-                    array('$set' => $data),
-                    array('upsert' => true, 'multiple' => false, 'safe' => true)
-                );
-                //$id = isset($result['upserted']) ? $result['upserted'].$id : $id;
+                $mongoid = self::mongoID($id);
+                $filter = array('_id' => $mongoid);
+                $updateCommand = array('$set' => $data);
+                $options = array('upsert' => true);
+                $this->_collection->updateOne($filter, $updateCommand, $options);
                 $id = $mongoid->__toString();
             } else {
                 CodeGuard::checkNullAndThrow($id, 'id');
                 CodeGuard::checkNullAndThrow($property, 'property');
                 $subKey = $property . '.' . $id;
-                $result = $this->_collection->update(
-                    array('_id' => self::mongoId($rootId)),
-                    array('$set' => array($subKey => $data)),
-                    array('upsert' => false, 'multiple' => false, 'safe' => true)
-                );
+                $filter = array('_id' => self::mongoID($rootId));
+                $updateCommand = array('$set' => array($subKey => $data));
+                $this->_collection->updateOne($filter, $updateCommand);
             }
         } else {
             CodeGuard::checkNullAndThrow($id, 'id');
-            $result = $this->_collection->update(
-                array('_id' => self::mongoId($rootId)),
-                array('$set' => array($property . '$' . $id => $data)),
-                array('upsert' => false, 'multiple' => false, 'safe' => true)
-            );
+            $filter = array('_id' => self::mongoID($rootId));
+            $updateCommand = array('$set' => array($property . '$' . $id => $data));
+            $this->_collection->updateOne($filter, $updateCommand);
         }
         return $id;
     }

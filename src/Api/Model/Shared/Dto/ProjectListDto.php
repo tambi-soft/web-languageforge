@@ -43,13 +43,13 @@ class ProjectListDto
             }
             $entry['role'] = $role;
             if (array_key_exists('ownerRef', $entry) and $entry['ownerRef']) {
-                $entry['ownerId'] = $entry['ownerRef']->{'$id'};
+                $entry['ownerId'] = strval($entry['ownerRef']);
             } else {
                 $entry['ownerId'] = '';
                 // for legacy projects that don't have an owner
             }
             unset($entry['ownerRef']);
-            $entry['dateModified'] = $project->dateModified->format(\DateTime::RFC2822);
+            $entry['dateModified'] = $project->dateModified->asDateTimeInterface()->format(\DateTime::RFC2822);
             $data['entries'][] = $entry;
             $count++;
         }

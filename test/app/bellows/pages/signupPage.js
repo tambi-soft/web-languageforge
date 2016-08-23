@@ -2,11 +2,10 @@
 
 var SignupPage = function() {
   this.get = function() {
-    browser.get('/signup');
-    browser.waitForAngular();
+    browser.get(browser.baseUrl + '/signup');
   };
 
-  this.signupForm = element('form#signupForm');
+  this.signupForm = element(by.tagName('form'));
   this.usernameExists = element(by.id('usernameExists'));
   this.usernameOk = element(by.id('usernameOk'));
   this.usernameInput = element(by.model('record.username'));

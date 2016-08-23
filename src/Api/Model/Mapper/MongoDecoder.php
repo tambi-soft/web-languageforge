@@ -2,6 +2,8 @@
 
 namespace Api\Model\Mapper;
 
+use Litipk\Jiffy\UniversalTimestamp;
+use MongoDB\BSON\UTCDatetime;
 use Palaso\Utilities\CodeGuard;
 
 class MongoDecoder extends JsonDecoder
@@ -17,6 +19,7 @@ class MongoDecoder extends JsonDecoder
      * Sets the public properties of $model to values from $values[propertyName]
      * @param object $model
      * @param array $values A mixed array of JSON (like) data.
+     * @param string $id
      */
     public static function decode($model, $values, $id = '')
     {
@@ -69,9 +72,9 @@ class MongoDecoder extends JsonDecoder
         }
         $refsArray = $data;
         foreach ($refsArray as $objectId) {
-            if (!is_a($objectId, 'MongoId')) {
+            if (!is_a($objectId, 'MongoDB\BSON\ObjectID')) {
                 throw new \Exception(
-                        "Invalid type '" . gettype($objectId) . "' in ref collection"
+                        "Invalid type '" . gettype($objectId) . " : " . get_class($objectId) . "' in ref collection"
                 );
             }
             array_push($model->refs, new Id((string) $objectId));
@@ -79,16 +82,31 @@ class MongoDecoder extends JsonDecoder
     }
 
     /**
-     * @param string $key
-     * @param object $model
-     * @param MongoDate $data
+     * @param \DateTime $model
+     * @param UTCDatetime $data
      */
-    public function decodeDateTime($key, $model, $data)
+    public function decodeDateTime(&$model, $data)
     {
-        CodeGuard::checkTypeAndThrow($data, 'MongoDate', CodeGuard::CHECK_NULL_OK);
+        CodeGuard::checkTypeAndThrow($data, 'MongoDB\BSON\UTCDatetime', CodeGuard::CHECK_NULL_OK);
+        /** @var UTCDatetime $data */
         if ($data !== null) {
-            $model->setTimeStamp($data->sec);
+            /** @var \DateTime $newDateTime */
+            $newDateTime = $data->toDateTime();
+            $model->setTimestamp($newDateTime->getTimestamp());
         }
+    }
+
+    /**
+     * @param UniversalTimestamp $model
+     * @param UTCDatetime $data
+     */
+    public function decodeUniversalTimestamp(&$model, $data)
+    {
+        CodeGuard::checkTypeAndThrow($data, 'MongoDB\BSON\UTCDatetime', CodeGuard::CHECK_NULL_OK);
+        // account for difference between .NET and Linux epoch
+        // (which produces negative milliseconds in UTCDatetime then causes an exception in UniversalTimestamp)
+        if ((int) (String) $data < 0) $data = new UTCDatetime(0);
+        parent::decodeUniversalTimestamp($model, $data);
     }
 
     /**
@@ -96,7 +114,7 @@ class MongoDecoder extends JsonDecoder
      * Replace '___DOLLAR___' with '$'
      * Replace '___DOT___' with '.'
      * @param string $key
-     * @param MongoDate $data
+     * @param array $data
      */
     public function decodeDollarDot($key, &$data)
     {
@@ -114,8 +132,8 @@ class MongoDecoder extends JsonDecoder
 
     /**
      * @param string $key
-     * @param object $model
-     * @param MongoDate $data
+     * @param MapOf $model
+     * @param array $data
      */
     public function decodeMapOf($key, $model, $data)
     {
@@ -124,5 +142,4 @@ class MongoDecoder extends JsonDecoder
         }
         parent::decodeMapOf($key, $model, $data);
     }
-
 }

@@ -7,7 +7,7 @@ specs.push('scriptureforge/**/e2e/*.spec.js');
 exports.config = {
   // The address of a running selenium server.
   seleniumAddress: 'http://default.local:4444/wd/hub',
-  baseUrl: 'https://scriptureforge.local',
+  baseUrl: 'http://scriptureforge.local',
 
   // The timeout in milliseconds for each script run on the browser. This should
   // be longer than the maximum time your application needs to stabilize between
@@ -18,8 +18,8 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     chromeOptions: {
-      args: ['--start-maximized'],
-    },
+      args: ['--start-maximized']
+    }
   },
 
   // To run tests in multiple browsers, uncomment the following
@@ -31,7 +31,7 @@ exports.config = {
 
   // Selector for the element housing the angular app - this defaults to
   // body, but is necessary if ng-app is on a descendant of <body>
-  rootElement: 'div',
+  rootElement: '[id="app-container-for-bootstrap"]',
 
   // Spec patterns are relative to the current working directly when
   // protractor is called.
@@ -40,7 +40,7 @@ exports.config = {
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 70000,
+    defaultTimeoutInterval: 120000
 
     //isVerbose: true,
   },
@@ -50,7 +50,7 @@ exports.config = {
       require('jasmine-reporters');
       jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
     }
-  },
+  }
 };
 
 if (process.env.TEAMCITY_VERSION) {

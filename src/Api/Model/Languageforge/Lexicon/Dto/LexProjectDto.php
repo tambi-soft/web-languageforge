@@ -2,7 +2,7 @@
 
 namespace Api\Model\Languageforge\Lexicon\Dto;
 
-use Api\Model\Languageforge\Lexicon\LexiconProjectModel;
+use Api\Model\Languageforge\Lexicon\LexProjectModel;
 use Api\Model\Mapper\JsonEncoder;
 use Api\Model\UserModel;
 
@@ -47,20 +47,24 @@ class LexProjectDto
 {
     /**
      * @param string $projectId
-     * @param string $userId
      * @returns array - the DTO array
      */
-    public static function encode($projectId, $userId)
+    public static function encode($projectId)
     {
-        $project = new LexiconProjectModel($projectId);
-        $projectJson = LexProjectDtoEncoder::encode($project);
+        $project = new LexProjectModel($projectId);
+        $projectDto = LexProjectDtoEncoder::encode($project);
 
         $data = array();
         $data['project'] = array();
-        $data['project']['interfaceLanguageCode'] = $projectJson['interfaceLanguageCode'];
-        $data['project']['ownerRef'] = $projectJson['ownerRef'];
-        $data['project']['projectCode'] = $projectJson['projectCode'];
-        $data['project']['featured'] = $projectJson['featured'];
+        $data['project']['interfaceLanguageCode'] = $projectDto['interfaceLanguageCode'];
+        $data['project']['ownerRef'] = $projectDto['ownerRef'];
+        $data['project']['projectCode'] = $projectDto['projectCode'];
+        $data['project']['featured'] = $projectDto['featured'];
+        if ($project->hasSendReceive()) {
+            $data['project']['sendReceive'] = array();
+            $data['project']['sendReceive']['project'] = $projectDto['sendReceiveProject'];
+            $data['project']['sendReceive']['project']['identifier'] = $projectDto['sendReceiveProjectIdentifier'];
+        }
 
         return $data;
     }

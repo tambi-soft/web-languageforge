@@ -35,7 +35,7 @@ class RightsHelper
      *
      * @param UserModel $userModel
      * @param ProjectModel $projectModel
-     * @return multitype:
+     * @return mixed
      */
     public static function encode($userModel, $projectModel) {
         return $projectModel->getRightsArray($userModel->id->asString());
@@ -103,11 +103,11 @@ class RightsHelper
     }
 
     /**
-     *
      * @param string $methodName
      * @param array $params
      *            - parameters passed to the method
-     * @return boolean
+     * @return bool
+     * @throws \Exception
      */
     public function userCanAccessMethod($methodName, $params) {
         switch ($methodName) {
@@ -119,8 +119,6 @@ class RightsHelper
                 return true;
             case 'semdom_item_update':
                 return $this->userHasProjectRight(Domain::ENTRIES + Operation::EDIT);
-            case 'semdom_comment_update':
-                return $this->userHasProjectRight(Domain::COMMENTS + Operation::EDIT);
             case 'semdom_project_exists':
                 return true;
             case 'semdom_create_project':
@@ -134,13 +132,12 @@ class RightsHelper
             case 'semdom_does_googletranslatedata_exist':
                 return true;
             case 'project_acceptJoinRequest':
-                returN $this->userHasProjectRight(Domain::USERS + OPERATION::EDIT);
+                return $this->userHasProjectRight(Domain::USERS + OPERATION::EDIT);
             case 'project_denyJoinRequest':
                 return $this->userHasProjectRight(Domain::USERS + OPERATION::EDIT); 
             case 'semdom_export_project':
                 return $this->userHasProjectRight(DOMAIN::PROJECTS + Operation::EDIT );
 
-                
             case 'user_sendInvite':
             case 'message_markRead':
             case 'project_pageDto':
@@ -150,9 +147,6 @@ class RightsHelper
             case 'answer_vote_up':
             case 'answer_vote_down':
                 return $this->userHasProjectRight(Domain::ANSWERS + Operation::VIEW);
-
-            case 'text_list_dto':
-                return $this->userHasProjectRight(Domain::TEXTS + Operation::VIEW);
 
             case 'question_update_answer':
                 return $this->userHasProjectRight(Domain::ANSWERS + Operation::EDIT_OWN);
@@ -242,11 +236,9 @@ class RightsHelper
             case 'user_delete':
                 return $this->userHasSiteRight(Domain::USERS + Operation::DELETE);
 
-            case 'project_archive_asAdmin':
-                return $this->userHasSiteRight(Domain::PROJECTS + Operation::ARCHIVE);
-
-            case 'project_archive_asOwner':
-                return $this->userHasSiteRight(Domain::PROJECTS + Operation::ARCHIVE_OWN);
+            case 'project_archive':
+                return $this->userHasSiteRight(Domain::PROJECTS + Operation::ARCHIVE) ||
+                        $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
 
             case 'project_archivedList':
             case 'project_publish':
@@ -258,6 +250,13 @@ class RightsHelper
             case 'project_create':
             case 'project_create_switchSession':
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
+
+            case 'project_join_switchSession':
+                return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
+
+            case 'project_delete':
+                return $this->userHasSiteRight(Domain::PROJECTS + Operation::DELETE);
+
             case 'projectcode_exists':
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::CREATE);
 
@@ -291,8 +290,9 @@ class RightsHelper
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::VIEW_OWN);
 
             case 'session_getSessionData':
-                // Are there any circumstances where this should be denied? Should this just be "return true;"?
-                return $this->userHasSiteRight(Domain::USERS + Operation::VIEW_OWN);
+                return true;
+
+
 
             // ScriptureForge (Typesetting)
             case 'typesetting_create_Rapuma_Project':
@@ -416,8 +416,14 @@ class RightsHelper
             case 'lex_project_removeMediaFile':
                 return $this->userHasProjectRight(Domain::ENTRIES + Operation::EDIT);
 
+            // send receive api
+            case 'sendReceive_getProjectStatus':
+                return $this->userHasProjectRight(Domain::PROJECTS + Operation::VIEW);
 
-
+            case 'sendReceive_updateSRProject':
+            case 'sendReceive_receiveProject':
+            case 'sendReceive_commitProject':
+                return $this->userHasProjectRight(Domain::PROJECTS + Operation::EDIT);
 
             // project management app
             case 'project_management_dto':
@@ -426,12 +432,15 @@ class RightsHelper
             case 'project_management_report_sfchecks_responsesOverTimeReport':
                 return $this->userHasProjectRight(Domain::PROJECTS + Operation::EDIT);
 
-
             // semdomtrans app management
             case 'semdomtrans_app_management_dto':
             case 'semdomtrans_export_all_projects':
                 return $this->userHasSiteRight(Domain::PROJECTS + Operation::EDIT);
 
+            // xforge frame
+            case 'xforge_frame_can_show_page_help_button':
+                return true;
+            
             default:
                 throw new \Exception("API method '$methodName' has no security policy defined in RightsHelper::userCanAccessMethod()");
         }

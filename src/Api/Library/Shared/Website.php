@@ -68,13 +68,18 @@ class Website
      * @var array<Website>
      */
     private static $_sites;
+
     /**
      *
      * @var array
      */
     private static $_redirect;
+
     /**
-    */
+     * @param string $domain
+     * @param string $base
+     * @throws \Exception
+     */
     public function __construct($domain, $base)
     {
         if ($base != self::SCRIPTUREFORGE && $base != self::LANGUAGEFORGE) { throw new \Exception('website->base must be either scriptureforge or languageforge'); }
@@ -121,6 +126,7 @@ class Website
     /**
      * @param string $hostname
      * @return string
+     * @throws \Exception
      */
     public static function getRedirect($hostname = '')
     {
@@ -199,6 +205,17 @@ class Website
         return $path;
     }
 
+    public function getAngularPath($appName) {
+        $dirPath = "angular-app/" . $this->base . "/$appName";
+        if (!file_exists($dirPath)) {
+            $dirPath = "angular-app/bellows/apps/$appName";
+            if (!file_exists($dirPath)) {
+                $dirPath = '';
+            }
+        }
+        return $dirPath;
+    }
+
     /**
      * get an array of available project themes for a base site (scriptureforge or languageforge)
      * @param string $baseSite
@@ -226,158 +243,9 @@ class Website
      */
     public static function init()
     {
-        $sites = array();
-        $redirect = array();
-
-        /*
-         * **************************
-         * SCRIPTURE FORGE WEBSITES
-         * **************************
-         */
-
-        // scriptureforge.local sites
-        $w = new Website('scriptureforge.local', self::SCRIPTUREFORGE);
-        $w->name = 'Scripture Forge';
-        $w->ssl = true;
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['scriptureforge.local'] = $w;
-
-        $w = new Website('e2etest.scriptureforge.local', self::SCRIPTUREFORGE);
-        $w->name = 'Scripture Forge';
-        $w->ssl = false;
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['e2etest.scriptureforge.local'] = $w;
-
-        $w = new Website('jamaicanpsalms.scriptureforge.local', self::SCRIPTUREFORGE);
-        $w->name = 'The Jamaican Psalms Project';
-        $w->ssl = true;
-        $w->theme = 'jamaicanpsalms';
-        $w->defaultProjectCode = 'jamaicanpsalms';
-        $sites['jamaicanpsalms.scriptureforge.local'] = $w;
-
-        $w = new Website('demo.scriptureforge.local', self::SCRIPTUREFORGE);
-        $w->name = 'Scripture Forge';
-        $w->ssl = true;
-        $w->theme = 'simple';
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['demo.scriptureforge.local'] = $w;
-
-        // dev.scriptureforge.org sites
-        $w = new Website('dev.scriptureforge.org', self::SCRIPTUREFORGE);
-        $w->name = 'Scripture Forge';
-        $w->ssl = true;
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['dev.scriptureforge.org'] = $w;
-
-        $w = new Website('sbu.scriptureforge.org', self::SCRIPTUREFORGE);
-        $w->name = 'Scripture Forge';
-        $w->ssl = true;
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['sbu.scriptureforge.org'] = $w;
-
-        $w = new Website('demo.dev.scriptureforge.org', self::SCRIPTUREFORGE);
-        $w->name = 'Scripture Forge';
-        $w->ssl = true;
-        $w->theme = 'simple';
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['demo.dev.scriptureforge.org'] = $w;
-
-        $w = new Website('jamaicanpsalms.dev.scriptureforge.org', self::SCRIPTUREFORGE);
-        $w->name = 'The Jamaican Psalms Project';
-        $w->ssl = true;
-        $w->theme = 'jamaicanpsalms';
-        $w->defaultProjectCode = 'jamaican_psalms';
-        $sites['jamaicanpsalms.dev.scriptureforge.org'] = $w;
-
-        $jterm = array('jterm', 'taylor-a', 'taylor-b', 'taylor-c', 'calvin-a', 'calvin-b');
-        foreach ($jterm as $team) {
-            $domain = $team . '.dev.scriptureforge.org';
-            $w = new Website($domain, self::SCRIPTUREFORGE);
-            $w->name = 'Scripture Forge';
-            $w->ssl = false;
-            $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-            $sites[$domain] = $w;
-
-            $domain = 'scriptureforge-' . $team . '.e2etest';
-            $w = new Website($domain, self::SCRIPTUREFORGE);
-            $w->name = 'Scripture Forge';
-            $w->ssl = false;
-            $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-            $sites[$domain] = $w;
-        }
-        
-        // scriptureforge.org
-        $w = new Website('scriptureforge.org', self::SCRIPTUREFORGE);
-        $w->name = 'Scripture Forge';
-        $w->ssl = true;
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['scriptureforge.org'] = $w;
-
-        // jamaicanpsalms.com
-        $w = new Website('jamaicanpsalms.com', self::SCRIPTUREFORGE);
-        $w->name = 'The Jamaican Psalms Project';
-        $w->ssl = true;
-        $w->theme = 'jamaicanpsalms';
-        $w->defaultProjectCode = 'jamaican_psalms';
-        $sites['jamaicanpsalms.com'] = $w;
-
-        // waaqwiinaagiwritings.org
-        $w = new Website('waaqwiinaagiwritings.org', self::SCRIPTUREFORGE);
-        $w->name = 'Waaqwiinaagi Writings';
-        $w->ssl = true;
-        $w->theme = 'simple';
-        $w->defaultProjectCode = 'waaqwiinaagiwritings';
-        $sites['waaqwiinaagiwritings.org'] = $w;
-        
-        /*
-         * **************************
-         * LANGUAGE FORGE WEBSITES
-         * **************************
-         */
-
-        // languageforge.local sites
-        $w = new Website('languageforge.local', self::LANGUAGEFORGE);
-        $w->name = 'Language Forge';
-        $w->ssl = false;
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['languageforge.local'] = $w;
-
-        $w = new Website('e2etest.languageforge.local', self::LANGUAGEFORGE);
-        $w->name = 'Language Forge';
-        $w->ssl = false;
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['e2etest.languageforge.local'] = $w;
-
-        // dev.languageforge.org sites
-        $w = new Website('dev.languageforge.org', self::LANGUAGEFORGE);
-        $w->name = 'Language Forge';
-        $w->ssl = true;
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $sites['dev.languageforge.org'] = $w;
-
-        // languageforge.org
-        $w = new Website('languageforge.org', self::LANGUAGEFORGE);
-        $w->name = 'Language Forge';
-        $w->userDefaultSiteRole = self::SITEROLE_PROJECT_CREATOR;
-        $w->ssl = true;
-        $sites['languageforge.org'] = $w;
-
-        /*
-         * **************************
-         * REDIRECTS
-         * **************************
-         */
-
-        $redirect['www.scriptureforge.org'] = 'scriptureforge.org';
-        $redirect['www.languageforge.org'] = 'languageforge.org';
-        $redirect['www.jamaicanpsalms.com'] = 'jamaicanpsalms.com';
-        $redirect['www.jamaicanpsalms.org'] = 'jamaicanpsalms.com';
-        $redirect['jamaicanpsalms.org'] = 'jamaicanpsalms.com';
-
-        self::$_sites = $sites;
-        self::$_redirect = $redirect;
+        self::$_sites = WebsiteInstances::getLanguageForgeSites() + WebsiteInstances::getScriptureForgeSites();
+        self::$_redirect = WebsiteInstances::getRedirects();
     }
-
 }
 
 Website::init();

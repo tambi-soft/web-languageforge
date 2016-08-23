@@ -2,79 +2,30 @@
 
 namespace Api\Model\Mapper;
 
+use Litipk\Jiffy\UniversalTimestamp;
 use Palaso\Utilities\CodeGuard;
 
-class MapperModel
+class MapperModel extends ObjectForEncoding
 {
-    /**
-     *
-     * @var MongoMapper
-     */
+    /** @var MongoMapper */
     protected $_mapper;
 
-    /**
-     *
-     * @var \DateTime
-     */
+    /** @var UniversalTimestamp */
     public $dateModified;
 
-    /**
-     *
-     * @var \DateTime
-     */
+    /** @var UniversalTimestamp */
     public $dateCreated;
 
     /**
-     *
-     * @var array
-     */
-    private $_privateProperties;
-
-    /**
-     *
-     * @var array
-     */
-    private $_readOnlyProperties;
-
-    protected function setReadOnlyProp($propertyName)
-    {
-        if (!is_array($this->_readOnlyProperties)) {
-            $this->_readOnlyProperties = array();
-        }
-        if (!in_array($propertyName, $this->_readOnlyProperties)) {
-            $this->_readOnlyProperties[] = $propertyName;
-        }
-    }
-    protected function setPrivateProp($propertyName)
-    {
-        if (!is_array($this->_privateProperties)) {
-            $this->_privateProperties = array();
-        }
-        if (!in_array($propertyName, $this->_privateProperties)) {
-            $this->_privateProperties[] = $propertyName;
-        }
-    }
-
-    public function getReadOnlyProperties()
-    {
-        return $this->_readOnlyProperties;
-    }
-
-    public function getPrivateProperties()
-    {
-        return $this->_privateProperties;
-    }
-
-    /**
-     *
      * @param MongoMapper $mapper
      * @param string $id
      */
     protected function __construct($mapper, $id = '')
     {
         $this->_mapper = $mapper;
-        $this->dateModified = new \DateTime();
-        $this->dateCreated = new \DateTime();
+        $now = UniversalTimestamp::now();
+        $this->dateModified = $now;
+        $this->dateCreated = $now;
         $this->setReadOnlyProp('dateModified');
         $this->setReadOnlyProp('dateCreated');
         CodeGuard::checkTypeAndThrow($id, 'string');
@@ -83,21 +34,16 @@ class MapperModel
         }
     }
 
-    // TODO Would be nice to deprecate this. Should be removed. Derived models should do their own query, or have methods that do the right query not elsewhere in app code. CP 2013-11
-    public function findOneByQuery($query, $fields = array())
-    {
-        return $this->_mapper->findOneByQuery($this, $query, $fields = array());
-    }
-
     /**
      * Reads the model from the mongo collection
      * @param string $id
      * @see MongoMapper::read()
+     * @throws \Exception
      */
     public function read($id)
     {
         if ($this->_mapper->exists($id)) {
-            return $this->_mapper->read($this, $id);
+            $this->_mapper->read($this, $id);
         } else {
             throw new \Exception(get_called_class() . "($id) doesn't exist");
         }
@@ -113,7 +59,6 @@ class MapperModel
     }
 
     /**
-     *
      * @param string $property
      * @param string $value
      * @return boolean
@@ -124,7 +69,6 @@ class MapperModel
     }
 
     /**
-     *
      * @param array $properties
      * @return boolean
      */
@@ -141,9 +85,10 @@ class MapperModel
     public function write()
     {
         CodeGuard::checkTypeAndThrow($this->id, 'Api\Model\Mapper\Id');
-        $this->dateModified = new \DateTime();
+        $now = UniversalTimestamp::now();
+        $this->dateModified = $now;
         if (Id::isEmpty($this->id)) {
-            $this->dateCreated = new \DateTime();
+            $this->dateCreated = $now;
         }
         $this->id->id = $this->_mapper->write($this, $this->id->id);
 

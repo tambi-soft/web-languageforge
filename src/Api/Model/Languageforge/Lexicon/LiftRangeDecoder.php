@@ -29,7 +29,6 @@ class LiftRangeElementError {
     public $rangeElementId;
 }
 
-// TODO: Should we inherit from LiftDecoder?
 class LiftRangeDecoder {
     public function __construct($projectModel)
     {
@@ -39,19 +38,19 @@ class LiftRangeDecoder {
 
     /**
      *
-     * @var LexiconProjectModel
+     * @var LexProjectModel
      */
     private $_projectModel;
 
     /**
      *
-     * @var array(RangeError / RangeElementError)
+     * @var array<LiftRangeError | LiftRangeElementError>
      */
     private $_errors;
 
     /**
-     * @param SimpleXMLElement $sxeNode
-     * @return Array of Range objects, keyed by id
+     * @param \SimpleXMLElement $sxeNode
+     * @return array<LiftRange> Array of Lift Range objects, keyed by id
      */
     public function decode($sxeNode)
     {
@@ -65,8 +64,9 @@ class LiftRangeDecoder {
 
     /**
      * Reads a Range from the XmlNode $sxeNode
-     * @param SimpleXMLElement $sxeNode
-     * @return Range
+     * @param \SimpleXMLElement $sxeNode
+     * @param LiftRange $existingRange
+     * @return LiftRange
      */
     public function readRange($sxeNode, $existingRange = null)
     {
@@ -106,8 +106,7 @@ class LiftRangeDecoder {
                     $element->parentRef = $elementsById[$element->parent];
                 } else {
                     $errorMsg = "Parent '$element->parent' not found";
-                    $this->_errors[] = new RangeElementError($errorMsg, $range->id, $element->id);
-                    // TODO: When parsing is done, collect all errors and report them somehow. 2014-09 RM
+                    $this->_errors[] = new LiftRangeElementError($errorMsg, $range->id, $element->id);
                 }
             }
         }
@@ -142,10 +141,10 @@ class LiftRangeDecoder {
 
     /**
      * Reads a MultiText from the XmlNode $sxeNode
-     * @param SimpleXMLElement $sxeNode
-     * @param MultiText $existingMultiText
+     * @param \SimpleXMLElement $sxeNode
+     * @param LexMultiText $existingMultiText
      * @param ArrayOf $inputSystems
-     * @return MultiText
+     * @return LexMultiText
      */
     // TODO: If we don't use $this->_projectModel (and I think we shouldn't), this can be
     // converted to a static method so other code could use it.
@@ -154,7 +153,7 @@ class LiftRangeDecoder {
         if (isset($existingMultiText)) {
             $multiText = $existingMultiText;
         } else {
-            $multiText = new MultiText();
+            $multiText = new LexMultiText();
         }
         if (isset($sxeNode->form)) {
             foreach ($sxeNode->form as $form) {
@@ -165,7 +164,7 @@ class LiftRangeDecoder {
                 // been defined, which is not the same concept as "ones for which data exists". 2014-09 RM
                 //$this->_projectModel->addInputSystem($inputSystemTag);
                 if (isset($inputSystems)) {
-                    $inputSystems->value($inputSystemTag);
+                    $inputSystems->ensureValueExists($inputSystemTag);
                 }
             }
         }

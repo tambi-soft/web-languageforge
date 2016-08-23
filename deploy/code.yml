@@ -11,7 +11,7 @@
       changed_when: false
       when: inventory_hostname == "localhost"
       with_items:
-        #- /var/www/virtual/languageforge.org/htdocs
+        - /var/www/virtual/languageforge.org/htdocs
         - /var/www/virtual/scriptureforge.org/htdocs
 
     - name: bower install
@@ -21,8 +21,8 @@
       changed_when: false
       when: inventory_hostname == "localhost"
       with_items:
-        #- /var/www/virtual/languageforge.org/htdocs
+        - /var/www/virtual/languageforge.org/htdocs
         - /var/www/virtual/scriptureforge.org/htdocs
 
     - name: factory reset mongodb to empty with admin user
-      shell: php /home/superman/src/web-scriptureforge/scripts/tools/factoryReset.php run
+      shell: php factoryReset.php run chdir={{lf_path}}/scripts/tools/

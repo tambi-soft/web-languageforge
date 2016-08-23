@@ -18,8 +18,8 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     chromeOptions: {
-      args: ['--start-maximized'],
-    },
+      args: ['--start-maximized']
+    }
   },
 
   // To run tests in multiple browsers, uncomment the following
@@ -31,7 +31,7 @@ exports.config = {
 
   // Selector for the element housing the angular app - this defaults to
   // body, but is necessary if ng-app is on a descendant of <body>
-  rootElement: 'div',
+  rootElement: '[id="app-container-for-bootstrap"]',
 
   // Spec patterns are relative to the current working directly when
   // protractor is called.
@@ -40,7 +40,7 @@ exports.config = {
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 70000,
+    defaultTimeoutInterval: 120000
 
     //isVerbose: true,
   },
@@ -48,11 +48,13 @@ exports.config = {
   onPrepare: function() {
     /* global angular: false, browser: false, jasmine: false */
 
+    browser.driver.manage().window().maximize();
+
     // Disable animations so e2e tests run more quickly
     var disableNgAnimate = function() {
       angular.module('disableNgAnimate', []).run(['$animate', function($animate) {
         $animate.enabled(false);
-      },]);
+      }]);
     };
 
     // This seemed to make the tests more flaky rather than less. IJH 2014-12
@@ -62,7 +64,7 @@ exports.config = {
       require('jasmine-reporters');
       jasmine.getEnv().addReporter(new jasmine.TeamcityReporter());
     }
-  },
+  }
 };
 
 if (process.env.TEAMCITY_VERSION) {

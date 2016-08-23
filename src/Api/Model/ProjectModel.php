@@ -2,36 +2,41 @@
 
 namespace Api\Model;
 
-use Palaso\Utilities\CodeGuard;
-use Palaso\Utilities\FileUtilities;
 use Api\Library\Shared\Website;
 use Api\Model\Command\UserCommands;
+use Api\Model\Languageforge\Lexicon\LexProjectModel;
+use Api\Model\Languageforge\Lexicon\LexRoles;
+use Api\Model\Languageforge\Semdomtrans\SemDomTransRoles;
+use Api\Model\Languageforge\SemDomTransProjectModel;
 use Api\Model\Mapper\ArrayOf;
 use Api\Model\Mapper\Id;
 use Api\Model\Mapper\IdReference;
 use Api\Model\Mapper\MapOf;
 use Api\Model\Mapper\MapperUtils;
-use Api\Model\Languageforge\SemDomTransProjectModel;
-use Api\Model\Languageforge\Lexicon\LexiconProjectModel;
+use Api\Model\Scriptureforge\Sfchecks\SfchecksRoles;
 use Api\Model\Scriptureforge\TypesettingProjectModel;
 use Api\Model\Scriptureforge\SfchecksProjectModel;
 use Api\Model\Shared\Rights\ProjectRoleModel;
-use Api\Model\Sms\SmsSettings;
+use Palaso\Utilities\CodeGuard;
+use Palaso\Utilities\FileUtilities;
 
 class ProjectModel extends Mapper\MapperModel
 {
 
+    /**
+     * @var LexRoles|SfchecksRoles|SemDomTransRoles|RapumaRoles
+     */
     protected $rolesClass;
 
     public function __construct($id = '')
     {
         $this->id = new Id();
         $this->ownerRef = new IdReference();
-        $this->users = new MapOf(function ($data) {
+        $this->users = new MapOf(function() {
             return new ProjectRoleModel();
         });
         
-        $this->userJoinRequests = new MapOf(function ($data) {
+        $this->userJoinRequests = new MapOf(function() {
             return new ProjectRoleModel();
         });
         
@@ -59,6 +64,15 @@ class ProjectModel extends Mapper\MapperModel
     }
 
     /**
+     * @param string $projectId
+     * @return bool
+     */
+    public static function projectExists($projectId) {
+        $projectModel = new ProjectModel();
+        return $projectModel->exists($projectId);
+    }
+
+    /**
      * Reads the model from the mongo collection
      * Ensures that the required pick lists exist even if not present in the database
      * @param string $id
@@ -66,9 +80,8 @@ class ProjectModel extends Mapper\MapperModel
      */
     public function read($id)
     {
-        $result = parent::read($id);
+        parent::read($id);
         $this->userProperties->ensurePickListsExist();
-        return $result;
     }
 
     /**
@@ -95,9 +108,10 @@ class ProjectModel extends Mapper\MapperModel
             $user->removeProject($this->id->asString());
             $user->write();
         }
-        $this->rrmdir($this->getAssetsFolderPath());
+        $this->cleanup();
 
         MapperUtils::dropAllCollections($this->databaseName());
+        MapperUtils::drop($this->databaseName());
         ProjectModelMongoMapper::instance()->remove($this->id->asString());
     }
 
@@ -109,7 +123,7 @@ class ProjectModel extends Mapper\MapperModel
      */
     public function addUser($userId, $role)
     {
-        $mapper = ProjectModelMongoMapper::instance();
+        ProjectModelMongoMapper::instance();
 //        $ProjectModelMongoMapper::mongoID($userId)
         $model = new ProjectRoleModel();
         $model->role = $role;
@@ -123,7 +137,7 @@ class ProjectModel extends Mapper\MapperModel
      * @see roles
      */
     public function createUserJoinRequest($userId, $role) {
-        $mapper = ProjectModelMongoMapper::instance();
+        ProjectModelMongoMapper::instance();
         $model = new ProjectRoleModel();
         $model->role = $role;
         $this->userJoinRequests[$userId] = $model;
@@ -158,7 +172,7 @@ class ProjectModel extends Mapper\MapperModel
      */
     public function userIsMember($userId)
     {
-        return key_exists($userId, $this->users);
+        return $this->users->offsetExists($userId);
     }
 
     public function listUsers()
@@ -190,13 +204,22 @@ class ProjectModel extends Mapper\MapperModel
         }
         return $userList;
     }
-    
+
+    /**
+     * Returns true if the given $userId is the owner of this project
+     * @param string $userId
+     * @return bool
+     */
+    public function isOwner($userId) {
+        return $this->ownerRef->asString() == $userId;
+    }
 
     /**
      * Returns true if the given $userId has the $right in this project.
      * @param string $userId
      * @param int $right
      * @return bool
+     * @throws \Exception
      */
     public function hasRight($userId, $right)
     {
@@ -204,7 +227,7 @@ class ProjectModel extends Mapper\MapperModel
             throw new \Exception('hasRight method cannot be called directly from ProjectModel');
         }
         $hasRight = false;
-        if (key_exists($userId, $this->users)) {
+        if (key_exists($userId, $this->users->getArrayCopy())) {
             $rolesClass = $this->rolesClass;
             $hasRight = $rolesClass::hasRight($this->users[$userId]->role, $right);
         }
@@ -228,6 +251,7 @@ class ProjectModel extends Mapper\MapperModel
      * Returns the rights array for the $userId role.
      * @param string $userId
      * @return array
+     * @throws \Exception
      */
     public function getRightsArray($userId)
     {
@@ -235,7 +259,7 @@ class ProjectModel extends Mapper\MapperModel
             throw new \Exception('getRightsArray method cannot be called directly from ProjectModel');
         }
         CodeGuard::checkTypeAndThrow($userId, 'string');
-        if (!key_exists($userId, $this->users)) {
+        if (!key_exists($userId, $this->users->getArrayCopy())) {
             $result = array();
         } else {
             $role = $this->users[$userId]->role;
@@ -252,7 +276,9 @@ class ProjectModel extends Mapper\MapperModel
      * @param string $userId
      * @return array
      */
-    public function getPublicSettings($userId)
+    public function getPublicSettings(
+        /** @noinspection PhpUnusedParameterInspection used in inherited methods */
+        $userId)
     {
         $settings = array(
             "allowInviteAFriend" => $this->allowInviteAFriend,
@@ -274,7 +300,7 @@ class ProjectModel extends Mapper\MapperModel
             case 'typesetting':
                 return new TypesettingProjectModel($projectId);
             case 'lexicon':
-                return new LexiconProjectModel($projectId);
+                return new LexProjectModel($projectId);
             case 'semdomtrans':
                 return new SemDomTransProjectModel($projectId);
             default:
@@ -287,13 +313,10 @@ class ProjectModel extends Mapper\MapperModel
      */
     public function getAssetsRelativePath()
     {
-        $path = 'assets/' . $this->appName. '/' . $this->databaseName();
-        return $path;
+        return 'assets/' . $this->appName. '/' . $this->databaseName();
     }
 
     /**
-
-        return $path;
      * @return string Full path of the projects assets folder
      */
     public function getAssetsFolderPath()
@@ -314,6 +337,14 @@ class ProjectModel extends Mapper\MapperModel
     public function initializeNewProject()
     {
         // this method should be overridden by child classes
+    }
+
+    /**
+     * Cleanup assets folder upon project deletion
+     */
+    protected function cleanup()
+    {
+        FileUtilities::removeFolderAndAllContents($this->getAssetsFolderPath());
     }
 
     /**
@@ -406,44 +437,6 @@ class ProjectModel extends Mapper\MapperModel
      * @var ArrayOf
      */
     public $usersRequestingAccess;
-    
-    
-    private function rrmdir($dir)
-    {
-        if (is_dir($dir)) {
-            $objects = scandir($dir);
-            foreach ($objects as $object) {
-                if ($object != "." && $object != "..") {
-                    if (filetype($dir."/".$object) == "dir") $this->rrmdir($dir."/".$object); else unlink($dir."/".$object);
-                }
-            }
-            reset($objects);
-            rmdir($dir);
-        }
-    }
-}
-
-/**
- * This class is separate from the ProjectModel to protect the smsSettings and emailSettings which are managed
- * by the site administrator only.
- */
-class ProjectSettingsModel extends ProjectModel
-{
-    public function __construct($id = '')
-    {
-        $this->smsSettings = new SmsSettings();
-        $this->emailSettings = new EmailSettings();
-        parent::__construct($id);
-    }
-
-    /**
-     * @var SmsSettings
-     */
-    public $smsSettings;
-
-    /**
-     * @var EmailSettings
-     */
-    public $emailSettings;
 
 }
+

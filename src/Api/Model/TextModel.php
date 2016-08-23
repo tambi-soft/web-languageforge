@@ -1,21 +1,20 @@
 <?php
+
 namespace Api\Model;
 
 use Api\Model\Mapper\Id;
+use Api\Model\Mapper\MapperListModel;
+use Api\Model\Mapper\MapperModel;
+use Api\Model\Mapper\MongoMapper;
 
 require_once APPPATH . 'Api/Model/ProjectModel.php';
 
-class TextModelMongoMapper extends \Api\Model\Mapper\MongoMapper
+class TextModelMongoMapper extends MongoMapper
 {
-
-    /**
-     *
-     * @var TextModelMongoMapper[]
-     */
+    /** @var TextModelMongoMapper[] */
     private static $_pool = array();
 
     /**
-     *
      * @param string $databaseName
      * @return TextModelMongoMapper
      */
@@ -28,15 +27,15 @@ class TextModelMongoMapper extends \Api\Model\Mapper\MongoMapper
     }
 }
 
-class TextModel extends \Api\Model\Mapper\MapperModel
+class TextModel extends MapperModel
 {
-
-    /**
-     *
-     * @var ProjectModel;
-     */
+    /** @var ProjectModel */
     private $_projectModel;
 
+    /**
+     * @param ProjectModel $projectModel
+     * @param string $id
+     */
     public function __construct($projectModel, $id = '')
     {
         $this->id = new Id();
@@ -76,15 +75,23 @@ class TextModel extends \Api\Model\Mapper\MapperModel
     public $content;
 
     public $isArchived;
+
+    /**
+     * @var string - the font-family CSS string used in the Text div.  This is optional, for cases where font-fallback is not working properly or a font-family preference is needed
+     */
+    public $fontfamily;
 }
 
-class TextListModel extends \Api\Model\Mapper\MapperListModel
+class TextListModel extends MapperListModel
 {
-
-    public function __construct($projectModel)
+    /**
+     * TextListModel constructor.
+     * @param ProjectModel $project
+     */
+    public function __construct($project)
     {
         parent::__construct(
-            TextModelMongoMapper::connect($projectModel->databaseName()),
+            TextModelMongoMapper::connect($project->databaseName()),
             array('title' => array('$regex' => '')),
             array('title')
         );

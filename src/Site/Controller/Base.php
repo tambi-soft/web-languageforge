@@ -2,6 +2,7 @@
 
 namespace Site\Controller;
 
+use Api\Library\Shared\SilexSessionHelper;
 use Api\Library\Shared\Website;
 use Api\Model\Shared\Rights\SystemRoles;
 use Api\Model\Shared\Rights\Operation;
@@ -9,6 +10,7 @@ use Api\Model\Shared\Rights\Domain;
 use Api\Model\FeaturedProjectListModel;
 use Api\Model\UserModel;
 use Silex\Application;
+use Symfony\Component\HttpFoundation\Response;
 
 require_once APPPATH."version.php";
 
@@ -17,6 +19,7 @@ class Base
     public function __construct() {
         $this->website = Website::get();
         $this->_isLoggedIn = false;
+        $this->_showHelp = false;
         $this->data['isLoggedIn'] = $this->_isLoggedIn;
         $this->data['isAdmin'] = false;
         $this->data['projects'] = array();
@@ -45,6 +48,12 @@ class Base
     public $website;
 
     /**
+     * Variable used to control visibility of help button in header menu bar
+     * @var bool
+     */
+    protected $_showHelp;
+
+    /**
      * @var bool
      */
     protected $_isLoggedIn;
@@ -65,14 +74,21 @@ class Base
     protected $_projectId;
 
     // all child classes should use this method to render their pages
-    protected function renderPage(Application $app, $viewName, $render = true) {
+    protected function renderPage(Application $app, $viewName) {
+        if ($viewName == 'favicon.ico') {
+            $viewName = 'container';
+        }
+
         $this->_isLoggedIn = $this->isLoggedIn($app);
         if ($this->_isLoggedIn) {
             try {
-                $userId = (string) $app['session']->get('user_id');
-                $this->_userId = $userId;
-                $this->_user = new UserModel($userId);
-                $this->_projectId = (string) $app['session']->get('projectId');
+                if (!$this->_userId) {
+                    $this->_userId = SilexSessionHelper::getUserId($app);
+                }
+                $this->_user = new UserModel($this->_userId);
+                if (!$this->_projectId) {
+                    $this->_projectId = SilexSessionHelper::getProjectId($app, $this->website);
+                }
             } catch (\Exception $e) {
 //                error_log("User $userId not found, logged out.\n" . $e->getMessage());
                 return $app->redirect('/app/logout');
@@ -80,7 +96,7 @@ class Base
         }
 
         $this->populateHeaderMenuViewdata();
-        $this->data['useLocalDependencies'] = USE_LOCAL_DEPENDENCIES;
+        $this->data['useCdn'] = USE_CDN;
 
         if (empty($this->data)) {
             $app->abort(404, 'Error: cannot render without data');
@@ -91,6 +107,8 @@ class Base
         } catch (\Twig_Error_Loader $e) {
             $app->abort(404, "Page not found: $viewName.twig");
         }
+
+        return new Response('Should not get here', 500);
     }
 
     protected function populateHeaderMenuViewdata() {
@@ -98,6 +116,7 @@ class Base
 
         // setup specific variables for header
         $this->data['isLoggedIn'] = $this->_isLoggedIn;
+        $this->data['showHelpButton'] = $this->_showHelp;
 
         $featuredProjectList = new FeaturedProjectListModel();
         $featuredProjectList->read();
@@ -152,6 +171,7 @@ class Base
     }
 
     private static function addFiles($ext, $dir, &$result, $exclude) {
+        array_push($exclude, 'excluded/');
         if (is_dir($dir)) {
             $files = scandir($dir);
             foreach ($files as $file) {

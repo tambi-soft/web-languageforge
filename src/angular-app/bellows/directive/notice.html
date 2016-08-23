@@ -11,7 +11,7 @@
                 <a style="font-size: smaller;" ng-click="notice.toggleDetails()">Click for details</a>
                 <div style="clear:both" ng-show="notice.showDetails">
                     <hr />
-                    <pre>{{notice.details}}</pre>
+                    <pre style="max-height: 600px; overflow-y: auto;">{{notice.details}}</pre>
                     <div ng-if="notice.type == 'error'">
                         <a target="_blank" data-ng-href="https://github.com/sillsdev/{{githubRepo}}/issues/new">Report this bug to the developers</a><br /><i>Please copy error above and include screenshot</i>
                         <!-- TODO: automate this via https://developer.github.com/v3/issues/#create-an-issue -->
@@ -22,11 +22,11 @@
         </alert>
     </div>
     <div class="alert" style="padding:0; display:flex; min-height: 50px; " ng-show="isLoading()">
-        <div style="margin:auto; max-width: 400px;">
+        <div style="margin:auto; max-width: 420px;">
             <div style="margin:10px">
                 <img src="/Site/views/shared/image/loading-small.gif" style="margin-right:10px" /> <b>Please wait.  {{getLoadingMessage()}}</b>
             </div>
-            <div style="margin-top:10px" ng-show="showProgressBar()">
+            <div style="margin:10px" ng-show="showProgressBar()">
                 <progressbar value="getPercentComplete()" max="100.0">{{getPercentComplete() | number:0}}%</progressbar>
             </div>
         </div>

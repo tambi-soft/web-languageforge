@@ -2,18 +2,16 @@
 
 namespace Api\Model;
 
+use Api\Model\Mapper\Id;
+use Api\Model\Mapper\IdReference;
+use Api\Model\Mapper\MapperListModel;
+use Api\Model\Mapper\MapOf;
+use Api\Model\Mapper\MapperModel;
 use Api\Model\Mapper\MongoMapper;
 
-use Api\Model\Mapper\IdReference;
-
-use Api\Model\Mapper\Id;
-use Api\Model\Mapper\MapOf;
-
-class QuestionModelMongoMapper extends \Api\Model\Mapper\MongoMapper
+class QuestionModelMongoMapper extends MongoMapper
 {
-    /**
-     * @var QuestionModelMongoMapper[]
-     */
+    /** @var QuestionModelMongoMapper[] */
     private static $_pool = array();
 
     /**
@@ -27,19 +25,20 @@ class QuestionModelMongoMapper extends \Api\Model\Mapper\MongoMapper
         }
         return static::$_pool[$databaseName];
     }
-
 }
 
-class QuestionModel extends \Api\Model\Mapper\MapperModel
+class QuestionModel extends MapperModel
 {
+    /**
+     * @param ProjectModel $projectModel
+     * @param string $id
+     */
     public function __construct($projectModel, $id = '')
     {
         $this->id = new Id();
         $this->workflowState = "open"; // default workflow state
         $this->description = '';
         $this->title = '';
-        $this->dateCreated = new \DateTime();
-        $this->dateEdited = new \DateTime();
         $this->textRef = new IdReference();
         $this->answers = new MapOf(
             function () {
@@ -67,6 +66,7 @@ class QuestionModel extends \Api\Model\Mapper\MapperModel
     /**
      * Adds / updates an answer to the given question.
      * @param AnswerModel $answer
+     * @return string $id
      */
     public function writeAnswer($answer)
     {
@@ -98,7 +98,6 @@ class QuestionModel extends \Api\Model\Mapper\MapperModel
      * Reads an answer model for a question
      * @param string $answerId
      * @return AnswerModel
-     *
      */
     public function readAnswer($answerId)
     {
@@ -106,7 +105,6 @@ class QuestionModel extends \Api\Model\Mapper\MapperModel
     }
 
     /**
-     *
      * @param string $answerId
      * @param string $commentId
      * @return CommentModel
@@ -122,7 +120,7 @@ class QuestionModel extends \Api\Model\Mapper\MapperModel
      * @param string $databaseName
      * @param string $questionId
      * @param string $answerId
-     * @return
+     * @return int
      */
     public static function removeAnswer($databaseName, $questionId, $answerId)
     {
@@ -138,6 +136,7 @@ class QuestionModel extends \Api\Model\Mapper\MapperModel
      * @param string $questionId
      * @param string $answerId
      * @param CommentModel $comment
+     * @return string $id
      */
     public static function writeComment($databaseName, $questionId, $answerId, $comment)
     {
@@ -162,7 +161,7 @@ class QuestionModel extends \Api\Model\Mapper\MapperModel
      * @param string $questionId
      * @param string $answerId
      * @param string $commentId
-     * @return
+     * @return int
      */
     public static function removeComment($databaseName, $questionId, $answerId, $commentId)
     {
@@ -173,7 +172,6 @@ class QuestionModel extends \Api\Model\Mapper\MapperModel
     }
 
     /**
-     *
      * @return string - the title for display
      */
     public function getTitleForDisplay()
@@ -195,57 +193,37 @@ class QuestionModel extends \Api\Model\Mapper\MapperModel
         return $title;
     }
 
-    /**
-     * @var Id
-     */
+    /** @var Id */
     public $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $title;
 
-    /**
-     * @var string A content description/explanation of the question being asked
-     */
+    /** @var string A content description/explanation of the question being asked */
     public $description;
 
-    /**
-     * @var \DateTime
-     */
-    public $dateCreated;
-
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     public $dateEdited;
 
-    /**
-     * @var IdReference - Id of the referring text
-     */
+    /** @var IdReference - Id of the referring text */
     public $textRef;
 
-    /**
-     * @var MapOf<AnswerModel>
-     */
+    /** @var MapOf<AnswerModel> */
     public $answers;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     public $workflowState;
 
-    /**
-     * @var Boolean
-     */
+    /** @var Boolean */
     public $isArchived;
-
 }
 
-class QuestionListModel extends \Api\Model\Mapper\MapperListModel
+class QuestionListModel extends MapperListModel
 {
-
+    /**
+     * @param ProjectModel $projectModel
+     * @param string $textId
+     */
     public function __construct($projectModel, $textId)
     {
         parent::__construct(
@@ -254,5 +232,4 @@ class QuestionListModel extends \Api\Model\Mapper\MapperListModel
             array('description')
         );
     }
-
 }

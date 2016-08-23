@@ -1,7 +1,6 @@
 <?php
 
 use Api\Model\Languageforge\Lexicon\LiftImport;
-use Api\Model\Languageforge\Lexicon\LiftMergeRule;
 use Api\Model\Languageforge\Lexicon\LexEntryListModel;
 use Api\Model\Languageforge\Lexicon\ImportErrorReport;
 use Api\Model\Languageforge\Lexicon\ZipImportNodeError;
@@ -10,22 +9,17 @@ use Api\Model\Languageforge\Lexicon\LiftImportNodeError;
 
 require_once __DIR__ . '/../../TestConfig.php';
 require_once SimpleTestPath . 'autorun.php';
-require_once TestPath . 'common/MongoTestEnvironment.php';
+require_once TestPhpPath . 'common/MongoTestEnvironment.php';
 
 class TestLiftImportZip extends UnitTestCase
 {
-
     public function __construct() {
+        parent::__construct();
         $this->environ = new LexiconMongoTestEnvironment();
         $this->environ->clean();
-        parent::__construct();
     }
 
-    /**
-     * Local store of mock test environment
-     *
-     * @var LexiconMongoTestEnvironment
-     */
+    /** @var LexiconMongoTestEnvironment Local store of mock test environment */
     private $environ;
 
     /**
@@ -39,7 +33,7 @@ class TestLiftImportZip extends UnitTestCase
 
     public function testLiftImportMerge_ZipFile_CorrectValues()
     {
-        $zipFilePath = $this->environ->copyTestUploadFile(TestPath . 'common/TestLexProject.zip');
+        $zipFilePath = $this->environ->copyTestUploadFile(TestPhpPath . 'common/TestLexProject.zip');
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
         $this->assertTrue(array_key_exists('en', $project->inputSystems));
@@ -63,8 +57,8 @@ class TestLiftImportZip extends UnitTestCase
         $this->assertEqual($entry0['senses'][0]['gloss']['en']['value'], "incorrect gloss");
         $this->assertEqual($entry0['senses'][0]['gloss']['th']['value'], "th incorrect gloss");
         $this->assertEqual($entry0['senses'][0]['partOfSpeech']['value'], "Adjective");
-        $this->assertEqual($entry0['senses'][0]['semanticDomain']['values'][0], "5.2 Food");
-        $this->assertEqual($entry0['senses'][0]['semanticDomain']['values'][1], "1 Universe, creation");
+        $this->assertEqual($entry0['senses'][0]['semanticDomain']['values'][0], "5.2");
+        $this->assertEqual($entry0['senses'][0]['semanticDomain']['values'][1], "1");
         $this->assertEqual($entry0['senses'][0]['examples'][0]['sentence']['th-fonipa']['value'], "sentence 1");
         $this->assertEqual($entry0['senses'][0]['examples'][0]['translation']['en']['value'], "translation 1");
         $this->assertEqual($entry0['senses'][0]['examples'][1]['sentence']['th-fonipa']['value'], "sentence 2");
@@ -85,14 +79,14 @@ class TestLiftImportZip extends UnitTestCase
 
     public function testLiftImportMerge_ZipFileWrongFormat_Exception()
     {
-        copy(TestPath . 'common/TestLexProject.zip', TestPath . 'common/TestLexProject.tar.gz');
-        $zipFilePath = $this->environ->copyTestUploadFile(TestPath . 'common/TestLexProject.tar.gz');
-        unlink(TestPath . 'common/TestLexProject.tar.gz');
+        copy(TestPhpPath . 'common/TestLexProject.zip', TestPhpPath . 'common/TestLexProject.tar.gz');
+        $zipFilePath = $this->environ->copyTestUploadFile(TestPhpPath . 'common/TestLexProject.tar.gz');
+        unlink(TestPhpPath . 'common/TestLexProject.tar.gz');
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
-        $this->expectException(new \Exception("Sorry, the .tar.gz format isn't allowed"));
+        $this->expectException(new \Exception('Sorry, the .tar.gz format isn\'t allowed'));
         $this->environ->inhibitErrorDisplay();
-        $importer = LiftImport::get()->importZip($zipFilePath, $project);
+        LiftImport::get()->importZip($zipFilePath, $project);
 
         // nothing runs in the current test function after an exception. IJH 2014-11
     }
@@ -105,7 +99,7 @@ class TestLiftImportZip extends UnitTestCase
 
     public function testLiftImportMerge_ZipFileWithDir_CorrectValues()
     {
-        $zipFilePath = $this->environ->copyTestUploadFile(TestPath . 'common/TestLexProjectWithDir.zip');
+        $zipFilePath = $this->environ->copyTestUploadFile(TestPhpPath . 'common/TestLexProjectWithDir.zip');
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
         $importer = LiftImport::get()->importZip($zipFilePath, $project);
@@ -125,8 +119,8 @@ class TestLiftImportZip extends UnitTestCase
         $this->assertEqual($entry0['senses'][0]['gloss']['en']['value'], "incorrect gloss");
         $this->assertEqual($entry0['senses'][0]['gloss']['th']['value'], "th incorrect gloss");
         $this->assertEqual($entry0['senses'][0]['partOfSpeech']['value'], "Adjective");
-        $this->assertEqual($entry0['senses'][0]['semanticDomain']['values'][0], "5.2 Food");
-        $this->assertEqual($entry0['senses'][0]['semanticDomain']['values'][1], "1 Universe, creation");
+        $this->assertEqual($entry0['senses'][0]['semanticDomain']['values'][0], "5.2");
+        $this->assertEqual($entry0['senses'][0]['semanticDomain']['values'][1], "1");
         $this->assertEqual($entry0['senses'][0]['examples'][0]['sentence']['th-fonipa']['value'], "sentence 1");
         $this->assertEqual($entry0['senses'][0]['examples'][0]['translation']['en']['value'], "translation 1");
         $this->assertEqual($entry0['senses'][0]['examples'][1]['sentence']['th-fonipa']['value'], "sentence 2");
@@ -139,12 +133,12 @@ class TestLiftImportZip extends UnitTestCase
 
     public function testLiftImportMerge_ZipFileNoLift_Exception()
     {
-        $zipFilePath = $this->environ->copyTestUploadFile(TestPath . 'common/TestLexNoProject.zip');
+        $zipFilePath = $this->environ->copyTestUploadFile(TestPhpPath . 'common/TestLexNoProject.zip');
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
         $this->environ->inhibitErrorDisplay();
-        $this->expectException(new \Exception("Uploaded file does not contain any LIFT data"));
-        $importer = LiftImport::get()->importZip($zipFilePath, $project);
+        $this->expectException(new \Exception('Uploaded file does not contain any LIFT data'));
+        LiftImport::get()->importZip($zipFilePath, $project);
 
         // nothing runs in the current test function after an exception. IJH 2014-11
     }
@@ -157,7 +151,7 @@ class TestLiftImportZip extends UnitTestCase
 
     public function testLiftImportMerge_ZipFile2LiftAndOddFolder_Error()
     {
-        $zipFilePath = $this->environ->copyTestUploadFile(TestPath . 'common/TestLex2ProjectsOddFolder.zip');
+        $zipFilePath = $this->environ->copyTestUploadFile(TestPhpPath . 'common/TestLex2ProjectsOddFolder.zip');
         $project = $this->environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
 
         $importer = LiftImport::get()->importZip($zipFilePath, $project);
