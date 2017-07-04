@@ -46,8 +46,7 @@ class QuestionListDto
         $data['text']['content'] = $usxHelper->toHtml();
         foreach ($questionList->entries as $questionData) {
             $question = new QuestionModel($project, $questionData['id']);
-            if ( ! $project->usersSeeEachOthersResponses)
-            {
+            if (! $project->usersSeeEachOthersResponses) {
                 $questionData['answers'] = array_filter($questionData['answers'], function($answer) use ($userId) {
                     return ((string)$answer['userRef'] == $userId);
                 });
@@ -57,8 +56,7 @@ class QuestionListDto
                 $questionData['answerCount'] = count($questionData['answers']);
                 $responseCount = 0; // "Responses" = answers + comments
                 foreach ($questionData['answers'] as $a) {
-                    if ( ! $project->usersSeeEachOthersResponses)
-                    {
+                    if (! $project->usersSeeEachOthersResponses) {
                         $a['comments'] = array_filter($a['comments'], function($comment) use ($userId) {
                             return ((string)$comment['userRef'] == $userId);
                         });
@@ -75,8 +73,7 @@ class QuestionListDto
         }
 
         // sort Questions with newest at the top
-        usort($data['entries'], function ($a, $b)
-        {
+        usort($data['entries'], function ($a, $b) {
             $sortOn = 'dateCreated';
             if (array_key_exists($sortOn, $a) && array_key_exists($sortOn, $b)) {
                 return (strtotime($a[$sortOn]) < strtotime($b[$sortOn])) ? 1 : -1;

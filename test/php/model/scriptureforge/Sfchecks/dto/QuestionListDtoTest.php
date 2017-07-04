@@ -229,7 +229,7 @@ class QuestionListDtoTest extends TestCase
         $answer1->content = 'Me, John Carter.';
         $answer1->score = 10;
         $answer1->userRef->id = $user1Id;
-        $answer1->textHightlight = 'I knew that I was on Mars';
+        $answer1->textHighlight = 'I knew that I was on Mars';
         $question1->writeAnswer($answer1);
 
         // ... and two answers for question 2
@@ -237,14 +237,14 @@ class QuestionListDtoTest extends TestCase
         $answer2->content = 'On Mars.';
         $answer2->score = 1;
         $answer2->userRef->id = $user1Id;
-        $answer2->textHightlight = 'I knew that I was on Mars';
+        $answer2->textHighlight = 'I knew that I was on Mars';
         $question2->writeAnswer($answer2);
 
         $answer3 = new AnswerModel();
         $answer3->content = 'On the planet we call Barsoom, which you inhabitants of Earth normally call Mars.';
         $answer3->score = 7;
         $answer3->userRef->id = $user2Id;
-        $answer3->textHightlight = 'I knew that I was on Mars';
+        $answer3->textHighlight = 'I knew that I was on Mars';
         $answer3Id = $question2->writeAnswer($answer3);
 
         // Comments should NOT show up in the answer count; let's test this.
