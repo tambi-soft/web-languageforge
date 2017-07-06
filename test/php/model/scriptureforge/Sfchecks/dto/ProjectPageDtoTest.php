@@ -9,7 +9,7 @@ use Api\Model\Shared\CommentModel;
 use Api\Model\Shared\ProjectModel;
 use PHPUnit\Framework\TestCase;
 
-require "CommonQuestionsAndAnswersForDto.php";
+require_once "CommonQuestionsAndAnswersForDto.php";
 
 class ProjectPageDtoTest extends TestCase
 {

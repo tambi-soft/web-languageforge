@@ -10,7 +10,7 @@ use Api\Model\Shared\CommentModel;
 use Api\Model\Shared\Rights\ProjectRoles;
 use PHPUnit\Framework\TestCase;
 
-require "CommonQuestionsAndAnswersForDto.php";
+require_once "CommonQuestionsAndAnswersForDto.php";
 
 class QuestionCommentDtoTest extends TestCase
 {

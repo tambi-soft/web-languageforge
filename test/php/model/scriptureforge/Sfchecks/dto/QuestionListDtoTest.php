@@ -10,7 +10,7 @@ use Api\Model\Shared\CommentModel;
 use Api\Model\Shared\Rights\ProjectRoles;
 use PHPUnit\Framework\TestCase;
 
-require "CommonQuestionsAndAnswersForDto.php";
+require_once "CommonQuestionsAndAnswersForDto.php";
 
 class QuestionListDtoTest extends TestCase
 {
@@ -200,70 +200,7 @@ class QuestionListDtoTest extends TestCase
     {
         list($projectId, $text1Id, $text2Id, $user1Id, $user2Id, $answer1Id, $answer2Id, $answer3Id, $question1Id, $question2Id, $comment1Id, $comment2Id) =
             CommonQuestionsAndAnswersForDto::createProjectForTestingAnswerVisibility(self::$environ);
-//        $project = self::$environ->createProject(SF_TESTPROJECT, SF_TESTPROJECTCODE);
-//        $projectId = $project->id->asString();
-//
-//        $text = new TextModel($project);
-//        $text->title = 'Chapter 3';
-//        $text->content = '<usx version="2.0"> <chapter number="1" style="c" /> <verse number="1" style="v" /> ' .
-//            '<para style="q1">Blessed is the man</para> ' .
-//            '<para style="q2">who does not walk in the counsel of the wicked</para> ' .
-//            '<para style="q1">or stand in the way of sinners</para> <usx>';
-//        $textId = $text->write();
-//
-//        // Answers are tied to specific users, so let's create some sample users
-//        $user1Id = self::$environ->createUser('jcarter', 'John Carter', 'johncarter@example.com');
-//        $user2Id = self::$environ->createUser('dthoris', 'Dejah Thoris', 'princess@example.com');
-//
-//        // Two questions, with different numbers of answers and different create dates
-//        $question1 = new QuestionModel($project);
-//        $question1->title = 'Who is speaking?';
-//        $question1->description = 'Who is telling the story in this text?';
-//        $question1->textRef->id = $textId;
-//        $question1->write();
-//        $question1->dateCreated->addSeconds(-date_interval_create_from_date_string('1 day')->s);
-//        $question1Id = $question1->write();
-//
-//        $question2 = new QuestionModel($project);
-//        $question2->title = 'Where is the storyteller?';
-//        $question2->description = 'The person telling this story has just arrived somewhere. Where is he?';
-//        $question2->textRef->id = $textId;
-//        $question2Id = $question2->write();
-//
-//        // One answer for question 1...
-//        $answer1 = new AnswerModel();
-//        $answer1->content = 'Me, John Carter.';
-//        $answer1->score = 10;
-//        $answer1->userRef->id = $user1Id;
-//        $answer1->textHighlight = 'I knew that I was on Mars';
-//        $question1->writeAnswer($answer1);
-//
-//        // ... and two answers for question 2
-//        $answer2 = new AnswerModel();
-//        $answer2->content = 'On Mars.';
-//        $answer2->score = 1;
-//        $answer2->userRef->id = $user1Id;
-//        $answer2->textHighlight = 'I knew that I was on Mars';
-//        $question2->writeAnswer($answer2);
-//
-//        $answer3 = new AnswerModel();
-//        $answer3->content = 'On the planet we call Barsoom, which you inhabitants of Earth normally call Mars.';
-//        $answer3->score = 7;
-//        $answer3->userRef->id = $user2Id;
-//        $answer3->textHighlight = 'I knew that I was on Mars';
-//        $answer3Id = $question2->writeAnswer($answer3);
-//
-//        // Comments should NOT show up in the answer count; let's test this.
-//        $comment1 = new CommentModel();
-//        $comment1->content = 'By the way, our name for Earth is Jasoom.';
-//        $comment1->userRef->id = $user2Id;
-//        QuestionModel::writeComment($project->databaseName(), $question2Id, $answer3Id, $comment1);
-//
-//        // Second comment so we can test the "users can/cannot see each other's comments" feature
-//        $comment1 = new CommentModel();
-//        $comment1->content = 'Although I have learned to think of Mars as Barsoom, I still think of Earth as Earth, not Jasoom.';
-//        $comment1->userRef->id = $user1Id;
-//        QuestionModel::writeComment($project->databaseName(), $question2Id, $answer3Id, $comment1);
+
         return array($projectId, $text1Id, $user1Id, $user2Id, $question1Id, $question2Id);
     }
 }
