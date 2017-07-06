@@ -87,6 +87,23 @@ class UserUnreadModel extends UserRelationModel
         }
     }
 
+    /**
+     * @param string[] $itemIds
+     */
+    public function markMultipleRead($itemIds)
+    {
+        $item = new UnreadItem();
+        $item->itemRef->id = $itemId;
+        $item->type = $this->_type;
+        $c = $this->unread->count();
+        for ($i = $c - 1; $i >= 0; $i--) {
+            if ($this->unread[$i] == $item) {
+                unset($this->unread[$i]);
+//                break; // The lack of a break here is consistent with the previous implementation, and currently isn't a performance issue. CP 2013-12
+            }
+        }
+    }
+
     public function markAllRead()
     {
         $c = $this->unread->count();
