@@ -1,12 +1,12 @@
 import * as angular from 'angular';
-import 'ng-intl-tel-input';
+import 'ng-intl-tel-mini';
 
 import { CoreModule } from '../../core/core.module';
 import { NoticeModule } from '../../core/notice/notice.module';
 import { UserProfileAppComponent } from './user-profile-app.component';
 
 export const UserProfileAppModule = angular
-  .module('userprofile', ['ui.bootstrap', 'pascalprecht.traslate', 'ngIntlTelInput',
+  .module('userprofile', ['ui.bootstrap', 'pascalprecht.translate', 'ng-intl-tel-mini',
     CoreModule, NoticeModule
   ])
   .component('userProfileApp', UserProfileAppComponent)

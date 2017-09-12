@@ -18,9 +18,11 @@ export class UserProfileAppController implements angular.IController {
   originalUsername = '';
   takenEmail = '';
   takenUsername = '';
+  country = 'us';
   user = new UserProfile();
   emailExists: boolean;
   usernameExists: boolean;
+  readonly allCountries = require('ng-intl-tel-mini/gen/data.js'); // exports allCountries
   readonly dropdown = {
     avatarColors: {},
     avatarShapes: {}
@@ -151,6 +153,20 @@ export class UserProfileAppController implements angular.IController {
     }
   };
 
+  // noinspection JSUnusedLocalSymbols
+  isValid($isValid: boolean, $error: number, $phoneNumber: string, $inputVal: string): void {
+    if (!$inputVal) {
+      return;
+    }
+
+    this.user.mobile_phone = $inputVal;
+    for (let country of this.allCountries) {
+      if ($inputVal.startsWith(country.dialCode) || $inputVal.startsWith('+' + country.dialCode)) {
+        this.country = country.iso2;
+      }
+    }
+  }
+
   private loadUser(): void {
     this.userService.readProfile((result) => {
       if (result.ok) {
@@ -159,6 +175,7 @@ export class UserProfileAppController implements angular.IController {
         this.initColor = this.user.avatar_color;
         this.initShape = this.user.avatar_shape;
         this.projectsSettings = result.data.projectsSettings;
+        this.$scope.$broadcast('ng-intl-tel-mini.setNumber', this.user.mobile_phone);
 
         // populate the project pickList default values with the userProfile picked values
         for (let i = 0; i < this.projectsSettings.length; i++) {

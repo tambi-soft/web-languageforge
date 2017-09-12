@@ -72,9 +72,9 @@
                                 <div class="card bg-faded col-md-8">
                                     <div class="card-block">
                                         <div class="form-group row">
-                                            <label class="control-label col-md-4 text-md-right" for="mobile_phone" data-translate="Mobile Phone Number"></label>
+                                            <label class="control-label col-md-4 text-md-right" data-translate="Mobile Phone Number"></label>
                                             <div class="controls col-md-8">
-                                                <input class="form-control" type="tel" data-ng-intl-tel-input id="mobile_phone" data-ng-model="$ctrl.user.mobile_phone"/>
+                                                <ng-intl-tel-mini on-number-validity-check="$ctrl.isValid($isValid, $error, $phoneNumber, $inputVal)" show-search="true" country="$ctrl.country"></ng-intl-tel-mini>
                                             </div>
                                         </div>
                                         <div class="form-group row">
