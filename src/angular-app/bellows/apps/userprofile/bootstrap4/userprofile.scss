@@ -18,5 +18,12 @@
       background-color: white;
     }
   }
+
+  .intl-tel-input {
+    width: 100%;
+    .country-list {
+      z-index: 3;
+    }
+  }
 }
 

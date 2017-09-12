@@ -16,15 +16,15 @@ export class UserProfileAppController implements angular.IController {
   emailValid = true;
   usernameValid = true;
   originalUsername = '';
-  dropdown = {
-    avatarColors: {},
-    avatarShapes: {}
-  };
   takenEmail = '';
   takenUsername = '';
   user = new UserProfile();
   emailExists: boolean;
   usernameExists: boolean;
+  readonly dropdown = {
+    avatarColors: {},
+    avatarShapes: {}
+  };
 
   private initColor = '';
   private initShape = '';
