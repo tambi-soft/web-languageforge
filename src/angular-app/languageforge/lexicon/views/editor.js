@@ -315,9 +315,9 @@ angular.module('lexicon.editor', ['ui.router', 'ui.bootstrap', 'bellows.services
         $location.path('/importExport');
       };
 
-      function _scrollDivToId(containerId, divId, posOffset) {
-        var $div = $(divId);
-        var $containerDiv = $(containerId);
+      function scrollDivToId(containerId, divId, posOffset) {
+        var div = document.getElementById(divId);
+        var containerDiv = document.getElementById(containerId);
         var foundDiv = false;
         var offsetTop;
         if (angular.isUndefined(posOffset)) {
@@ -325,35 +325,48 @@ angular.module('lexicon.editor', ['ui.router', 'ui.bootstrap', 'bellows.services
         }
 
         // todo: refactor this spaghetti logic
-        if ($div && $containerDiv) {
-          if (angular.isUndefined($div.offsetTop)) {
-            if (angular.isDefined($div[0])) {
-              $div = $div[0];
+        if (div && containerDiv) {
+          if (angular.isUndefined(div.offsetTop)) {
+            if (angular.isDefined(div[0])) {
+              div = div[0];
               foundDiv = true;
             } else {
               console.log('Error: unable to scroll to div with div id ' + divId);
             }
+          } else {
+            foundDiv = true;
           }
 
           if (foundDiv) {
-            if (angular.isUndefined($div.offsetTop)) {
-
-              offsetTop = $div.offset().top - posOffset;
+            if (angular.isUndefined(div.offsetTop)) {
+              offsetTop = div.offset().top - posOffset;
             } else {
-              offsetTop = $div.offsetTop - posOffset;
+              offsetTop = div.offsetTop - posOffset;
             }
 
             if (offsetTop < 0)
               offsetTop = 0;
-            $containerDiv.scrollTop(offsetTop);
+
+            containerDiv.scrollTop = offsetTop;
           }
         }
       }
 
+      // note: 'elementIsVisible' is taken from a JQuery invention that means 'it takes up space
+      // on the page'. It may actually not be visible at the moment because it may be down inside
+      // a scrolling div or scrolled off the view of the page.
+      function elementIsVisible(element) {
+        // noinspection EqualityComparisonWithCoercionJS
+        if (element == null) return false;
+        return !(element.offsetWidth === 0 && element.offsetHeight === 0);
+      }
+
       function scrollListToEntry(id, position) {
         var posOffset = (position === 'top') ? 274 : 487;
-        var entryDivId = '#entryId_' + id;
-        var listDivId = '#compactEntryListContainer';
+        var entryDivId = 'entryId_' + id;
+        var entryDiv = document.getElementById(entryDivId);
+        var listDivId = 'compactEntryListContainer';
+        var listDiv = document.getElementById(listDivId);
         var index;
 
         // make sure the item is visible in the list
@@ -374,16 +387,12 @@ angular.module('lexicon.editor', ['ui.router', 'ui.bootstrap', 'bellows.services
           console.warn('Error: tried to scroll to an entry that is not in the entry list!');
         }
 
-        // note: ':visible' is a JQuery invention that means 'it takes up space on
-        // the page'.
-        // It may actually not be visible at the moment because it may down inside a
-        // scrolling div or scrolled off the view of the page
-        if ($(listDivId).is(':visible') && $(entryDivId).is(':visible')) {
-          _scrollDivToId(listDivId, entryDivId, posOffset);
+        if (elementIsVisible(entryDiv) && elementIsVisible(listDiv)) {
+          scrollDivToId(listDivId, entryDivId, posOffset);
         } else {
           // wait then try to scroll
           $interval(function () {
-            _scrollDivToId(listDivId, entryDivId, posOffset);
+            scrollDivToId(listDivId, entryDivId, posOffset);
           }, 200, 1);
         }
       }
