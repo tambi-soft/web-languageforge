@@ -6,6 +6,8 @@ import { NoticeService } from '../../core/notice/notice.service';
 import { UtilityService } from '../../core/utility.service';
 import { UserProfile } from '../../shared/model/user-profile.model';
 
+import './user-profile-app.component.scss';
+
 interface UserProfileAppControllerScope extends angular.IScope {
   userprofileForm: angular.IFormController;
 }

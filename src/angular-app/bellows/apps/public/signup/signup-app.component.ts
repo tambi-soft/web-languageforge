@@ -4,6 +4,8 @@ import { UserService } from '../../../core/api/user.service';
 import { SessionService } from '../../../core/session.service';
 import { UserWithPassword } from '../../../shared/model/user-password.model';
 
+import './signup-app.component.scss';
+
 class UserSignup extends UserWithPassword {
   captcha?: string;
 }

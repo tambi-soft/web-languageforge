@@ -5,6 +5,8 @@ import { NoticeService } from '../../core/notice/notice.service';
 import { SessionService } from '../../core/session.service';
 import { Project } from '../../shared/model/project.model';
 
+import './projects-app.component.scss';
+
 class Rights {
   canEditProjects: boolean;
   canCreateProject: boolean;

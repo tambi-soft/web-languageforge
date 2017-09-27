@@ -615,16 +615,9 @@ gulp.task('test-e2e-run').description = 'Run the E2E test on local developer env
 
 var sassCommand = './node_modules/.bin/node-sass';
 
-gulp.task('sass', gulp.parallel(
-  function buildSiteDir(done) {
-    execute(sassCommand + ' src/Site/ -o src/Site/ --output-style compressed', null, done);
-  },
-
-  function buildAngularAppDir(done) {
-    execute(sassCommand  + ' src/angular-app/ -o src/angular-app/ --output-style compressed',
-      null, done);
-  }
-));
+gulp.task('sass', function (done) {
+  execute(sassCommand + ' src/Site/ -o src/Site/ --output-style compressed', null, done);
+});
 
 gulp.task('sass:watch', function () {
   var debug = process.argv.indexOf('--debug') !== -1;
@@ -633,16 +626,11 @@ gulp.task('sass:watch', function () {
   var watch = ' --watch --recursive';
   var debugArgs = debug ? ' --source-comments --source-map-embed --source-map-contents' : '';
 
-  var a = sassCommand + ' src/Site -o src/Site' + debugArgs;
-  var b = sassCommand + ' src/angular-app -o src/angular-app' + debugArgs;
+  var cmd = sassCommand + ' src/Site -o src/Site' + debugArgs;
 
   return new Promise(function (resolve, reject) {
-    execute(b, null, function () {
-      execute(b + watch, null, reject);
-    });
-
-    execute(a, null, function () {
-      execute(a + watch, null, reject);
+    execute(cmd, null, function () {
+      execute(cmd + watch, null, reject);
     });
   });
 

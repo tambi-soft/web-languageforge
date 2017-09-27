@@ -3,6 +3,8 @@ import * as angular from 'angular';
 import { ProjectService } from '../../core/api/project.service';
 import { SessionService } from '../../core/session.service';
 
+import './user-management-app.component.scss';
+
 export class Rights {
   remove: boolean;
   add: boolean;

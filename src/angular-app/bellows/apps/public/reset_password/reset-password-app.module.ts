@@ -4,6 +4,8 @@ import { UserService } from '../../../core/api/user.service';
 import { CoreModule } from '../../../core/core.module';
 import { UserWithPassword } from '../../../shared/model/user-password.model';
 
+import './reset_password.scss';
+
 export class ResetPasswordController implements angular.IController {
   record: UserWithPassword;
   confirmPassword: string;
