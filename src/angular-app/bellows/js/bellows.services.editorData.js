@@ -121,11 +121,14 @@ function ($q, sessionService, cache, commentsCache,
         }
 
         if (newOffset < totalCount) {
-          doFullRefresh(newOffset).then(function () {
-            deferred.resolve(result);
+          doFullRefresh(newOffset).then(function (newResult) {
+            // TODO: Merge the old and new results so that we're returning the complete array
+            deferred.resolve(newResult);
           });
         } else {
-          deferred.resolve(result);
+          sortAndFilterEntries(false).then(function () {
+            deferred.resolve(result);
+          });
         }
       });
     });
@@ -338,12 +341,8 @@ function ($q, sessionService, cache, commentsCache,
       util.arrayCopyRetainingReferences(filteredEntriesSorted, filteredEntries);
       var visibleEntriesSorted = sortList(config, visibleEntries);
       if (shouldResetVisibleEntriesList) {
+        // TODO: Magic number "50" below should become a constant somewhere
         util.arrayCopyRetainingReferences(filteredEntriesSorted.slice(0, 50), visibleEntries);
-      } else {
-        console.log('sortedVisibleEntries');
-        console.log(visibleEntriesSorted);
-        util.arrayCopyRetainingReferences(visibleEntriesSorted, visibleEntries);
-        console.log(visibleEntries);
       }
 
       var sortTime = ((performance.now() - startTime) / 1000).toFixed(2);
@@ -367,14 +366,8 @@ function ($q, sessionService, cache, commentsCache,
       }
 
       if (shouldResetVisibleEntriesList) {
+        // TODO: Magic number "50" below should become a constant somewhere
         util.arrayCopyRetainingReferences(filteredEntries.slice(0, 50), visibleEntries);
-
-      } else {
-        var filteredVisibleEntries = visibleEntries.filter(function (entry) {
-          return entryMeetsFilterCriteria(config, entry);
-        });
-
-        util.arrayCopyRetainingReferences(filteredVisibleEntries, visibleEntries);
       }
     });
   }
