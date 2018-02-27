@@ -100,8 +100,8 @@ angular.module('palaso.ui.comments')
               $scope.contextGuid += '#' + $scope.multiOptionValue;
             }
 
-            $scope.contextGuid += ($scope.inputSystem.abbreviation ? '.' +
-              $scope.inputSystem.abbreviation : '');
+            $scope.contextGuid += ($scope.inputSystem.tag ? '.' +
+              $scope.inputSystem.tag : '');
             if ($scope.contextGuid.indexOf('undefined')  === -1) {
               $scope.active = true;
             }

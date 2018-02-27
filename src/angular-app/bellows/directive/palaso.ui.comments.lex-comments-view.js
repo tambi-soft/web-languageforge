@@ -42,7 +42,7 @@ angular.module('palaso.ui.comments')
               if (inputSystem) {
                 $scope.newComment.regarding.fieldValue = getFieldValue(model, inputSystem);
                 $scope.newComment.regarding.inputSystem =
-                  $scope.config.inputSystems[inputSystem].languageName;
+                  $scope.config.inputSystems[inputSystem].tag;
                 $scope.newComment.regarding.inputSystemAbbreviation =
                   $scope.config.inputSystems[inputSystem].abbreviation;
               } else if (multioptionValue) {

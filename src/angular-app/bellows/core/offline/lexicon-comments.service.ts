@@ -85,7 +85,7 @@ export class LexiconCommentService {
               contextGuid = comment.contextGuid;
             } else {
               contextGuid = comment.regarding.field +
-                (comment.regarding.inputSystemAbbreviation ? '.' + comment.regarding.inputSystemAbbreviation : '');
+                (comment.regarding.inputSystem ? '.' + comment.regarding.inputSystem : '');
               if (fieldConfig.type === 'multioptionlist') {
                 contextGuid += '#' + comment.regarding.fieldValue;
               }
