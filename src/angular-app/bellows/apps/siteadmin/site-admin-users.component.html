@@ -45,14 +45,14 @@
                         <td class="username-styling">
                             <a ng-style="!user.active && {'text-decoration': 'line-through', 'color':'grey'}"
                                data-ng-click="$ctrl.selectRow($index, user)" title="Click to edit this user"
-                               class="username-styling">{{user.username}}</a>
+                               class="username-styling notranslate">{{user.username}}</a>
                         </td>
                         <td>{{user.email}}</td>
                         <td>{{user.name}} <span ng-show="user.role === 'system_admin'">(System Admin)</span></td>
                         <td><span style="font-weight: bold" ng-show="user.projects.length > 0">(<span class="notranslate">{{user.projects.length}}</span>
                             project<span ng-show="user.projects.length > 1">s</span>) </span>
                             <span ng-repeat="project in user.projects">
-                                <a class="username-styling"
+                                <a class="username-styling notranslate"
                                    data-ng-href="http://{{project.siteName}}/app/{{project.appName}}/{{project.id}}">
                                     {{project.projectCode}}</a><span ng-show="!$last">, </span></span>
                         </td>

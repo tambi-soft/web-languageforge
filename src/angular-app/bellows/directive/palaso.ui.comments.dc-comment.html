@@ -49,8 +49,9 @@
             </div>
         </div>
         <div class="comment-interaction">
-            <span class="likes">{{comment.score}} Like{{(comment.score != 1 ? 's' : '')}}</span>
-            <span class="replies">{{comment.replies.length || '0'}} Comment{{(comment.replies.length != 1 ? 's' : '')}}</span>
+            <!-- TODO: Plurals are different in different languages, and "one or more than one" is not a universal rule. See https://docs.transifex.com/projects/plurals-and-genders -->
+            <span class="likes"><span class="notranslate">{{comment.score}}</span> Like{{(comment.score != 1 ? 's' : '')}}</span>
+            <span class="replies"><span class="notranslate">{{comment.replies.length || '0'}}</span> Comment{{(comment.replies.length != 1 ? 's' : '')}}</span>
         </div>
         <div class="comment-actions">
             <div class="btn-like">

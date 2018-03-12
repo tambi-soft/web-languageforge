@@ -1,5 +1,6 @@
 <span>
-    {{count.total}}
+    <!-- TODO: Plurals are different in different languages, and "one or more than one" is not a universal rule. See https://docs.transifex.com/projects/plurals-and-genders -->
+    <span class="notranslate">{{count.total}}</span>
     <span ng-if="count.total !== 1" class="d-none d-md-inline-block">Comments</span>
     <span ng-if="count.total === 1" class="d-none d-md-inline-block">Comment</span>
 </span>

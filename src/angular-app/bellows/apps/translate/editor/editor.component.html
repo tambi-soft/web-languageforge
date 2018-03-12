@@ -8,9 +8,9 @@
         <a class="btn btn-secondary" href="#" data-ng-click="$ctrl.train()"
            data-ng-if="!$ctrl.isTraining && $ctrl.hasDocumentSets() && $ctrl.tecRights.canEditProject()">Train</a>
         <uib-progress class="training" data-ng-if="$ctrl.isTraining" title="Training">
-            <uib-bar class="justify-content-start" value="$ctrl.trainingPercent" data-ng-if="$ctrl.trainingPercent < 25">
+            <uib-bar class="justify-content-start notranslate" value="$ctrl.trainingPercent" data-ng-if="$ctrl.trainingPercent < 25">
                 {{$ctrl.trainingPercent}}%</uib-bar>
-            <uib-bar class="justify-content-center" value="$ctrl.trainingPercent" data-ng-if="$ctrl.trainingPercent >= 25">
+            <uib-bar class="justify-content-center notranslate" value="$ctrl.trainingPercent" data-ng-if="$ctrl.trainingPercent >= 25">
                 {{$ctrl.trainingPercent}}%</uib-bar>
         </uib-progress>
         <div class="rating" data-ng-attr-title="Engine rating ({{$ctrl.engineConfidence}}%)">
@@ -170,14 +170,14 @@
 </div>
 <div data-ng-if="$ctrl.showMetrics">
     <small class="text-muted">
-        Backspace key {{$ctrl.metrics.keyBackspaceCount}}&nbsp;&nbsp;&nbsp;
-        Delete key {{$ctrl.metrics.keyDeleteCount}}&nbsp;&nbsp;&nbsp;
-        Character keys {{$ctrl.metrics.keyCharacterCount}}&nbsp;&nbsp;&nbsp;
-        Productive characters {{$ctrl.metrics.productiveCharacterCount}}&nbsp;&nbsp;&nbsp;
-        Navigation keys {{$ctrl.metrics.keyNavigationCount}}&nbsp;&nbsp;&nbsp;
-        Mouse clicks {{$ctrl.metrics.mouseClickCount}}&nbsp;&nbsp;&nbsp;
-        Suggestions (accepted/given) {{$ctrl.metrics.suggestionAcceptedCount}}/{{$ctrl.metrics.suggestionTotalCount}}&nbsp;&nbsp;&nbsp;
-        Active edit time {{$ctrl.metrics.timeEditActive | secondsToTime}}&nbsp;&nbsp;&nbsp;
-        Total time {{$ctrl.metrics.timeTotal | secondsToTime}}
+        Backspace key <span class="notranslate">{{$ctrl.metrics.keyBackspaceCount}}</span>&nbsp;&nbsp;&nbsp;
+        Delete key <span class="notranslate">{{$ctrl.metrics.keyDeleteCount}}</span>&nbsp;&nbsp;&nbsp;
+        Character keys <span class="notranslate">{{$ctrl.metrics.keyCharacterCount}}</span>&nbsp;&nbsp;&nbsp;
+        Productive characters <span class="notranslate">{{$ctrl.metrics.productiveCharacterCount}}</span>&nbsp;&nbsp;&nbsp;
+        Navigation keys <span class="notranslate">{{$ctrl.metrics.keyNavigationCount}}</span>&nbsp;&nbsp;&nbsp;
+        Mouse clicks <span class="notranslate">{{$ctrl.metrics.mouseClickCount}}</span>&nbsp;&nbsp;&nbsp;
+        Suggestions (accepted/given) <span class="notranslate">{{$ctrl.metrics.suggestionAcceptedCount}}</span>/<span class="notranslate">{{$ctrl.metrics.suggestionTotalCount}}</span>&nbsp;&nbsp;&nbsp;
+        Active edit time <span class="notranslate">{{$ctrl.metrics.timeEditActive | secondsToTime}}</span>&nbsp;&nbsp;&nbsp;
+        Total time <span class="notranslate">{{$ctrl.metrics.timeTotal | secondsToTime}}</span>
     </small>
 </div>

@@ -12,7 +12,7 @@
         data-ng-click="select()"
         data-ng-disabled="selectDisabled">
         {{(selected.language.name) ? 'Select ' + typeName + ' Language as' : 'Select'}}
-        {{selected.language.name}}</button>
+        <span class="notranslate">{{selected.language.name}}</span></button>
     <div>
         <a href="http://www.infoterm.info/standardization/iso_639_1_2002.php" target="_blank">
             <small><i class="fa fa-globe" aria-hidden="true"></i> About Language 639-1 Codes</small></a>
