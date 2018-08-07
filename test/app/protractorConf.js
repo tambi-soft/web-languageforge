@@ -1,4 +1,7 @@
 
+var HtmlReporter = require('protractor-beautiful-reporter');
+var path = require('path');
+var log4js = require('log4js');
 exports.config = {
   // The address of a running selenium server.
   seleniumAddress: 'http://default.local:4444/wd/hub',
@@ -76,6 +79,45 @@ exports.config = {
       // Uncomment to pause tests on first failure
       // jasmine.getEnv().addReporter(pauseOnFailure);
     }
+    // Log4js configuration
+    const DesktopPath = require('path').join(require('os').homedir(), 'Desktop');
+    log4js.configure({
+      appenders: { TestprotractorLog4js: { type: 'file', filename: DesktopPath + '/Logs/executionLog.log' } },
+      categories: { default: { appenders: ['TestprotractorLog4js'], level: 'error' } }
+      });
+    browser.logger = log4js.getLogger('TestprotractorLog4js');
+    
+    // HTML Report configuration
+    jasmine.getEnv().addReporter(new HtmlReporter({
+      baseDirectory: 'tmp/screenshots',
+      preserveDirectory: false,
+      takeScreenShotsOnlyForFailedSpecs: false,
+      screenshotsSubfolder: 'images',
+      jsonsSubfolder: 'jsons',
+      baseDirectory: DesktopPath + '/HTML_Reports',
+      docTitle: 'HTML_Reports',
+      docName: 'HTML_Report.html',
+      gatherBrowserLogs: false,
+      takeScreenShotsForSkippedSpecs: true,
+      excludeSkippedSpecs: false,
+      pathBuilder: function pathBuilder(spec, descriptions, results, capabilities) {
+          var currentDate = new Date(),
+              day = currentDate.getDate(),
+              month = currentDate.getMonth() + 1,
+              year = currentDate.getFullYear();
+
+          var validDescriptions = descriptions.map(function (description) {
+              return description.replace('/', '@');
+          });
+
+          return path.join(
+              day + "-" + month + "-" + year,
+              capabilities.get('browserName'),
+              validDescriptions.join('-'));
+      }
+    }).getJasmine2Reporter());
+  
+  
   },
   SELENIUM_PROMISE_MANAGER: false
 };

@@ -41,4 +41,37 @@ afterEach(() => {
       expect<any>(text).toEqual(''); // fail the test
     }
   });
+
+  const myReporter = {
+    specDone: (result: any) => {
+
+        switch (result.status) {
+            case 'passed' : {
+                browser.logger.info('Test FullName: ' + result.fullName + ' - Test Result: ' + result.status);
+                break;
+            }
+            case 'failed' : {
+                browser.logger.error('Test FullName: ' + result.fullName + ' - Test Result: ' + result.status);
+                // tslint:disable-next-line:prefer-for-of
+                for (let i = 0; i < result.failedExpectations.length; i++) {
+                  browser.logger.error('Test failed message: ' + result.failedExpectations[i].message);
+                  browser.logger.error('Test failed stack: ' + result.failedExpectations[i].stack);
+                 }
+                break;
+            }
+            case 'pending' : {
+                browser.logger.info('Test FullName: ' + result.fullName + ' - Test Result: ' + result.status);
+                break;
+            }
+            default: {
+                browser.logger.info('There is no testcase pass or fail state' +
+                  'It seems to be unkown test result state');
+                break;
+             }
+        }
+
+    }
+  };
+  jasmine.getEnv().addReporter(myReporter);
+
 });

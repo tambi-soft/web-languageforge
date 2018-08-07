@@ -1,5 +1,4 @@
 import {browser, ExpectedConditions} from 'protractor';
-
 import { BellowsChangePasswordPage } from './shared/change-password.page';
 import { BellowsLoginPage } from './shared/login.page';
 import { PageHeader } from './shared/page-header.element';
@@ -10,6 +9,10 @@ describe('Bellows E2E Change Password app', () => {
   const header = new PageHeader();
   const changePasswordPage = new BellowsChangePasswordPage();
   const newPassword = '12345678';
+
+  const log4js = require('log4js');
+  const logger = log4js.getLogger('TestprotractorLog4js');
+  logger.level = 'trace';
 
   it('setup: login as user, go to change password page', async () => {
     await loginPage.loginAsUser();

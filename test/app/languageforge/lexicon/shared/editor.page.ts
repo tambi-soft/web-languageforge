@@ -469,4 +469,22 @@ export class EditorPage {
       }
     };
   }
+
+  // Comment bubble dialog elements
+  Likes = element(by.css('.comment-actions .btn-like .can-like'));
+  MarkTodo = element(by.css('.comment-actions .btn-todo .mark-todo'));
+  commentbtn = element(by.css('.comment-actions .btn-comments'));
+  Todobtn = element(by.css('.comment-actions .btn-todo .mark-todo'));
+  CommentBox = element(by.css('.comment-actions .btn-comments'));
+  CommentTextArea = element(by.model('$ctrl.newReply.editingContent'));
+  CommentSubmit = element.all(by.css('.d-flex button[type="submit"]'));
+  ToDoCheck = element(by.cssContainingText('.comment-actions .btn-todo .resolve-todo', 'To do'));
+  commentcount = element.all(by.css('.commentContainer .card-block .comment-interaction .replies'));
+  replytext = element.all(by.css('span[class="reply-content ng-binding"]'));
+  threedotbutton = element(by.css('.comment-meta .dropdown .ellipsis-menu'));
+  editbutton = element.all(by.css('.dropdown-menu .dropdown-item .fa-pencil'));
+  editTextArea = element(by.model('$ctrl.editingCommentContent'));
+  updatebutton = element(by.cssContainingText('.commentEditing .d-flex .btn-primary', 'Update'));
+  resolvedCheck = element.all(by.css('[class="open-todo btn-action-icon"]'));
+  updateText = element.all(by.binding('$ctrl.comment.content'));
 }
